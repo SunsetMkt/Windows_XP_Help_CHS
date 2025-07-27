@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>配置 ASP 应用程序</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何为 ASP 应用程序设置属性的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37778609">配置 ASP 应用程序</a></h1>
+
+<p>可以为安装在 Web 服务器上的每个 ASP 应用程序设置某些属性。例如，可以在应用程序中启用会话状态或设置默认脚本语言。应用程序属性将应用于应用程序中的所有 ASP 网页，除非在某个单独网页中直接覆盖了此属性。</p>
+
+<big>配置 ASP 应用程序</big><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站或应用程序的开始位置目录。</li>
+<li>打开目录的属性页，然后单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+<li> 单击“配置”按钮，然后单击“选项”选项卡。</li>
+<li> 设置应用程序的属性。有关每种属性的描述，请参阅<a href="iipy_32.htm">选项</a>属性页。</li>
+</ol>
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+</font>
+</body>
+</html>

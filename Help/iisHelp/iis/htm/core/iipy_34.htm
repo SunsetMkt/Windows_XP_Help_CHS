@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html dir=ltr>
+<head>
+
+<title>应用程序“映射”属性页</title>
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000>
+<FONT FACE="宋体">
+
+<p><strong>应用程序“映射”属性页</strong></p>
+
+<p>使用此属性页将文件扩展名映射到用来处理这些文件的程序或解释器。映射的应用程序包括 Internet Server API (ISAPI) 应用程序、Active Server Pages (ASP) 应用程序、Internet Database Connector (IDC) 应用程序以及使用“服务器端包含”命令的文件。例如，当 Web 服务器收到对带有 .asp 文件扩展名的网页的请求时，将使用应用程序映射确定调用可执行文件 asp.dll 处理此页。</p>
+
+<p><strong>缓存 ISAPI 应用程序</strong></p>
+
+<p>可以加载并缓存 Internet Server API DLL，以便在处理后续请求时不必再调用应用程序。大多数 ISAPI 应用程序（包括 Active Server Pages）都受益于缓存。只有在特定环境下，如调试 ISAPI 应用程序，才应清除此选项。</p>
+
+<p>如果服务器上有多个网站加载并缓存了同一个 ISAPI 应用程序，则对服务器清除此选项不会从内存中卸载此应用程序。必须对使用此应用程序的所有网站清除此选项。清除此选项不会卸载正在执行的应用程序。只是后续请求不再被缓存。</p>
+
+<p><strong>应用程序映射</strong></p>
+
+<p>此表列出了与可执行文件相关联的文件扩展名以及可执行文件的名称。如果“全部”出现在列表中，则所有动作都将被发送给应用程序；但“全部”不是动作。</p>
+
+<p><font color="#0000ff"><strong>要点</strong></font>&nbsp;&nbsp;&nbsp;在 IIS 4.0 的“应用程序映射”属性页中，在“排除”列具有一个动作列表。IIS 5.0 和 5.1 对此进行了更改，在“动作”列中列出了将由应用程序运行的 HTTP 动作。</p> 
+
+<p><strong>添加应用程序映射</strong></p>
+
+<ol>
+<li>单击“添加”。</li>
+<li>在“扩展名”列中输入可执行文件的扩展名。</li>
+<li>在“可执行文件”列中输入可执行文件的物理路径。</li>
+<li>输入可执行文件应传递给应用程序的 HTTP 动作。要指定将所有动作传递给应用程序，则保留此字段为空（单击“确定”后此字段将写入“全部”）。方法名之间用英文逗号 (,) 分隔。</li>
+<li>如果允许应用程序在没有“执行”权限的目录内运行，可选中“脚本引擎”复选框。</li>
+<li>选中“检查文件是否存在”复选框，可以指示 Web 服务器验证请求的脚本文件是否存在，并保证请求用户对此脚本文件具有访问权限。</li>
+<li>单击“确定”。</li>
+</ol>
+
+<p>要删除应用程序映射，选择扩展名并单击“删除”。</p>
+
+<p><strong>注意</strong></p>
+
+<ul>
+<li>“脚本引擎”设置主要是用于基于脚本的应用程序，如映射到解释器的 ASP 和 IDC。要运行脚本映射的应用程序，必须为应用程序所在的目录选中“脚本”或者“执行”访问权限复选框。要只允许运行脚本映射的应用程序，可使用“脚本”访问。要允许运行脚本映射的应用程序和可执行文件（.exe 和 .dll），可使用“执行”访问。</li>
+
+<li>如果选中了“检查文件是否存在”复选框，但脚本不存在或者用户没有访问此脚本文件的权限，则向浏览器返回相应的警告消息，并且脚本引擎不会激活。此选项对于映射到非 CGI 可执行文件的脚本非常有用，这些可执行文件（如 Perl 解释器）无法在脚本不能访问时发送 CGI 响应。由于脚本会打开两次（服务器和脚本引擎各打开一次），所以启用此选项会对性能有一定影响。</li>
+</ul>
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</BODY>
+</HTML>

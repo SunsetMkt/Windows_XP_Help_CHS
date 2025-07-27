@@ -1,0 +1,315 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>管理会话</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="本主题讨论如何使用 ASP 来维护访问 Web 应用程序的用户信息。ASP 管理用户会话，以便应用程序可以访问在整个会话期间都保持一致的信息。">
+<META HTTP-EQUIV="Content-Type" Content="text-html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+
+<h1><a name="H1_37683573">管理会话</a></h1>
+
+
+<p>开发一个成功的 Web 应用程序所面临的挑战之一便是：当用户从应用程序中的某一页转到另一页时，如何在整个访问或“会话”期间维护用户信息。HTTP 是一种无状态协议，即站点服务器将网页的每个 HTTP 请求都当作独立的请求，服务器不保留与以前的请求有关的任何信息，即使它们只早于当前请求几秒钟。这种无法记忆先前请求的缺陷使得编写某些应用程序非常困难，如编写联机目录，应用程序可能要跟踪用户在目录不同网页间跳转时所选的目录项。</p>
+
+<p>ASP 针对管理会话信息时所遇到的问题提供了特有的解决方案。使用 ASP <A HREF="vbob12d0.htm">Session 对象</A>和服务器生成的特定用户 ID，您可以创建更智能的、用于标识每个访问用户的应用程序，并收集应用程序用来跟踪用户首选项或选择的信息。</p>
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;ASP 通过 HTTP Cookie 方法指派用户 ID，Cookie 是一个存储在用户浏览器中的小文件。因此，如果正在为不支持 Cookie 的浏览器创建应用程序，或者如果用户浏览器设置为拒绝 Cookie，则不应使用 ASP 的会话管理功能。</p>
+
+
+<h2><a name="H2_37685211">启动和结束会话</a></h2>
+
+<p>会话有四种开始方式：</p>
+
+<ul>
+<li>新用户请求标识应用程序中某个 .asp 文件的 URL，且此应用程序的 Global.asa 文件包含 <A HREF="glob6t84.htm">Session_OnStart</A> 过程。</li>
+<li>用户在 <strong>Session</strong> 对象中保存了一个值。</li>
+<li>如果服务器接收的请求没有包含有效的 <A HREF="#H2_37687121">SessionID Cookie</A>，就将自动启动新会话。</li>
+<li>用户在应用程序中请求某个 .asp 文件，且应用程序的 Global.asa 文件通过 &lt;OBJECT&gt; 标记使用会话作用域实例化了对象。有关使用 &lt;OBJECT&gt; 标记实例化对象的详细信息，请参阅<a href="iiwacomu.htm">使用组件和对象</a>。</li>
+
+</ul>
+
+<p>如果在某一指定时间内，用户没有请求或刷新应用程序中的网页，会话将自动结束。默认情况下此值为 20 分钟。可以通过在 <a href="javascript://" onclick="Activate(); return false">Internet 信息服务管理单元</a>中设置“应用程序选项”属性页中的<A HREF="vbob04vo.htm">会话超时</A>，更改默认值。
+
+<script language="javascript">
+<!--
+function Activate() {
+if (navigator.appName == "Microsoft Internet Explorer"){
+	window.open("../core/iisnapin.htm", "NewWin", 'toolbar=no, left=200, top=200, scrollbars=no, resizeable=no,  width=350, height=350');
+	}
+	else if (navigator.appName == "Netscape") {
+		window.open("../core/iisnapin.htm", "NewWin",  'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=yes,resizable=0,width=350,height=350,top=200,left=200');
+	}
+}
+//-->
+</script> 可依据 Web 应用程序的要求以及服务器的内存容量来设置此值。例如，如果希望浏览 Web 应用程序的用户在每页上只停留几分钟，则可以使会话超时值远低于默认值。会话超时过长可能导致打开的会话太多，从而增加服务器内存资源的负担。</p>
+
+<p>对于特定会话，如果要设置的超时间隔低于默认应用程序超时，则也可以设置 <strong>Session</strong> 对象的 </strong>Timeout</strong> 属性。例如，下列脚本将超时间隔设置为 5 分钟。</p>
+
+<pre>&lt;%  Session.Timeout = 5  %&gt;</pre>
+
+<p>也可以将超时间隔设置为大于默认值，此值由 <strong>Session Timeout</strong> 属性决定。</p>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;<STRONG>Timeout</STRONG> 只适用于具有状态的会话。在“无状态会话”期间，<STRONG>Session</STRONG> 对象不包含内容或静态对象。此类会话在请求处理完毕后自动结束，并在收到同一浏览器的请求时重新创建。<p>  
+
+<P>另外，如要特意结束一个会话，可以使用 <strong>Session</strong> 对象的 <A HREF="vbob5tpq.htm">Abandon</A> 方法。例如，您可以在表单中提供一个“退出”按钮，并将 ACTION 参数设置为包含下列命令的 .asp 文件的 URL。</p>
+
+<pre>&lt;% Session.Abandon %&gt;</pre>
+
+<P><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果排队等待执行的用户请求在 <STRONG>Session.Abandon</STRONG> 之前启动，则用户请求将在“被放弃的会话”环境中执行。<STRONG>Session.Abandon</STRONG> 执行完毕后，新收到的请求不与此会话相关联。</P>
+
+
+<h2><a name="H2_37687121">SessionID Cookies</a></h2>
+
+<p>用户第一次请求特定应用程序内的 .asp 文件时，ASP 将生成一个“SessionID”。这是通过复杂算法产生的一个数值，SessionID 唯一标识每个用户的会话。新会话开始时，服务器将 Session ID 作为 Cookie 存储到用户的站点浏览器中。</p> 
+
+<p>SessionID Cookie 类似于小橱柜钥匙，当用户在会话期间与应用程序交互时，ASP 可以将用户信息储存到服务器上的“小橱柜”内。用户 SessionID Cookie（在 HTTP 请求头文件内传送）可以按小橱柜钥匙开启小橱柜内容的方式访问此信息。ASP 每次收到网页请求时，都检查 HTTP 请求头文件内的 SessionID Cookie。</p>
+
+<p>将 SessionID Cookie 存储到用户浏览器后，即使用户请求其他 .asp 文件或请求在其他应用程序中运行的 .asp 文件，ASP 也会重复使用同一 Cookie 来跟踪会话。同样，如果用户主动放弃会话或使会话超时，然后继续请求其他 .asp 文件，ASP 仍旧使用同一 Cookie 开始新会话。用户收到新 SessionID Cookie 的唯一机会就是，服务器管理员重新启动服务器从而清除存储在内存中的 SessionID 设置，或者用户重新启动站点浏览器。</p>  
+
+<p>通过重复使用 SessionID Cookie，ASP 将发送到浏览器的 Cookie 数量减到最少。另外，如果确定 ASP 应用程序不需要会话管理，则可以禁止 ASP 跟踪会话和向用户发送 SessionID Cookie。</p> 
+
+<p>在下列情况下，ASP 将不会发送会话 Cookie：</p>
+
+<ul>
+<li>应用程序禁用会话状态。</li>
+<li>ASP 网页定义为“无会话”，即包含下列标记：<pre>&lt;%@ EnableSessionState=False %&gt;</pre> 详细信息，请参阅<a href="#sessionlessasp">无会话 ASP 网页</a>。</li>
+</ul>
+
+<p>还应注意，SessionID Cookie 并不是跟踪用户对网站进行多次访问的一劳永逸的方法。SessionID 信息存储在服务器计算机内存中，很容易丢失。如果要在很长一段时间内跟踪访问 Web 应用程序的用户，必须将特定 Cookie 存储到用户站点浏览器，并将 Cookie 信息保存到一个数据库中，从而创建一个用户标识。详细信息，请参阅<a href="#usingcookies">使用 Cookie</a>。</p>
+
+<h2><a name="sessionobject">存储和删除 <strong>Session</strong> 对象中的数据</a></h2>
+
+<p><strong>Session</strong> 对象提供动态关联数组，可以在其中存储信息。您可以在 <strong>Session</strong> 对象中存储标量变量和对象变量。</p>
+
+<p>要在 <strong>Session</strong> 对象中存储变量，可以为 <strong>Session</strong> 对象中的已命名项目指派一个值。例如，下列命令将两个新变量存储到 <strong>Session</strong> 对象中：</p>
+
+<pre>&lt;% 
+  Session("FirstName") = "Jeff"
+  Session("LastName") = "Smith" 
+%&gt;</pre>
+
+<p>要从 <strong>Session</strong> 对象中检索信息，访问已命名的项目即可。例如，要显示 Session("FirstName") 的当前值：</p>
+
+<pre>Welcome &lt;%= Session("FirstName") %&gt;</pre>
+
+<p>可以在 <strong>Session</strong> 对象中保存用户首选项，然后访问这些首选项以确定要返回给用户的网页。例如，可以允许用户在应用程序首页中指定只查看纯文本内容，然后将此项选择应用于用户在此应用程序中访问的所有后续网页。</p>
+
+<pre>&lt;% If Session("ScreenResolution") = "Low" Then %&gt; 
+  这是一个纯文本版本的网页。
+&lt;% Else %&gt; 
+  这是一个多媒体版本的网页。
+&lt;% End If %&gt;</pre>
+
+<p>也可以在 <strong>Session</strong> 对象中存储对象实例，尽管这样做可能影响服务器性能。详细信息，请参阅<a href="iiwaobu.htm">设置对象作用域</a>。</p>
+
+<p>有时，可能希望删除 <strong>Session</strong> 对象中存储的项目。例如，对于访问网上零售店的用户来说，改变主意、放弃一系列采购项目并重新作出选择是很平常的事情。这种情况下，删除不合适的值并更新 <strong>Session</strong> 对象将会非常有用。</p> 
+
+<p><strong>Session</strong> 对象的 <A HREF="vbob8my6.htm">Contents</A> 集合包含已存储的所有会话变量（即那些未使用 HTML &lt;OBJECT&gt; 标记存储的变量）。通过使用 <strong>Contents</strong> 集合中的 <A HREF="vbob155x.htm">Remove</A> 方法，可以有选择地删除为会话状态添加的变量引用。下列脚本说明如何使用 <strong>Remove</strong> 方法清除 <strong>Session</strong> 对象中的项目。此示例是用户的折扣信息：</p>
+
+<pre>&lt;%
+  If Session.Contents("Purchamnt") &lt;= 75 then 
+    Session.Contents.Remove("Discount")
+  End If 
+%&gt;</pre>
+
+<p>如果需要，也可以使用 <strong>Contents</strong> 集合的 <A HREF="vbob8bu4.htm">RemoveAll</A> 方法完全删除已存储的所有会话变量：</p>
+
+<pre>Session.Content.RemoveAll()</pre>
+
+使用 <strong>Remove</strong> 方法时，可以按照名称或索引删除项目。下列脚本说明如何按照索引循环查看 <strong>Session</strong> 对象中存储的值，并有条件地进行删除：
+
+
+<pre>&lt;%
+  For Each intQuote in Session.Contents
+    If Session.Contents(intQuote) &lt; 200 Then
+      Session.Contents.Remove(intQuote)  
+    End If
+  Next
+%&gt;</pre>
+
+<h2><a name="H2_37691818">管理跨多个服务器的会话</a></h2>
+
+<p>ASP 会话信息存储于站点服务器上。浏览器必须从同一站点服务器请求网页，以便脚本可以访问会话信息。在站点服务器群集（由许多站点服务器共同响应用户请求）中，用户请求不会总是路由到同一服务器。相反，专用软件将对站点 URL 的请求分发到任一空闲的服务器，此进程称为“负载平衡”。负载平衡使得维护站点服务器群集上的会话信息十分困难。</p>
+
+<p>要在负载平衡的站点上使用 ASP 会话管理，必须确保用户会话中的所有请求都发送到同一站点服务器。实现此目标的方法之一是编写 <A HREF="glob6t84.htm">Session_OnStart</A> 过程，此过程通过 <strong>Response</strong> 对象将浏览器重定向到运行用户会话的特定站点服务器。如果应用程序网页中的所有链接都是相对链接，则对此网页的请求都将路由到同一服务器。</p>
+
+<p>例如，用户可以通过站点的常规 URL (http://www.microsoft.com) 访问应用程序。负载平衡程序将请求路由到特定服务器，例如 server3.microsoft.com。ASP 在此服务器上新建一个用户会话。在 <strong>Session_OnStart</strong> 过程中，浏览器将重定向到此特定的服务器：</p>
+
+<pre>&lt;% Response.Redirect("http://server3.microsoft.com/webapps/firstpage.asp") %&gt;</pre>
+
+<p>浏览器将请求指定的网页，只要原始 URL 中没有引用特定的服务器名称，所有后续请求都将路由到同一服务器。</p>
+
+<h2><a name="usingcookies">使用 Cookie</a></h2>
+
+<p>Cookie 是一种令牌，由站点服务器嵌入用户浏览器中，以便标识用户。下次同一浏览器请求网页时，将发送以前从站点服务器收到的 Cookie。Cookie 将一组信息与用户相关联。通过使用 <strong>Response</strong> 和 <strong>Request</strong> 对象中的 <A HREF="vbob87j9.htm">Cookies</A> 集合，ASP 脚本可以获取并设置 Cookie 的值。</p>
+
+<h3><a name="H3_37694204">设置 Cookie</a></h3>
+
+<p>可以使用 <strong>Response.Cookies</strong> 设置 Cookie 的值。如果 Cookie 尚未存在，<strong>Response.Cookies</strong> 将新建一个。例如，可使用下列命令将关联值为 ("49") 的 Cookie ("VisitorID") 发送到浏览器。此命令在网页中必须位于 &lt;HTML&gt; 标记之前：</p>
+
+<pre>&lt;% Response.Cookies("VisitorID") = 49 %&gt;</pre>
+
+<p>如果只希望在当前用户会话中使用 Cookie，则将 Cookie 发送到浏览器即可。但是，如果在用户停止并重新启动浏览器后仍需要标识用户，则必须强制浏览器在客户端计算机硬盘文件中存储 Cookie。可使用 <strong>Response.Cookies</strong> 的 <strong>Expires</strong> 属性保存 Cookie，并将日期设置为将来的某个日期：</p>
+
+<pre>&lt;%
+  Response.Cookies("VisitorID") = 49 
+  Response.Cookies("VisitorID").Expires = "December 31, 2001" 
+%&gt;</pre>
+
+<p>Cookie 可以有多个值；这样的 Cookie 称为“索引式 Cookie”。可以为索引式 Cookie 值指派一个键；可以设置特定的 Cookie 键值。例如：</p>
+
+<pre>&lt;% Response.Cookies("VisitorID")("49") = "Travel" %&gt;</pre>
+
+
+<p>如果现有的 Cookie 具有键值，但 <strong>Response.Cookies</strong> 没有指定键名称，则将删除现有键值。同样，如果现有的 Cookie 没有键值，但 <strong>Response.Cookies</strong> 指定了键名称和键值，则删除现有的 Cookie 值，并新建键值对。</p>
+
+<h3><a name="H3_37696008">获取 Cookies</a></h3>
+
+<p>可以使用 <strong>Request.Cookies</strong> 集合获取 Cookie 值。例如，如果用户 HTTP 请求设置了 <code>VisitorID=49</code>，则下列语句将检索值 <code>49</code>：</p>
+
+<pre>&lt;%= Request.Cookies("VisitorID") %&gt;</pre>
+
+<p>类似地，可通过键名称检索索引式 Cookie 的键值。例如，如果用户浏览器在 HTTP 请求头文件中发送下列信息：</p>
+
+<pre>Cookie: VisitorID=49=Travel</pre>
+
+<p>下列语句将返回值 <code>Travel</code>：</p>
+
+<pre>&lt;%= Request.Cookies("VisitorID")("49") %&gt;</pre>
+
+<h3><a name="settingcookiepaths">设置 Cookie 路径</a></h3>
+
+<p>ASP 在站点浏览器上存储的每个 Cookie 都包含路径信息。当浏览器请求的文件的保存位置与 Cookie 中指定的路径相同时，浏览器自动将 Cookie 传送给服务器。默认情况下，Cookie 路径对应于应用程序的名称，此应用程序包含最初生成 Cookie 的 .asp 文件。例如，如果驻留在应用程序“UserApplication”中的 .asp 文件生成一个 Cookie，则用户站点浏览器每次检索驻留在此应用程序中的任何文件时，都将传送此 Cookie 以及包含路径“/UserApplication”的其他所有 Cookie。</p>
+
+<p>可以使用 ASP <strong>Response.Cookies</strong> 集合的 <strong>Path</strong> 属性指定 Cookie 的路径（不是默认的应用程序路径）。例如，下列脚本将路径“SalesApp/Customer/Profiles/”指定给 Cookie <code>Purchases</code>：</p>
+
+<pre>&lt;%
+  Response.Cookies("Purchases") = "12" 
+  Response.Cookies("Purchases").Expires = "January 1, 2001" 
+  Response.Cookies("Purchases").Path = "/SalesApp/Customer/Profiles/"
+%&gt;</pre>
+
+<p>无论何时，只要包含 <code>Purchases</code> Cookie 的站点浏览器请求驻留于路径 /SalesApp/Customer/Profiles/ 或其子目录中的文件，浏览器都将 Cookie 传送到服务器。</p>
+
+<p>许多 Web 浏览器，包括 Microsoft Internet Explorer 4.0 或更新版本以及 Netscape 浏览器，都保留 Cookie 路径的大小写。这意味着，如果请求的文件的路径与存储的 Cookie 路径大小写不一致，则浏览器不会将 Cookie 发送到服务器。例如，对 ASP 来说，虚拟目录 /TRAVEL 和 /travel 是相同的 ASP 应用程序；但对保留 URL 大小写的浏览器来说，/TRAVEL 和 /travel 是两个不同的应用程序。确认所有至 .asp 文件的 URL 都具有相同的大小写，以便确保用户浏览器传送已存储的 Cookie。</p> 
+
+<p>可以使用下列语句设置 Cookie 路径。这样，无论何时，只要浏览器请求服务器中的文件，用户站点浏览器都将传送 Cookie，而不考虑应用程序或路径：</p>
+
+<code>Response.Cookies("Purchases").Path = "/"</code>
+
+<p>不过，请注意，如果将 Cookie 传送到服务器而不区分应用程序，并且 Cookie 包含不应由特定应用程序之外的其他应用程序访问的敏感信息时，可能导致潜在的安全问题。</p>
+
+<h3><a name="H3_37697847">保留使用 Cookies 的状态</a></h3>
+
+<p>并非所有浏览器都支持 Cookie。即使是支持 Cookie 的浏览器，某些用户也喜欢关闭 Cookie 支持。如果应用程序需要响应不支持 Cookies 浏览器，则不能使用 ASP 会话管理。</p>
+
+<p>这种情况下，必须编写自己的机制以便在应用程序的不同网页之间传递信息。有两种常用方法可以实现此目的：</p>
+
+<ul>
+<li>在 URL 查询字符串中添加参数。例如：</li>
+
+<pre>http://MyServer/MyApp/start.asp?name=Jeff</pre>
+
+<p>不过，如果某些浏览器通过 GET 方法提交表单，可能会丢弃查询字符串传递的任何显式参数。</p>
+
+<li>在表单中添加隐藏值。例如，下列 HTML 表单包含一个隐藏控件，此控件不会显示在实际表单中，并且在用户站点浏览器中不可见。此表单通过 HTTP POST 方法传递用户标识值以及用户提供的信息。</li>
+
+<pre>&lt;FORM METHOD="POST" ACTION="/scripts/inform.asp"&gt;
+&lt;INPUT TYPE="text" NAME="city" VALUE=""&gt;
+&lt;INPUT TYPE="text" NAME="country/region" VALUE =""&gt;
+&lt;INPUT TYPE="hidden" NAME="userid" VALUE= &lt;%= UserIDNum(i) %&gt;
+&lt;INPUT TYPE="submit"  VALUE="Enter"&gt;</pre>
+
+<p>此方法要求将所有传递用户信息的链接目标都编码为 HTML 表单。</p>
+
+</ul>
+
+<p>如果不使用 ASP 会话管理，则应关闭对应用程序的会话支持。启用会话时，ASP 将向请求网页的所有浏览器发送 SessionID Cookie。要关闭会话支持，可清除 <a href="javascript://" onclick="Activate(); return false">Internet 信息服务管理单元</a>“应用程序选项”属性页上的“启用会话状态”复选框。
+
+<script language="javascript">
+<!--
+function Activate() {
+if (navigator.appName == "Microsoft Internet Explorer"){
+	window.open("../core/iisnapin.htm", "NewWin", 'toolbar=no, left=200, top=200, scrollbars=no, resizeable=no,  width=350, height=350');
+	}
+	else if (navigator.appName == "Netscape") {
+		window.open("../core/iisnapin.htm", "NewWin",  'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=yes,resizable=0,width=350,height=350,top=200,left=200');
+	}
+}
+//-->
+</script></p> 
+
+<h2><a name="sessionlessasp">无会话 ASP 网页</a></h2>
+
+<p>通过 ASP，也可以创建无会话网页。可以使用“无会话”网页推迟创建会话跟踪，直到需要时才创建。</p>  
+
+<p>“无会话”网页将不执行下列任务：</p>
+
+<ul>
+<li>执行 <strong>Session_OnStart </strong> 过程。</li>
+<li>发送 session ID Cookie。</li>
+<li>创建 <strong>Session</strong> 对象。</li>
+<li>访问由 &lt;OBJECT&gt; 标记创建的内置 <strong>Session</strong> 对象或会话范围对象。</li>
+<li>与其他会话请求连接执行。</li>
+</ul>
+
+<p>可使用下列命令将 .asp 文件配置为无会话：</p>
+
+<pre>&lt;%@ EnableSessionState=False %&gt;</pre>
+
+<p>应将此脚本置于 .asp 文件的第一行，位于其他任何脚本之前。默认情况下，如果省略此标记，则启用会话跟踪。</p>
+
+<p>无会话 ASP 网页可以消除潜在的、非常耗时的会话活动，从而提高服务器的响应能力。例如，对于包含两个 HTML 框架（Frame 1 和 Frame 2）的 ASP 网页，两者位于同一框架集中。Frame 1 包含一个用来执行复杂脚本的 .asp 文件，而 Frame 2 包含一个简单的 .asp 文件。因为 ASP 按先后顺序或连续执行会话请求，所以在 Frame 1 中的脚本执行完毕之前，将无法查看 Frame 2 的内容。然而，如果将 Frame 1 中的 .asp 文件设置为无会话，则 ASP 请求不再连续执行，浏览器将在 Frame 1 内容执行完毕前就会生成 Frame 2 的内容。</p>
+
+<p>不过，如何处理对不同框架的多个请求完全取决于用户站点浏览器的配置。某些站点浏览器可能将多个请求连续执行，而忽略 .asp 文件的无会话配置。</p>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

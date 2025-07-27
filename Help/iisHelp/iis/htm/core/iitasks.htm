@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>备份配置数据库</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="备份配置数据库">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="bak">备份配置数据库</a></h1>
+
+<p>IIS 提供了三种备份配置数据库的方法：使用“配置备份/还原”，可以为配置数据库创建安全备份或不安全备份；使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中“配置备份/还原”的新增功能，网站管理员还可以将配置数据库副本还原到其他计算机上；这些备份方法可以只还原配置数据库设置，而不还原内容文件；使用以前版本的 IIS，可以用编程方式创建旧式的配置数据库备份，但是不能将旧式的配置数据库备份还原到其他计算机上。</p>
+
+<strong>安全备份</strong><br>
+使用此方法时，网站管理员将提供一个密码，并用它加密配置数据库备份。密码信息存储在配置数据库备份头中，表示创建备份时使用密码。对密码进行了加密并将它存储在配置数据库备份中之后，此密码不能更改。只有知道密码的管理员可以还原配置数据库备份。请参阅<a href="#TocreateabackupwithaPassword">创建安全备份（需要密码）</a>。
+
+<p><strong>不安全备份</strong><br>
+使用此方法时，网站管理员不会提供密码。配置数据库备份是用空密码加密的，任何人都可以还原配置数据库备份。请参阅<a href="#TocreateabackupwithoutaPassword">创建不安全备份（不需要密码）</a></li>。
+<p>
+<strong>旧式备份</strong><br>
+使用此方法时，网站管理员可以用编程方式创建配置数据库备份。但是必须以编程方式或使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中的“配置备份/还原”还原这些备份。
+<p>
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;建议不要使用旧式备份方法，因此没有对此方法进行介绍。以编程方式创建备份时，IIS 使用 IIS 5.0 中的旧式方法。所以只能将旧式配置数据库备份还原到创建此备份的操作系统中。
+</li>
+</ul>
+
+
+<h3><a name="TocreateabackupwithaPassword">创建安全备份（需要密码）</h3>
+
+<ol>
+<li> 在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择“Internet 信息服务”下的“计算机”图标。</li>
+<li>单击“操作”，并选择“备份/恢复配置”。</li>
+<li> 单击“创建备份”。</li>
+<li>在“配置备份名称”文本框中输入一个名称。</li>
+<li> 选中“使用密码加密备份”复选框，然后在“密码”文本框中输入密码。</li>
+<li>单击“确定”，然后单击“关闭”。默认情况下，备份文件存储在<br>\Winnt\System32\Inetsrv\MetaBack 目录中。</li>
+</ol>
+
+
+<a name="TocreateabackupwithoutaPassword"><h3>创建不安全备份（不需要密码）</h3>
+<ol>
+<li> 在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择“Internet 信息服务”下的“计算机”图标。</li>
+<li>单击“操作”，并选择“备份/还原配置”。</li>
+<li> 单击“创建备份”。</li>
+<li>在“配置备份名称”文本框中输入一个名称。</li>
+<li>单击“确定”，然后单击“关闭”。</li>
+</ol>
+
+<p><a name="RelatedTopics"><strong>相关主题</strong></p>
+<ul>
+<li>有关配置数据库关键字名称和路径、属性继承、安全性以及可靠性的信息，请参阅 <a href="../asp/aint1aud.htm">IIS 配置数据库简介</a>。</li>
+<li>有关还原配置数据库的信息，请参阅<a href="iirestore.htm">还原配置数据库</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

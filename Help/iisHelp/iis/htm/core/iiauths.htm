@@ -1,0 +1,341 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML dir=ltr><HEAD><TITLE>启用和配置身份验证</TITLE>
+<SCRIPT language=JavaScript>
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</SCRIPT>
+
+<SCRIPT language=VBScript>
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META 
+content="有关如何启用和配置 Web 服务器的匿名、基本、摘要式、高级摘要式和集成 Windows 身份验证安全方法的过程信息。允许用户访问限制访问的网站、目录或文件之前，可以通过身份验证确认用户的身份。" 
+name=description>
+<META content="text/html; charset=gb2312" http-equiv=Content-Type>
+<META 
+content='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))' 
+http-equiv=PICS-Label>
+<META content=ZH-CN name=MS.LOCALE>
+<META content="Internet 信息服务" name=MS-IT-LOC>
+<META content="Microsoft FrontPage 4.0" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff text=#000000><FONT face=宋体>
+
+<H1><A name=procedure>启用和配置身份验证</A></H1>
+<P>此主题提供启用身份验证的一般过程，以及配置匿名、基本、摘要式、高级摘要式和集成 Windows 身份验证设置的详细过程。如果对这些身份验证方法不太熟悉，请在服务器上启用和配置这些身份验证设置之前，参阅<A 
+href="iiabasc.htm">关于身份验证</A>。</P>
+
+<ul>
+<li><A href="iiauths.htm#selectauth">启用身份验证</A></li>
+<li><A href="iiauths.htm#enableanon">配置匿名身份验证</a></li>
+<li><A href="iiauths.htm#enablebasic">配置基本身份验证</a></li>
+<li><A href="iiauths.htm#enabledigest">配置摘要式身份验证</a></li>
+<li><A href="#enableadvanceddigest">配置高级摘要式身份验证</a></li>
+<li><A href="iiauths.htm#enableNTLM">配置集成 Windows 身份验证</a></li>
+</ul>
+
+<H2><A name=selectauth>启用身份验证</A></H2>
+<P>可以对任何网站或 
+FTP 站点、虚拟目录或文件启用任意一种或多种身份验证设置。默认情况下，启用匿名身份验证和集成 Windows 身份验证。</P>
+<H3><a name="EnableWWW">启用 WWW 身份验证方法</H3></a>
+<OL>
+  <LI>创建与此身份验证方法对应的 Windows 用户帐户。如果允许，可将此帐户添加到 Windows 用户组。有关创建 Windows 用户帐户的详细信息，请参阅<A   href="iintfsc.htm">使用 NTFS 保护文件安全</a>。<LI>为要控制其访问权限的目录或文件配置 NTFS 权限。详细信息，请参阅<A   href="iidfpsc.htm">设置目录或文件的 NTFS 权限</a>。<LI>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个站点、目录或文件，并打开其属性页。<LI>选择相应的“目录安全性”或“文件安全性”属性页。在“匿名访问和身份验证控制”下，单击“编辑”。 
+  <LI>在“身份验证方法”对话框中，选择一项或多项设置。</LI></OL>
+  <P><STRONG>注意</STRONG></P>
+  <UL>
+  <LI>要确保仅使用基本身份验证对用户进行身份验证，请清除其他所有复选框。</li> 
+  <LI>在下列任何情况下，Web 服务器将只尝试使用基本、摘要式或集成 Windows 身份验证方法：</li>
+  <UL>
+    <LI>未选择匿名身份验证访问。</LI>
+	<LI>匿名身份验证失败。</LI>
+	<LI>对文件和目录的访问受 NTFS 权限的限制。</LI></UL>
+</UL>
+<H3>启用 FTP 身份验证方法</H3>
+<p>摘要式和集成 Windows 身份验证不能用于 FTP 站点。必须在 FTP 站点的站点级设置可用的身份验证设置。
+<OL>
+  <LI>按照<a href="#EnableWWW">启用 WWW 身份验证方法</a>中的步骤 1-3 进行操作。<LI>选择“安全帐户”属性页，选中“允许匿名连接”复选框。
+  <LI>在“用户名”和“密码”文本框中，输入要使用的匿名登录用户名和密码。用户名是匿名用户的帐户名，一般格式为 IUSR_<EM>computername</EM>。清除“允许 IIS 控制密码”复选框，可以对密码进行更改。<LI>选中“允许 IIS 控制密码”复选框，密码将与 Windows 用户帐户的密码同步。<P><strong>注意</strong>&nbsp;&nbsp;&nbsp;密码只能与本地计算机上所定义的匿名用户帐户同步，而不能与网络中其他计算机上的匿名帐户同步。</P>
+  <LI>选中“只允许匿名连接”复选框，要求所有用户以匿名用户帐户登录。 
+  <LI>单击“确定”。<LI>为匿名帐户设置适当的 NTFS 权限。详细信息，请参阅<a href="iidfpsc.htm">设置目录或文件的 NTFS 权限</a>。</LI></OL>
+
+
+
+<P><STRONG><FONT color=#0000ff>要点</FONT></STRONG>&nbsp;&nbsp;&nbsp;如果更改网站或虚拟目录的安全性设置，Web 服务器将提示您重新设置此站点或目录下子级站点或子级目录的安全设置。如果选择接受这些设置，子级站点或子级目录将继承父站点或父目录的安全设置。有关设置属性的信息，请参阅<A href="iivsovr.htm">关于网站和 FTP 站点</A>中的“站点属性和属性继承”。</P>
+
+<H2><a name="enableanon">配置匿名身份验证</a></H2>
+<P>默认情况下，Windows 用户组 Guests 包含 IUSR_<EM>computername</EM> 帐户。可以创建多个匿名帐户，每个网站或 FTP 站点、目录或文件对应一个帐户。通过授予这些帐户不同的访问权限，或将这些帐户指派到不同的 Windows 用户组，允许用户匿名访问公共网站和 FTP 的各部分内容。</P>
+<P>匿名帐户必须允许用户从本地登录。如果帐户没有“本地登录”权限，IIS 将无法为任何匿名请求提供服务。默认情况下，未向域控制器的 IUSR_<EM>computername</EM> 帐户指派此权限。必须将此帐户的权限更改为“本地登录”才能允许匿名请求。</P>
+<P>还可以更改 Windows 中 IUSR_<EM>computername</EM> 帐户的安全权限。但是，如果匿名用户帐户对特定资源没有访问权限，Web 服务器将拒绝建立与此资源的匿名连接。详细信息，请参阅<a href="iiwspsc.htm">设置 Web 和 FTP 权限</a>。</P>
+
+
+<H3><A name=toenableanon>启用匿名身份验证</A></H3>
+
+<OL>
+  <LI>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个站点、目录或文件，打开其属性页。<LI>选择“目录安全性”或“文件安全性”属性页。出现“目录安全性”还是“文件安全性”属性页，取决于您正在更改的是目录级还是文件级的安全设置。<li>在“匿名访问和身份验证控制”部分，单击“编辑”，出现“身份验证方法”对话框。<LI>选中“匿名访问”复选框。
+</ol>
+
+
+<H3><a name="changeanon">更改用于匿名身份验证的帐户</a></H3>
+<OL>
+  <LI>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个站点、目录或文件，并打开其属性页。<LI>选择“目录安全性”或“文件安全性”属性页。出现“目录安全性”还是“文件安全性”属性页，取决于您正在更改的是目录级还是文件级的安全设置。 
+  <li>在“匿名访问和身份验证控制”部分，单击“编辑”，出现“身份验证方法”对话框。
+  <LI>选中“匿名访问”复选框并单击“编辑”，出现“匿名用户帐户”对话框。<LI>输入或浏览希望用于匿名访问的有效 Windows 用户帐户。<LI>清除“允许 IIS 控制密码”复选框，输入帐户密码。 </LI></OL>
+  
+<P><FONT COLOR="#0000ff"><strong>要点</strong></FONT>&nbsp;&nbsp;&nbsp;如果更改 IUSR_<EM>computername</EM> 帐户，将会影响由 Web 服务器提供服务的所有匿名请求。修改此账户时须小心谨慎。</P>
+
+<H2><a name="enablebasic">配置基本身份验证</a></H2>
+<P>启用基本身份验证不会自动配置 Web 服务器对用户进行身份验证。必须按上所述创建 Windows 用户帐户并正确设置 NTFS 权限。</P>
+<P>要使用基本身份验证正确验证用户身份，Windows 用户帐户必须具有“本地登录”用户权限。因为基本身份验证将模拟一个本地用户，或实际登录到服务器的用户，因此必须指派此权限。默认情况下，未向 Windows 主域控制器 (PDC) 中的用户帐户授予“本地登录”权限。有关信息，请参阅“Active Server Pages 指南”中的 <A href="../asp/apro1zms.htm">LogonMethod</A> 参考。</P>
+
+<P>
+<P><strong><font color=#0000ff>要点</font></strong>&nbsp;&nbsp;&nbsp;基本身份验证方法以非加密形式在网络上传输用户名和密码。可以将 Web 服务器的加密功能与基本身份验证方法结合使用，确保通过网络传输的用户帐户信息的安全性。详细信息，请参阅<a href="iicrysc.htm">关于加密</a>。</P>
+
+<H3><A name=toenablebasic>启用基本身份验证</A></H3>
+
+<OL>
+  <LI>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个站点、目录或文件，并打开其属性页。<LI>选择“目录安全性”或“文件安全性”属性页。出现“目录安全性”还是“文件安全性”属性页，取决于您正在更改的是目录级还是文件级的安全设置。 
+  <li>在“身份验证方法”对话框中，选中“基本身份验证”复选框。
+</ol>
+
+<P>必须选择默认的登录域。详细信息，请参阅<a href="iidlgsc.htm">设置默认登录域</a>。
+
+<H2><a name="enabledigest">配置摘要式身份验证</a></H2>
+
+有关使用摘要式身份验证的基本要求，请参阅<a href="iiabasc.htm#bdigestRequirements">摘要式身份验证的要求</a>。要在 IIS 服务器上启用摘要式身份验证，需完成下列两个任务：<ul>
+<li><a href="#EnablingDigestForDomainServers">对 Windows 域服务器启用摘要式身份验证</a></li>
+<li><a href="#DigestRealmName">配置领域名</a></li> 
+</ul>
+
+<h3><a name=EnablingDigestForDomainServers>对 Windows 域服务器启用摘要式身份验证</h3> 
+<ol>
+<li>打开 <a href="iiabuti.htm">Internet 信息服务管理单元</a>。</li>
+<li>选择某个网站、虚拟目录或文件夹。</li>
+<li>在“操作”菜单中，选择“属性”。</li>
+<li>选择“目录安全性”属性页。</li>
+<li>单击“匿名访问和身份验证控制”部分中的“编辑”。</li>
+<li>选中“Windows 域服务器的摘要式身份验证”复选框。</li>
+</ol>
+
+<h3><A name=DigestRealmName>配置领域名</A></h3>
+
+可以在配置数据库的任何级别配置领域名，如<a href="#Table1">表 1</a> 所示。如果没有对子节点进行专门配置，它将从配置好的上一级节点继承配置。
+
+<p><a name="Table1"><b>表 1</b></a>
+<table border ="1" cellpadding ="5" cellspacing="1" width = "100%">
+<tr align="CENTER" bgcolor="#C0C0C0" bordercolor="#000000">
+    <td><strong>配置数据库级别</strong></td>
+    <td><strong>说明</strong></td>
+</tr>
+<tr>
+	<td><b>W3SVC</b></td>
+	<td>W3SVC 级别也称为 IISWebService 级别，是配置数据库中可以配置高级摘要式身份验证的最高级别。如果此级别下面的级别没有专门配置，将继承此级别的配置。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i></td>
+	<td>W3SVC/<i><b>n</b></i> 级别也称为 IISWebServer 级别，是一个专门的网站，其中 <i><b>n</b></i> 是站点编号。从 1 开始对这些站点编号，默认网站的编号为 1。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i>/root</b></td>
+	<td>W3SVC/<i><b>n</b></i>/Root 级别也称为 IISWebVirtualDir 级别，是网站的开始位置，其中 <i><b>n</b></i> 是站点的编号。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i>/root/vdir</b></td>
+	<td>W3SVC/<i><b>n</b></i>/ROOT/WebVirtualDir 级别也称为 IISWebVirtualDir 级别，是网站中的虚拟目录，其中 <i><b>n</b></i> 是站点的编号。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i>/root/vdir/webdir</b></td>
+	<td>W3SVC/<i><b>n</b></i>/Root/WebVirtualDir/WebDir 级别也称为 IISWebDirectory 级别，是虚拟目录中的物理目录，其中 <i><b>n</b></i> 是站点编号。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i>/root/vdir/file</b></td>
+	<td>这是 W3SVC/<i><b>n</b></i>/ROOT/WebVirtualDir 级别中的单个文件，其中 <i><b>n</b></i> 是站点编号。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i>/root/vdir/webdir/file</b></td>
+	<td>这是 W3SVC/<i><b>n</b></i>/Root/WebVirtualDir/WebDir 级别中的单个文件，其中 <i><b>n</b></i> 是站点编号。</td>
+</tr>
+</table>
+
+<p>可以在 IIS 服务器上配置一个或多个领域名。如果使用多个领域名，必须分别在配置数据库的不同级别进行配置。例如，您可能希望配置多个领域名，允许 domain1 的成员访问销售虚拟目录，允许 domain2 的成员访问工程虚拟目录。如果 domain1 和 domain2 没有建立信任关系，配置多个领域名非常有用。有关域的详细信息，请参阅 Windows XP 联机文档。</p>
+
+<p>如果配置数据库中的子节点没有配置领域名，此子节点将从配置了领域名的上一级节点继承领域名。如果上一级节点也没有配置领域名，IIS 将发送自己的计算机名作为领域名。如果 IIS 发送自己的计算机名作为领域名，但具有 Active Direc
+tory 的 Windows XP 域控制器上没有运行 IIS，摘要式身份验证将失败。虽然也可以在域控制器上运行 IIS，但这样做不安全而且会影响性能，建议不要这样做。</p>
+
+<h4>配置领域名</h4>
+<ol>
+<li>打开命令提示符窗口。</li> 
+<li>输入 <b>cscript.exe <i>x:</i>\inetpub\adminscripts\adsutil.vbs set <i>level</i>/realm <i>realm_name</i></b>。</li><br>
+<ul>
+<li>其中 <i><b>x:</b></i> 是安装 IIS 的驱动器。<br> 
+<li>其中 <i><b>level</b></i> 是要配置其领域名的配置数据库级别。<br>
+<li>其中 <i><b>realm_name</b></i> 是将对客户端进行身份验证的领域/域名称。<br>
+</ul>
+<li>按 Enter 键。</li>
+</ol>
+
+<h4>示例</h4>
+决定将默认网站（默认网站的编号为 1）的领域名配置为 redmond，并且知道 IIS 安装在驱动器 c: 上。
+
+<ol>
+<li>在命令提示符窗口中，输入 <b>cscript.exe c:\inetpub\adminscripts\adsutil.vbs set w3svc/1/realm redmond</b>。
+<li>按 Enter 键。
+</ol>
+
+<p>命令提示符窗口显示：<br>
+&nbsp;&nbsp;&nbsp;realm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &#60string&#62 &nbsp;&nbsp; "redmond"
+
+
+<H2><A name=enableadvanceddigest>配置高级摘要式身份验证</A></H2>
+
+
+有关使用高级摘要式身份验证的基本要求，请参阅<a href="iiabasc.htm#advanceddigestRequirements">高级摘要式身份验证的要求</a>。要在 IIS 服务器上启用高级摘要式身份验证，需完成下列三个步骤：<ul>
+<li><a href="#AdvancedEnablingDigestForDomainServers">对 Windows 域服务器启用摘要式身份验证</a></li>
+<li><a href="#AdvancedRealmName">配置领域名</a></li> 
+<li><a href="#AdvancedUseDigestSSP">设置 UseDigestSSP 配置数据库属性</a></li>
+</ul>
+<p><FONT COLOR="#0000ff"><strong>要点</strong></FONT>&nbsp;&nbsp;&nbsp;如果执行了前两个步骤，但没有配置 UseDigestSSP 配置数据库关键字，则使用的将是摘要式身份验证，而非高级摘要式身份验证。</p>
+
+<h3><a name=AdvancedEnablingDigestForDomainServers>对 Windows 域服务器启用摘要式身份验证</a></h3> 
+<ol>
+<li>打开 <a href="iiabuti.htm">Internet 信息服务管理单元</a>。</li>
+<li>选择某个网站、虚拟目录或文件夹。</li>
+<li>在“操作”菜单中，选择“属性”。</li>
+<li>选择“目录安全性”属性页。</li>
+<li>单击“匿名访问和身份验证控制”部分中的“编辑”。</li>
+<li>选中“Windows 域服务器的摘要式身份验证”复选框。</li>
+</ol>
+
+
+<h3><A name=AdvancedRealmName>配置领域名</A></h3>
+
+可以在配置数据库的任何级别配置领域名，如<a href="#Table2">表 2</a> 所示。如果没有对子节点进行专门配置，它将从配置好的上一级继承配置。
+
+<p><a name="Table2"><b>表 2</b></a>
+<table border ="1" cellpadding ="5" cellspacing="1" width = "100%">
+<tr align="CENTER" bgcolor="#C0C0C0" bordercolor="#000000">
+    <td><strong>配置数据库级别</strong></td>
+    <td><strong>说明</strong></td>
+</tr>
+<tr>
+	<td><b>W3SVC</b></td>
+	<td>W3SVC 级别也称为 IISWebService 级别，它是配置数据库中可以配置高级摘要式身份验证的最高级别。如果此级别下面的级别没有专门配置，将继承此级别的配置。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i></td>
+	<td>W3SVC/<i><b>n</b></i> 级别也称为 IISWebServer 级别，是一个专门的网站，其中 <i><b>n</b></i> 是站点编号。从 1 开始对这些站点编号，默认网站的编号为 1。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i>/root</b></td>
+	<td>W3SVC/<i><b>n</b></i>/Root 级别也称为 IISWebVirtualDir 级别，是网站的开始位置，其中 <i><b>n</b></i> 是站点的编号。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i>/root/vdir</b></td>
+	<td>W3SVC/<i><b>n</b></i>/ROOT/WebVirtualDir 级别也称为 IISWebVirtualDir 级别，是网站中的虚拟目录，其中 <i><b>n</b></i> 是站点的编号。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i>/root/vdir/webdir</b></td>
+	<td>W3SVC/<i><b>n</b></i>/Root/WebVirtualDir/WebDir 级别也称为 IISWebDirectory 级别，是虚拟目录中的物理目录，其中 <i><b>n</b></i> 是站点编号。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i>/root/vdir/file</b></td>
+	<td>这是 W3SVC/<i><b>n</b></i>/ROOT/WebVirtualDir 级别中的单个文件，其中 <i><b>n</b></i> 是站点的编号。</td>
+</tr>
+<tr>
+	<td><b>W3SVC/<i><b>n</b></i>/root/vdir/webdir/file</b></td>
+	<td>这是 W3SVC/<i><b>n</b></i>/Root/WebVirtualDir/WebDir 级别中的单个文件，其中 <i><b>n</b></i> 是站点的编号。</td>
+</tr>
+</table>
+
+<p>可以在 IIS 服务器上配置一个或多个领域名。如果使用多个领域名，必须分别在配置数据库的不同级别进行配置。例如，您可能希望配置多个领域名，允许 domain1 的成员访问销售虚拟目录，允许 domain2 的成员访问工程虚拟目录。如果 domain1 和 domain2 没有建立信任关系，配置多个领域名非常有用。有关域的详细信息，请参阅 Windows XP 联机文档。</p>
+
+<p>如果配置数据库中的子节点没有配置领域名，此子节点将从配置了领域名的上一级节点继承领域名。如果上一级节点也没有配置领域名，IIS 将发送自己的计算机名作为领域名。如果 IIS 发送自己的计算机名作为领域名，但具有 Active Directory 的 Windows XP 域控制器上没有运行 IIS，高级摘要式身份验证将失败。虽然也可以在域控制器上运行 IIS，但这样做不安全而且会影响性能，建议不要这样做。</p>
+
+<h4>配置领域名</h4> 
+<ol>
+<li>打开命令提示符窗口。
+<li>输入 <b>cscript.exe <i>x:</i>\inetpub\adminscripts\adsutil.vbs set <i>level</i>/realm <i>realm_name</i></b></li>。<br>
+<ul>
+<li>其中 <i><b>x:</b></i> 是安装 IIS 的驱动器。<br>  
+<li>其中 <i><b>level</b></i> 是要配置领域名的配置数据库级别。<br>
+<li>其中 <i><b>realm_name</b></i> 是将对客户端进行身份验证的领域或域的名称。<br>
+</ul>
+<li>按 Enter 键。</li>
+</ol>
+
+<h4>示例</h4>
+决定将默认网站（默认网站的编号为 1）的领域名配置为 redmond，并且知道 IIS 安装在驱动器 c: 上。 
+
+<ol>
+<li>在命令提示符窗口中，输入 <b>cscript.exe c:\inetpub\adminscripts\adsutil.vbs set w3svc/1/realm redmond</b>。
+<li>按 Enter 键。</li>
+
+<p>命令提示符窗口显示：<br>&nbsp;&nbsp;&nbsp;realm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &#60string&#62 &nbsp;&nbsp; "redmond"
+</ol>
+
+<h3><a name=AdvancedUseDigestSSP>设置 UseDigestSSP 配置数据库属性</a></h3>
+<p>高级摘要式身份验证使用称为 UseDigestSSP 的配置数据库关键字。此配置数据库关键字是摘要式和高级摘要式安全支持提供程序接口 (SSPI) 代码之间的切换开关。设置此关键字后，有效的属性值只有 1 (TRUE)、0 (FALSE) 或空。如果属性值为 TRUE，则使用新的高级摘要式 SSPI 代码。设置为其他值（FALSE、空或未设置）时，IIS 使用摘要式 SSPI 代码。</p> 
+
+可以在配置数据库的任何级别配置 UseDigestSSP 配置数据库属性，如<a href="#Table2">表 2</a> 所示。如果没有对子节点进行专门配置，它将从已配置好的上一级继承配置。
+<h4>配置 UseDigestSSP 配置数据库属性</h4>
+<ol>
+<li>打开命令提示符窗口。
+<li>输入 <b>cscript /nologo %SystemDrive%\inetpub\adminscripts\adsutil.vbs SET <i>level</i>/UseDigestSSP True</b>。</li>
+<ul>
+<li>其中 <i><b>level</b></i> 是 UseDigestSSP 关键字所在的配置数据库级别。</li>
+</ul>
+<li>按 Enter 键。</li>
+</ol>
+
+<p>有关 UseDigestSSP 配置数据库关键字的详细信息，请参阅“按字母排序的属性列表”中的 <a href="../asp/apro5nao.htm">UseDigestSSP</a>。</p>
+  
+<h4>示例</h4>
+<p>使用此示例测试是否在 w3svc/1 级别配置了 UseDigestSSP 配置数据库关键字。</p>
+<ol>
+<li>打开命令提示符窗口。
+<li>输入 <B>cscript /nologo %SystemDrive%\inetpub\adminscripts\adsutil.vbs GET w3svc/1/UseDigestSSP</b>。
+<li>按 Enter 键。
+</ol>
+<ul>
+<li>如果未在配置数据库的 w3svc/1 级别配置 UseDigestSSP 配置数据库关键字，命令提示符窗口将显示：<br>
+	&nbsp;&nbsp;&nbsp;未在此节点设置参数“UseDigestSSP”。</p>
+
+<li>如果检查的节点（此示例中为 w3svc/1 级别）配置了 UseDigestSSP 关键字，命令提示符窗口将显示：<br>
+    &nbsp;&nbsp;&nbsp;UseDigestSSP&nbsp;&nbsp;&nbsp; :&nbsp;&nbsp;&nbsp; (BOOLEAN)&nbsp;&nbsp;&nbsp; True
+</ul>
+
+
+
+
+
+<H2><A name=enableNTLM>配置集成 Windows 身份验证</A></H2>
+<P>只有 Microsoft Internet Explorer 2.0 或更高版本支持集成 Windows 身份验证。集成 Windows 身份验证不能跨代理服务器或其他防火墙应用程序运行。如果由于用户凭据不正确或其他原因导致集成 Windows 身份验证失败，浏览器将提示用户输入用户名和密码。</P>
+<HR class=iis SIZE=1>
+
+<P align=center><A href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</A></P></FONT></BODY></HTML>

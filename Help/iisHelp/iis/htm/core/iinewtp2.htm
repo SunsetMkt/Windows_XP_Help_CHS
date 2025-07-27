@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>管理</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="导航页包含有关 Internet 信息服务管理单元文档的主题。Internet 信息服务管理单元驻留于 Microsoft 管理控制台 (MMC)，它是用于在本地或通过 Intranet 配置 IIS 的图形界面。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><A NAME="H1_448403271"></A>管理</h1>
+
+<p> 本节说明如何使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>来管理 IIS。Internet 信息服务管理单元驻留在 Microsoft Management Console (MMC) 中，是一个强大的站点管理工具，可提供对所有服务器设置的访问。使用 Internet 信息服务管理单元可管理企业 Intranet 中的复杂站点，或在将站点内容上载到 Internet 信息服务器之前管理模拟调试的站点。</p>
+
+<p>本节包含：</p>
+<ul>
+<li><A HREF="iiwebcon.htm">网站管理</A>：创建站点内容并创建必要的发布目录结构。</li>
+<li><A HREF="iisvadm.htm">服务器管理</A>：有关调整默认设置以提高性能或改进安全性的高级主题。</li>
+<li><A HREF="iiadmnrf.htm">管理员参考</A>：有关注册表和配置数据库设置的详细信息。</li>
+</ul>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;<a href="iiabuti.htm">Internet 信息服务管理单元</a>是用于 IIS 的管理工具，它已经和 Windows XP 的其他管理功能集成。在以前的版本中，此工具称为 Internet 服务管理器。</p>
+
+<p>本节不包含：</p>
+<ul>
+
+<li>有关建立网站或 FTP 站点的信息；请参阅<a href="iitstart.htm">使用 IIS 快速建立站点</a>。</li>
+<li>有关安装或安装程序的信息；请参阅<a href="iiiisin.htm">安装 IIS</a>。</font>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</body>
+</html>

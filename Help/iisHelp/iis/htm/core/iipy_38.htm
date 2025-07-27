@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html dir=ltr>
+<head>
+
+<title>“服务”属性页</title>
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000>
+<FONT FACE="宋体"><p>
+<strong>“服务”属性页</strong></p>
+
+<p>使用此属性页启用 HTTP 压缩或指定一个网站，此站点可由使用 IIS 3.0 管理接口的应用程序程序化管理。</p>
+
+<P><strong>默认网站</strong></P>
+
+<p>选择一个 IIS 3.0 管理接口可访问的网站。</p>
+
+<p><strong>HTTP 压缩配置</strong></p>
+
+<p>将文件发送到启用压缩的客户端之前，使用 HTTP 压缩来压缩文件。如果文件被请求过，则其压缩副本已存储在缓存目录中。收到后续请求时，将发送此压缩文件。在收到对文件的请求之前，文件不会被压缩。 </p>
+
+<p>选择“压缩静态文件”可以压缩静态 HTML 文件。</p>
+
+<p>选择“压缩静态文件”和“压缩应用程序文件”可以压缩应用程序文件。</p>
+
+<p>在“临时文件夹”文本框中输入要缓存压缩文件的目录名称和路径。也可以单击“浏览”定位目录。目录必须位于本地硬盘的 NTFS 分区，并且不能共享和标记为压缩。</p>
+
+<p>可以在“限制为”文本框中输入值限制缓存目录大小。</p> 
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>加密</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="导航页包含有关如何使用 SSL 加密防止未授权个人阅读数据的主题。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="encryption">加密</a></h1>
+
+<p>可以使用 Web 服务器的 SSL 加密功能来编码 Web 服务器传输和接收的信息。当启用 SSL 加密时，可以防止未授权个人解码传输的原始内容。</p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iicrysc.htm">关于加密</a>：SSL 安全通信概述。了解加密如何保护通过不安全网络传输的信息。</li>
+<li><a href="iiecrsc.htm">启用加密</a>：启用 Web 服务器 SSL 加密功能的步骤。</li>
+<li><a href="iistesc.htm">设置加密强度</a>：了解如何要求用户与 Web 服务器之间建立 128 位会话密钥的安全通信。</li>
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>创建用于 SSL 身份验证的 Web 服务器密钥对文件；请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>。</li>
+<li>在使用 SSL 安全功能之前，首先应获得 Web 服务器证书；请参阅<a href="iiocrsc.htm">获取服务器证书</a>。</li>
+</ul>
+
+<hr class="iis" size="1">
+<p align="center"><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>限制连接和设置连接超时</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<meta name="DESCRIPTION" content="有关如何设置连接限制和连接超时属性的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37708551">限制连接和设置连接超时</a></h1>
+
+<p>限制连接是保留带宽用于其他用途（如电子邮件）的一种方法。连接限制之外的所有连接尝试都将被拒绝。如果浏览器意外停止运行或连接中途失效，站点将继续处理数据，直到达到超时值为止。设置超时值可减少由于连接断开而造成的处理资源的浪费。</p>
+
+<big>确定是否限制连接</big><br>
+
+<ol>
+<li>至少在 Web 服务和 FTP 服务对象上使用“系统监视器”记录当前连接数、最大连接数和连接尝试总数计数器。</li>
+</li>持续记录一段时间，直到对正常范围具有比较清晰的认证。通常，这可能需要几天到一周，甚至更长的时间。</li>
+</ol>
+
+<big>限制连接数量</big><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站并单击“属性”按钮显示其属性页。</li>
+<li>在“网站”属性页中，选中“限制为”选项。</li>
+<li>在“最大连接数”框中输入允许同时连接的最大数目。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;IIS Professional 的连接不能超过 10 个。“不受限制”选项不可用。如果需要 10 个以上的同时连接，请考虑升级到 Windows Server，其中的同时连接数将不受限制。</p>
+
+
+
+<li>在“连接超时”框中，输入以秒为单位的连接超时值。</li>
+</ol>
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li>有关容量问题的详细信息，请参阅<a href="iiprftn.htm">关于容量计划</a>。</li>
+<li>有关如何限制带宽（限制与 Web 服务器连接的另一种方式）的信息，请参阅<a href="iithrot.htm">限制带宽</a>。</li>
+<li>有关设置 CGI 超时的信息，请参阅<a href="iipoolc.htm">缓存应用程序</a>。</li>
+<li>有关 IIS 计数器的清单，请参阅<a href="iicntpm.htm">计数器参考</a>。</li>
+<li>有关可以在 IIS 中设置的超时值的清单，请参阅<a href="iitime.htm">超时参考</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

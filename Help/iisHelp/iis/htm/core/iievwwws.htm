@@ -1,0 +1,574 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>Web 服务事件</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="列出用于 IIS 的 Windows 事件记录的 Web 服务事件的数字和消息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="wwwevents">Web 服务事件</a></h1>
+
+<p><strong>验证</strong></p>
+
+<table border="1" cellpadding="4" cellspacing="1">
+<tr>
+<td align="center" bgcolor="#C0C0C0"><strong>事件 ID</strong></td>
+<td align="center" bgcolor="#C0C0C0"><strong>描述</strong></td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>装入映射文件 %1 时出错，错误 %2。</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td>用户 %1 登录失败：%2。</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td>摘要式身份验证：对用户 "%1" 、成员域 "%2" 的身份验证无效。</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td>摘要式身份验证：不能识别用户 "%1"，成员域 "%2"。</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td>摘要式身份验证：对用户 "%1"、 成员域 "%2" 的身份验证停止。</td>
+</tr>
+</table>
+
+<p><strong>日志记录</strong></p>
+
+<table border="1" cellpadding="4" cellspacing="1">
+<tr>
+<td align="center" bgcolor="#C0C0C0"><strong>事件 ID</strong></td>
+<td align="center" bgcolor="#C0C0C0"><strong>描述</strong></td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>由于发生了磁盘已满的错误，%1 的 IIS 日志记录无法继续运行。</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td>IIS 日志记录不能创建目录 %1。数据错误。</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td>IIS 日志记录不能创建文件 %1。数据错误。</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td>继续 %1 的 IIS 日志记录。</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td>IIS ODBC 日志记录无法与数据源 %1 连接。错误文本是 [%2]。</td>
+</tr>
+<tr>
+<td align="center">100</td>
+<td>由于错误 %2，服务器不能登录到 Windows 帐户 '%1'。数据是错误代码。</td>
+</tr>
+<tr>
+<td align="center">101</td>
+<td>由于错误 '%1'，此服务器无法为目录 '%2' 添加虚拟根目录。数据是错误代码。</td>
+</tr>
+<tr>
+<td align="center">102</td>
+<td>由于错误 %1，服务器无法装载 SQL 日志记录所用的 ODBC32.DLL。数据是错误代码。</td>
+</tr>
+<tr>
+<td align="center">103</td>
+<td>服务器无法打开 ODBC 数据源 %1，表：%2, 在用户名 %3 下。ODBC 错误是：%4。数据是错误代码。</td>
+</tr>
+<tr>
+<td align="center">104</td>
+<td>日志记录的参数太长。域：%1，给出的数据：%2。</td>
+</tr>
+<tr>
+<td align="center">105</td>
+<td>服务器无法注册管理工具发现信息。管理工具可能无法看到此服务器。数据是错误代码。</td>
+</tr>
+<tr>
+<td align="center">106</td>
+<td>创建 IntelLog 环境失败。数据为错误代码。</td>
+</tr>
+<tr>
+<td align="center">107</td>
+<td>日志记录信息失败。由于配置错误，日志对象可能从未被创建。</td>
+</tr>
+<tr>
+<td align="center">108</td>
+<td>服务器找不到日志文件目录 %1。数据是错误代码。</td>
+</tr>
+<tr>
+<td align="center">109</td>
+<td>因为在写日志记录时发生错误，服务器暂停请求记录。数据是错误代码。错误代码文本是： %1。</td>
+</tr>
+<tr>
+<td align="center">110</td>
+<td>服务器已恢复请求的日志记录。</td>
+</tr>
+<tr>
+<td align="center">111</td>
+<td>服务无法初始化套接字程序库。数据是错误代码。</td>
+</tr>
+<tr>
+<td align="center">112</td>
+<td>服务找不到模块 %1。数据是错误代码。</td>
+</tr>
+<tr>
+<td align="center">113</td>
+<td>实例 %1 的绑定描述符 %2 无效。</td>
+</tr>
+<tr>
+<td align="center">114</td>
+<td>实例 %1 的安全绑定描述符 %2 无效（主机名被忽略）。</td>
+</tr>
+<tr>
+<td align="center">115</td>
+<td>服务无法绑定实例 %1。数据是错误代码。</td>
+</tr>
+<tr>
+<td align="center">116</td>
+<td>无法打开服务配置数据库路径 '%1'。数据是错误代码。</td>
+</tr>
+</table>
+
+<p><strong>配置数据库</strong></p>
+
+<table border="1" cellpadding="4" cellspacing="1">
+<tr>
+<td align="center" bgcolor="#C0C0C0"><strong>事件 ID</strong></td>
+<td align="center" bgcolor="#C0C0C0"><strong>描述</strong></td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>无法访问服务器 %1 实例 %2 的 IIS 配置数据库配置，错误 %3。</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td>服务器 %1 实例 %2 没有响应 HTTP 查询，错误 %3。</td>
+</tr>
+<tr>
+<td align="center">800</td>
+<td>元数据尚未初始化。</td>
+</tr>
+<tr>
+<td align="center">801</td>
+<td>找不到指定的元数据。</td>
+</tr>
+<tr>
+<td align="center">802</td>
+<td>无法识别元数据存储中指定的版本。</td>
+</tr>
+<tr>
+<td align="center">803</td>
+<td>找不到指定的元对象路径。元对象及其相关的元数据被忽略。</td>
+</tr>
+<tr>
+<td align="center">804</td>
+<td>不只一次指定了元对象或元数据。忽略重复的部分。</td>
+</tr>
+<tr>
+<td align="center">805</td>
+<td>指定的元继数据无效。忽略无效的元数据。</td>
+</tr>
+<tr>
+<td align="center">806</td>
+<td>无法与目标服务器建立安全的通信管道。</td>
+</tr>
+<tr>
+<td align="center">807</td>
+<td>路径并未按要求插入到字符串内。可能原因是数据的对象级别比句柄高。</td>
+</tr>
+<tr>
+<td align="center">808</td>
+<td>无法通过 GetData 方法从数据项中删除 METADATA_SECURE 属性。请使用 DeteteData 方法删除安全数据。</td>
+</tr>
+<tr>
+<td align="center">809</td>
+<td>在备份之前保存元数据失败。以前版本的数据被备份。</td>
+</tr>
+</table>
+
+<p><strong>ODBC 日志记录</strong></p>
+
+<table border="1" cellpadding="4" cellspacing="1">
+<tr>
+<td align="center" bgcolor="#C0C0C0"><strong>事件 ID</strong></td>
+<td align="center" bgcolor="#C0C0C0"><strong>描述</strong></td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>不能执行查询 %1。</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td>您刚刚填写的表单需要填上项目 %1。请在表单中填入此项目，然后重新提交表单。</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td>无法打开查询文件 %1。文件不存在，或者不具有打开文件所需的权限。</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td>无法打开模板文件 %1。文件不存在，或者不具有打开文件所需的权限。</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td>模板文件含有一个 <em>else</em> 标记，但没有对应的 <em>if</em> 标记。</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td>模板文件含有一个 <em>endif</em> 标记，但没有对应的 <em>if</em> 标记。</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td>模板文件含有的表达式的参数类型不一致。例如，<em>if</em> 标记将字符串和数字作比较时，就会发生这种错误。</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td>模板文件包含一个使用 <em>CONTAINS</em> 操作符的表达式，但其中一或两个参数不是字符串。<em>CONTAINS</em> 只能用于字符串。</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td>模板文件包含的表达式具有一个被引号引起来的字符串，但是没有右引号。</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td>模板文件包含的表达式具有无法识别的操作符。有效操作符是 <em>GT</em>、 <em>LT</em>、<em>EQ</em> 以及 <em>CONTAINS</em>。</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td>查询文件含有无法识别的域 %1。</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td>查询文件必须含有有效、非空的 <em>Datasource：</em>域和 <em>SQLStatement：</em>域。</td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td>无法装载 odbc32.dll 库来执行查询。请确认服务器上已正确安装了 ODBC 。</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td>不支持所指定的 HTTP 方法。只支持 POST 和 GET。</td>
+</tr>
+<tr>
+<td align="center">15</td>
+<td>运行查询 %1 错误 。</td>
+</tr>
+<tr>
+<td align="center">16</td>
+<td>已经超过了 IDC 文件内 SQLStatement 域的最大数目。</td>
+</tr>
+</table>
+
+<p><strong>服务器端包含</strong></p>
+
+<table border="1" cellpadding="4" cellspacing="1">
+<tr>
+<td align="center" bgcolor="#C0C0C0"><strong>事件 ID</strong></td>
+<td align="center" bgcolor="#C0C0C0"><strong>描述</strong></td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>不能解析虚拟路径 '%1'。</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td>处理 SSI 文件 '%1' 时出错。</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td>无效的 SSI 标记。</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td>不能运行 flastmod( '%1' )：Win32 错误代码 = %2。</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td>不能运行 fsize( '%1' )：Win32 错误代码 = %2。</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td>找不到变量 '%1'。</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td>变量 '%1' 无法求值。</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td>不支持 SSI 功能。</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td>处理 SSI 文件 '%1' 时出错：Win32 错误代码 = %2。</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td>成功处理了 SSI 文件 '%1'。</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td>处理 SSI 文件 '%1' 失败。</td>
+</tr>
+<tr>
+<td align="center">12</td>
+<td>执行 CMD '%1' 失败：Win32 错误代码 = %2。</td>
+</tr>
+<tr>
+<td align="center">13</td>
+<td>执行脚本 '%1' 失败：Win32 错误代码 = %2。</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td>执行 ISAPI 扩展 '%1' 失败。</td>
+</tr>
+<tr>
+<td align="center">16</td>
+<td>此文档已移到 (URL) 位置。</td>
+</tr>
+<tr>
+<td align="center">17</td>
+<td>设置子进程环境失败：Win32 错误代码 = %1。</td>
+</tr>
+<tr>
+<td align="center">18</td>
+<td>设置子进程管道失败：Win32 错误代码 = %1。</td>
+</tr>
+<tr>
+<td align="center">19</td>
+<td>创建进程失败：Win32 错误代码 = %1。</td>
+</tr>
+<tr>
+<td align="center">20</td>
+<td>#EXEC 命令超时。</td>
+</tr>
+<tr>
+<td align="center">21</td>
+<td>#EXEC ISAPI 应用程序失败：Win32 错误代码 = %1。</td>
+</tr>
+<tr>
+<td align="center">22</td>
+<td>ISAPI 应用程序试图发送此 (URL) 位置。</td>
+</tr>
+<tr>
+<td align="center">23</td>
+<td>由于没有 EXECUTE 权限而无法执行 #EXEC '%1'。</td>
+</tr>
+<tr>
+<td align="center">24</td>
+<td>因为拒绝访问而无法处理 '%1'。</td>
+</tr>
+<tr>
+<td align="center">25</td>
+<td>“服务器端包含”文件包含了本身，或是已超过“服务器端包含”文件的最大深度。</td>
+</tr>
+<tr>
+<td align="center">26</td>
+<td>ISA 使用了不支持的 ServerSupportFunction() 选项。</td>
+</tr>
+<tr>
+<td align="center">27</td>
+<td>#EXEC 调用不能有 CMD 选项。</td>
+</tr>
+<tr>
+<td align="center">28</td>
+<td>此虚拟路径的 #EXEC 调用已经禁用。</td>
+</tr>
+<tr>
+<td align="center">29</td>
+<td>具有 '%1' 的递归 #INCLUDE 链。</td>
+</tr>
+</table>
+
+<p><strong>Web 服务</strong></p>
+
+<table border="1" cellpadding="4" cellspacing="1">
+<tr>
+<td align="center" bgcolor="#C0C0C0"><strong>事件 ID</strong></td>
+<td align="center" bgcolor="#C0C0C0"><strong>描述</strong></td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>HTTP 服务器无法将它自己的安全系统初始化。数据错误。</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td>HTTP 服务器无法将套接字程序库初始化。数据错误。</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td>由于内存不足，HTTP 服务器无法初始化。数据错误。</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td>HTTP 服务器无法创建主连接套接字。数据错误。</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td>HTTP 服务器无法为主机 %1 上的用户创建客户端连接对象。与用户的连接已中断。数据错误。</td>
+</tr>
+<tr>
+<td align="center">14</td>
+<td>无法装载 HTTP 筛选程序 DLL %1。数据错误。</td>
+</tr>
+<tr>
+<td align="center">16</td>
+<td>在设置的超时期间内，以参数 '%2' 从 URL '%1' 启动的脚本没有答复。HTTP 服务器终止此脚本。</td>
+</tr>
+<tr>
+<td align="center">18</td>
+<td>HTTP 服务器在处理“服务器端包含”文件 '%1' 时出错。错误是 '%2'。</td>
+</tr>
+<tr>
+<td align="center">19</td>
+<td>HTTP 服务器在处理 ISAPI 应用程序 '%1' 时，遇到了无法处理的异常。</td>
+</tr>
+<tr>
+<td align="center">20</td>
+<td>HTTP 服务器无法装载 ISAPI 应用程序 '%1'。数据错误。</td>
+</tr>
+<tr>
+<td align="center">21</td>
+<td>“服务器端包含”文件包含了本身，或是已超过“服务器端包含”文件的最大深度。</td>
+</tr>
+<tr>
+<td align="center">22</td>
+<td>试着在服务器实例上装载筛选器 '%1'，但它需要 SF_NOTIFY_READ_RAW_DATA 筛选器通知，所以必须作为全局筛选器来装入。</td>
+</tr>
+<tr>
+<td align="center">23</td>
+<td>为了与以前版本的 IIS 兼容，从注册表加载的筛选器“%1”作为全局筛选器。若要使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>控制筛选器，需先从注册表中删除筛选器，然后用“Internet 服务管理器”将其添加为全局筛选器。注册表中的筛选器保存在“HKLM\System\CurrentControlSet\Services\W3Svc\Parameters\Filter DLLs”中。</td>
+</tr>
+<tr>
+<td align="center">26</td>
+<td>服务器无法读取文件 %1，因为没有访问权限。</td>
+</tr>
+<tr>
+<td align="center">27</td>
+<td>服务器无法取得 SSL 连接的许可协议。</td>
+</tr>
+<tr>
+<td align="center">28</td>
+<td>服务器停止应用程序 '%1' 的请求，因为进程外组件故障数超过一定限度。</td>
+</tr>
+<tr>
+<td align="center">29</td>
+<td>服务器无法关闭应用程序 '%1'。错误是 '%2'。</td>
+</tr>
+<tr>
+<td align="center">30</td>
+<td>服务器无法读取文件 %1。此文件不存在。</td>
+</tr>
+<tr>
+<td align="center">31</td>
+<td>服务器无法读取文件 %1。返回的 Windows 32 错误是 %2。</td>
+</tr>
+<tr>
+<td align="center">32</td>
+<td>服务器无法读取文件 %1。此文件超过许可长度的最大值 %2。</td>
+</tr>
+<tr>
+<td align="center">33</td>
+<td>服务器无法分配一个缓冲区来读取文件 %1。</td>
+</tr>
+<tr>
+<td align="center">34</td>
+<td>服务器未能 PUT 到 URL %1（文件名 %2）。可能已失去此文件。备份文件被存为 %3。</td>
+</tr>
+<tr>
+<td align="center">35</td>
+<td>服务器未能 PUT 到 URL %1（文件名 %2）。</td>
+</tr>
+<tr>
+<td align="center">36</td>
+<td>服务器不能装载应用程序 '%1'。错误是 '%2'。</td>
+</tr>
+<tr>
+<td align="center">37</td>
+<td>进程外应用程序 '%1' 意外地终止。</td>
+</tr>
+</table>
+
+<p><strong>Web 应用程序管理器(WAM)</strong></p>
+
+<table border="1" cellpadding="4" cellspacing="1">
+<tr>
+<td align="center" bgcolor="#C0C0C0"><strong>事件 ID</strong></td>
+<td align="center" bgcolor="#C0C0C0"><strong>描述</strong></td>
+</tr>
+<tr>
+<td align="center">201</td>
+<td>WAM 范例已启动，进程标识为 %1。</td>
+</tr>
+<tr>
+<td align="center">202</td>
+<td>进程 %1 中的 WAM 实例启动失败。数据错误。</td>
+</tr>
+<tr>
+<td align="center">203</td>
+<td>进程 %1 中的 WAM 实例已关闭。</td>
+</tr>
+<tr>
+<td align="center">204</td>
+<td>HTTP 服务器在处理 ISAPI 应用程序 '%1' 时，遇到了无法处理的异常。</td>
+</tr>
+<tr>
+<td align="center">205</td>
+<td>HTTP 服务器无法装载 ISAPI 应用程序 '%1'。数据错误。</td>
+</tr>
+</table>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;在事件日志或 Web 浏览器中显示消息时，文档中出现的符号（如 %s、%X、%1、%2，等等）将由实际发生错误时此错误的详细信息所替换。</p>
+ 
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

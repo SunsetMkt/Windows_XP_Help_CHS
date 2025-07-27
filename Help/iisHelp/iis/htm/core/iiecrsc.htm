@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>启用加密</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何要求用户建立一个 SSL 加密链接的过程信息。Web 服务器支持最少 40 位的加密（会话）密钥长度，以便加密用户 Web 浏览器和Web 服务器之间的所有通信。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37697878">启用加密</a></h1>
+
+<p>在访问被限制的网站、目录或文件之前，可以要求用户与服务器之间建立加密通道（https:// 而非 http://）。然而，使用加密通道要求用户 Web 浏览器和 Web 服务器都支持所使用的加密策略，才能保证通道的安全性。特殊情况下，当启用 Web 服务器的默认安全通信设置时，要求用户的 Web 浏览器支持 40 位或 40 位以上的会话密钥。</p>
+
+<p><strong><span style="color: #0000FF"><font color="#0000FF">要点</font></span></strong></p>
+
+<ul>
+<li>设置特定网站的安全属性时，将自动为属于此网站的目录和文件设置同样的安全属性，除非已经提前为某些单独目录和文件设置好了安全属性。</li>  
+<li>当试图设置特定网站的属性时，Web 服务器将提醒您是否允许重新设置单个目录和文件的属性。如果选择了重新设置这些属性，先前的设置将被新的设置所替换。设置目录属性时，如果目录中包含以前设置了安全属性的子目录或文件，情况也是如此。有关设置属性的详细信息，请参阅<a href="iivsovr.htm">关于网站和 FTP 站点</a>中的“站点属性和属性继承”。</li>
+</ul>
+
+<p class="bigfix">&nbsp;<big></big></p>
+
+<big>启用加密</big><br>
+
+<p>启用加密之前，必须安装有效的服务器证书。详细信息，请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>以及<a href="iiocrsc.htm">获取服务器证书</a>。</p>
+
+<ol>	
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站、目录或文件，并打开其属性页。</li>
+<li>如果以前没有创建服务器密钥对和证书请求，请选择“目录安全性”或“文件安全性”属性页，并单击“安全通信”下的“服务器证书”。“ Web 服务器证书向导”将指导您完成整个过程。有关新向导的详细信息，请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>。</li>
+<li>如果以前创建了服务器密钥对和证书请求，请选择“目录安全性”或“文件安全性”属性页，并单击“安全通信”下的“编辑”。</li>
+<li>在“安全通信”对话框中，请选中“要求安全通道 (SSL)”复选框。</li>
+<li>指导用户建立与 Web 内容之间的安全 HTTPS 连接（即被限制网站的 URL 应以 https:// 而非 http:// 开始）。</li>
+
+<p><strong>注意</strong></p>
+<ul>
+<li>为了保证 Web 服务器的性能，应考虑只对敏感信息（如财务交易等）使用 SSL 加密。加密传输会明显降低传输速率和服务器性能。</li>
+<li>即使没有选中“要求安全通道”复选框，用户也可以建立加密通道 (https://)。如果要求用户建立安全通道，请选中“要求安全通道 (SSL)”复选框。</li>
+</ul>
+</ol>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于性能调整</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion	
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关使用 Windows 2000 中的工具监视 Web 服务器性能的概念性信息，其中包含如何实现有效的监视策略以及在特定情况使用何种工具的建议。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37678224">关于性能调整</a></h1>
+
+<p>为了让用户满意，就必须确保服务器性能达到最佳。根据所提供服务的不同，对硬件的要求也有所不同。例如，FTP 服务比 Web 服务需要的内存要少。另外，Active Server Pages (ASP) 应用程序、公共网关接口 (CGI) 脚本、数据库查询和视频文件对处理器的要求比静态 HTML 网页对处理器的要求更高。通信量和站点内容发生变化时，性能也会有所变化。为了有效地对性能进行调整，服务器管理员必须制定一个涉及多种工具的监视策略。</p>
+
+<p>本节包含下列内容：</p>
+
+<ul>
+<li><a href="#TestingandTuning">测试和调整的循环特性</a></li>
+<li><a href="#PerformanceTuning">用于监视性能的工具</a></li>
+<li><a href="#DiskOptimization">磁盘优化</a></li>
+</ul>
+
+<h2><a name="TestingandTuning">测试和调整的循环特性</a></h2>
+<p>性能测试和调整是一个连续性过程。要有效地进行测试和调整，首先必须详细规划评估策略。第一步是测量当前的性能级别。由于服务器性能随时间的不同可能存在很大差异，所以必须确保足够长的监视时间以获得真实的服务器活动数据。</p>
+
+<p>要改善服务器的性能，需要检查整个系统的各个部分，找出潜在的性能瓶颈。瓶颈可能是由于硬件配置不完善或不正确引起的，也可能是由于 IIS 或 Windows XP 中的软件设置所致。一个完善的监视规划应能够全方位地对性能进行检查。</p>
+
+<p>了解服务器性能之后，便可以着手进行一些更改以提高性能。最好一次只更改一项设置，因为同时更改多项设置时的效果不易观察。</p>
+
+<p>每次完成更改后，请继续进行监视，观察这些更改是否达到了预期的效果，是否产生了负面影响。由于对某项资源的更改可能会导致其他方面的瓶颈，因此进行更改之后，需要检查所有资源的性能。了解此项更改带来的影响之后，就可以确定是否需要进一步对设置进行更改。</p>
+
+<h2><a name="PerformanceTuning">性能监视工具</a></h2>
+
+<p>对服务器进行监视是服务器管理中的一项关键性任务。使用适当的监视工具，可以检测服务器问题，评估更改网站内容的效果以及规划升级，使站点更便于用户访问。</p>
+
+<p>选择哪种监视工具和哪种监视方法效果最好，取决于所需要的信息。例如，如果需要测量 Web 服务器的总负荷，可以使用性能监视器提供一周内的性能数据，显示诸如计算机连接数和文件传输数等信息。再如，如果发现服务器性能有所下降，可以查看事件查看器中的错误记录。事件查看器是查看由 Windows XP 生成的日志的工具。</p>
+
+<p>还可以通过检查 IIS 生成的日志来监视服务器。这些日志是 Windows XP 生成日志的扩展。有关日志记录的详细信息，请参阅<a href="iilogsa.htm">记录站点活动</a>中的相应主题。</p>
+
+
+<p>Windows XP 提供了下列监视工具，这些工具既可以提供实时信息，也可以提供摘要信息：</p>
+
+<ul>
+<li><a href="#Sysmon">性能监视器</a></li>
+<li><a href="#eventviewer">事件查看器</a></li>
+<li><a href="#Taskman">任务管理器</a></li>
+<li><a href="#Netmon">网络监视器</a></li>
+</ul>
+
+
+<p>除了 Windows XP 中的内置工具，还有一些其他性能监视工具可供使用。详细信息，请参阅<a href="../asp/perf1w13.htm">性能和可扩展性测试</a>。</p>
+
+<h3><a name="Sysmon">性能监视器</a></h3>
+
+<p>性能监视器是一个功能强大的 MMC 管理单元，可用来监视服务器的活动，并根据选定的时间间隔进行性能汇总。使用此工具，可以在实时图表或报告中显示性能数据，将收集到的数据保存在文件中，并在发生严重事件时发出警告。可以使用这些数据确定导致系统瓶颈的原因，并相应地调整系统及应用程序的性能。</p>
+
+<p>下面是三种访问性能监视器的方法：</p>
+
+<ul>
+  <li>从“开始”菜单，单击“程序”，单击“管理工具”，再单击“性能”。</li>
+  <li>从“开始”菜单，单击“运行”，在文本框中输入“perfmon”，再按 Enter 键。<li>在任意命令提示符窗口中，输入“perfmon”。</li>
+</ul>
+
+<p>性能监视器检查性能计数器的输出，而性能计数器用来监视特定性能对象（即控制服务器资源的特定服务或机制）的活动。例如，单击性能监视器中的加号按钮，可以查看 Web Service 性能对象，以及监视每秒接收的字节数或每秒尝试的连接数等事件的计数器列表。在此窗口中，可以向性能监视器的图形化显示中添加或删除计数器，或者对计数器进行配置，使其使用特定的方式进行记录。如果同时运行多个计数器，性能可能会稍有下降，因此必须有所选择。</p>
+
+<p>Windows XP 包括数百个计数器，可分别记录磁盘使用情况及 TCP 活动等。IIS 还有自己的计数器，包括 Web Service 计数器、FTP Service 计数器、Active Server Pages 应用程序计数器和 IIS Global 计数器。Web Service、FTP Service 计数器及 Active Server Pages 对象计数器监视脚本的连接活动，Internet Information Services Global 计数器监视带宽使用情况及所有 IIS 服务的缓存活动。计数器一般以数量或长度进行度量，选择要显示的计数器时需记住这一点。</p>
+
+<p>系统监视器既可以提供短期内有关服务器及站点负载的信息，也可以提供这方面的长期信息。下表列出了一些对监视服务器很有用的系统监视器计数器，并提供了每个计数器的理想值。性能监视器的图形化显示范围为 0 到 100，因此对于记录较小值的个别计数器，可能需要更改显示范围。</p>
+
+<table border=1 width=95% cellpadding=1 cellspacing=1>
+<caption align=top></caption>
+<tr><th>对象\计数器</th><th>理想值</th></tr>
+<tr><td>Memory\Pages/sec</td><td>0-20（如果大于 80，表示有问题）。</td></tr>
+<tr><td>Memory\Available Bytes</td><td>最少 20 MB。</td></tr>
+<tr><td>Memory\Committed Bytes</td><td>不超过物理内存的 75%。</td></tr>
+<tr><td>Memory\Pool Nonpaged Bytes</td><td>稳定（缓慢增长表示存在内存泄漏问题）。</td></tr>
+<tr><td>Processor\% Processor Time</td><td>小于 75%。</td></tr>
+<tr><td>Processor\Interrupts/sec</td><td>取决于处理器。486/66 处理器最大可达 1,000；P90 可达 3,500；P200 可能大于 7,000。此值越低，表示性能越佳。 </td></tr>
+<tr><td>Processor\System Processor Queue Length</td><td>不大于 2。</td></tr>
+<tr><td>(Logical or Physical) Disk \ % Disk Time</td><td>尽可能低。</td></tr>
+<tr><td>(Logical or Physical) Disk \ Avg. Disk Queue Length</td><td>小于 2。</td></tr>
+<tr><td>(Logical or Physical) Disk \ Avg Disk Bytes/Transfer</td><td>尽可能高。</td></tr>
+<tr><td>Internet Information Services Global\File Cache Hits %</td><td>虽然此值取决于站点内容，但是应尽可能高。</td></tr>
+<tr><td>Web Service\Bytes Total/sec</td><td>尽可能高。</td></tr>
+<tr><td>Active Server Pages\Request Wait Time</td><td>ASP\Request Execution Time</td></tr>
+<tr><td>Active Server Pages\Requests Queued</td><td>零。</td></tr>
+<tr><td>Active Server Pages\Transactions/sec</td><td>尽可能高。</td></tr></table>
+
+<p>有关使用系统监视器的详细信息，请参阅 Windows XP 文档。有关 IIS 提供的完整计数器列表，请参阅<a href="iicntpm.htm">计数器参考</a>。</p>
+
+<h3><a name="eventviewer">事件查看器</a></h3>
+
+<p>Windows XP 包括事件日志记录服务，可以记录错误或成功启动服务等事件。这些事件日志可以通过事件查看器查看。还可以通过事件查看器监视系统、安全性和应用程序事件日志。通过这些信息，可以更好地了解导致特殊性能问题的事件序列和类型。有关如何使用事件查看器的详细信息，请参阅 Windows XP 文档。</p>
+
+<h3><a name="Taskman">任务管理器</a></h3>
+<p>使用任务管理器，可以查看正在进行的任务和线程，也可以更改已分配的进程优先级。但是，进程完成后，新的优先级设置将丢失。可以实时查看 CPU 和内存的使用情况，但不会随时保存这些信息。有关使用任务管理器的详细信息，请参阅 Windows XP 文档。</p>
+
+<h3><a name="Netmon">网络监视器</a></h3>
+
+<p>网络监视器捕获进出计算机的通信信息，并提供正在发送和接收的帧的详细信息。此工具可以帮助分析复杂的网络通信模式。通过它，可以查看发送到服务器的 HTTP 和 FTP 请求中所包含的头信息。通常情况下，需要设计捕获筛选器，它的功能与数据库查询类似，可以筛选出正在传输的帧的一个子集。还可以使用捕获触发器，通过启动某项操作（如启动可执行文件）响应网络事件。Windows XP 中包含网络监视器的简装版，Systems Management Server 中包含网络监视器的完整版。有关网络监视器的详细信息，请参阅 Windows XP 文档（包括 Windows XP 资源大全）。</p>
+
+<h2><a name="DiskOptimization">磁盘优化</a></h2>
+
+<p>硬盘瓶颈在那些存在大量可随机访问的文件集的站点上更为常见。IIS 对硬盘的访问频率与 RAM 数量及请求文件的数量和大小直接相关。如果 RAM 偏低，或者正在请求大量各种各样的文件，或者请求的文件过大，IIS 将无法在 RAM 中保存文件副本以加速访问。这种情况下，IIS 必须从硬盘访问文件。硬盘的访问速度和大小决定了 IIS 定位所请求文件的速度。</p>
+
+<p>要监视硬盘驱动器，可以使用性能监视器记录 CPU 使用百分率、网卡饱和度及 Physical Disk 对象的 &#37; Disk Time 计数器。如果 &#37; Disk Time 计数器值很高，而 CPU 和网卡均没有饱和，说明磁盘驱动器导致了瓶颈。有关 Physical Disk &#37 Disk Time 的详细信息，请参阅 Windows XP 文档。</p>
+
+<p>要改善磁盘访问状况，可以使用独立驱动器冗余阵列 (RAID) 和条带状磁盘集。如果服务器的数据库负载过大，数据库将与 IIS 抢占内存、CPU 和磁盘资源，因此可能需要考虑在另一台计算机上运行最新、最合适的 Windows Server 版本。如果数据库服务器与 Windows XP 必须在同一台计算机上运行，可能需要数千兆的 RAM 以减少访问延迟，或者要求驱动器控制器具有较大的 RAM 缓存。同时还应保留一定的冗余度，这样当某一驱动器无法运行时，不用从备份副本还原。许多新的控制器允许“热替换”，这样当某一驱动器出错时，不必强制关闭服务器就可以对它进行替换。当然，即使这样，仍然应该适当地保留备份，并在现场以外的位置保留一个副本。</p>
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

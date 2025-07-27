@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html dir=ltr>
+
+<head>
+<style>
+a:link			{font:9pt/11pt 宋体; color:FF0000}
+a:visited		{font:9pt/11pt 宋体; color:#4e4e4e}
+</style>
+
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<title>网页要求有效的客户证书</title>
+
+<META HTTP-EQUIV="Content-Type" Content="text-html; charset=gb2312">
+</head>
+
+<script> 
+function Homepage(){
+<!--
+// in real bits, urls get returned to our script like this:
+// res://shdocvw.dll/http_404.htm#http://www.DocURL.com/bar.htm 
+
+	//For testing use DocURL = "res://shdocvw.dll/http_404.htm#https://www.microsoft.com/bar.htm"
+	DocURL=document.URL;
+	
+	//this is where the http or https will be, as found by searching for :// but skipping the res://
+	protocolIndex=DocURL.indexOf("://",4);
+	
+	//this finds the ending slash for the domain server 
+	serverIndex=DocURL.indexOf("/",protocolIndex + 3);
+
+	//for the href, we need a valid URL to the domain. We search for the # symbol to find the begining 
+	//of the true URL, and add 1 to skip it - this is the BeginURL value. We use serverIndex as the end marker.
+	//urlresult=DocURL.substring(protocolIndex - 4,serverIndex);
+	BeginURL=DocURL.indexOf("#",1) + 1;
+	urlresult=DocURL.substring(BeginURL,serverIndex);
+		
+	//for display, we need to skip after http://, and go to the next slash
+	displayresult=DocURL.substring(protocolIndex + 3 ,serverIndex);
+	InsertElementAnchor(urlresult, displayresult);
+}
+
+function HtmlEncode(text)
+{
+    return text.replace(/&/g, '&amp').replace(/'/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function TagAttrib(name, value)
+{
+    return ' '+name+'="'+HtmlEncode(value)+'"';
+}
+
+function PrintTag(tagName, needCloseTag, attrib, inner){
+    document.write( '<' + tagName + attrib + '>' + HtmlEncode(inner) );
+    if (needCloseTag) document.write( '</' + tagName +'>' );
+}
+
+function URI(href)
+{
+    IEVer = window.navigator.appVersion;
+    IEVer = IEVer.substr( IEVer.indexOf('MSIE') + 5, 3 );
+
+    return (IEVer.charAt(1)=='.' && IEVer >= '5.5') ?
+        encodeURI(href) :
+        escape(href).replace(/%3A/g, ':').replace(/%3B/g, ';');
+}
+
+function InsertElementAnchor(href, text)
+{
+    PrintTag('A', true, TagAttrib('HREF', URI(href)), text);
+}
+
+//-->
+</script>
+
+<body bgcolor="FFFFFF">
+
+<table width="410" cellpadding="3" cellspacing="5">
+
+  <tr>
+    <td align="left" valign="middle">
+	<h1 style="COLOR:000000; FONT: 12pt/15pt 宋体"><!--Problem-->网页要求有效的客户证书</h1>
+    </td>
+  </tr>
+  
+  <tr>
+    <td width="400" colspan="2">
+	<font style="COLOR:000000; FONT: 9pt/11pt 宋体">试图查看的网页要求使用有效的客户证书。您的客户证书不可信或者无效。客户证书用于验证您是否为资源的有效用户。</font></td>
+  </tr>
+  
+  <tr>
+    <td width="400" colspan="2">
+	<font style="COLOR:000000; FONT: 9pt/11pt 宋体">
+
+	<hr color="#C0C0C0" noshade>
+	
+    <p>请尝试执行下列操作：</p>
+	
+	<ul>
+	<li>如果已更改客户证书，请单击<a href="javascript:location.reload()">刷新</a>按钮重试。</li>
+
+      <li>与 Web 服务器管理员联系以获得有效的客户证书。</li>
+
+	<li>如果确信能够查看此目录或网页，请与网站管理员联系，其电子邮件地址或电话号码请参阅 
+
+	<script>
+	<!--
+	if (!((window.navigator.userAgent.indexOf("MSIE") > 0) && (window.navigator.appVersion.charAt(0) == "2")))
+	{
+		 Homepage();
+	}
+	//-->
+	</script>
+
+	主页。</li>
+    </ul>
+	
+    <h2 style="font:9pt/11pt 宋体; color:000000">HTTP 错误 403.16 - 禁止访问：客户证书不可信或者无效<br> Internet 信息服务</h2>
+	
+	<hr color="#C0C0C0" noshade>
+	
+	<p>技术信息（用于支持人员）</p>
+	
+<ul>
+<li>详细信息：<br><a href="http://www.microsoft.com/ContentRedirect.asp?prd=iis&sbp=&pver=5.0&pid=&ID=403.16&cat=web&os=&over=&hrd=&Opt1=&Opt2=&Opt3=" target="_blank">Microsoft 支持</a>
+</li>
+</ul>
+
+</font></td>
+  </tr>
+
+</table>
+</body>
+</html>

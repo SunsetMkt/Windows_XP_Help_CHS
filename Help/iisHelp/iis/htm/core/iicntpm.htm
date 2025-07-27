@@ -1,0 +1,995 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>计数器参考</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="IIS 中可用性能计数器列表及其说明。包括测量或记录带宽使用情况、吞吐量、错误、内存使用情况、缓存、会话管理以及事务处理等计数器。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name ="Webcounters">计数器参考</a></h1>
+
+<p>有两种协议允许访问性能计数器，可以在使用其中某个协议的性能监视器、第三方客户端软件或自定义应用程序中查看计数器数据。这两个协议是简单网络管理协议 (SNMP) 和性能数据帮助器 (PDH)，下表对这两种协议进行了比较。协议帮助器文件一定不能编辑。若要编写自己的自定义应用程序访问性能计数器，可将帮助器文件作为参考。可在 <a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&ar=home&pver=6.0" target="_blank">MSDN 联机</a>资料库中找到有关两个协议的接口的说明。</p>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+<th bgcolor="#C0C0C0">协议</th>
+<th bgcolor="#C0C0C0">PDH</th>
+<th bgcolor="#C0C0C0">SNMP</th>
+</tr>
+
+<tr>
+<th bgcolor="#C0C0C0">使用程序</th>
+<td valign="top">性能监视器（或自定义应用程序）。</td>
+<td valign="top">第三方客户端软件，有时称为 MIB 浏览器（或自定义应用程序）。</td>
+</tr>
+
+<tr>
+<th bgcolor="#C0C0C0">安装</th>
+<td valign="top">默认安装。</td>
+<td valign="top"> 必须在安装 Windows 时或通过“添加或删除程序”，在“管理和监视工具”下选中此选项。</td>
+</tr>
+
+<tr>
+<th bgcolor="#C0C0C0">IIS 帮助器文件</th>
+<td valign="top">Ftpctrs.ini<br>W3ctrs.ini<br>Infoctrs.ini<br>Axperf.ini</td>
+<td valign="top">Ftp.mib<br>Inetsrv.mib<br>Http.mib</td>
+</tr>
+
+<tr>
+<th bgcolor="#C0C0C0">帮助器文件包含</th>
+<td valign="top">标识符名称、计数器名称、说明。</td>
+<td valign="top">
+标识符名称、计数器名称、说明、唯一对象标识号 (OID) 以及辅助功能和状态等其他属性。</td>
+</tr>
+
+<tr>
+<th bgcolor="#C0C0C0">优点</th>
+<td valign="top">更易于编程的接口。Microsoft 软件使用它后，更加稳定，功能更强大。可通过 WMI 访问。
+</td>
+<td valign="top">
+其他操作系统的用户也比较熟悉 SNMP。可通过 WMI 访问。虽然所有 IIS 计数器都是只读的，但是 SNMP 是一种管理协议，允许您在可以写入值的位置写入值。</td>
+</tr>
+
+<tr>
+<th bgcolor="#C0C0C0">缺点</th>
+<td valign="top">PDH 是一种监视协议，而不是管理协议；无法写入值。</td>
+<td valign="top">
+帮助器文件对排序和 OID 的依赖程度很高，因此很难添加计数器。</td>
+</tr>
+</table>
+
+
+<p>随 Internet 信息服务器安装的 Web Service 和 FTP Service 对象计数器监视文件传输速率、带宽使用情况、连接速率、错误以及用户数和用户类型。可以查看此对象所有实例的性能数据（使用_Total 实例），或查看特定实例（如“默认网站”、“默认 FTP 站点”或“管理网站”实例）的性能数据。IIS Global 对象计数器报告所有 IIS 服务的性能数据。Active Server Pages 对象计数器监视脚本的连接活动，包括运行时错误、请求、会话、模板和事务。
+
+
+<p>下面按照作业类型列出了 IIS 性能计数器。计数器名称与 PDH 帮助器文件中的计数器名称一致。所有 IIS 计数器都是只读的。若要查看按字母顺序排列的计数器列表及其说明，请单击下列任意计数器名称。有关性能监视器的详细信息，请参阅<a href="iiabtpm.htm">关于性能调整</a>。
+
+<ul>
+<li><a href="#bandwidth">与带宽使用情况有关的计数器</a></li>
+<li><a href="#throughput">与吞吐量有关的计数器</a></li>
+<li><a href="#requests">与特定请求和错误有关的计数器</a></li>
+<li><a href="#users">与连接和用户有关的计数器</a></li>
+<li><a href="#Caching">与缓存和内存有关的计数器</a></li>
+<li><a href="#sessions">与会话有关的计数器</a></li>
+<li><a href="#transactions">与事务有关的计数器</a></li>
+<li><a href="#restarts">与重新启动有关的计数器</a></li>
+</ul>
+
+<h2><a name="bandwidth">与带宽使用情况有关的计数器</a></h2>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+<th width=30% bgcolor="#C0C0C0">对象</th>
+<th width=70% bgcolor="#C0C0C0">计数器</th>
+</tr>
+
+<tr>
+<td valign="top">IIS Global、Web</td>
+<td valign="top"><a href="iicshpm.htm#CurrentBlockedAsyncI/ORequests">Current Blocked Async I/O Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global、Web</td>
+<td valign="top"><a href="iicshpm.htm#MeasuredAsyncI/OBandwidthusage">Measured Async I/O Bandwidth usage</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global、Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalAllowedAsyncI/ORequests">Total Allowed Async I/O Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global、Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalBlockedAsyncI/ORequests">Total Blocked Async I/O Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global、Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalRejectedAsyncI/ORequests">Total Rejected Async I/O Requests</a></td>
+</tr>
+</table>
+
+<h2><a name="throughput">与吞吐量有关的计数器</a></h2>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+<th width = 30% bgcolor="#C0C0C0">
+
+对象
+
+
+</th>
+<th width = 70% bgcolor="#C0C0C0">计数器</th>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#BytesReceived/sec">Bytes Received/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#BytesSent/sec">Bytes Sent/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#BytesTotal/sec">Bytes Total/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#Files/sec">Files/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#FilesReceived/sec">Files Received/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#FilesSent/sec">Files Sent/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#TotalFilesReceived">Total Files Received</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#TotalFilesSent">Total Files Sent</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>	
+<td valign="top"><a href="iicshpm.htm#TotalFilesTransferred">Total Files Transferred</a></td>
+</tr>
+
+</table>
+
+<h2><a name="requests">与特定请求和错误有关的计数器</a></h2>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+	<th width = 30% bgcolor="#C0C0C0">
+
+对象
+
+
+    </th>
+	<th width = 70% bgcolor="#C0C0C0">计数器</th>
+</tr>
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#CGIRequests/sec">CGI Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#CopyRequests/sec">Copy Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#CurrentCGIRequests">Current CGI Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#CurrentISAPIExtensionRequests">Current ISAPI Extension Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#DebuggingRequests">Debugging Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#DeleteRequests/sec">Delete Requests/sec</a></td> 
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#ErrorsDuringScriptRuntime">Errors During Script Runtime</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#ErrorsFromASPPreprocessor">Errors From ASP Preprocessor</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#ErrorsFromScriptCompiler">Errors From Script Compiler</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#Errors/Sec">Errors/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#GetRequests/sec">Get Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#HeadRequests/sec">Head Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#ISAPIExtensionRequests/sec">ISAPI Extension Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#LockRequests/sec">Lock Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#LockedErrors/sec">Locked Errors/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#MaximumCGIRequests">Maximum CGI Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#MaximumISAPIExtensionRequests">Maximum ISAPI Extension Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#MkcolRequests/sec">Mkcol Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#MoveRequests/sec">Move Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#NotFoundErrors/sec">Not Found Errors/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#OptionsRequests/sec">Options Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#OtherRequestMethods/sec">Other Request Methods/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#PostRequests/sec">Post Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#PropfindRequests/sec">Propfind Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#ProppatchRequests/sec">Proppatch Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#PutRequests/sec">Put Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestBytesInTotal">Request Bytes In Total</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestBytesOutTotal">Request Bytes Out Total</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestExecutionTime">Request Execution Time</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestWaitTime">Request Wait Time</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestsDisconnected">Requests Disconnected</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestsExecuting">Requests Executing</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestsFailedTotal">Requests Failed Total</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestsNotAuthorized">Requests Not Authorized</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestsNotFound">Requests Not Found</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestsQueued">Requests Queued</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestsRejected">Requests Rejected</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestsSucceeded">Requests Succeeded</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestsTimedOut">Requests Timed Out</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#RequestsTotal">Requests Total</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#Requests/Sec">Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#SearchRequests/sec">Search Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalCGIRequests">Total CGI Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalCopyRequests">Total Copy Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalDeleteRequests">Total Delete Requests</a></td>
+</tr>
+ 
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalGetRequests">Total Get Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalHeadRequests">Total Head Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalISAPIExtensionRequests">Total ISAPI Extension Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalLockRequests">Total Lock Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalLockedErrors">Total Locked Errors</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalMethodRequests">Total Method Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalMethodRequests/sec">Total Method Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalMkcolRequests">Total Mkcol Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalMoveRequests">Total Move Requests</a></td>
+</tr> 
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalNotFoundErrors">Total Not Found Errors</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalOptionsRequests">Total Options Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalOtherRequestMethods">Total Other Request Methods</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalPostRequests">Total Post Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalPropfindRequests">Total Propfind Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalProppatchRequests">Total Proppatch Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalPutRequests">Total Put Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalSearchRequests">Total Search Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalTraceRequests">Total Trace Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TotalUnlockRequests">Total Unlock Requests</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#TraceRequests/sec">Trace Requests/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#UnlockRequests/sec">Unlock Requests/sec</a></td>
+</tr>
+
+</table>
+
+<h2><a name="users">与连接和用户有关的计数器</a></h2>
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+
+<tr>
+	<th width = 30% bgcolor="#C0C0C0">
+
+对象
+
+
+    </th>
+	<th width = 70% bgcolor="#C0C0C0">计数器</th>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#AnonymousUsers/sec">Anonymous Users/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a href="iicshpm.htm#ConnectionAttempts/sec">Connection Attempts/sec</a></td>
+</tr>
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#CurrentAnonymousUsers">Current Anonymous Users</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#CurrentCALCountForAuthenticatedUsers">Current CAL Count for Authenticated Users</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#CurrentCALCountForSSLConnections">Current CAL Count for SSL connections</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#CurrentConnections">Current Connections</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#CurrentNonAnonymousUsers">Current NonAnonymous Users</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#LogonAttempts/sec">Logon Attempts/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#MaximumAnonymousUsers">Maximum Anonymous Users</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#MaximumCALCountForAuthenticatedUsers">Maximum CAL Count for Authenticated Users</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#MaximumCALCountForSSLConnections">Maximum CAL Count for SSL connections</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#MaximumConnections">Maximum Connections</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#MaximumNonAnonymousUsers">Maximum NonAnonymous Users</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#NonAnonymousUsers/sec">Nonanonymous Users/sec</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#TotalAnonymousUsers">Total Anonymous Users</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#TotalConnectionAttempts">Total Connection Attempts</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#TotalCountOfFailedCALRequestsForAuthenticatedUsers">Total Count of failed CAL Requests for Authenticated Users</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#TotalCountOfFailedCALRequestsForSSLConnections">Total Count of failed CAL Requests for SSL connections</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#TotalLogonAttempts">Total Logon Attempts</a></td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#TotalNonAnonymousUsers">Total NonAnonymous Users</a></td>
+</tr>
+</table>
+
+<h2><a name="Caching">与缓存和内存有关的计数器</a></h2>
+
+<!-- Global Caching Counters start here.  -->
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+<th width = 30% bgcolor="#C0C0C0">
+
+对象
+
+
+</th>
+<th width = 70% bgcolor="#C0C0C0">计数器</th>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#ActiveFlushedEntries">Active Flushed Entries</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#BLOBCacheFlushes">BLOB Cache Flushes</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#BLOBCacheHits">BLOB Cache Hits</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#BLOBCacheHits%">BLOB Cache Hits %</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#BLOBCacheMisses">BLOB Cache Misses</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#CurrentBLOBsCached">Current BLOBs Cached</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#CurrentFileCacheMemoryUsage">Current File Cache Memory Usage</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#CurrentFilesCached">Current Files Cached</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#CurrentURIsCached">Current URIs Cached </a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#FileCacheFlushes">File Cache Flushes</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#FileCacheHits">File Cache Hits</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#FileCacheHits%">File Cache Hits %</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#FileCacheMisses">File Cache Misses</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#InMemoryCacheHitRate">In Memory Cache Hit Rate</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#InMemoryTemplates">In Memory Templates Cached</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#MaximumFileCacheMemoryUsage">Maximum File Cache Memory Usage</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#MemoryAllocated">Memory Allocated</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#ScriptEngineCache">Script Engines Cached</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#TemplatesCached">Templates Cached</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#TemplateCacheHitRate">Template Cache Hit Rate</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#TemplateNotifications">Template Notifications</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#TotalBLOBsCached">Total BLOBs Cached</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#TotalFilesCached">Total Files Cached</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#TotalFlushedBLOBs">Total Flushed BLOBs</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#TotalFlushedFiles">Total Flushed Files</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#TotalFlushedURIs">Total Flushed URIs</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#TotalURIsCached">Total URIs Cached</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#URICacheFlushes">URI Cache Flushes</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#URICacheHits">URI Cache Hits</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#URICacheHits%">URI Cache Hits %</a></td>
+</tr>
+
+<tr>
+<td valign="top">
+
+IIS Global</td>
+<td valign="top"><a href="iicshpm.htm#URICacheMisses">URI Cache Misses</a></td>
+</tr>
+</table>
+
+<h2><a name="sessions">与会话有关的计数器</a></h2>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+	<th width = 30% bgcolor="#C0C0C0">
+
+对象
+
+
+    </th>
+	<th width = 70% bgcolor="#C0C0C0">计数器</th>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#SessionDuration">Session Duration</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#SessionsCurrent">Sessions Current</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#SessionsTimedOut">Sessions Timed Out</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#SessionsTotal">Sessions Total</a></td>
+</tr>
+
+</table>
+
+<h2><a name="transactions">与事务有关的计数器</a></h2>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+	<th width=30% bgcolor="#C0C0C0">
+
+对象
+
+
+    </th>
+	<th width=70% bgcolor="#C0C0C0">计数器</th>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#TransactionsAborted">Transactions Aborted</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#TransactionsCommitted">Transactions Committed</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#TransactionsPending">Transactions Pending</a></td>
+</tr>
+
+<tr><td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#TransactionsTotal">Transactions Total</a></td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a href="iicshpm.htm#Transactions/Sec">Transactions/sec</a></td>
+</tr>
+</table>
+
+<h2><a name="restarts">与重新启动有关的计数器</a></h2>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+	<th width = 30% bgcolor="#C0C0C0">
+
+对象
+
+
+    </th>
+	<th width = 70% bgcolor="#C0C0C0">计数器</th>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a href="iicshpm.htm#ServiceUptime">Service Uptime</a></td>
+</tr>
+</table>
+
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

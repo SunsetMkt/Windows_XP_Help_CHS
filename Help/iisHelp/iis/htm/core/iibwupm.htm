@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr>
+<head>
+<title>更改内容</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="说明 IIS 4.0、IIS 5.0 与 IIS 5.1 之间的重要差别，例如对默认设置的更改、新增属性以及新的文件默认安装位置等。">
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name ="whatschanged">更改内容</a></h1>
+
+<p> 此主题将说明 IIS 4.0、IIS 5.0 与 IIS 5.1 之间默认行为及设置方面的重要差别。</p>
+
+<p>有关 IIS 5.1 新增功能的信息，请参阅<a href="iifeats.htm">功能</a>。</p>
+
+<p><a href="#administration">管理 </a></p>
+<p><a href="#progadm">程序管理</a></p>
+<p><a href="#asp">Active Server Pages (ASP)</a></p>
+<p><a href="#regandmet">注册表</a></p>
+<p><a href="#security">安全性</a></p>
+
+<p><a href="#docs">文档</a></p>
+
+<h2><a name="administration">管理 </a></h2>
+
+<ul>
+<li>在 IIS 4.0 中，应用程序既可以与 Internet 服务在同一个进程中运行，也可以在单独的进程中运行。在 IIS 5.0 和 IIS 5.1 中，为了提高性能并增强可扩展性，将应用程序分为若干个组，并分别在若干个缓冲进程中运行。详细信息，请参阅“关于应用程序”主题中的<a href="iiwarndc.htm#app_2">应用程序保护</a>。</li>
+
+<li>“应用程序映射”属性页包含一个超文本传输协议 (HTTP) 动作列表，这些动作可由映射到某种文件类型的应用程序进行处理。此动作列表体现了相对 IIS 4.0 所做的更改。在 IIS 4.0 中，此列表包含的是被排除（或者说不处理）的动作。这种变化的目的是为了包含最新版本的“协议”中增加的 HTTP 动作。有关应用程序映射的详细信息，请参阅<a href="iiwarndf.htm">设置应用程序映射</a>。</li>
+
+<li>改变了自定义错误文件的位置。详细信息，请参阅<a href="iierrdtl.htm#custerrinstall">启用详细自定义错误消息</a>。</li>
+
+<li>不能再从“开始”菜单访问 Internet 服务管理器。若要管理 IIS，请打开 <a href="iiabuti.htm">Internet 信息服务管理单元</a>。
+</li>
+</ul>
+
+<h2><a name="progadm">程序管理</a></h2>
+
+<p>请参阅 <a href="../asp/adsi5ga8.htm">IIS 5.1 中 ADSI 的更改</a>。</p>
+
+<h2><a name="asp"></a>Active Server Pages (ASP)</h2>
+
+<p>请参阅 <A HREF="../asp/iiwachng.htm">ASP 的重要变化</A>。</p>
+
+<h2><a name="regandmet">注册表</a></h2>
+
+
+从以前版本的 IIS 进行升级时，将删除下列注册表项：
+
+<p>HKEY_LOCAL_MACHINE\SOFTWARE <br> &nbsp;\Microsoft <br> &nbsp;&nbsp;\INetMgr <br> &nbsp;&nbsp;&nbsp;\InstalledBy </p>
+
+<p>HKEY_LOCAL_MACHINE\SOFTWARE <br> &nbsp;\Microsoft <br> &nbsp;&nbsp;\InetMgr <br> &nbsp;&nbsp;&nbsp;\Parameters <br> &nbsp;&nbsp;&nbsp;&nbsp;\AddOnTools <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\&Key Manager </p>
+
+<p>HKEY_LOCAL_MACHINE\SOFTWARE <br> &nbsp;\Microsoft <br> &nbsp;&nbsp;\INetMgr <br> &nbsp;&nbsp;&nbsp;\Parameters <br> &nbsp;&nbsp;&nbsp;&nbsp;\x </p>
+
+<p>HKEY_LOCAL_MACHINE\SOFTWARE <br> &nbsp;\Microsoft <br> &nbsp;&nbsp;\INetMgr <br> &nbsp;&nbsp;&nbsp;\Parameters <br> &nbsp;&nbsp;&nbsp;&nbsp;\AddOnServices <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\Gopher </p>
+
+<p>HKEY_LOCAL_MACHINE\SOFTWARE <br> &nbsp;\Microsoft <br> &nbsp;&nbsp;\INetStp <br> &nbsp;&nbsp;&nbsp;\SetupID </p>
+
+<p>HKEY_LOCAL_MACHINE\SOFTWARE <br> &nbsp;\Microsoft <br> &nbsp;&nbsp;\Windows <br> &nbsp;&nbsp;&nbsp;\CurrentVersion <br> &nbsp;&nbsp;&nbsp;&nbsp;\URL <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\Prefixes <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\ftp </p>
+
+<p>HKEY_LOCAL_MACHINE\SOFTWARE <br> &nbsp;\Microsoft <br> &nbsp;&nbsp;\Windows <br> &nbsp;&nbsp;&nbsp;\CurrentVersion <br> &nbsp;&nbsp;&nbsp;&nbsp;\Setup <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\OC Manager <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\mts_mmc </p>
+
+<p>HKEY_LOCAL_MACHINE\SOFTWARE <br> &nbsp;\Microsoft <br> &nbsp;&nbsp;\Windows <br> &nbsp;&nbsp;&nbsp;\CurrentVersion <br> &nbsp;&nbsp;&nbsp;&nbsp;\Setup <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\OC Manager <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\Subcomponents<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\iis_w3samp<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\iis_doc_common<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\iis_doc_ismcore<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\iis_doc_pwmcore<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\iis_doc_asp<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\iis_doc_sdk<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\iis_doc_mm</p>
+
+<h2><a name="security">安全性</a></h2>
+<ul>
+<li>IIS 4.0 中的许多安全功能在 IIS 5.0 和 IIS 5.1 中都被精简，取而代之的是新的安全任务向导：权限向导、Web 服务器证书向导以及 CTL 向导。通过这三个向导，可以同步 Web 和 NTFS 的安全设置、获取并安装服务器证书以及创建并修改证书信任列表。详细信息，请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>。</li>
+<li>默认情况下，启用“索引资源”。</li>
+<li>新增了“脚本资源访问”功能，可以访问 ASP 网页中的脚本及其他脚本的源代码。默认情况下是禁用的。只有选中了“读取”或“写入”权限，才能使用此功能。</li>
+<li>FrontPage Web（允许通过 FrontPage 管理服务器上的站点）不再在 Internet 信息服务管理单元中进行设置。默认情况下，已启用此选项。</li>
+</ul>
+
+
+
+<h2><a name="docs">文档</a></h2>
+
+<p>请参阅 <a href="iistpov.asp">Windows NT Option Pack 文档</a>。</p>
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+</font>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>网站管理</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关管理单个网站的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="websitecontent">网站管理</a></h1>
+
+<p>无论站点位于 Intranet 还是 Internet，提供内容的原理是相同的。首先必须将 Web 文件放入服务器的目录中，这样用户就可以建立 HTTP 连接，并使用 Web 浏览器查看文件。但是，除了仅仅在服务器上存储文件之外，还必须管理站点的部署方法，更重要的是如何发展您的站点。目前，极富吸引力的网站基本上不会是页面的静态集合。最成功的 Web 管理员总是忙于整理不断变化的 Web 内容。</P>
+
+<P>在本节中，将学习管理网站基础结构的基本概念，其中包括从重定向请求到动态改变网页的整个过程。</p>
+
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iihtmat.htm">关于网站管理</a>：简单介绍如何组织和管理网站。</li>
+<li><a href="iihowat.htm">选择创作工具</a>：概述如何选择满足需要的创作工具</li>。<li><a href="iiaspat.htm">使用 ASP 管理网站内容</a>：介绍 Microsoft Active Server Pages (ASP) 及如何使用它管理 Web 内容。</li>
+<li><a href="iicodirh.htm">更改主目录</a>：指定站点的中心位置。</li>
+<li><a href="iicodirv.htm">创建虚拟目录</a>：将目录添加到站点。</li>
+<li><a href="iicodirr.htm">将请求重定向到目录</a>：将浏览器请求转发到一个新位置。</li>
+<li><a href="iicodirp.htm">将请求重定向到程序</a>：将浏览器请求转发给应用程序。</li>
+<li><a href="iipswwws.htm">启用内容过期</a>：配置时间敏感信息的设置。</li>
+<li><a href="iicodirc.htm">使用内容分级</a>：对站点内容进行分级，帮助用户阻塞令人反感的信息。</li>
+<li><a href="iicodirf.htm">为网页添加页脚</a>：将页脚自动插入到站点的每个 HTML 网页。</li>
+<li><A HREF="iisiwelc.htm">服务器端包含</A>：将服务器命令插入到网页，这些命令在网页被请求之后、但发送到浏览器之前进行处理。</li>
+</ul>
+
+<p>本节不包含：</p>
+<ul>
+<li>使用 ASP 创建服务器端脚本的基础知识；请参阅 <a href="../asp/iiwawelc.htm">Active Server Pages</a>。</li>
+<li>添加网站；请参阅<a href="iivrtsv.htm">网站和 FTP 站点</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE>
+（下列单词只用于搜索，不会出现在网页中。）管理, 基本, 简单, 欢迎, 概述, 管理, 管理员, 管理器, c:\, inetpub, wwwroot, url, 好记的名, 文本名, 别名, 物理位置, ftp, 网络管理员, 配置, 设置, 组织, 作者, 写, html, web, 页, 浏览器, explorer, navigator, 站点, 记事本, frontpage；主站点, hotdog, visual interdev, asp, active server pages, 内容, 文件, 更改, 树, 目录, 文件夹, 结构, 关联, 链接, 主页, 启动, 默认, 虚拟目录, vdir, v-dir, unc, 访问点, 发布, 创建, 添加, 新建, 到期, 旧的, 过期的, 过时的, 以前的, 优先的, 更新的, 缓存, 浏览器, 重新定向, 向前, 发送, 请求, 不同的, 凸块, 回弹, 重新传递, 直接, 地址, 替换, 绕行, 交换, 分级, 成人, 攻击性, 讨厌的, 暴力, 血腥的, 赤裸, 性, 色情文学, 色情书刊, 色情文学, 色情作品, 色情的, 语言, 图片, Internet 内容选择平台, 审查, 不适当的, 儿童, 小孩, 未成年的, 页脚, 包括, 底部, 属性, 属性页, 链接, 详细信息
+</layer></span>
+</font>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>超时参考</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="超时值的参考信息。包括可在 IIS 中设置的各种超时值的表格。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="time">超时参考</a></h1>
+
+<p>Internet 信息服务具有几个超时值，在安装 Windows&nbsp;XP 时已对它们进行了默认设置。使用超时值，服务器可以指定将服务器资源分配给特定任务或客户端使用的时间。下表列出了 IIS 中的不同超时值及其设置位置。</p>
+
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+
+<tr>
+<th width="20%" bgcolor="#C0C0C0" align="Left" valign="top">属性名称</th>
+<th width="27%" bgcolor="#C0C0C0" align="Left" valign="top">配置数据库标识符</th>
+<th width="20%" bgcolor="#C0C0C0" align="Left" valign="top">在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中是否可用</th>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro1cmt.htm">AspScriptTimeout</a></td>
+<td valign="Top"> MD_ASP_SCRIPTTIMEOUT </td>
+<td valign="Top"><a href="iitime2.htm#1">是</a></td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro0rw4.htm">AspSessionTimeout</a></td>
+<td valign="Top">MD_ASP_SESSIONTIMEOUT</td>
+<td valign="Top"><a href="iitime2.htm#2">是</a></td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro6khg.htm">ConnectionTimeout</a></td>
+<td valign="Top">MD_CONNECTION_TIMEOUT</td>
+<td valign="Top"><a href="iitime2.htm#3">是</a></td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro6e9g.htm">CGITimeout</a></td>
+<td valign="Top">MD_SCRIPT_TIMEOUT</td>
+<td valign="Top"><a href="iitime2.htm#4">是</a></td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro19ys.htm">ServerListenTimeout</a></td>
+<td valign="Top">MD_SERVER_LISTEN_TIMEOUT</td>
+<td valign="Top">否</td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro9fhw.htm">PoolIdcTimeout</a></td>
+<td valign="Top">MD_POOL_IDC_TIMEOUT</td>
+<td valign="Top">否</td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro64vo.htm">AspQueueTimeout</a></td>
+<td valign="Top">MD_ASP_QUEUETIMEOUT</td>
+<td valign="Top">否</td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro7e9g.htm">CpuLimitLogEvent</a></td>
+<td valign="Top">MD_CPU_LIMIT_LOGEVENT</td>
+<td valign="Top"><a href="iitime2.htm#5">是</a></td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro0mm1.htm">CpuLimitPriority</a></td>
+<td valign="Top">MD_CPU_LIMIT_PRIORITY</td>
+<td valign="Top"><a href="iitime2.htm#5">是</a></td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro65rk.htm">CpuLimitProcStop</a></td>
+<td valign="Top">MD_CPU_LIMIT_PROCSTOP</td>
+<td valign="Top"><a href="iitime2.htm#5">是</a></td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="../asp/apro9k85.htm">CpuLimitPause</a></td>
+<td valign="Top">MD_CPU_LIMIT_PAUSE</td>
+<td valign="Top">否</td>
+</tr>
+
+</table>
+<br>
+<table border="1" cellpadding="4" cellspacing="1" width="70%">
+
+<tr>
+<th width="50%" bgcolor="#C0C0C0" align="Left" valign="top"><a name="timetable">IIS 重新启动超时</a></th>
+<th width="50%" bgcolor="#C0C0C0" align="Left" valign="top">默认值（秒）</th>
+</tr>
+
+<tr>
+<td valign="Top"><a href="iicodira.htm#timeout">停止</a></td>
+<td valign="Top">60</td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="iicodira.htm#timeout">重新启动</a></td>
+<td valign="Top">20</td>
+</tr>
+
+<tr>
+<td valign="Top"><a href="iicodira.htm#timeout">重新引导</a></td>
+<td valign="Top">0</td>
+</tr>
+
+</table>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

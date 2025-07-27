@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+
+<title>目录安全性属性页</title>
+
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 dir=ltr>
+<FONT FACE="宋体">
+
+<p> <strong><a name="hidd_directory_security"></a>目录安全性属性页</strong></p>
+
+<p>使用此属性页设置 Web 服务器的安全特性。</p>
+
+<p><strong>匿名访问和身份验证控制</strong></p>
+
+<p>要配置 Web 服务器的身份验证和匿名访问功能，可单击 “编辑”。使用这些功能对 Web 服务器进行配置，使其在授予用户对受限内容的访问权限之前先验证用户身份。</p>
+
+<p>在服务器验证用户身份之前，必须首先创建有效的 Windows 用户帐户，并为这些帐户配置 Windows 文件系统 (NTFS) 目录和文件权限。</p>
+
+<p><strong>IP 地址和域名限制</strong></p>
+
+<p>（此功能只适用于 Windows 2000 Server。）</p>
+
+<p>要允许或防止特定用户、计算机、计算机组或域访问此网站、目录或文件，可单击“编辑”。</p>
+
+<p><strong>安全通信</strong></p>
+
+<p>要配置 Web 服务器的安全套接字层 (SSL) 安全通信功能，可单击“编辑”。只有在被管理的计算机上安装了有效的服务器证书，才能使用 Web 服务器安全通信特性。</p>
+
+<p>使用安全通信特性可以：</p>
+
+<ul>
+<li>要求用户建立安全（加密）链接才能连接到目录或文件。</li>
+<li>设置 Web 服务器的客户证书映射和身份验证功能。</li>
+<li>启用或禁用客户证书映射</li>
+</ul>
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

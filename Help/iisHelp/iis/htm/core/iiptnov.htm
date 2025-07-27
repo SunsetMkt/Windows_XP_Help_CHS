@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>性能调整</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="导航页包含有关服务器性能调整的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name="H1_37722482">性能调整</a></h1>
+
+<p>Internet Information Services 5.1 不能同时连接 10 个以上的客户端。通常不需要对同时连接的 10 个客户端进行性能调整。因此，下列信息是针对使用 Windows 2000 Server 和 Windows 2000 DataCenter 的用户的，这两种产品可以处理同时连接的几千个客户端。如果对 IIS 5.1 性能调整感兴趣，也可以考虑用 Active Server Pages (ASP) 创建应用程序以提高性能。详细信息，请参阅 <a href="../asp/aspguide.htm">Active Server Pages 指南</a>。</p>
+
+<p>本节介绍如何选择和使用 Windows&nbsp;XP 工具来监视服务器和网站的性能，以及如何调节多个设置来提高总体性能。IIS 提供两种用以访问性能设置的方法。第一种方法是使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>。第二种方法是以编程方式直接更改配置数据库中的设置。本节只介绍使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>更改性能设置。</p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iiabtpm.htm">关于性能调整</a>：描述性能问题的概念信息。</li>
+
+<li><a href="iiabcap.htm">网络容量</a>：设计网络容量，并优化连接性能。</li>
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>编程管理；请参阅<a href="../asp/aint7e9l.htm">以编程方式管理 IIS</a>。</li>
+<li>有关网站内容选择的性能效果；请参阅<a href="iiwarndb.htm">配置应用程序</a>。</li>
+<li>有关如何跟踪网站通信量的信息；请参阅<a href="iilogsa.htm">记录站点活动</a>。</li>
+</ul>
+
+<hr><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE>
+（下列词汇只用于搜索，不会显示在网页中。）性能, 性能, 性能, 容量, 能够, 能力, 计划, 执行, 修改, 自定义, 自定义, 调节, 调节, 调整, 扭, 改进, 加强, 加速, 详细, 另外, 更大, ram, 内存, cpu, 速度, 卷, 句柄, 加载, 连接, 连接, 池, 池, http, 保持活动, 保持活动, 保持活动, 保持活动, 保持活动, 评估, 计算, 多少, 多少, 磁盘驱动器, 添加, 添加, 利用, 利用, 利用, 带宽, 限制, 限制, 处理, 处理器, oop, 外部进程, 利用, 应用程序, 超时, 超时, 超时, 限制, 压缩, 压缩, 限制, http 压缩, 缓存, 网络, web,  internet,  Intranet, 服务器, 应用程序, 要求, 加载, 加载, 加载, 重, 轻, 大, 更大, 电子邮件, 电子邮件, 容量, 链接, 详细信息, 工作对象 
+</layer></span>
+</font>
+</body>
+</html>

@@ -1,0 +1,1472 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr>
+<head>
+<title>单元 1：创建 ASP 网页</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</SCRIPT> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//-->
+</SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="这是一个 Active Server Pages (ASP) 教程，您可以通过创建自己的 ASP 网页 (.asp 文件) 了解一些 ASP 基础知识。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+</head>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<font face="宋体">
+
+<h1><a name="module1">单元 1：创建 ASP 网页</a></h1>
+
+<p>
+在单元 1 中，将使用 HTML 和 Microsoft&reg; Visual Basic&reg; Scripting Edition (VBScript) 创建 ASP 网页（.asp 文件）。此单元包含下列课程：
+</p>
+
+<p>
+<ul>
+	<li>
+	<A href="#writing">第 1 课：编写 ASP 网页</A>&nbsp;&nbsp;&nbsp;如何使用 HTML 和 VBScript 编写并运行 ASP 网页的四个示例。</li><li>
+	<A href="#submitting">第 2 课：使用表单提交信息</A>&nbsp;&nbsp;&nbsp;在 HTML 网页上开发表单，使用户可以输入他们的个人数据。</li><li>
+	<A href="#creating">第 3 课：创建使用数据库的意见簿</A>&nbsp;&nbsp;&nbsp;使用表单收集访问者的信息，将这些信息存储到 Microsoft Access 数据库中，并在网页上显示此数据库的内容。</li><li>
+	<A href="#displaying">第 4 课：显示 Excel 电子表格</A>&nbsp;&nbsp;&nbsp;在网页上显示 Microsoft Excel 电子表格。</li>
+</ul>
+
+<BR>
+<h2><a name="writing">第 1 课：编写 ASP 网页</a></h2>
+
+<p>
+学习 ASP 的最佳方法是先研究示例，然后更改感兴趣的整数值、字符串以及语句，并在浏览器中观察发生的变化。
+</p>
+
+<p>
+在本课程中，您将执行下列任务：
+</p>
+
+<ul>
+    <li>
+	<b>示例 1&nbsp;&nbsp;&nbsp;</b>使用 HTML 和 VBScript 创建、保存和运行 ASP 网页。</li><li>
+	<b>示例 2、 3 和 4&nbsp;&nbsp;&nbsp;</b>使用内置函数和条件脚本语句在 ASP 网页中添加功能和逻辑。</li>
+</ul>
+
+
+<p>
+VBScript 是用于 ASP 网页的默认脚本语言，但其分隔符与 JScript 相同。使用尖括号作为 HTML 标记的分隔符（如在任何 .htm 网页中一样），如下所示：
+</p>
+
+<code>
+&nbsp; &lt;<i>example</i>&gt;&lt;/<i>example</i>&gt;
+</code>
+
+<p>
+使用百分号和尖括号作为脚本代码的分隔符，如下所示：
+</p>
+
+<code>
+&nbsp; &lt;% <i> example</i> %&gt;
+</code>
+
+<p>
+&nbsp;</p>
+
+<p>
+可以将多条脚本语句放在一对脚本分隔符中，如下例所示：</p>
+
+<code>
+<p>
+&nbsp; &lt;font face="MS Gothic"&gt;
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; '创建一个变量。
+<BR>&nbsp;&nbsp; dim strGreeting
+<BR>
+<BR>&nbsp;&nbsp; '设置欢迎词
+<BR>&nbsp;&nbsp; strGreeting = "Hello  World!"
+<BR>
+<BR>&nbsp;&nbsp; '使用 ASP Response 对象输出欢迎词。
+<BR>&nbsp;&nbsp; Response.Write strGreeting &amp; "&lt;BR&gt;"
+<BR>
+<BR>&nbsp;&nbsp; '同时使用 &lt;%= 方法输出欢迎词。
+<BR>&nbsp; %&gt;
+<BR>&nbsp; &lt;%=strGreeting%&gt;
+<BR>&nbsp; &lt;/font&gt;
+</p>
+</code>
+
+<P>
+&nbsp;
+</P>
+
+<P>
+此代码将在浏览器中显示下列文字：
+</P>
+<P>
+<FONT face="MS Gothic">&nbsp; Hello World!<BR>&nbsp; Hello World!</FONT>
+</P> 
+ 
+&nbsp;
+<p>下面是使用 JScript 实现上述功能的示例:</p>
+<p>
+
+<code>
+&nbsp; &lt;%@ Language=JScript %&gt;
+<BR>
+<BR>&nbsp; &lt;font face=&quot;MS Gothic&quot;&gt;
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; //创建一个变量。
+<BR>&nbsp;&nbsp; var strGreeting;
+<BR>
+<BR>&nbsp;&nbsp; //设置欢迎词。
+<BR>&nbsp;&nbsp; strGreeting = &quot;Hello World!&quot;;
+<BR>
+<BR>&nbsp;&nbsp; //使用 ASP Response 对象输出欢迎词。
+<BR>&nbsp;&nbsp; Response.Write(strGreeting + &quot;&lt;BR&gt;&quot;);
+<BR>
+<BR>&nbsp;&nbsp; //同时使用 &lt;%= 方法输出欢迎词。
+<BR>&nbsp; %&gt;
+<BR>&nbsp; &lt;%=strGreeting%&gt;
+<BR>&nbsp; &lt;/font&gt;
+</code>
+<p>
+创建 ASP 网页时，可以使用一个类似于记事本的文本编辑器编写代码，并以 .asp 而非 .htm 作为扩展名保存。.asp 文件扩展名告知 IIS 在将网页发送到客户端之前要通过 ASP 引擎。（<b>注意：</b>在记事本的“另存为”对话框中，当“保存类型”选择为“文本文档 (*.txt)”时，记事本会自动将 .txt 追加到文件名后。为防止这种情况发生，请将“保存类型”选择为“所有文件”，并在“文件名”字段中键入完整的文件名“MyFile.asp”，然后单击“保存”按钮。）
+</P>
+
+<p> 
+ 
+<br></p>
+<h3>示例 1</h3>
+
+<p>
+本示例用于显示欢迎词、日期和当前时间。要运行本示例，请将下列代码复制并粘贴到一个空文件中，并将其保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为“Example1.asp”。在浏览器地址栏中键入 <b> 
+http&#58;&#47;&#47;localhost&#47;Tutorial&#47;Example1.asp</b> 查看此示例。
+</p>
+   
+
+  
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt;
+<BR>
+<BR>&nbsp; &lt;html&gt;
+<BR>&nbsp; &lt;head&gt;
+<BR>&nbsp; &lt;title&gt;示例 1&lt;/title&gt;
+<BR>&nbsp; &lt;/head&gt;
+<BR>&nbsp; &lt;body&gt;
+<BR>&nbsp; &lt;font face="宋体"&gt;
+<BR>
+<BR>&nbsp; &lt;H1&gt;欢迎访问我的主页&lt;/H1&gt;
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; '创建一些变量。
+<BR>&nbsp;&nbsp; dim strDynamicDate
+<BR>&nbsp;&nbsp; dim strDynamicTime
+<BR>
+<BR>&nbsp;&nbsp; '获取日期和时间。
+<BR>&nbsp;&nbsp; strDynamicDate = Date()
+<BR>&nbsp;&nbsp; strDynamicTime = Time()
+<BR>
+<BR>&nbsp;&nbsp; '将 strDymamicTime 中的后两个字符与 "PM" 比较，并基于当前时间输出欢迎词。
+<BR>&nbsp;&nbsp; If "PM" = Right(strDynamicTime, 2) Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;H3&gt;下午好!&lt;/H3&gt;"
+<BR>&nbsp;&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;H3&gt;上午好!&lt;/H3&gt;"
+<BR>&nbsp;&nbsp; End If
+<BR>&nbsp; %&gt;
+<BR>&nbsp; 今天是 &lt;%=strDynamicDate%&gt;，时间 &lt;%=strDynamicTime%&gt;&nbsp;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt;
+<BR>&nbsp; &lt;/html&gt;
+</P>
+</code>
+
+<P>
+在浏览器中，您将看到类似于下面的结果（取决于执行此练习的日期和时间）：
+</P>
+<font face="MS Gothic"> 
+<P>
+<H1>&nbsp;欢迎访问我的主页</H1> 
+<H3>&nbsp; 下午好！</H3> 
+&nbsp; 今天是 2000-10-20，时间 7:29:50 PM</font>
+<p></p>
+<br>
+<p>
+</p>
+<p><b>注意：</b>站点服务器按下列顺序处理 Example1.asp：
+</p>
+
+<ol>
+	<li>
+	<b>&lt;%@ Language=VBScript %&gt;</b>告知 ASP 引擎使用 VBScript 引擎解析脚本代码。</li>  
+	<li>
+	ASP 引擎忽略 HTML 代码块。</li>  
+	<li>
+	ASP 引擎执行 <b>&lt;%...%&gt;</b> 块中的代码，并用占位符替换这些块。将 <b>Response.Write</b> 字符串和 <i>&lt;%=...%&gt;</i> 字符串的结果保存到服务器的内存中。</li> 
+	<li>
+	在网页离开 ASP 引擎之前，将 Response.Write 字符串和 <i>&lt;%=...%&gt;</i> 字符串的结果插入到 HTML 代码中的相应占位符处。</li> 
+	<li>
+	完整的网页以一个 HTML 代码文件形式离开 ASP 引擎。然后，服务器将此网页发送到客户端。</li>
+</ol>
+<BR><h3>示例 2</h3>
+
+<p>
+此示例在 ASP 网页中加进一个 <b>For...Next</b> 循环以添加一些动态逻辑。<b>For...Next</b> 循环是可使用的六个条件语句之一。另外五个条件语句是：<b>Do...Loop</b>、<b>For Each...Next</b>、<b>If...Then...Else...End If</b>、<b>Select..Case...End Select</b> 和 <b>While...Wend</b>。您可以在 <a href="http://go.microsoft.com/fwlink/?LinkId=1758" target="_blank">Windows
+Script Technologies</a> 的 VBScript 部分找到这些语句的描述。
+</p>
+
+<P>
+请将下列代码复制并粘贴到文本编辑器中，并保存为“Example2.asp”。在浏览器地址栏中键入 <B>http&#58;&#47;&#47;localhost&#47;Tutorial&#47;Example2.asp
+</B> 查看此示例。
+</p>         
+     
+<P>
+此示例的处理过程与 Example1.asp 相同。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt;&nbsp;
+<BR>
+<BR>&nbsp; &lt;html&gt;
+<BR>&nbsp; &lt;head&gt;
+<BR>&nbsp; &lt;title&gt;示例 2&lt;/title&gt;
+<BR>&nbsp; &lt;/head&gt;
+<BR>&nbsp; &lt;body&gt;
+<BR>&nbsp; &lt;font face="宋体"&gt;
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; '创建一个变量。
+<BR>&nbsp;&nbsp; dim strTemp
+<BR>&nbsp;&nbsp; dim font1, font2, font3, font, size
+<BR>
+<BR>&nbsp;&nbsp; '设置此变量。
+<BR>&nbsp;&nbsp; strTemp= "请购买我的产品！"
+<BR>&nbsp;&nbsp; fontsize = 0
+<BR>
+<BR>&nbsp;&nbsp; '使用 For...Next 循环输出字符串 5 次。
+<BR>&nbsp;&nbsp; For i = 1 to 5
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '闭合脚本分隔符以允许使用 HTML 代码和 &lt;%=...
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; %&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;table align=center&gt;&lt;font size= &lt;%=fontsize%&gt;&gt; &lt;%=strTemp%&gt; &lt;/font&gt;&lt;/table&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;%
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; fontsize = fontsize + i
+<BR>
+<BR>&nbsp;&nbsp; Next
+<BR>
+<BR>&nbsp; %&gt;
+<BR>&nbsp; &lt;table align=center&gt;&lt;font size=6&gt;&lt;B&gt; 棒极了！ &lt;B&gt;&lt;/font&gt;&lt;/table&gt;&lt;BR&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt;
+<BR>&nbsp; &lt;/html&gt; 
+</P>
+</code>
+
+<P>
+在浏览器中，您应该看到类似于下面的结果：
+</P>
+
+<P>
+<FONT face="宋体">
+<TABLE align=center><FONT size=0>请购买我的产品！</FONT></TABLE>
+<TABLE align=center><FONT size=1>请购买我的产品！</FONT></TABLE>
+<TABLE align=center><FONT size=3>请购买我的产品！</FONT></TABLE>
+<TABLE align=center><FONT size=6>请购买我的产品！</FONT></TABLE>
+<TABLE align=center><FONT size=10>请购买我的产品！</FONT></TABLE>
+<TABLE align=center><FONT size=6><B>棒极了！ </B></FONT></TABLE>
+</FONT>
+<P>
+&nbsp;
+<p>下面是使用 JScript 编写的示例 2：</p>
+<p>
+
+<code>
+&nbsp; &lt;%@ Language=JScript %&gt;
+<BR>
+<BR>
+&nbsp; &lt;html><br>
+&nbsp; &lt;head><br>
+&nbsp; &lt;title>示例 2&lt;/title><br>
+&nbsp; &lt;/head><br>
+&nbsp; &lt;body><br>
+&nbsp; &lt;font face="宋体"><br>
+<br>
+&nbsp; &lt;%<br>
+&nbsp; //创建一个变量。<br>
+&nbsp; var strTemp;<br>
+&nbsp; var font1, font2, font3, font, size;<br>
+<br>
+&nbsp; //设置变量。<br>
+&nbsp; strTemp= "请购买我的产品！";<br>
+&nbsp; fontsize = 0;<br>
+<br>
+&nbsp; //使用 For...Next 循环输出字符串 5 次。<br>
+&nbsp; for (i = 1; i &lt; 6; i++) {<br>
+<br>
+&nbsp; //闭合脚本分隔符以使用 HTML 代码和 &lt;%=...<br>
+&nbsp; %><br>
+&nbsp; &lt;table align=center>&lt;font size= &lt;%=fontsize%>> &lt;%=strTemp%> &lt;/font>&lt;/table><br>
+&nbsp; &lt;%<br>
+&nbsp; fontsize = fontsize + i;<br>
+<br>
+&nbsp; }<br>
+<br>
+&nbsp; %><br>
+&nbsp; &lt;table align=center>&lt;font size=6>&lt;B> 棒极了！&lt;B>&lt;/font>&lt;/table>&lt;BR><br>
+<br>
+&nbsp; &lt;/font><br>
+&nbsp; &lt;/body><br>
+&nbsp; &lt;/html></code>
+
+</p>
+
+<h3>示例 3</h3>
+<p>随着企业意识到必须在世界范围内推销其产品，多语种网站每天都在层出不穷。因此，设置日期、时间和货币的格式，使之与用户所在区域相匹配对开拓市场大有裨益。
+<p>
+在示例 3 中，使用一个预定义函数在 ASP 网页上显示日期和货币。对于不同的区域，可以使用 <b>GetLocale</b>、<b>SetLocale</b>、<b>FormatCurrency</b> 和 <b>FormatDateTime</b> 函数，为不同的区域设置日期和货币的格式。MSDN 的 <b>Locale ID Chart</b> 中列出了区域标识字符串。（本示例不包括更改“代码页”以实现在欧洲语言操作系统上显示非欧洲语言字符。详细信息，请参阅 IIS 文档中的“代码页”主题。）
+
+<p>
+<b>注意：</b>在 VBScript 中有 90 多个预定义函数，<a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&amp;ar=scripting&amp;clcid=" target="_blank">Windows
+Script Technologies</a> 中对这些函数进行了详细定义。要查看此文档，请选择“VBScript”，选择“Documentation”，选择“Language Reference”，再选择“Functions”。
+</p>
+
+<p>
+将下列代码复制并粘贴到文本编辑器中，并保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为“Example3.asp”。在浏览器地址栏中键入 <B>http&#58;&#47;&#47;localhost&#47;Tutorial&#47;Example3.asp</B> 查看此示例。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt;
+<BR>
+<BR>&nbsp; &lt;html&gt;
+<BR>&nbsp; &lt;head&gt;
+<BR>&nbsp; &lt;title&gt;示例 3&lt;/title&gt;
+<BR>&nbsp; &lt;/head&gt;
+<BR>&nbsp; &lt;body&gt;
+<BR>&nbsp; &lt;font face="宋体"&gt;
+<BR>
+<BR>&nbsp; &lt;H3&gt;感谢您购买我们的产品。请打印此网页以作为记录。&lt;/H3&gt;
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; '创建一些变量。
+<BR>&nbsp;&nbsp; dim saveLocale
+<BR>&nbsp;&nbsp; dim totalBill
+<BR>
+<BR>&nbsp;&nbsp; '设置变量。
+<BR>&nbsp;&nbsp; saveLocale = GetLocale
+<BR>&nbsp;&nbsp; totalBill = CCur(85.50)
+<BR>
+<BR>&nbsp;&nbsp; '为每个区域设置日期和货币的格式
+<BR>&nbsp;&nbsp; SetLocale("fr")
+<BR>&nbsp;&nbsp; Response.Write"&lt;B&gt;设置为法语格式：&lt;/B&gt;&lt;BR&gt;"
+<BR>&nbsp;&nbsp; Response.Write FormatDateTime(Date, 1) &amp; "&lt;BR&gt;"
+<BR>&nbsp;&nbsp; Response.Write FormatCurrency(totalBill) &amp; "&lt;BR&gt;"
+<BR>&nbsp;&nbsp; SetLocale("de")
+<BR>&nbsp;&nbsp; Response.Write"&lt;B&gt;设置为德语格式：&lt;/B&gt;&lt;BR&gt;"
+<BR>&nbsp;&nbsp; Response.Write FormatDateTime(Date, 1) &amp; "&lt;BR&gt;"
+<BR>&nbsp;&nbsp; Response.Write FormatCurrency(totalBill) &amp; "&lt;BR&gt;"
+<BR>&nbsp;&nbsp; SetLocale("en-au")
+<BR>&nbsp;&nbsp; Response.Write"&lt;B&gt;设置为英语格式 - 澳大利亚：&lt;/B&gt;&lt;BR&gt;"
+<BR>&nbsp;&nbsp; Response.Write FormatDateTime(Date, 1)&amp; "&lt;BR&gt;"
+<BR>&nbsp;&nbsp; Response.Write FormatCurrency(totalBill) &amp; "&lt;BR&gt;"
+<BR>
+<BR>&nbsp;&nbsp; '还原为原来的区域设置
+<BR>&nbsp;&nbsp; SetLocale(saveLocale)
+<BR>&nbsp; %&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt;
+<BR>&nbsp; &lt;/html&gt;
+</p>
+</code>
+
+<P>
+在浏览器中，您应看到下列结果：
+</P>
+
+<p><H3><FONT face="宋体">感谢您购买我们的产品。请打印此网页以作为记录。</H3>
+<B>&nbsp; 设置为法语格式：</B>
+<BR>&nbsp; vendredi 20 octobre 2000
+<BR>&nbsp; 85,50 F
+<BR><B>&nbsp; 设置为德语格式：</B>
+<BR>&nbsp; Freitag, 20. Oktober 2000
+<BR>&nbsp; 85,50 DM
+<BR><B>&nbsp; 设置为英语格式 - 澳大利亚：</B>
+<BR>&nbsp; Friday, 20 October 2000
+<BR>&nbsp; $85.50
+</FONT>
+
+<h3>示例 4</h3>
+
+<p>
+在 ASP 脚本中，字符串操作函数是最常使用的函数。最强大的字符串函数使用正则表达式。因为正则表达式较难掌握，示例 4 显示了如何使用字符串表达式和正则表达式替换字符串中的字符。<a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&amp;ar=scripting&amp;clcid=" target="_blank">Windows
+Script Technologies</a> 中对正则表达式进行了定义。要查看此文档，请选择“VBScript”，选择“Documentation”，再选择“Regular Expressions Guide”。 
+</p>
+
+<p>
+将下列代码复制并粘贴到文本编辑器中，并将其保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为“Example4.asp”。在浏览器地址栏中键入 <B>
+http&#58;&#47;&#47;localhost&#47;Tutorial&#47;Example4.asp 
+</B>查看此示例。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt;
+<BR>
+<BR>&nbsp; &lt;html&gt;
+<BR>&nbsp; &lt;head&gt;
+<BR>&nbsp; &lt;title&gt;示例 4&lt;/title&gt;
+<BR>&nbsp; &lt;/head&gt;
+<BR>&nbsp; &lt;body&gt;
+<BR>&nbsp; &lt;font face="宋体"&gt;
+<BR>
+<BR>&nbsp; &lt;H3&gt;更改客户的街道地址&lt;/H3&gt;
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; '创建一些变量。
+<BR>&nbsp;&nbsp; dim strString
+<BR>&nbsp;&nbsp; dim strSearchFor&nbsp;&nbsp;&nbsp;&nbsp; ' 定义为字符串
+<BR>&nbsp;&nbsp; dim reSearchFor&nbsp;&nbsp;&nbsp;&nbsp; ' 定义为正则表达式
+<BR>&nbsp;&nbsp; dim strReplaceWith
+<BR>
+<BR>&nbsp;&nbsp; '设置变量。
+<BR>&nbsp;&nbsp; strString = "Jane Doe&lt;BR&gt;100 Orange Road&lt;BR&gt;Orangeville, WA&lt;BR&gt;98100&lt;BR&gt;800.555.1212&lt;BR&gt;"
+<BR>&nbsp;&nbsp; '&nbsp;&nbsp; 使用字符串对象
+<BR>&nbsp;&nbsp; strSearchFor = "100 Orange Road&lt;BR&gt;Orangeville, WA&lt;BR&gt;98100"
+<BR>&nbsp;&nbsp; '&nbsp;&nbsp; 使用正则表达式对象
+<BR>&nbsp;&nbsp; Set reSearchFor = New RegExp
+<BR>&nbsp;&nbsp; reSearchFor.Pattern = "100 Orange Road&lt;BR&gt;Orangeville, WA&lt;BR&gt;98100"
+<BR>&nbsp;&nbsp; reSearchFor.IgnoreCase = False
+<BR>
+<BR>&nbsp;&nbsp; strReplaceWith = "200 Bluebell Court&lt;BR&gt;Blueville, WA&lt;BR&gt;98200"
+<BR>
+<BR>&nbsp;&nbsp; '检查 strSearchFor 是否存在...
+<BR>&nbsp;&nbsp; '&nbsp;&nbsp; 使用字符串对象。
+<BR>&nbsp;&nbsp; If Instr(strString, strSearchFor) Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "在 strString 中找到 strSearchFor&lt;BR&gt;"
+<BR>&nbsp;&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "未找到"
+<BR>&nbsp;&nbsp; End If
+<BR>&nbsp;&nbsp; '&nbsp;&nbsp; 使用正则表达式对象。
+<BR>&nbsp;&nbsp; If reSearchFor.Test(strString) Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "在 strStringre 中找到 SearchFor.Pattern&lt;BR&gt;"
+<BR>&nbsp;&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "未找到"
+<BR>&nbsp;&nbsp; End If
+<BR>
+<BR>&nbsp;&nbsp; '替换字符串...
+<BR>&nbsp;&nbsp; Response.Write "&lt;BR&gt;原字符串：&lt;BR&gt;" &amp; strString &amp; "&lt;BR&gt;"
+<BR>&nbsp;&nbsp; '&nbsp;&nbsp; 使用字符串对象。
+<BR>&nbsp;&nbsp; Response.Write "替换了 strSearchFor 后的字符串：&lt;BR&gt;"
+<BR>&nbsp;&nbsp; Response.Write Replace(strString, strSearchFor, strReplaceWith) &amp; "&lt;BR&gt;"
+<BR>&nbsp;&nbsp; '&nbsp;&nbsp; 使用正则表达式对象。
+<BR>&nbsp;&nbsp; Response.Write "替换了 reSearchFor 后的字符串：&lt;BR&gt;"
+<BR>&nbsp;&nbsp; Response.Write reSearchFor.Replace(strString, strReplaceWith) &amp; "&lt;BR&gt;"
+<BR>&nbsp; %&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt;
+<BR>&nbsp; &lt;/html&gt;
+</p>
+</code>
+
+<P>
+在浏览器中，您应看到下列结果：
+</P>
+
+<p>
+<FONT face="宋体"><H3>&nbsp;更改客户的街道地址</H3>
+&nbsp; 在 strString 中找到 strSearchFor
+<BR>&nbsp; 在 strString 中找到 reSearchFor.Pattern
+<BR>
+<BR>&nbsp; 原字符串：
+<BR>&nbsp; Jane Doe
+<BR>&nbsp; 100 Orange Road
+<BR>&nbsp; Orangeville, WA
+<BR>&nbsp; 98100
+<BR>&nbsp; 800.555.1212
+<BR>
+<BR>&nbsp; 替换了 strSearchFor 后的字符串：
+<BR>&nbsp; Jane Doe
+<BR>&nbsp; 200 Bluebell Court
+<BR>&nbsp; Blueville, WA
+<BR>&nbsp; 98200
+<BR>&nbsp; 800.555.1212
+<BR>
+<BR>&nbsp; 替换了 reSearchFor 后的字符串：
+<BR>&nbsp; Jane Doe
+<BR>&nbsp; 200 Bluebell Court
+<BR>&nbsp; Blueville, WA
+<BR>&nbsp; 98200
+<BR>&nbsp; 800.555.1212
+</FONT>
+
+<p><BR>
+<h2><a name="submitting">第 2 课：使用表单提交信息</a></h2>
+
+<p>
+Intranet 和 Internet 服务器应用程序的一个常见用途就是在网页中实现一个表单，接受用户输入。ASP 在 <b>Request</b> 对象中包含下列两个集合：<b>QueryString</b> 集合和 <b>Form</b> 集合，实现了表单信息的处理。</p>
+<p>在本课程中，您将创建一个 HTML 网页，使用一个 HTML 表单接受用户输入，并将用户输入返回站点服务器的同一网页。站点服务器随后显示用户输入。在本单元的最后，您将利用这些有关表单的知识，使用 ASP 脚本建立一个意见簿应用程序。要完成此课程，您应当执行下列任务：
+</p>
+
+<ul>
+    <li>
+	<b>示例 1&nbsp;&nbsp;&nbsp;</b>在表单中显示一组按钮。
+    </li>
+    <li>
+	<b>示例 2&nbsp;&nbsp;&nbsp;</b>在表单中显示文本框，从表单接受用户输入，随后在网页上显示用户输入。</li>
+</ul>
+
+<h3>示例 1：按钮</h3>
+
+<p>
+表单可以包含多种不同类型的元素帮助用户输入数据。在本示例中，将创建五个称为按钮的输入表单元素。此外，还有多种类型的按钮，包括 <b>RADIO</b> 按钮、<b>SUBMIT</b> 按钮、<b>RESET</b> 按钮、<b>CHECKBOX</b> 按钮和 <b>TEXT</b> 按钮。
+</p>
+<p>用户在表单中输入信息之后，需要将信息发送到 Web 应用程序。用户单击网页中的“提交”按钮之后，表单数据将从客户端发送到在表单标记 <b>ACTION</b> 元素中列出的网页。此网页不必与调用网页相同。本示例中，在 <b>ACTION</b> 元素中列出的网页与调用网页相同，不需要再调用其他网页。
+</p>
+<p>在本示例中，<b>METHOD</b>=&quot;<b>POST</b>&quot; 用于将数据从站点客户端浏览器发送到站点服务器。当您在表单中使用 <b>METHOD</b>=&quot;<b>POST</b>&quot; 时，用户数据最终保存在 <b>Request</b> 对象的 <b>Form</b> 集合中。</p>
+
+<p>
+将下列代码复制并粘贴到文本编辑器中，并保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为“Button.asp”。在浏览器地址栏中键入 <B>http&#58;&#47;&#47;localhost&#47;Tutorial&#47;Button.asp</B> 查看此示例。
+</p>  
+
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt;
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;title&gt;按钮表单&lt;/title&gt; 
+<BR>&nbsp; &lt;/head&gt; 
+<BR>&nbsp; &lt;body&gt; 
+<BR>&nbsp; &lt;font face="宋体"&gt; 
+<BR>
+<BR>&nbsp; &lt;FORM NAME="Button Example" METHOD="POST" ACTION="button.asp"&gt;
+<BR>&nbsp; &lt;H3&gt;计算机编程经验：&lt;/H3&gt; 
+<BR>&nbsp; &lt;p&gt;
+<BR>&nbsp; &lt;INPUT TYPE="RADIO" NAME= "choice" VALUE="少于 1 年"&gt; 少于 1 年。&lt;BR&gt; 
+<BR>&nbsp; &lt;INPUT TYPE="RADIO" NAME= "choice" VALUE="1-5 年"&gt; 1-5 年。&lt;BR&gt;
+<BR>&nbsp; &lt;INPUT TYPE="RADIO" NAME= "choice" VALUE="多于 5 年"&gt; 多于 5 年。&lt;BR&gt;
+<BR>&nbsp; &lt;/p&gt; 
+<BR>&nbsp; &lt;p&gt;
+<BR>&nbsp; &lt;INPUT TYPE="SUBMIT" VALUE=&quot;提交&quot;&gt; 
+<BR>&nbsp; &lt;INPUT TYPE="RESET" VALUE="清除表单"&gt;
+<BR>&nbsp; &lt;/p&gt;
+<BR>&nbsp; &lt;/form&gt; 
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; '查看是否存在输入信息。&nbsp;
+<BR>&nbsp;&nbsp; dim strChoice
+<BR>&nbsp;&nbsp; strChoice = Request.Form(&quot;choice&quot;)
+<BR>
+<BR>&nbsp;&nbsp; If "" = strChoice Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;P&gt;（尚未输入。）&lt;/P&gt;"
+<BR>&nbsp;&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;P&gt;您的最终选择是 &lt;B&gt;" &amp; strChoice &amp; "&lt;/B&gt;&lt;/P&gt;"
+<BR>&nbsp;&nbsp; End If
+<BR>&nbsp; %&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt; 
+<BR>&nbsp; &lt;/body&gt; 
+<BR>&nbsp; &lt;/html&gt;
+</p>
+</code>
+
+<P>
+在浏览器中，您应看到下列结果：
+</P>
+
+<FONT face="MS Gothic">
+<FORM name="Button Example" method=post>
+<H3>&nbsp; 计算机编程经验：</H3>
+<P>
+&nbsp; <INPUT type=radio value="少于 1 年" name=choice> 少于 1 年。<BR>&nbsp; <INPUT type=radio value="1-5 年" name=choice> 1-5 年。
+<BR>&nbsp; <INPUT type=radio value="多于 5 年" name=choice> 多于 5 年。
+<BR>
+</P>
+<P>
+&nbsp; <INPUT id=button1 type=button value="提交" name=button1>
+<INPUT id=button2 type=button value="清除表单" name=button2>
+</P>
+</FORM>
+
+<P>
+&nbsp; （尚未输入。）
+</P>
+</FONT>
+
+<BR>
+<h3>示例 2：输入表单元素</h3>
+
+<p>
+在本示例中，将创建三个称为文本字段的输入表单元素和两个称为复选框的输入表单元素。复选框与选项按钮不同，可以进行多选。此示例仍需使用默认的“提交”按钮将数据发送回服务器。
+<P>在本示例中，METHOD=GET 用于将数据从站点客户端浏览器发送到站点服务器。在表单中使用 METHOD=GET 时，用户数据最终保存在 <b>Request</b> 对象的
+<b>QueryString</b> 集合中。
+</p>
+<p>单击“提交”按钮之后，查看地址栏，您将看到 <b>QueryString</b> 元素显示在 URL 的尾部。
+</p>
+
+<p>
+将下列代码复制并粘贴到文本编辑器中，将其保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为“Text.asp”。在浏览器的地址栏中键入 <B>
+http&#58;&#47;&#47;localhost&#47;Tutorial&#47;Text.asp</B> 查看此示例。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt;&nbsp; 
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;title&gt;文本和复选框表单&lt;/title&gt;
+<BR>&nbsp; &lt;/head&gt;
+<BR>&nbsp; &lt;body&gt;
+<BR>&nbsp; &lt;font face=&quot;宋体&quot;&gt;
+<BR>
+<BR>&nbsp; &lt;FORM NAME=&quot;TextCheckbox Example&quot; METHOD=&quot;GET&quot;
+ACTION=&quot;text.asp&quot;&gt;
+<BR>&nbsp; &lt;H3&gt;要获取我们的产品信息，请填写此表单：&lt;/H3&gt;
+<BR>&nbsp; &lt;p&gt;
+<BR>&nbsp; &lt;table&gt;
+<BR>&nbsp; &lt;tr&gt;
+<BR>&nbsp; &lt;td&gt;&lt;font face=&quot;宋体&quot;&gt;姓名（必需）&lt;/td&gt;
+<BR>&nbsp; &lt;td&gt;&lt;INPUT TYPE=&quot;TEXT&quot; NAME=&quot;name&quot;
+VALUE=&quot;&quot; SIZE=&quot;20&quot; MAXLENGTH=&quot;150&quot;&gt;&lt;/td&gt;
+<BR>&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp; &lt;td&gt;&lt;font face=&quot;宋体&quot;&gt;公司&lt;/td&gt;
+<BR>&nbsp; &lt;td&gt;&lt;INPUT TYPE=&quot;TEXT&quot; NAME=&quot;company&quot;
+VALUE=&quot;&quot; SIZE=&quot;25&quot; MAXLENGTH=&quot;150&quot;&gt;&lt;/td&gt;
+<BR>&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp; &lt;td&gt;&lt;font face=&quot;宋体&quot;&gt;电子邮件（必需）&lt;/td&gt;
+<BR>&nbsp; &lt;td&gt;&lt;INPUT TYPE=&quot;TEXT&quot; NAME=&quot;email&quot;
+VALUE=&quot;&quot; SIZE=&quot;25&quot; MAXLENGTH=&quot;150&quot;&gt;&lt;/td&gt;
+<BR>&nbsp; &lt;/tr&gt;
+<BR>&nbsp; &lt;/table&gt;
+<BR>&nbsp; &lt;/p&gt;
+<BR>&nbsp; &lt;p&gt;
+<BR>&nbsp; 要了解的信息：&lt;BR&gt;
+<BR>&nbsp; &lt;INPUT TYPE=&quot;CHECKBOX&quot; NAME= &quot;info&quot;
+VALUE=&quot;软件&quot;&gt;软件&lt;BR&gt;
+<BR>&nbsp; &lt;INPUT TYPE=&quot;CHECKBOX&quot; NAME= &quot;info&quot;
+VALUE=&quot;硬件&quot;&gt;硬件 &lt;BR&gt;
+<BR>&nbsp; &lt;/p&gt;
+<BR>&nbsp; &lt;p&gt;
+<BR>&nbsp; &lt;INPUT TYPE=&quot;SUBMIT&quot; VALUE=&quot;提交&quot;&gt;
+<BR>&nbsp; &lt;INPUT TYPE=&quot;RESET&quot; VALUE=&quot;清除表单&quot;&gt;
+<BR>&nbsp; &lt;/p&gt;
+<BR>&nbsp; &lt;/form&gt;
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; '检查是否存在输入信息。
+<BR>&nbsp;&nbsp; dim strName, strEmail, strCompany, strInfo
+<BR>&nbsp;&nbsp; strName = Request.QueryString(&quot;name&quot;)
+<BR>&nbsp;&nbsp; strEmail = Request.QueryString(&quot;email&quot;)
+<BR>&nbsp;&nbsp; strCompany = Request.QueryString(&quot;company&quot;)
+<BR>&nbsp;&nbsp; strInfo = Request.QueryString(&quot;info&quot;)
+<BR>
+<BR>&nbsp;&nbsp; '显示输入的信息。
+<BR>&nbsp;&nbsp; If (&quot;&quot; = strName) OR (&quot;&quot; = strEmail) Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write &quot;&lt;P&gt;（尚未输入必需的信息。）&lt;/P&gt;&quot;
+<BR>&nbsp;&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write &quot;&lt;P&gt;您是 &quot;&amp;
+strName &amp;&quot;。&quot;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; If Not (&quot;&quot; = strCompany) Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write &quot;&lt;BR&gt;来自 &quot; &amp;
+strCompany &amp;&quot;。&quot;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; End If
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write &quot;&lt;BR&gt;您的电子邮件地址是
+ &quot; &amp; strEmail &amp;&quot;。&quot;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; If Not (&quot;&quot; = strInfo) Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write &quot;&lt;BR&gt;您希望了解&quot; &amp; strInfo &amp; &quot;方面的信息。&lt;/P&gt;&quot;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; End If
+<BR>&nbsp;&nbsp; End If
+<BR>&nbsp; %&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt;
+<BR>&nbsp; &lt;/html&gt;
+</p>
+</code>
+
+<P>
+在浏览器中，您应看到下列结果：
+</P>
+
+<FONT face="MS Gothic">
+<FORM name="Button Example" method=get>
+<H3>&nbsp; 要获取我们的产品信息，请填写此表单：</H3>
+<P>
+<TABLE>
+  <TR>
+    <TD><FONT face="宋体">&nbsp; 姓名（必需）</FONT></TD>
+    <TD><INPUT maxLength=150 name=name></TD></TR>
+  <TR>
+    <TD><FONT face="宋体">&nbsp; 公司</FONT></TD>
+    <TD><INPUT maxLength=150 size=25 name=company></TD></TR>
+  <TR>
+    <TD><FONT face="宋体">&nbsp; 电子邮件地址（必需）</FONT></TD>
+    <TD><INPUT size=25 name="email" MAXLENGTH="150"></TD>
+  </TR>
+</TABLE>
+</P>
+<P>&nbsp; 要了解的信息：
+<BR>&nbsp; <INPUT type=checkbox value="软件" name=info>软件
+<BR>&nbsp; <INPUT type=checkbox value="硬件" name=info>硬件
+</P>
+<P>&nbsp; <INPUT id=button3 type=button value="提交" name=button3>
+<INPUT id=button4 type=button value="清除表单" name=button4>
+</P>
+</FORM>
+<P>
+&nbsp; （尚未输入必需的信息。）
+</P>
+</FONT>
+<p>
+<BR><h2><a name="creating">第 3 课：创建使用数据库的意见簿</a></h2>
+
+<p>本课程要求在系统中已安装了 Microsoft Access，且示例不支持在 64 位平台上运行，除非 Access 是为 64 位平台开发的版本。</p>
+<p>在第 3 课中，将开发一个意见簿应用程序。此意见簿允许访问网站的用户留下信息，例如姓名、电子邮件地址和评论等。在本课程中，您将在创建一个 Access 数据库后执行下列任务：
+</p>
+
+<ul>
+    <li>
+    <b>示例 1</b>&nbsp;&nbsp;创建一个 ASP 网页，仅使用 ADO <b>Connection</b> 对象连接到数据库。
+    </li>
+    <li>
+    <b>示例 2</b>&nbsp;&nbsp;创建一个 ASP 网页，同时使用 <b>Connection</b> 对象和 <b>Command</b> 对象连接到数据库。</li>     
+    <li>
+    <b>示例 3</b>&nbsp;&nbsp;创建一个 ASP 网页，在浏览器中从数据库显示意见簿的信息。</li>     
+</ul>
+
+<br><h4>创建 Access 数据库</h4>
+
+<p>
+创建一个名为“GuestBook.mdb”的 Access 数据库，并将其保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 中。在“GuestBook”数据库中创建一个表。使用 Access 中的“使用设计器创建表”选项添加下列字段和属性：
+</p>
+
+<p>
+<table border=1 align=center cellspacing=1 cellpadding=5>
+<tr>
+<td align="left" valign="top"><B>字段名称</B></td>
+<td align="left" valign="top"><B>数据类型</B></td>
+<td align="left" valign="top"><B>字段常规属性</B></td>
+</tr><tr>
+<td align="left" valign="top">FID</td>
+<td align="left" valign="top">自动编号</td>
+<td align="left" valign="top">字段大小=长整型，<BR>新值=递增，<BR>索引=有（无重复）</td>
+</tr><tr>
+<td align="left" valign="top">FTB1</td>
+<td align="left" valign="top">文本</td>
+<td align="left" valign="top">字段大小=255，<BR>必填字段=否，<BR>允许空字符串=是，<BR>索引=无</td>
+</tr><tr>
+<td align="left" valign="top">FTB2</td>
+<td align="left" valign="top">文本</td>
+<td align="left" valign="top">字段大小=255，<BR>必填字段=否，<BR>允许空字符串=是，<BR>索引=无</td>
+</tr><tr>
+<td align="left" valign="top">FTB3</td>
+<td align="left" valign="top">文本</td>
+<td align="left" valign="top">字段大小=255，<BR>必填字段=否，<BR>允许空字符串=是，<BR>索引=无</td>
+</tr><tr>
+<td align="left" valign="top">FTB4</td>
+<td align="left" valign="top">文本</td>
+<td align="left" valign="top">字段大小=255，<BR>必填字段=否，<BR>允许空字符串=是，<BR>索引=无</td>
+</tr><tr>
+<td align="left" valign="top">FMB1</td>
+<td align="left" valign="top">备注</td>
+<td align="left" valign="top">必填字段=否，<BR>允许空字符串=是</td>
+</tr>
+</table>
+
+<BR><h4>创建一个 ASP 网页，将数据添加到 Access 数据库</h4>
+
+<p>
+现在已经创建了数据库，可以建立一个 ASP 网页，使用 Microsoft ActiveX&reg; Data Objects 
+(ADO) 连接到数据库，并读取传入数据。ADO 是一个具有方法和属性的对象的集合，可以操作几乎所有类型数据库中的数据。（如果要经常使用数据库，您应购买一本 ADO 程序员参考手册。在下列示例中，仅说明了最基础的 ADO 代码，却足以对数据库进行打开、读取、写入操作）。
+</p>
+
+<p>
+后面的两个示例具有相同的结果。然而，第一个示例只使用了 <b>Connection</b> 对象，而第二个示例则将部分工作交给 <b>Command</b> 对象完成，其功能更为强大。对比两个示例可以看到这些对象是如何连接在一起的。在熟悉了这些对象之后，可以使用 ADO 程序员参考手册练习更多的方法和属性。
+</p>
+
+<p>要查看 ASP 网页中的 ADO 错误，可以在将数据库重命名、在连接字符串中输入拼写错误或将数据库设置为只读后，再浏览此网页。</p>
+
+<BR><h3> 示例 1：仅使用 ADO Connection 对象
+
+</h3>
+
+<p>
+将下列代码复制并粘贴到文本编辑器中，将其保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为“GuestBook1.asp”。在浏览器地址栏中键入 <B>http&#58;&#47;&#47;localhost&#47;Tutorial&#47;GuestBook1.asp
+</B> 查看此示例。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt;
+<BR>
+<BR>&nbsp; &lt;html&gt;
+<BR>&nbsp; &lt;head&gt;
+<BR>&nbsp; &lt;title&gt;仅使用 Connection 对象的意见簿&lt;/title&gt;
+<BR>&nbsp; &lt;/head&gt;
+<BR>&nbsp; &lt;body&gt;
+<BR>&nbsp; &lt;font face=&quot;宋体&quot;&gt;
+<BR>&nbsp; &lt;h2&gt;仅使用 Connection 对象的意见簿&lt;/h2&gt;
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; If Not Request.QueryString("Message") = "True" Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '尚未输入信息，因此提供输入表单。
+<BR>&nbsp; %&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;FORM NAME=&quot;GuestBook1&quot; METHOD="GET" ACTION="guestbook1.asp"&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;table&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;发件人：&lt;/td&gt;&lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="From"&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;电子邮件地址：&lt;/td&gt;&lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="EmailAdd"&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;抄送：&lt;/td&gt;&lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="CC"&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;主题：&lt;/td&gt;&lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="Subject"&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/tr&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/table&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 消息：&lt;br&gt;&lt;TEXTAREA NAME="Memo" ROWS=6 COLS=70&gt;&lt;/TEXTAREA&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/p&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="HIDDEN" NAME="Message" VALUE="True"&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="SUBMIT" VALUE="提交信息"&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/FORM&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/p&gt;
+<BR>&nbsp; &lt;% 
+<BR>&nbsp;&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '上面的隐藏按钮将 Message 变量设置为 True。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '现在知道已经输入了表单数据。
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '从表单获取数据。将信息插入到数据库中。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 'Access 不支持某些字符，如单引号，因此
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; ' 使用 ASP Server 对象的 HTMLEncode 方法对数据进行编码。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; dim strTB1, strTB2, strTB3, strTB4, strMB1, strCommand
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strTB1 = Server.HTMLEncode(Request.QueryString("From"))
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strTB2 = Server.HTMLEncode(Request.QueryString("EMailAdd"))
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strTB3 = Server.HTMLEncode(Request.QueryString("CC"))
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strTB4 = Server.HTMLEncode(Request.QueryString("Subject"))
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strMB1 = Server.HTMLEncode(Request.QueryString("Memo"))
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '下面是一个连接字符串。ADO 使用此字符串通过 Access 驱动程序连接到一个数据库。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '此字符串需要 Access 驱动程序的提供程序名称和 Access 数据库的名称。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '取决于使用的提供程序，连接字符串会有细微的不同，
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '但都使用分号分隔变量。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '如果这些行产生错误，搜索注册表
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '查找 Microsoft.JET，确定版本是否为 4.0。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strProvider = "Provider=Microsoft.JET.OLEDB.4.0;Data Source=C:\InetPub\Wwwroot\Tutorial\guestbook.mdb;"
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '下面将创建一个 ADO Connection 对象示例。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '另外还有 4 个 ADO 对象可用，每个具有不同的方法和
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '属性。利用这些方法和属性，可以对数据库对象进行任何操作。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Set objConn = server.createobject("ADODB.Connection")
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 'Connection 对象的 Open 方法使用连接字符串
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '创建与数据库的连接。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; objConn.Open strProvider
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '定义查询。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '查询有多种类型，允许您添加、删除或获取数据。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '此查询将使用 INSERT INTO 关键字将数据添加到数据库中。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '在此，GuestBook 是表的名称。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '在此，需要使用单引号将字符串括起来。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strCommand = "INSERT INTO GuestBook (FTB1,FTB2,FTB3,FTB4,FMB1) VALUES ('"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strCommand = strCommand & strTB1 & "','" & strTB2 & "','" & strTB3 & "','" & strTB4 & "','" & strMB1
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strCommand = strCommand & "')"
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '执行查询，将数据添加到数据库中。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; objConn.Execute strCommand
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write("谢谢！数据添加成功。")
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; End If
+<BR>&nbsp; %&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt
+<BR>&nbsp; &lt;/body&gt;
+<BR>&nbsp; &lt;/html&gt;
+</p>
+</code>
+
+<P>
+在浏览器中，您应看到下列结果：
+</P>
+
+<p>
+  <font face="宋体"> 
+  <h2>&nbsp; 仅使用 Connection 对象的意见簿</h2> 
+     <p> 
+     <FORM NAME="guestbook" METHOD="POST"> 
+     <table> 
+       <tr> 
+       <td><font face="宋体">&nbsp; 发件人：</td><td><INPUT TYPE="TEXT" NAME="From"></td> 
+       </tr><tr> 
+       <td><font face="宋体">&nbsp; 电子邮件地址：</td><td><INPUT TYPE="TEXT" NAME="EmailAdd"></td> 
+       </tr><tr> 
+       <td><font face="宋体">&nbsp; 抄送：</td><td><INPUT TYPE="TEXT" NAME="CC"></td> 
+       </tr><tr> 
+       <td><font face="宋体">&nbsp; 主题：</td><td><INPUT TYPE="TEXT" NAME="Subject"></td> 
+       </tr> 
+     </table> 
+     &nbsp; 消息：<br>&nbsp; <TEXTAREA NAME="Memo" ROWS=6 COLS=70></TEXTAREA> 
+     <p> 
+     &nbsp; <INPUT TYPE="BUTTON" VALUE="提交信息"> 
+     </FORM> 
+  </font>
+
+<BR>
+<h3> 示例 2：同时使用 Connection 对象和 Command 对象</h3>
+
+<p>
+将下列代码复制并粘贴到文本编辑器中，保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为“GuestBook2.asp”。在浏览器地址栏中键入 <B>
+http&#58;&#47;&#47;localhost&#47;Tutorial&#47;GuestBook2.asp
+</B> 查看示例。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt;
+<BR>
+<BR>&nbsp; &lt;html&gt;
+<BR>&nbsp; &lt;head&gt;
+<BR>&nbsp; &lt;title&gt;使用 Connection 对象和 Command 对象的意见簿&lt;/title&gt;
+<BR>&nbsp; &lt;/head&gt;
+<BR>&nbsp; &lt;body&gt;
+<BR>&nbsp; &lt;font face=&quot;宋体&quot;&gt;
+<BR>&nbsp; &lt;h2&gt;使用 Connection 对象和 Command 对象的意见簿&lt;/h2&gt;
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; If Not Request.QueryString("Message") = "True" Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '尚未输入信息，因此提供此输入表单。
+<BR>&nbsp; %&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;FORM NAME=&quot;GuestBook2&quot; METHOD="GET" ACTION="guestbook2.asp"&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;table&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;发件人：&lt;/td&gt;&lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="From"&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;电子邮件地址：&lt;/td&gt;&lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="EmailAdd"&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;抄送：&lt;/td&gt;&lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="CC"&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;主题：&lt;/td&gt;&lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="Subject"&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/tr&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/table&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 消息：&lt;br&gt;&lt;TEXTAREA NAME="Memo" ROWS=6 COLS=70&gt;&lt;/TEXTAREA&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/p&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;p&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="HIDDEN" NAME="Message" VALUE="True"&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="SUBMIT" VALUE="提交信息"&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/FORM&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/p&gt;
+<BR>&nbsp; &lt;% 
+<BR>&nbsp;&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '上面的隐藏按钮将 Message 变量设置为 True。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '现在知道已经输入了表单数据。
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '从表单获取数据。将信息插入到数据库中。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 'Access 不支持某些字符，如单引号，因此
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '使用 ASP Server 对象的 HTMLEncode 方法对数据进行编码。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; dim strTB1, strTB2, strTB3, strTB4, strMB1
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strTB1 = Server.HTMLEncode(Request.QueryString("From"))
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strTB2 = Server.HTMLEncode(Request.QueryString("EMailAdd"))
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strTB3 = Server.HTMLEncode(Request.QueryString("CC"))
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strTB4 = Server.HTMLEncode(Request.QueryString("Subject"))
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strMB1 = Server.HTMLEncode(Request.QueryString("Memo"))
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 'Access 数据库中的备注数据类型允许您设置字段大小。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; If strMB1 = "" Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iLenMB1 = 255
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; iLenMB1 = Len(strMB1)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; End If
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '下面是连接字符串。ADO 使用此字符串通过 Access 驱动程序连接到数据库。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '此字符串需要 Access 驱动程序的提供程序名称和 Access 数据库的名称。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '取决于使用的提供程序，连接字符串会有细微的不同，
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '但都使用引号分隔变量。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '如果这些行产生错误，请搜索注册表
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '查找 Microsoft.JET，确定版本是否为 4.0。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; strProvider = "Provider=Microsoft.JET.OLEDB.4.0;Data Source=C:\InetPub\Wwwroot\Tutorial\guestbook.mdb;"
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '下面将创建一个 ADO Connection 对象示例。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '另外还有 4 个 ADO 对象可用，每个具有不同的方法和
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '属性。利用这些方法和属性，可以对数据库对象进行任何操作。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Set objConn = server.createobject("ADODB.Connection")
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 'Connection 对象的 Open 方法使用连接字符串
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '创建与数据库的连接。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; objConn.Open strProvider
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '下面将创建一个 ADO Command 对象实例。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '尽管使用 Connection 对象几乎可以完成所有工作，
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '但 Command 对象可提供更多的控制。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Set cm = Server.CreateObject("ADODB.Command")
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 'ActiveConnection 属性允许您连接到一个 Open 连接。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '下面将 Connection 对象连接到 Command 对象。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; cm.ActiveConnection = objConn
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '定义查询。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '查询有多种类型，允许您添加、删除或获取数据。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '此查询使用 INSERT INTO 关键字将数据添加到数据库中。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '因为要使用 Command 对象，需要将查询置入
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 'CommandText 属性中。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '在此，GuestBook 是表的名称。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; cm.CommandText = "INSERT INTO GuestBook (FTB1,FTB2,FTB3,FTB4,FMB1) VALUES (?,?,?,?,?)"
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '由此，可以看到 Command 对象的强大功能。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '通过将 ? 号放入上面的字符串，可以使用 Parameters 集合
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '让 ADO 填充详细参数。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 'cm.CreateParameter 用于设置参数的格式。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 'cm.Parameters.Append 将参数追加到集合。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '请确定参数顺序与 (TB1,TB2,TB3,TB4,MB1) 的顺序相同。
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Set objparam = cm.CreateParameter(, 200, , 255, strTB1)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; cm.Parameters.Append objparam
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Set objparam = cm.CreateParameter(, 200, , 255, strTB2)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; cm.Parameters.Append objparam
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Set objparam = cm.CreateParameter(, 200, , 255, strTB3)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; cm.Parameters.Append objparam
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Set objparam = cm.CreateParameter(, 200, , 255, strTB4)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; cm.Parameters.Append objparam
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Set objparam = cm.CreateParameter(, 201, , iLenMB1, strMB1)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; cm.Parameters.Append objparam
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '执行查询，将数据添加到数据库中。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '在此，调用的是 Command 对象的 Execute 方法，而不是
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 'Connection 对象的 Execute 方法。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; cm.Execute
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write("谢谢！数据添加成功。")
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; End If
+<BR>&nbsp; %&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt
+<BR>&nbsp; &lt;/body&gt;
+<BR>&nbsp; &lt;/html&gt;
+</p>
+</code>
+
+<P>
+在浏览器中，您应看到与 GuestBook1.asp 相似的内容，如下所示：
+</P>
+<p>
+  <font face="宋体"> 
+  <h2>&nbsp; 使用 Connection 对象和 Command 对象的意见簿</h2> 
+     <p> 
+     <FORM NAME="guestbook" METHOD="POST"> 
+     <table> 
+       <tr> 
+       <td><font face="宋体">&nbsp; 发件人：</td><td><INPUT TYPE="TEXT" NAME="From"></td> 
+       </tr><tr> 
+       <td><font face="宋体">&nbsp; 电子邮件地址：</td><td><INPUT TYPE="TEXT" NAME="EmailAdd"></td> 
+       </tr><tr> 
+       <td><font face="宋体">&nbsp; 抄送：</td><td><INPUT TYPE="TEXT" NAME="CC"></td> 
+       </tr><tr> 
+       <td><font face="宋体">&nbsp; 主题：</td><td><INPUT TYPE="TEXT" NAME="Subject"></td> 
+       </tr> 
+     </table> 
+     &nbsp; 消息：<br>&nbsp;  <TEXTAREA NAME="Memo" ROWS=6 COLS=70></TEXTAREA> 
+     <p> 
+     &nbsp;  <INPUT TYPE="BUTTON" VALUE="提交信息"> 
+     </FORM> 
+  </font>
+  <br>
+<h3>示例 3：在浏览器中显示数据库</h3>
+
+<p>将信息输入数据库后，可以使用包含另一脚本的网页来查看和编辑这些数据。除定义查询的方法以外，ADO 代码并没有太多的更改。
+<BR>在上面两个示例中，使用 <b>INSERT INTO</b> 查询向数据库添加记录。在本示例中，将使用 <b>SELECT</b> 查询从数据库中选择记录，并将记录显示在浏览器中。还会使用 <b>DELETE</b> 查询从数据库中删除记录。在本示例中，唯一没有使用的查询是 <b>UPDATE</b> 查询，其语法与 <b>INSERT INTO</b> 查询相同。<b>UPDATE</b> 查询允许您更改数据库中的字段。
+</p>
+
+<p>
+将下列代码复制并粘贴到文本编辑器中，将文件保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 目录，文件名为“ViewGB.asp”。在浏览器地址栏中键入 <B>http&#58;&#47;&#47;localhost&#47;Tutorial&#47;ViewGB.asp</b>
+<BR> 查看此示例。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt; 
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;title&gt;查看意见簿&lt;/title&gt; 
+<BR>&nbsp; &lt;/head&gt; 
+<BR>&nbsp; &lt;body&gt; 
+<BR>&nbsp; &lt;font face=&quot;宋体&quot;&gt; 
+<BR>&nbsp; &lt;h2&gt;查看意见簿&lt;/h2&gt; 
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp; '读取用户输入。任何用户输入都可以为空。
+<BR>&nbsp; '先完成此步骤后，就可以将用户输入保存在表单中。
+<BR>&nbsp; dim strTB1, strTB2, strTB3, strTB4, strMB1, strSort, iDelete
+<BR>&nbsp; strTB1 = Server.HTMLEncode(Request.QueryString("From")) 
+<BR>&nbsp; strTB2 = Server.HTMLEncode(Request.QueryString("EMailAdd")) 
+<BR>&nbsp; strTB3 = Server.HTMLEncode(Request.QueryString("CC")) 
+<BR>&nbsp; strTB4 = Server.HTMLEncode(Request.QueryString("Subject")) 
+<BR>&nbsp; strMB1 = Server.HTMLEncode(Request.QueryString("Memo")) 
+<BR>&nbsp; strSort = Server.HTMLEncode(Request.QueryString("sort"))
+<BR>&nbsp; iDelete = CInt(Request.QueryString("Delete"))
+<BR>
+<BR>&nbsp; '由于要使用此变量，而它可能还没有设置...
+<BR>&nbsp; If "" = strSort Then
+<BR>&nbsp;&nbsp;&nbsp; strSort = "FID"
+<BR>&nbsp; End If
+<BR>&nbsp; %&gt;
+<BR>
+<BR>&nbsp; &lt;p&gt; 
+<BR>&nbsp; &lt;FORM NAME=&quot;ViewGuestBook&quot; METHOD="GET" ACTION="viewgb.asp"&gt; 
+<BR>&nbsp; &lt;table&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;按列排序：&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;SELECT NAME="sort" SIZE="1"&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OPTION VALUE="FID"&gt;ID 编号&lt;/OPTION&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OPTION VALUE="FTB1"&gt;名称&lt;/OPTION&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OPTION VALUE="FTB2"&gt;电子邮件&lt;/OPTION&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OPTION VALUE="FTB3"&gt;抄送&lt;/OPTION&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OPTION VALUE="FTB4"&gt;主题&lt;/OPTION&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;OPTION VALUE="FMB1"&gt;备注&lt;/OPTION&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/SELECT&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;名称包括：&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="From" VALUE="&lt;%=strTB1%&gt;"&gt;&lt;/td&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;电子邮件地址包括：&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="EmailAdd" VALUE="&lt;%=strTB2%&gt;"&gt;&lt;/td&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;抄送包括：&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="CC" VALUE="&lt;%=strTB3%&gt;"&gt;&lt;/td&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;主题包括：&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="Subject" VALUE="&lt;%=strTB4%&gt;"&gt;&lt;/td&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;font face="宋体"&gt;备注包括：&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;INPUT TYPE="TEXT" NAME="Memo" VALUE="&lt;%=strMB1%&gt;"&gt;&lt;/td&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt; 
+<BR>&nbsp; &lt;/table&gt; 
+<BR>&nbsp; &lt;INPUT TYPE="SUBMIT" VALUE="提交查询参数"&gt;
+<BR>&nbsp; &lt;/p&gt; 
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp; '创建连接字符串，创建一个 Connection 对象示例，
+<BR>&nbsp; '连接到数据库。
+<BR>&nbsp; strProvider = "Provider=Microsoft.JET.OLEDB.4.0;Data Source=C:\InetPub\Wwwroot\Tutorial\guestbook.mdb;" 
+<BR>&nbsp; Set objConn = Server.CreateObject("ADODB.Connection") 
+<BR>&nbsp; objConn.Open strProvider 
+<BR> 
+<BR>&nbsp; '定义查询。
+<BR>&nbsp; If iDelete = 0 Then
+<BR>&nbsp;&nbsp;&nbsp; '如果没有设置 Delete 变量，查询为 SELECT 查询。
+<BR>&nbsp;&nbsp;&nbsp; '* 表示所有字段。ASC 表示 ASCII。% 是通配符。
+<BR>&nbsp;&nbsp;&nbsp; strQuery = "SELECT * FROM GuestBook"
+<BR>&nbsp;&nbsp;&nbsp; strQuery = strQuery & " WHERE FTB1 LIKE '%" & strTB1 & "%'"
+<BR>&nbsp;&nbsp;&nbsp; strQuery = strQuery & " AND FTB2 LIKE '%" & strTB2 & "%'"
+<BR>&nbsp;&nbsp;&nbsp; strQuery = strQuery & " AND FTB3 LIKE '%" & strTB3 & "%'"
+<BR>&nbsp;&nbsp;&nbsp; strQuery = strQuery & " AND FTB4 LIKE '%" & strTB4 & "%'"
+<BR>&nbsp;&nbsp;&nbsp; strQuery = strQuery & " AND FMB1 LIKE '%" & strMB1 & "%'"
+<BR>&nbsp;&nbsp;&nbsp; strQuery = strQuery & " ORDER BY " & StrSort & " ASC"
+<BR>&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp; '要删除一条记录。
+<BR>&nbsp;&nbsp;&nbsp; strQuery = "DELETE FROM GuestBook WHERE FID=" & iDelete
+<BR>&nbsp; End If
+<BR>
+<BR>&nbsp; '执行 SELECT 查询，创建一个 ADO Recordset 对象。
+<BR>&nbsp; '此对象将保存从数据库中获取的数据。
+<BR>&nbsp; Set objRS = objConn.Execute(strQuery)
+<BR>
+<BR>&nbsp; '现在已将数据库数据保存在 Recordset 对象中，
+<BR>&nbsp; '在一个表格中显示。
+<BR>&nbsp;%&gt;
+<BR>
+<BR>&nbsp; &lt;p&gt;
+<BR>&nbsp; &lt;FORM NAME=&quot;EditGuestBook&quot; METHOD="GET" ACTION="viewgb.asp"&gt; 
+<BR>&nbsp; &lt;table border=1 cellpadding=4 &gt;
+<BR>&nbsp; &lt;% 
+<BR>&nbsp;&nbsp;&nbsp; On Error Resume Next
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; If objRS.EOF Then 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; If iDelete = 0 Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;tr&gt;&lt;td&gt;&lt;font
+face=&amp;quot;MS Gothic&amp;quot;&gt;数据库中没有相应记录。&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;" 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;tr&gt;&lt;td&gt;&lt;font
+face=&amp;quot;MS Gothic&amp;quot;&gt;记录 " & iDelete & " 已被删除。&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; End If
+<BR>&nbsp;&nbsp;&nbsp; Else
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '使用 Recordset 对象的一些方法和属性输出
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '字段名称。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;tr&gt;"
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '对于当前行的每一列...
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; For i = 1 to (objRS.Fields.Count - 1)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          '&nbsp;输出字段名。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;td&gt;&lt;font
+face=&amp;quot;MS Gothic&amp;quot;&gt;&lt;B&gt;" & objRS(i).Name & "&lt;/B&gt;&lt;/font&gt;&lt;/td&gt;"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Next
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;td&gt;&lt;font face=&amp;quot;MS
+Gothic&amp;quot;&gt;&lt;B&gt;删除&lt;/B&gt;&lt;/font&gt;&lt;/td&gt;"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;/tr&gt;"
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '使用 Recordset 对象的其他方法和属性输出字段数据。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '如果明白了某一模式的用法，
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '您可以寻找其他的模式进行尝试。
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '如果还没有达到记录集的尾部...
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; While Not objRS.EOF
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;tr&gt;"
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '对于当前行中的每一列...
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; For i = 1 to (objRS.Fields.Count - 1)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '&nbsp;输出字段中的数据。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;td&gt;&lt;font
+face=&amp;quot;MS Gothic&amp;quot;&gt;" & objRS(i) & "&lt;/font&gt;&lt;/td&gt;"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Next
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '添加一个按钮，接受 ID 号码来删除一条记录。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; %&gt;&lt;td&gt;&lt;INPUT TYPE="SUBMIT" NAME="删除" VALUE="&lt;%=objRS(0)%&gt;"&gt;&lt;/td&gt;&lt;%
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;/tr&gt;"
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '移到下一行
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; objRS.MoveNext
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wend
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; End If&nbsp;&nbsp; 'objRS.EOF 
+<BR>&nbsp; %&gt; 
+<BR>&nbsp; &lt;/table&gt; 
+<BR>&nbsp; &lt;/FORM&gt; 
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp; '关闭连接。
+<BR>&nbsp; objConn.Close
+<BR>&nbsp; %&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt; 
+<BR>&nbsp; &lt;/html&gt; 
+</p>
+</code>
+
+<P>
+在浏览器中，您应看到下列结果：
+</P>
+
+<p>
+  <font face="宋体"> 
+  <h2>&nbsp; 查看意见簿</h2> 
+  <p> 
+  <FORM NAME="viewguestbook" METHOD="GET"> 
+  &nbsp;  <table> 
+    <tr> 
+    <td><font face="宋体">&nbsp; 按列排序：</td> 
+    <td>&nbsp;  <SELECT NAME="sort" SIZE="1"> 
+      <OPTION VALUE="FID">ID 编号</OPTION> 
+      <OPTION VALUE="FTB1">名称</OPTION> 
+      <OPTION VALUE="FTB2">电子邮件</OPTION> 
+      <OPTION VALUE="FTB3">抄送</OPTION> 
+      <OPTION VALUE="FTB4">主题</OPTION> 
+      <OPTION VALUE="FMB1">备注</OPTION> 
+    </SELECT></td> 
+    </tr><tr> 
+    <td>&nbsp; <font face="宋体">名称包括：</td> 
+    <td><INPUT TYPE="TEXT" NAME="From" VALUE=""></td> 
+    </tr><tr> 
+    <td>&nbsp; <font face="宋体">电子邮件地址包括：</td> 
+    <td><INPUT TYPE="TEXT" NAME="EmailAdd" VALUE=""></td> 
+    </tr><tr> 
+    <td>&nbsp; <font face="宋体">抄送包括：</td> 
+    <td><INPUT TYPE="TEXT" NAME="CC" VALUE=""></td> 
+    </tr><tr> 
+    <td>&nbsp; <font face="宋体">主题包括：</td> 
+    <td><INPUT TYPE="TEXT" NAME="Subject" VALUE=""></td> 
+    </tr><tr> 
+    <td>&nbsp; <font face="宋体">备注包括：</td> 
+    <td><INPUT TYPE="TEXT" NAME="Memo" VALUE=""></td> 
+    </tr> 
+  </table> 
+  &nbsp;  <INPUT TYPE="BUTTON" VALUE="提交查询参数"> 
+  </p> 
+  <p> 
+  <FORM NAME="editguestbook" METHOD="GET"> 
+  &nbsp;  <table border=1 cellpadding=4> 
+  <tr><td><font face="宋体">&nbsp; 数据库中没有相应记录。</font></td></tr> 
+  </table> 
+  </FORM> 
+  </font> 
+
+<P><BR><h2><a name="displaying">第 4 课：显示 Excel 电子表格</a></h2>
+<p>本课程要求在系统中已安装了 Microsoft Excel，且示例不支持在 64 位平台上运行，除非 Excel 是为 64 位平台开发的版本。</p>
+<p>本课程演示如何在网页中显示一个 Microsoft Excel 电子表格。如同在以前课程中那样，将使用 ADO。然而，在本课程中，您将连接到 Excel 电子表格，而不是 Access 数据库。
+</p>
+
+<H4>准备将在 Active Server Page 中显示的 Excel 电子表格</H4>
+
+<ol>
+    <li>
+	使用 Excel 98 或 Excel 2000，创建一个电子表格，并将其保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 中，文件名为 ASPTOC.xls。创建电子表格时不要包括任何特殊的格式或列标签。</li><li>
+	用随机数据填充一些字段。将单元格的第一行作为列名称。</li><li>
+	选中要在网页中显示的电子表格的行和列（在某一单元格中单击，然后沿对角线拖动鼠标选中一组单元格）。</li><li>
+    在“插入”菜单上，选择“名称”，然后单击“定义”。所有工作簿的名称和单元格区域都在此对话框中定义。</li><li>
+    确保选中的单元格区域正确显示在底部。为您的工作簿键入名称“MYBOOK”，然后选择“添加”。无论何时改变 MYBOOK 时，请确保在“定义名称”窗口底部的“引用位置”文本框中显示了正确的单元格区域。仅仅在新选中一组单元格后选择 MYBOOK，不会更新单元格区域。</li><li>
+    在名称显示在工作簿列表后，单击“确定”按钮。保存电子表格。</li><li>
+    关闭 Excel，去除对文件的锁定，以便 ASP 网页可以对其进行访问。</li>
+</ol>
+
+<p>
+在第 3 课的示例中，将在连接字符串中指定提供程序的名称，以映射到特定的 ADO DLL。在本示例中，将使用一个驱动程序名称，使 ASP 使用此驱动程序的默认提供程序。
+</p>
+
+<p>
+将下列代码复制并粘贴到文本编辑器中，将文件保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为“ViewExcel.asp”。在浏览器地址栏中键入 <B>http&#58;&#47;&#47;localhost&#47;Tutorial&#47;ViewExcel.asp</B> 查看此示例。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt; 
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;title&gt;在网页中显示 Excel 电子表格&lt;/title&gt; 
+<BR>&nbsp; &lt;/head&gt; 
+<BR>&nbsp; &lt;body&gt;
+<BR>&nbsp; &lt;font face=&quot;宋体&quot;&gt; 
+<BR>&nbsp; &lt;h2&gt;在网页中显示 Excel 电子表格&lt;/h2&gt; 
+<BR>
+<BR>&nbsp; &lt;% 
+<BR>&nbsp;&nbsp; '创建连接字符串，创建一个 Connection 对象示例，
+<BR>&nbsp;&nbsp; '然后连接到数据库。
+<BR>&nbsp;&nbsp; strDriver = "Driver={Microsoft Excel Driver (*.xls)};DBQ=C:\Inetpub\Wwwroot\Tutorial\MyExcel.xls;" 
+<BR>&nbsp;&nbsp; Set objConn = Server.CreateObject("ADODB.Connection") 
+<BR>&nbsp;&nbsp; objConn.Open strDriver 
+<BR>
+<BR>&nbsp;&nbsp; '使用已保存的工作簿名称从 Excel 电子表格中选择记录。
+<BR>&nbsp;&nbsp; strSELECT = "SELECT * from `MYBOOK`" 
+<BR>
+<BR>&nbsp;&nbsp; '创建一个 ADO Recordset 对象示例，并将其连接到 objConn。
+<BR>&nbsp;&nbsp; Set objRS = Server.CreateObject("ADODB.Recordset") 
+<BR>&nbsp;&nbsp; objRS.Open strSELECT, objConn 
+<BR>
+<BR>&nbsp;&nbsp; '使用 GetString 方法打印表中的单元格和行。
+<BR>&nbsp;&nbsp; Response.Write "&lt;H4&gt;使用 GetString 方法将 Excel 数据取入一个字符串&lt;/H4&gt;" 
+<BR>&nbsp;&nbsp; Response.Write "&lt;table border=1 &gt;&lt;tr&gt;&lt;td&gt;" 
+<BR>&nbsp;&nbsp; Response.Write objRS.GetString (, , "&lt;/td&gt;&lt;td&gt;&lt;font face=&amp;quot;MS Gothic&amp;quot;&gt;", "&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;", NBSPACE) 
+<BR>&nbsp;&nbsp; Response.Write "&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" 
+<BR>
+<BR>&nbsp;&nbsp; '移动到第一条记录。
+<BR>&nbsp;&nbsp; objRS.MoveFirst 
+<BR>
+<BR>&nbsp;&nbsp; '使用 ViewGB.asp 方法打印表中的单元格和行。
+<BR>&nbsp;&nbsp; Response.Write "&lt;H4&gt;使用 MoveNext 方法获取 Excel 数据 &lt;/H4&gt;" 
+<BR>
+<BR>&nbsp;&nbsp; '使用相应方法和属性打印输出 Recordset 对象的
+<BR>&nbsp;&nbsp; '字段名称和属性
+<BR>&nbsp;&nbsp; Response.Write "&lt;table border=1 &gt;&lt;tr&gt;" 
+<BR>
+<BR>&nbsp;&nbsp; '对于当前行中的每一列... 
+<BR>&nbsp;&nbsp; For i = 0 to (objRS.Fields.Count - 1) 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '&nbsp;输出字段名称。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;td&gt;&lt;font face=&amp;quot;MS
+Gothic&amp;quot;&gt;&lt;B&gt;" & objRS(i).Name & "&lt;/B&gt;&lt;/font&gt;&lt;/td&gt;" 
+<BR>&nbsp;&nbsp; Next 
+<BR>
+<BR>&nbsp;&nbsp; '如果还没有到达记录集的尾部...
+<BR>&nbsp;&nbsp; While Not objRS.EOF
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Write "&lt;/tr&gt;&lt;tr&gt;" 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '对于当前行中的每一列... 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; For i = 0 to (objRS.Fields.Count - 1) 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '&nbsp;输出字段中的数据。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; %&gt;&lt;td&gt;&lt;font face="宋体"&gt;&lt;%=objRS(i)%&gt;&lt;/font&gt;&lt;/td&gt;&lt;% 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Next 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '移动到下一行。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; objRS.MoveNext 
+<BR>
+<BR>&nbsp;&nbsp; Wend 
+<BR>
+<BR>&nbsp;&nbsp; Response.Write "&lt;/tr&gt;&lt;/table&gt;"
+<BR>
+<BR>&nbsp;&nbsp; '关闭连接。
+<BR>&nbsp;&nbsp; objConn.Close
+<BR>&nbsp; %&gt; 
+<BR>
+<BR>&nbsp; &lt;/font&gt; 
+<BR>&nbsp; &lt;/body&gt; 
+<BR>&nbsp; &lt;/html&gt; 
+</p>
+</code>
+
+<P>
+在浏览器中，您应看到下列结果：
+</P>
+
+<p>
+<font face="宋体"> 
+<h2>&nbsp;在网页中显示 Excel 电子表格</h2> 
+<H4>&nbsp;使用 GetString 方法将 Excel 数据取入一个字符串</H4>
+<table border=1>
+<tr>
+<td>A2</td><td><font face="宋体">B2</td><td><font face="宋体">C2</font></td>
+</tr><tr>
+<td>A3</td><td><font face="宋体">B3</td><td><font face="宋体">C3</font></td>
+</tr>
+</table>
+<H4>&nbsp;使用 MoveNext 方法获取 Excel 数据</H4>
+<table border=1>
+<tr>
+<td><font face="MS Gothic"><B>A1</B></font></td><td><font face="MS Gothic"><B>B1</B></font></td><td><font face="MS Gothic"><B>C1</B></font></td>
+</tr><tr>
+<td><font face="MS Gothic">A2</font></td><td><font face="MS Gothic">B2</font></td><td><font face="MS Gothic">C2</font></td>
+</tr><tr>
+<td><font face="MS Gothic">A3</font></td><td><font face="MS Gothic">B3</font></td><td><font face="MS Gothic">C3</font></td>
+</tr>
+</table> 
+</font> 
+
+<BR><H2>下一单元：在 ASP 网页中使用 COM 组件</H2>
+
+<hr class="iis" size="1">
+<p align=center><A href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation。 保留所有权利。</A></p></font>
+</body>
+</html>

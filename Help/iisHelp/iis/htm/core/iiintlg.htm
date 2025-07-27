@@ -1,0 +1,473 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>日志记录属性参考</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="日志记录参考信息。包括属性列表以及 W3C 扩展日志记录格式的值。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+
+
+<h1><a name="H2_448399201"></a>日志记录属性参考</h1>
+
+<p>本主题列出了日志记录属性的定义以及用于 W3C 扩展日志记录格式的值。分为下列部分：</p>
+
+<ul>
+<li><a href="#W3CExtendedLoggingDefinitions">W3C 扩展日志记录定义</a>：W3C 扩展日志文件格式可用的常规属性。</li>
+<li><a href="#ProcessAccountingLoggingDefinitions">进程记帐日志记录定义</a>：W3C 扩展日志文件中进程记帐的其他属性。</li> 
+<li><a href="#MicrosoftIISLogDefinitions">Microsoft IIS 日志定义</a>：Microsoft IIS 日志文件格式可用的常规属性。</li> 
+<li><a href="#NCSACommonLogFileFormat">NCSA 公用日志文件格式</a>：NCSA 公用日志文件格式可用的常规属性。</li> 
+</ul>
+
+<p>有关 W3C 扩展日志格式的详细信息，请参阅 <a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=W3org&pver=1.0&ar=specs" target=_blank>World Wide Web Consortium（WWW 协会）网站</a>。</p>
+
+<h2><a name="extendedprops"></a><a name="W3CExtendedLoggingDefinitions">W3C 扩展日志记录定义</a></h2>
+<table border="1" cellpadding="2" cellspacing="0" width="50%">
+<tr>
+<th width="10%" bgcolor="#C0C0C0" align="Left" valign="top"><strong>前缀</strong></th>
+<th width="40%" align="CENTER" valign="TOP" bgcolor="#C0C0C0"><strong>含义</strong></th>
+</tr>
+<tr>
+<td valign="top"><strong>s-</strong></td>
+<td valign="top">服务器操作</td>
+</tr>
+<tr>
+<td valign="top"><strong>c-</strong></td>
+<td valign="top">客户端操作</td>
+</tr>
+<tr>
+<td valign="top"><strong>cs-</strong></td>
+<td valign="top">客户端到服务器的操作</td>
+</tr>
+<tr>
+<td valign="top"><strong>sc-</strong></td>
+<td valign="top">服务器到客户端的操作</td>
+</tr>
+</table>
+<br><br>
+
+
+<table border="1" cellpadding="5" cellspacing="1" width="90%">
+<tr>
+<th width="20%" bgcolor="#C0C0C0" align="Left" valign="top">字段</th>
+<th width="10%" bgcolor="#C0C0C0" align="Left" valign="top">表示为</th>
+<th width="70%" bgcolor="#C0C0C0" align="Left" valign="top">描述</th>
+</tr>
+
+<tr>
+<td valign="top">日期</td>
+<td valign="top"><code>date</code></td>
+<td valign="top">执行操作的日期。</td>
+</tr>
+
+<tr>
+<td valign="top">时间</td>
+<td valign="top"><code>time</code></td>
+<td valign="top">活动发生的时间。</td>
+</tr>
+
+<tr>
+<td valign="top">客户端 IP 地址</td>
+<td valign="top"><code>c-ip</code></td>
+<td valign="top">访问服务器的客户端 IP 地址。</td>
+</tr>
+
+<tr>
+<td valign="top">用户名</td>
+<td valign="top"><code>cs-username</code></td>
+<td valign="top">访问服务器的已验证用户的名称。不包括用连字符“-”所表示的匿名用户。</td>
+</tr>
+
+<tr>
+<td valign="top">服务名</td>
+<td valign="top"><code>s-sitename</code></td>
+<td valign="top">客户端已访问过的 Internet 服务和实例编号。</td>
+</tr>
+
+<tr>
+<td valign="top">服务器名称</td>
+<td valign="top"><code>s-computername</code></td>
+<td valign="top">生成日志条目的服务器名称。</td>
+</tr>
+
+<tr>
+<td valign="top">服务器 IP 地址</td>
+<td valign="top"><code>s-ip</code></td>
+<td valign="top">生成日志条目的服务器 IP 地址。</td>
+</tr>
+
+<tr>
+<td valign="top">服务器端口</td>
+<td valign="top"><code>s-port</code></td>
+<td valign="top">客户端连接的端口号。</td>
+</tr>
+
+<tr>
+<td valign="top">方法</td>
+<td valign="top"><code>cs-method</code></td>
+<td valign="top">客户端试图执行的操作（例如 GET 方法）。</td>
+</tr>
+
+<tr>
+<td valign="top">URI 资源</td>
+<td valign="top"><code>cs-uri-stem</code></td>
+<td valign="top">访问的资源；例如 Default.htm。</td>
+</tr>
+
+<tr>
+<td valign="top">URI 查询</td>
+<td valign="top"><code>cs-uri-query</code></td>
+<td valign="top">查询，如果有的话，客户端将试图执行。</td>
+</tr>
+
+<tr>
+<td valign="top">协议状态</td>
+<td valign="top"><code>sc-status</code></td>
+<td valign="top">以 HTTP 或 FTP 术语表示的操作状态。</td>
+</tr>
+
+<tr>
+<td valign="top">Win32 状态</td>
+<td valign="top"><code>sc-win32-status</code></td>
+<td valign="top">以 Windows 术语表示的操作状态。</td>
+</tr>
+
+<tr>
+<td valign="top">发送的字节数</td>
+<td valign="top"><code>sc-bytes</code></td>
+<td valign="top">服务器发送的字节数。</td>
+</tr>
+
+<tr>
+<td valign="top">接收的字节数</td>
+<td valign="top"><code>cs-bytes</code></td>
+<td valign="top">服务器接收的字节数。</td>
+</tr>
+
+<tr>
+<td valign="top">所用时间</td>
+<td valign="top"><code>time-taken</code></td>
+<td valign="top">操作所占用的时间。</td>
+</tr>
+
+<tr>
+<td valign="top">协议版本</td>
+<td valign="top"><code>cs-version</code></td>
+<td valign="top">客户端使用的协议 (HTTP、FTP) 版本。HTTP 协议应为 HTTP 2.0 或 HTTP 2.1。
+</td>
+</tr>
+
+<tr>
+<td valign="top">主机</td>
+<td valign="top"><code>cs-host</code></td>
+<td valign="top">显示主机标题的内容。
+</td>
+</tr>
+
+<tr>
+<td valign="top">用户代理</td>
+<td valign="top"><code>cs(User-Agent)</code></td>
+<td valign="top">客户端使用的浏览器。</td>
+</tr>
+
+<tr>
+<td valign="top">Cookie</td>
+<td valign="top"><code>cs(Cookie)</code></td>
+<td valign="top">发送或接收的 cookie 内容（如果有的话）。</td>
+</tr>
+
+<tr>
+<td valign="top">引用站点</td>
+<td valign="top"><code>cs(Referer)</code></td>
+<td valign="top">用户访问的前一个站点。此站点提供与当前站点的链接。</td>
+</tr>
+</table>
+
+
+<h2><a name="cpuprops"></a><a name="ProcessAccountingLoggingDefinitions">进程记帐日志记录定义</a></h2>
+
+<table width="90%" border="1" cellspacing="1" cellpadding="5">
+<tr>
+<th width="20%" bgcolor="#C0C0C0" align="Left" valign="top">字段</th>
+<th width="10%" bgcolor="#C0C0C0" align="Left" valign="top">表示为</th>
+<th width="70%" bgcolor="#C0C0C0" align="Left" valign="top">描述</th>
+</tr>
+
+<tr>
+<td valign="top">进程事件</td>
+<td valign="top"><code>s-event</code></td>
+<td valign="top">触发的事件：Site-Stop、Site-Start、Site-Pause、Periodic-Log、Interval-Start、Interval-End、Interval-Change、Log-Change-Int/Start/Stop、Eventlog-Limit、Priority-Limit、Process-Stop-Limit、Site-Pause-Limit、Eventlog-Limit-Reset、Priority-Limit-Reset、Process-Stop-Limit-Reset 或 Site-Pause-Limit-Reset。有关这些值的说明，请<a href="#valuesdescription">单击此处</a>。</td>
+</tr>
+
+<tr>
+<td valign="top">进程类型</td>
+<td valign="top"><code>s-process-type</code></td>
+<td valign="top">触发事件的进程类型，CGI 或进程外应用程序。类型可以是“CGI”、“应用程序”或“全部”。</td>
+</tr>
+
+<tr>
+<td valign="top">用户总时间</td>
+<td valign="top"><code>s-user-time</code></td>
+<td valign="top">在当前时间间隔内，站点所使用的总累计“用户模式”处理器时间百分比。</td>
+</tr>
+
+<tr>
+<td valign="top">内核总时间</td>
+<td valign="top"><code>s-kernel-time</code></td>
+<td valign="top">在当前时间间隔内，站点所使用的总累计“内核模式”处理器时间百分比。</td>
+</tr>
+
+<tr>
+<td valign="top">页面错误总数</td>
+<td valign="top"><code>s-page-faults</code></td>
+<td valign="top">导致内存页错误的内存引用总数。</td>
+</tr>
+
+<tr>
+<td valign="top">进程总数</td>
+<td valign="top"><code>s-total-procs</code></td>
+<td valign="top">在当前时间间隔内，创建的 CGI 和进程外应用程序总数。</td>
+</tr>
+
+<tr>
+<td valign="top">活动进程</td>
+<td valign="top"><code>s-active-procs</code></td>
+<td valign="top">记录日志时，运行的 CGI 和进程外应用程序总数。</td>
+</tr>
+
+<tr>
+<td valign="top">终止的进程总数</td>
+<td valign="top"><code>s-stopped-procs</code></td>
+<td valign="top">在当前时间间隔内由于进程限制而停止的 CGI 和进程外应用程序总数。</td>
+</tr>
+</table><br>
+
+
+<a name="valuesdescription"></a>
+<table width="70%" border="1" cellspacing="0" cellpadding="2">
+<tr>
+<th width="25%" bgcolor="#C0C0C0" align="Left" valign="top">值</th>
+<th width="75%" align="CENTER" valign="TOP" bgcolor="#C0C0C0">含义</th>
+</tr>
+<tr>
+<td valign="top">Site-Stop</td>
+<td valign="top">由于某种原因，网站被停止。</td>
+</tr>
+<tr>
+<td valign="top">Site-Start</td>
+<td valign="top">网站被启动或重新启动。</td>
+</tr>
+<tr>
+<td valign="top">Site-Pause</td>
+<td valign="top">网站被暂停。</td>
+</tr>
+<tr>
+<td valign="top">Periodic-Log</td>
+<td valign="top">这是一个按某种规律定义的日志条目，其间隔由管理员指定。</td>
+</tr>
+<tr>
+<td valign="top">Reset-Interval-Start</td>
+<td valign="top">重新设置间隔已经开始。</td>
+</tr>
+<tr>
+<td valign="top">Reset-Interval-End</td>
+<td valign="top">已达到“重新设置的间隔”，并将重置。</td>
+</tr>
+<tr>
+<td valign="top">Reset-Interval-Change</td>
+<td valign="top">网站管理员更改了“重新设置间隔”的值。</td>
+</tr>
+<tr>
+<td valign="top">Log-Change-Int/Start/Stop</td>
+<td valign="top">发生了下列事件之一：日志的间隔已经更改；发生了间隔事件或者站点停止、启动或暂停。</td>
+</tr>
+<td valign="top">Eventlog-Limit</td>
+<td valign="top">由于 CGI 或进程外应用程序达到管理员设置的事件日志限制，生成一个网站的事件日志。</td>
+</tr>
+</tr>
+<td valign="top">Priority-Limit</td>
+<td valign="top">由于网站达到了管理员设置的低优先级限制，此站点将 CGI 或进程外应用程序设置为低优先级。</td>
+</tr>
+</tr>
+<td valign="top">Process-Stop-Limit</td>
+<td valign="top">由于达到了管理员设置的“进程停止限制”，网站停止 CGI 或进程外应用程序。</td>
+</tr>
+</tr>
+<td valign="top">Site-Pause-Limit</td>
+<td valign="top">由于 CGI 或进程外应用程序达到了管理员设置的“站点暂停限制”，网站暂停。</td>
+</tr>
+</tr>
+<td valign="top">Eventlog-Limit-Reset</td>
+<td valign="top">已经达到“重新设置间隔”，或者手动重新设置了 Eventlog-Limit。</td>
+</tr>
+</tr>
+<td valign="top">Priority-Limit-Reset</td>
+<td valign="top">已经达到“重新设置间隔”，或者手动重新设置了 Priority-Limit。</td>
+</tr>
+</tr>
+<td valign="top">Process-Stop-Limit-Reset</td>
+<td valign="top">已经达到“重新设置间隔”，或者手动重新设置了 Process-Stop-Limit。</td>
+</tr>
+</tr>
+<td valign="top">Site-Pause-Limit-Reset</td>
+<td valign="top">已经达到“重新设置间隔”，或者手动重新设置了 Site-Pause-Limit。</td>
+</tr>
+</table>
+
+<h2><a name="extendedprops"></a>Microsoft IIS 日志定义<a name="MicrosoftIISLogDefinitions"></a></h2>
+<a name="valuesdescription"></a>
+<table width="70%" border="1" cellspacing="0" cellpadding="2">
+<tr>
+<th width="25%" bgcolor="#C0C0C0" align="Left" valign="top">字段</th>
+<th width="75%" align="CENTER" valign="TOP" bgcolor="#C0C0C0">描述</th>
+</tr>
+<tr>
+<td valign="top">客户端的 IP 地址</td>
+<td valign="top">发出请求的客户端的 IP 地址。</td>
+</tr>
+<tr>
+<td valign="top">用户名</td>
+<td valign="top">访问服务器的已验证用户的名称，不包括用连字符“-”所表示的匿名用户。</td>
+</tr>
+<tr>
+<td valign="top">日期</td>
+<td valign="top">活动发生的日期。</td>
+</tr>
+<tr>
+<td valign="top">时间</td>
+<td valign="top">活动发生的时间。</td>
+</tr>
+<tr>
+<td valign="top">服务和实例</td>
+<td valign="top">网站实例的显示方式为 W3SVC#，FTP 站点实例的显示方式为 MSFTPSVC#，其中 # 为站点实例。</td>
+</tr>
+<tr>
+<td valign="top">计算机名</td>
+<td valign="top">服务器的 NetBios 名称。</td>
+</tr>
+<tr>
+<td valign="top">服务器的 IP 地址</td>
+<td valign="top">为请求提供服务的服务器的 IP 地址。</td>
+</tr>
+<tr>
+<td valign="top">所用时间</td>
+<td valign="top">操作所占用的时间。</td>
+</tr>
+</tr>
+<td valign="top">发送的字节数</td>
+<td valign="top">向服务器发送的字节数。</td>
+</tr>
+</tr>
+<td valign="top">接收的字节数</td>
+<td valign="top">从服务器接收的字节数。</td>
+</tr>
+<td valign="top">服务状态码</td>
+<td valign="top">HTTP 或 FTP 状态码。</td>
+</tr>
+</tr>
+<td valign="top">Windows 状态码</td>
+<td valign="top">以 Windows 术语表示的操作状态。</td>
+</tr>
+</tr>
+<td valign="top">请求类型</td>
+<td valign="top">服务器按收到的请求类型（如 GET 和 PASS）。</td>
+</tr>
+</tr>
+<td valign="top">操作目标</td>
+<td valign="top">操作的目标 URL。</td>
+</tr>
+</tr>
+<td valign="top">参数</td>
+<td valign="top">传送到脚本的参数。</td>
+</tr>
+</tr>
+</table>
+
+<h2><a name="extendedprops"></a><a name="NCSACommonLogFileFormat">NCSA 公用日志文件格式</a></h2>
+<a name="valuesdescription"></a>
+<table width="70%" border="1" cellspacing="0" cellpadding="2">
+<tr>
+<th width="25%" bgcolor="#C0C0C0" align="Left" valign="top">字段</th>
+<th width="75%" align="CENTER" valign="TOP" bgcolor="#C0C0C0">描述</th>
+</tr>
+<tr>
+<td valign="top">远程主机地址</td>
+<td valign="top">发出请求的客户端的 IP 地址。</td>
+</tr>
+<tr>
+<td valign="top">远程日志名称</td>
+<td valign="top">此值始终为连字符“-”。</td>
+</tr>
+<tr>
+<td valign="top">用户名</td>
+<td valign="top">已验证用户的格式为“域\用户名”，匿名用户的格式为连字符“-”。</td>
+</tr>
+<tr>
+<td valign="top">日期</td>
+<td valign="top">执行操作的日期。</td>
+</tr>
+<tr>
+<td valign="top">时间和时差</td>
+<td valign="top">活动发生的时间，后面紧跟 GMT 时差。</td>
+</tr>
+<tr>
+<td valign="top">请求及版本</td>
+<td valign="top">所使用的请求类型、目标 URL、传递到脚本的参数以及客户端所使用的 HTTP 版本（如果有的话）。</td>
+</tr>
+<tr>
+<td valign="top">服务器状态码</td>
+<td valign="top">HTTP 状态码。</td>
+</tr>
+<tr>
+<td valign="top">发送的字节数</td>
+<td valign="top">服务器向客户端发送的字节数。</td>
+</tr>
+</table>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

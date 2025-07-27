@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>配置数据库</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="包含有关配置数据库的组织信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="metabase">配置数据库</a></h1>
+
+<p>配置数据库是一种分级数据库，用于存储 IIS 的配置值。在配置服务器属性方面，配置数据库比直接编辑注册表更为有效，尽管某些值仍可以通过注册表进行配置。可以通过修改配置数据库来设置计算机、网站、虚拟目录、目录和文件级别上的服务器属性。
+</p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><A HREF="iimbsovr.htm">关于配置数据库</A>：与配置数据库相关的概念主题</li>
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>备份配置数据库；请参阅<a href="iitasks.htm">备份配置数据库</a>。</li>
+<li>还原配置数据库；请参阅<a href="iirestore.htm">还原配置数据库</a>。</li>
+<li>注册表；请参阅<a href="iiregtop.htm">注册表</a>。</li>
+<li>例行服务器管理；请参阅<a href="iisvadm.htm">服务器管理</a>。</li>
+<li>编程管理；请参阅<a href="../asp/aint7e9l.htm">以编程方式管理 IIS</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

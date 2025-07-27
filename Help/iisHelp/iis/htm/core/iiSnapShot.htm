@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>配置数据库快照记录器和 NT 备份</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="描述配置数据库快照记录器以及它如何与 NTbackup 交互操作、描述如何使用 NTbackup 还原配置数据库。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="bak">配置数据库快照记录器</a></h1>
+
+<h3>配置数据库快照记录器</h3>
+
+<p>配置数据库快照记录器 (MSW) 使用 COM 接口确保 NTbackup 所创建的配置数据库备份的稳定性和可靠性。调用 NTbackup 备份配置数据库时将自动启动 MSW。MSW 确定已指定使用 NTbackup 的驱动器卷是否包含 metabase.bin 文件。如果包含，MSW 将用 RAM 中配置数据库的数据刷新 Metabase.bin 文件。如果不包含，MSW 将等待下一次调用 NTbackup。然后，MSW 阻止将新的信息添加到 RAM 配置数据库（最多持续两分钟）。在此期间，NT Backup 将对 Metabase.bin 进行备份。NT 备份完成后，MSW 即解除对 RAM 中配置数据库设置的写锁定。下图对 MSW 的启动和功能进行了说明。</p>
+
+<img src="iisnapshot.gif" alt="MSW 运行图。">
+
+<p class="note"><strong>注意</strong>&nbsp;&nbsp;&nbsp;配置数据库快照记录器支持 NTbackup，它不是从 <a href="iiabuti.htm">Internet 信息服务管理单元</a>运行的“配置备份/还原”应用程序的组成部分。</p>
+
+<p><font color="#0000FF"><strong>要点</strong></font>&nbsp;&nbsp;&nbsp;还原 metabase.bin 文件时，NTbackup 不调用配置数据库快照记录器。用 NTbackup 还原配置数据库之前，请先停止 WWW (万维网发布) 服务以防止 IIS 对 metabase.bin 文件进行写入操作。</p>
+
+<p><strong>相关主题</strong></p>
+<ul>
+<li>有关 NT 备份的详细信息，请参阅 Windows 文档，方法是在“开始”菜单上选择“帮助”，然后搜索关键字“ntbackup”。</li>
+<li>有关停止并重新启动 WWW 服务的详细信息，请参阅<a href="iicodira.htm">重新启动 IIS</a>。
+
+<li>有关配置数据库的简介，请参阅</li> <a href="../asp/aint1aud.htm">IIS 配置数据库简介</a>。</li>
+<li>有关备份配置数据库的信息，请参阅<a href="iitasks.htm">备份配置数据库</a>。</li>
+<li>有关还原配置数据库的信息，请参阅<a href="iirestore.htm">还原配置数据库</a>。</li>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE> 
+（下列单词只用于搜索，不会显示在网页中。）W3SVC, NTbackup NT Backup
+</layer></span>
+
+</font>
+</body>
+</html>

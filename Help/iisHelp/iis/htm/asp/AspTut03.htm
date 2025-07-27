@@ -1,0 +1,959 @@
+<!DOCtype HTML PUBLIC "-//W3C//Dtd HTML 3.2//EN">
+<html dir=ltr><head><title>单元 3：维护 Web 应用程序的会话状态</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//-->
+</SCRIPT>
+
+<META NAME="ROBOTS" CONTENT="NOINDEX"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312"></head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+ 
+<h1><a name="maintainingsessionstate">单元 3：维护会话状态</a></h1>
+
+<p>
+本单元说明在 Active Server Pages (ASP) 中维护会话状态的过程。会话是指特定用户查看网站内容的时间段，从用户开始访问网站的第一个网页时开始，在用户离开网站若干分钟后结束。与特定会话相关的用户特定信息，统称为会话状态。
+</p> 
+
+<p>因为 HTTP 是非状态协议，这就产生一个问题，即应当如何维护用户访问网站的状态。Web 服务器将每一个 HTTP 请求都看作独立的请求，而与以前的请求无关。这样，用户在请求的下一个网页中自动获得在上一个网页中输入（例如通过表单）的信息。Web 服务器必须维护会话状态，以便在用户浏览网站上的多个网页时可以识别和跟踪用户。
+</p> 
+
+<p>一个解决方案是使用 <i>cookie</i>。cookie 记录用户在一个网页上的信息并将此信息传递给网站内的其他网页。然而，一些浏览器不识别 cookie，而在另外一些浏览器上，用户可能禁用 cookie。如果考虑到这些 Web 用户的需要，您可以通过 HTTP POST 而不是使用 cookie 来维护会话状态。
+</p> 
+
+<p>
+本单元包括下列课程：
+</p>
+
+<ul>
+<li>
+<a href="#with">使用 cookie 维护会话状态</a>&nbsp;&nbsp;&nbsp;提供两个 cookie 示例，一个使用 ASP Response 和 Request 对象，而另一个使用 ASP Session 对象。
+</li><li>
+<a href="#without">不使用 cookie 维护会话状态</a>&nbsp;&nbsp;&nbsp;提供一个 HTTP POST 示例。使用 HTTP POST 可以达到与使用 cookie 维护会话状态相同的效果。
+</li>
+</ul>
+
+<BR><h2><a name="with">使用 cookie 维护会话状态</a></h2>
+
+<p>
+cookie 存储一组用户特定的信息，比如信用卡号码或密码。Web 服务器将 cookie 嵌入到用户的 Web 浏览器中，以便用户信息也可用于网站的其他网页。因此，用户不必为访问的每一个网页重新输入信息。在为网上购物、保留 Web 用户个人首选项或维护用户状态而收集客户信息时，cookie 是一种有效的方法。
+</p>
+
+<p>
+有两种类型的 cookie，如下所示：
+</p>
+
+<ul>
+<li>
+<B>内存 cookie</b>&nbsp;&nbsp;&nbsp;用户关闭浏览器时，内存 cookie 同时被释放。
+</li><li>
+<B>永久 cookie</b>&nbsp;&nbsp;&nbsp;永久 cookie 驻留在用户硬盘上，并在用户返回网页时进行检索。
+</li>
+</ul>
+
+<p>
+如果创建 cookie 时不指定过期日期，则创建内存 cookie，并只在浏览器会话期间有效。下列语句是用于内存 cookie 的脚本：
+</p>
+
+<code>
+<p>
+&nbsp;&nbsp;&nbsp;Response.Cookies("SiteArea") = "TechNet"
+</p>
+</code>
+
+<p>
+如果需要在会话结束后仍保留 cookie 信息，应当通过指定过期日期创建永久 cookie。提供过期日期可以使浏览器将 cookie 保存在客户端计算机中。在到达 cookie 过期日期前，永久 cookie 中的数据会一直保留在客户端机器中。对原来网站的任何请求都会自动附加由此网站创建的 cookie。由于 cookie 数据中包含了网站名称和 ASP 文件的部分信息，所以 cookie 只对创建它们的网站有效。<BR>下列语句是用于创建永久 cookie 的脚本：
+</p>
+
+<code>
+<p>
+&nbsp;&nbsp;&nbsp;Response.Cookies("SiteArea") = "TechNet"
+<br>&nbsp;&nbsp;&nbsp;Response.Cookies("SiteArea").Expires = "August 15, 2000"
+</p>
+</code>
+
+<p>应将创建 cookie 的脚本置于 ASP 文件的开始处，因为 cookie 需要在 HTML 文本发送到浏览器之前生成。
+</p>
+
+<BR><h3>使用 Response 和 Request 对象的 cookie</h3>
+
+<p>
+可以使用 <b>Response</b> 和 <b>Request</b> 对象生成永久 cookie，尽管这些对象也可以用于创建内存 cookie。大多数 Web 应用程序利用这些对象维护会话状态。
+</p>
+
+<ul>
+<li>
+<B>Response 对象</B>&nbsp;&nbsp;&nbsp;使用 <b>Response</b> 对象创建和设置 cookie 值。
+</li><li>
+<B>Request 对象</B>&nbsp;&nbsp;&nbsp;使用 <b>Request</b> 对象检索上一个 Web 会话中创建的 cookie 值。
+</li>
+</ul>
+
+<p>
+在本课中，将使用 <b>Response</b> 和 <b>Request</b> 对象创建下列文件。请一次创建全部文件，因为其中某些文件会需要另外一些文件。在创建所有文件后，通过在浏览器中键入 <b>http&#58;&#47;&#47;LocalHost&#47;Tutorial&#47;Frame.htm</b> 运行此应用程序。
+</p>
+
+<ul>
+<li>
+<B>Frame.htm</B>&nbsp;&nbsp;&nbsp;将用户视图拆分为两个窗口。此网页需要 Menu.htm 和 CustomGreeting.asp。
+</li><li>
+<B>Menu.htm</B>&nbsp;&nbsp;&nbsp;此网页包含到本课程示例的链接。要确保这些链接正常工作，必须已经创建了所有其他的网页。
+
+</li><li>
+<B>CustomGreeting.asp</B>&nbsp;&nbsp;&nbsp;在表单中取得用户名，并设置内存 cookie。
+</li><li>
+<B>DeleteGreetingCookie.asp</B>&nbsp;&nbsp;&nbsp;删除包含用户名的 cookie。如果没有设置 cookie，则显示警告。
+</li><li>
+<B>SelectColors.asp</B>&nbsp;&nbsp;&nbsp;为用户的颜色选择设置 cookie。</li><li>
+<B>DeleteColorCookie.asp</B>&nbsp;&nbsp;&nbsp;删除以前选择的 Web 颜色。如果没有选择颜色，则显示警告。
+</li><li>
+<B>Cookie.asp</B>&nbsp;&nbsp;&nbsp;设置永久 cookie，保存用户访问的当前日期和时间，并记录访问的总次数。</li><li>
+<B>DeleteCookies.asp</B>&nbsp;&nbsp;&nbsp;删除 Cookie.asp 中的 cookie。如果 cookie 不存在，将会显示警告。</li></ul>
+
+<BR><h4>Frame.htm</h4>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件中，并将其保存为 <b>C:\Inetpub\Wwwroot\Tutorial\Frame.htm</b>。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;html&gt;
+<BR>&nbsp; &lt;head&gt;
+<BR>&nbsp; &lt;title&gt;使用内存和永久 cookie 自定义问候和颜色&lt;/title&gt; 
+<BR>&nbsp; &lt;/head&gt;
+<BR>
+<BR>&nbsp; &lt;frameset cols="40%,60%"&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;frame src="menu.htm" name="left" marginheight="5" marginwidth="5"&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;frame src="CustomGreeting.asp" name="right" marginheight="5" marginwidth="5"&gt;
+<BR>&nbsp; &lt;/frameset&gt;
+<BR>
+<BR>&nbsp; &lt;noframes&gt;
+<BR>&nbsp;&nbsp;&nbsp; 抱歉，您的浏览器不支持框架。请转到&lt;a href="menu.htm"&gt;菜单&lt;/a&gt;。<BR>&nbsp; &lt;/noframes&gt;
+<BR>
+<BR>&nbsp; &lt;/html&gt;
+</p>
+</code>
+
+<BR><h4>Menu.htm</h4>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件中，并将其保存为 <b>C:\Inetpub\Wwwroot\Tutorial\Menu.htm</b>。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;html&gt;
+<BR>&nbsp; &lt;head&gt;
+<BR>&nbsp; &lt;title&gt;使用 cookie 维护会话状态&lt;/title&gt;
+<BR>&nbsp; &lt;/head&gt;
+<BR>&nbsp; &lt;body&gt;
+<BR>&nbsp; &lt;font face="MS Gothic"&gt;
+<BR>
+<BR>&nbsp; &lt;h2 align="center"&gt;cookie 示例&lt;/h2&gt;
+<BR>
+<BR>&nbsp; &lt;table align=center border=1 cellpadding=4&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;a href="CustomGreeting.asp" target="right"&gt;&lt;b&gt;自定义问候网页&lt;/b&gt;&lt;/a&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;a href="DeleteGreetingCookie.asp" target="right"&gt;&lt;b&gt;删除问候 cookie&lt;/b&gt;&lt;/a&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;a href="SelectColors.asp" target="right"&gt;&lt;b&gt;设置网页颜色&lt;/b&gt;&lt;/a&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;a href="DeleteColorCookie.asp" target="right"&gt;&lt;b&gt;删除网页颜色 cookie&lt;/b&gt;&lt;/a&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;a href="Cookie.asp" target="right"&gt;&lt;b&gt;设置日期、时间和总访问次数的 cookie&lt;/b&gt;&lt;/a&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;&lt;tr&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;td&gt;&lt;a href="DeleteCookies.asp" target="right"&gt;&lt;b&gt;删除日期、时间和总访问次数的 cookie&lt;/b&gt;&lt;/a&gt;&lt;/td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt;
+<BR>&nbsp; &lt;/table&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt;
+<BR>&nbsp; &lt;/html&gt;
+</p>
+</code>
+
+<BR><h4>CustomGreeting.asp</h4>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件中，并将其保存为 <b>C:\Inetpub\Wwwroot\Tutorial\CustomGreeting.asp</b>。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language="VBScript" %&gt; 
+<BR>&nbsp;  &lt;% 
+<BR>&nbsp;&nbsp; '如果用户已经选择了文字和背景颜色，
+<BR>&nbsp;&nbsp; 'cookie 用于在 HTTP 会话之间记录文字和背景颜色值。
+<BR>&nbsp;&nbsp; '先执行此步骤以便网页可以使用这些值（如果已进行了设置）。
+<BR>&nbsp;&nbsp; If Not (Request.QueryString("Text")="") Then 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies("TextColor") = Request.QueryString("Text") 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies("BackgroundColor") = Request.QueryString("Background") 
+<BR>&nbsp;&nbsp; End If 
+<BR>
+<BR>&nbsp;&nbsp; '如果用户已键入一个名字，则创建一个 cookie。
+<BR>&nbsp;&nbsp; If Not (Request.QueryString("Name")="") Then 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies ("Name") = Request.QueryString("Name")
+<BR>
+<BR>&nbsp;&nbsp; '如果用户没有给出姓名，则创建一个 cookie
+<BR>&nbsp;&nbsp; '以便以后不再询问姓名。
+<BR>&nbsp;&nbsp; ElseIf (InStr(Request.QueryString,"Name")=1) Then 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies ("NoUserInput") = "TRUE" 
+<BR>
+<BR>&nbsp;&nbsp; End If 
+<BR>&nbsp; %&gt; 
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;/head&gt; 
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; '按当前上一位用户的输入信息设置颜色。
+<BR>&nbsp;&nbsp; If (Request.Cookies ("TextColor")="") Then %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;body&gt; 
+<BR>&nbsp;&nbsp; &lt;% Else %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;body bgcolor=&lt;%=Request.Cookies("BackgroundColor")%&gt; text=&lt;%=Request.Cookies("TextColor")%&gt;&gt; 
+<BR>&nbsp;&nbsp; &lt;% End If
+<BR>&nbsp; %&gt;
+<BR>
+<BR>&nbsp; &lt;font face="MS Gothic"&gt;
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; '在不存在姓名 cookie、用户未输入姓名，
+<BR>&nbsp;&nbsp; '或根本没有用户输入时，获取用户姓名。
+<BR>&nbsp;&nbsp; If ( (Request.Cookies("Name")="") And ((Request.QueryString("Name"))="")) And (Not(Request.Cookies("NoUserInput")="TRUE") ) Then %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;FORM ACTION="CustomGreeting.asp" METHOD="GET" NAME="DataForm"&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;table align=center&gt;&lt;tr&gt;&lt;td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE=TEXTBOX NAME="Name" SIZE=33&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE=Submit VALUE="请输入您的姓名"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/FORM&gt; 
+<BR>
+<BR>&nbsp;&nbsp; &lt;% ElseIf Not(Request.Cookies("Name")="") Then %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;H2 align=center&gt;Greetings &lt;%=Request.Cookies("Name")%&gt;&lt;/H2&gt;
+<BR>
+<BR>&nbsp;&nbsp; &lt;% Else %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;H2&gt;您好！&lt;/H2&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;H3&gt;您没有提供姓名，所以无法用您的名字问候您。&lt;/H3&gt; 
+<BR>
+<BR>&nbsp;&nbsp; &lt;% End If
+<BR>&nbsp; %&gt; 
+<BR>
+<BR>&nbsp; &lt;H3&gt;内存 cookie 示例&lt;/H3&gt;
+<BR>&nbsp; &lt;P&gt;
+<BR>&nbsp; 在您输入姓名之后：
+<BR>&nbsp; &lt;UL&gt;
+<BR>&nbsp; &lt;LI&gt;如果单击浏览器中的&lt;B&gt;刷新&lt;/B&gt;，依然会看到您的名字。&lt;/LI&gt;
+<BR>&nbsp; &lt;LI&gt;如果关闭浏览器，此 cookie 将被删除。当使用浏览器重新打开此网页时，将要求您重新输入姓名。&lt;/LI&gt;
+<BR>&nbsp; &lt;LI&gt;如果单击&lt;B&gt;删除问候 cookie&lt;/B&gt;，并单击&lt;B&gt;自定义问候网页&lt;/B&gt;，会要求您重新输入姓名。&lt;/LI&gt;
+<BR>&nbsp; &lt;/P&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt; 
+<BR>&nbsp; &lt;/html&gt; 
+</p>
+</code>
+
+<BR><h4>DeleteGreetingCookie.asp</h4>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件中，并将其保存为 <B>C:\Inetpub\Wwwroot\Tutorial\DeleteGreetingCookie.asp</b>。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language="VBScript" %&gt; 
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;/head&gt; 
+<BR>
+<BR>&nbsp; &lt;% If (Request.Cookies ("TextColor")="") Then %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;body&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;font face="MS Gothic"&gt;
+<BR>&nbsp; &lt;% Else %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;body bgcolor=&lt;%=Request.Cookies("BackgroundColor")%&gt; text=&lt;%=Request.Cookies("TextColor")%&gt;&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;font face="MS Gothic" color=&lt;%=Request.Cookies("TextColor")%&gt;&gt;
+<BR>&nbsp; &lt;% End If %&gt;
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; If Not ("" = Request.Cookies("Name")) Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies ("Name").Expires = "January 1, 1992" 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies ("NoUserInput").Expires = "January 1, 1992" %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;h2 align=center&gt;已删除内存 cookie &lt;/h2&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;P&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 用于跟踪姓名的 cookie 已被删除。&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 请单击&lt;B&gt;自定义问候网页&lt;/B&gt;再次输入姓名。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/P&gt;
+<BR>
+<BR>&nbsp;&nbsp; &lt;% Else %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;h2 align=center&gt;未删除内存问候 cookie&lt;/h2&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;P&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 不存在与您的姓名有关的 cookie。&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 请单击&lt;B&gt;自定义问候网页&lt;/B&gt;输入您的姓名。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/P&gt;
+<BR>
+<BR>&nbsp;&nbsp; &lt;% End If
+<BR>&nbsp; %&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt; 
+<BR>&nbsp; &lt;/html&gt; 
+</p>
+</code>
+
+<br><h4>SelectColors.asp</h4>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件，并将其保存为 <B>C:\Inetpub\Wwwroot\Tutorial\SelectColors.asp</b>。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language="VBScript" %&gt; 
+<BR>
+<BR>&nbsp; &lt;% 
+<BR>&nbsp;&nbsp;&nbsp; '如果用户已经选择了文字和背景颜色，
+<BR>&nbsp;&nbsp;&nbsp; 'cookie 用于在 HTTP 会话之间记录文字和背景颜色值。
+<BR>&nbsp;&nbsp;&nbsp; If Not (Request.QueryString("Text")="") Then 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies ("TextColor") = Request.QueryString("Text") 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies ("BackgroundColor") = Request.QueryString("Background") 
+<BR>&nbsp;&nbsp;&nbsp; End If 
+<BR>&nbsp; %&gt; 
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;/head&gt; 
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp;&nbsp; '按当前上一位用户输入的信息设置颜色。
+<BR>&nbsp;&nbsp;&nbsp; If (Request.Cookies ("TextColor")="") Then %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;body&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;% Else %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;body bgcolor=&lt;%=Request.Cookies("BackgroundColor")%&gt; text=&lt;%=Request.Cookies("TextColor")%&gt;&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;% End If
+<BR>&nbsp; %&gt; 
+<BR>
+<BR>&nbsp; &lt;font face="MS Gothic"&gt; 
+<BR>
+<BR>&nbsp; &lt;H2 align=center&gt;为网页选择颜色&lt;/H2&gt;
+<BR>&nbsp; &lt;P&gt;
+<BR>&nbsp; 将使用内存 cookie 保存这些值。
+<BR>&nbsp; &lt;/P&gt;
+<BR>&nbsp; &lt;FORM ACTION="SelectColors.asp" METHOD="GET" NAME="DataForm"&gt;
+<BR>&nbsp; &lt;table border="1" width="450" cellpadding=0&gt;
+<BR>&nbsp; &lt;tr&gt;&lt;td&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;table&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;tr&gt;&lt;td BGCOLOR=99FF99&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;B&gt;&lt;font color=000000&gt;请选择背景颜色&lt;/font&gt;&lt;/B&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=FFFFFF&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Background" VALUE="FFFFFF" CHECKED&gt;&lt;font COLOR=000000&gt; FFFFFF &lt;/font&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=D98719&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Background" VALUE="D98719"&gt; D98719
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=D9D919&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Background" VALUE="D9D919"&gt; D9D919
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=00FFFF&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Background" VALUE="00FFFF"&gt; 00FFFF
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=FF00FF&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Background" VALUE="FF00FF"&gt; FF00FF
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=000000&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Background" VALUE="000000"&gt; &lt;font COLOR=FFFFFF&gt;000000&lt;/font&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt; 
+<BR>&nbsp; &lt;/table&gt;
+<BR>&nbsp; &lt;/td&gt;&lt;td&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;table&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;tr&gt;&lt;td BGCOLOR=99FF99&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;B&gt;&lt;font color=000000&gt;请选择文字颜色&lt;/font&gt;&lt;/B&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=FFFFFF&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Text" VALUE="FFFFFF" CHECKED&gt;&lt;font COLOR=000000&gt; FFFFFF &lt;/font&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=D98719&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Text" VALUE="D98719"&gt; D98719 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=D9D919&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Text" VALUE="D9D919"&gt; D9D919 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=00FFFF&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Text" VALUE="00FFFF"&gt; 00FFFF 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=FF00FF&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Text" VALUE="FF00FF"&gt; FF00FF 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td BGCOLOR=000000&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;input type="RADIO" NAME="Text" VALUE="000000" CHECKED&gt;&lt;font COLOR=FFFFFF&gt; 000000 &lt;/font&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/table&gt; 
+<BR>&nbsp; &lt;/td&gt;&lt;/tr&gt; 
+<BR>&nbsp; &lt;/table&gt;
+<BR>&nbsp; &lt;P&gt;
+<BR>&nbsp; &lt;input type=Submit VALUE="提交选定的颜色"&gt; 
+<BR>&nbsp; &lt;/FORM&gt; 
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt; 
+<BR>&nbsp; &lt;/html&gt; 
+</p>
+</code>
+
+<br><h4>DeleteColorCookie.asp</h4>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件中，并将其保存为 <B>C:\Inetpub\Wwwroot\Tutorial\DeleteColorCookie.asp</b>。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language="VBScript" %&gt; 
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp;  &lt;head&gt; 
+<BR>&nbsp;  &lt;/head&gt; 
+<BR>&nbsp;  &lt;body&gt; 
+<BR>&nbsp;  &lt;font face="MS Gothic"&gt;
+<BR>
+<BR>&nbsp;  &lt;% 
+<BR>&nbsp;&nbsp; If Not ("" = Request.Cookies("TextColor")) Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies("TextColor").Expires = "January 1, 1992" 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies("BackgroundColor").Expires = "January 1, 1992" %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;h2 align=center&gt;已删除内存 cookie &lt;/h2&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;P&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 用于跟踪显示颜色的 cookie 已被删除。&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 请单击&lt;B&gt;设置网页颜色&lt;/B&gt;重新设置颜色。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/P&gt;
+<BR>
+<BR>&nbsp;&nbsp; &lt;% Else %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;h2 align=center&gt;未删除内存颜色 cookie&lt;/h2&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;P&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 不存在与您的颜色选择相关的 cookie。&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 请单击&lt;B&gt;设置网页颜色&lt;/B&gt;设置显示颜色。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/P&gt;
+<BR>
+<BR>&nbsp;&nbsp; &lt;% End If
+<BR>&nbsp;  %&gt;
+<BR>
+<BR>&nbsp;  &lt;/font&gt;
+<BR>&nbsp;  &lt;/body&gt; 
+<BR>&nbsp;  &lt;/html&gt;
+</p>
+</code>
+
+<BR><h4>Cookie.asp</h4>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件，并将其保存为 <B>C:\Inetpub\Wwwroot\Tutorial\Cookie.asp</b>。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language="VBScript" %&gt; 
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; LastAccessTime = Request.Cookies("LastTime")
+<BR>&nbsp;&nbsp; LastAccessDate = Request.Cookies("LastDate")
+<BR>
+<BR>&nbsp;&nbsp; '如果 NumVisits cookie 为空，设置为 0，否则加 1。
+<BR>&nbsp;&nbsp; If (Request.Cookies("NumVisits")="") Then 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies("NumVisits") = 0 
+<BR>&nbsp;&nbsp; Else 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies("NumVisits") = Request.Cookies("NumVisits") + 1 
+<BR>&nbsp;&nbsp; End If 
+<BR>
+<BR>&nbsp;&nbsp; Response.Cookies("LastDate") = Date
+<BR>&nbsp;&nbsp; Response.Cookies("LastTime") = Time
+<BR>
+<BR>&nbsp;&nbsp; '以超过当前日期的过期日期创建永久 cookie。
+<BR>&nbsp;&nbsp; Response.Cookies("LastDate").Expires = "January 15, 2001"
+<BR>&nbsp;&nbsp; Response.Cookies("LastTime").Expires = "January 15, 2001"
+<BR>&nbsp;&nbsp; Response.Cookies("NumVisits").Expires = "January 15, 2001"
+<BR>&nbsp; %&gt; 
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;/head&gt; 
+<BR>&nbsp; &lt;% If (Request.Cookies ("TextColor")="") Then %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;body&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;font face="MS Gothic"&gt;
+<BR>&nbsp; &lt;% Else %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;body bgcolor=&lt;%=Request.Cookies("BackgroundColor")%&gt; text=&lt;%=Request.Cookies("TextColor")%&gt;&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;font face="MS Gothic" color=&lt;%=Request.Cookies("TextColor")%&gt;&gt;
+<BR>&nbsp; &lt;% End If %&gt;
+<BR>
+<BR>&nbsp; &lt;H2 align=center&gt;永久客户端 cookie！&lt;/H2&gt; 
+<BR>
+<BR>&nbsp; &lt;P&gt;
+<BR>&nbsp; 创建了三个永久客户端 cookie。
+<BR>&nbsp; &lt;UL&gt;
+<BR>&nbsp; &lt;LI&gt;一个 cookie 用于统计您访问网页的次数。&lt;/LI&gt;
+<BR>&nbsp; &lt;LI&gt;一个 cookie 用于确定访问日期。&lt;/LI&gt;
+<BR>&nbsp; &lt;LI&gt;一个 cookie 用于确定访问时间。&lt;/LI&gt;
+<BR>&nbsp; &lt;/UL&gt;
+<BR>&nbsp; &lt;/P&gt; 
+<BR>
+<BR>&nbsp;&lt;table border="1" width="300" cellpadding=4 align=center&gt; 
+<BR>&nbsp;&lt;tr&gt;&lt;td&gt;
+<BR>&nbsp;&lt;% If (Request.Cookies ("NumVisits")=0) Then %&gt; 
+<BR>&nbsp;&nbsp;&nbsp; 欢迎！这是您第一次访问此网页！
+<BR>&nbsp;&lt;% Else %&gt; 
+<BR>&nbsp;&nbsp;&nbsp; 谢谢您再次光临！您已访问此网页 &lt;B&gt;&lt;%=Request.Cookies("NumVisits")%&gt;&lt;/B&gt; 次。
+<BR>&nbsp;&lt;% End If %&gt; 
+<BR>&nbsp;&lt;/td&gt;&lt;/tr&gt;
+<BR>&nbsp;&lt;/table&gt; 
+<BR>
+<BR>&nbsp;&lt;P&gt; 
+<BR>&nbsp;&lt;B&gt;当前时间是 &lt;%=Date%&gt;&lt;BR&gt;&lt;%=Time%&gt;
+<BR>&nbsp;&lt;% If (Request.Cookies ("NumVisits")&gt;0) Then %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 您上一次访问此网页的时间是 &lt;%=LastAccessDate%&gt;&lt;%=LastAccessTime%&gt;  
+<BR>&nbsp;&lt;% End If %&gt; 
+<BR>&nbsp;&lt;/strong&gt; 
+<BR>&nbsp;&lt;/P&gt;
+<BR>
+<BR>&nbsp;&lt;/font&gt;
+<BR>&nbsp;&lt;/body&gt; 
+<BR>&nbsp;&lt;/html&gt; 
+</p>
+</code>
+
+<br><h4>DeleteCookies.asp</h4>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件中，并将文件保存为 DeleteCookies.asp。
+</p>
+
+<code>
+<p>
+<BR>&nbsp; &lt;%@ Language="VBScript" %&gt; 
+<BR>
+<BR>&nbsp; &lt;html&gt;
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;/head&gt; 
+<BR>
+<BR>&nbsp; &lt;% If (Request.Cookies ("TextColor")="") Then %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;body&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;font face="MS Gothic"&gt;
+<BR>&nbsp; &lt;% Else %&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;body bgcolor=&lt;%=Request.Cookies("BackgroundColor")%&gt; text=&lt;%=Request.Cookies("TextColor")%&gt;&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;font face="MS Gothic" color=&lt;%=Request.Cookies("TextColor")%&gt;&gt;
+<BR>&nbsp; &lt;% End If %&gt;
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp; If Not ("" = Request.Cookies("NumVisits")) Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies("NumVisits").Expires = "January 1, 1993"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies("LastDate").Expires = "January 1, 1993" 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; Response.Cookies("LastTime").Expires = "January 1, 1993" %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;H2 align=center&gt;已删除永久 cookie&lt;/H2&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;P&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 用于跟踪用户访问以及最后一次访问日期和时间的 cookie 已被删除 。&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 请单击&lt;B&gt;设置日期、时间和总访问次数的 cookie&lt;/B&gt; 重新设置 cookie。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/P&gt;
+<BR>
+<BR>&nbsp;&nbsp; &lt;% Else %&gt;
+<BR> 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;H2 align=center&gt;未删除任何永久 cookie&lt;/H2&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;P&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 不存在任何用于跟踪用户访问以及最后一次访问日期和时间的 cookie。&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; 请单击&lt;B&gt;设置日期、时间和总访问次数的 cookie&lt;/B&gt; 重新设置 cookie。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; &lt;/P&gt;
+<BR>
+<BR>&nbsp;&nbsp; &lt;% End If %&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt; 
+<BR>&nbsp; &lt;/html&gt; 
+</p>
+</code>
+
+<BR><h3>使用 Session 对象的 cookie</h3>
+
+<p>
+不能使用 <b>Session</b> 对象创建内存 cookie。要确保 <b>Session</b> 对象正常工作，需要确定用户访问网站的开始时间和结束时间。IIS 通过 cookie 完成此任务，cookie 存储了 ASP 会话 ID（而 ASP 会话 ID 维护一系列与用户有关的信息）。如果 ASP 会话 ID 不存在，则服务器认为当前请求是一次访问的开始。如果在 20 分钟内（默认时间）没有用户对 ASP 文件发出请求，则访问结束。
+</p>
+
+<p>
+在本课中，您将创建下列文件：
+</p>
+
+<ul>
+<li>
+<B>Global.asa</B>&nbsp;&nbsp;&nbsp;通过 Global.asa 文件，您可以在应用程序的开始以及每个用户会话的开始执行一些一般性操作。应用程序在第一次、第一个用户请求网页时开始，在应用程序被卸载或服务器脱机时结束。在请求开始时为每个用户分配唯一的会话，并且会话在用户请求最后一个网页后 20 分钟结束。在 Global.asa 中可以执行的一般性操作包括设置应用程序或会话变量、验证用户身份、实例化在整个应用程序或会话中一直活动的 COM 对象等。
+</li><li>
+<B>VisitCount.asp</B>&nbsp;&nbsp;&nbsp;此 ASP 脚本使用 <b>Session</b> 对象创建内存 cookie。
+</li></ul>
+
+<p>
+可将应用程序（或会话）的开始（或结束）认为是一个事件。通过 Global.asa 文件，您可以使用预定义的事件过程对文件作出响应。
+</p>
+
+<BR><h4>Global.asa </h4>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件，并将其保存为 <B>C:\Inetpub\Wwwroot\Global.asa</B>。</P><P>
+<B>要点：</B>必须将 Global.asa 文件保存在应用程序的根目录下以便于 ASP 进行查找。假定您有一个名为 C:\Inetpub\Wwwroot\Test 的虚拟路径，其 URL 应为 http://LocalHost/Test，并且 Global.asa 文件必须保存在 C:\Inetpub\Wwwroot\Test 中。我们没有创建映射到 C:\Inetpub\Wwwroot\Tutorial 的虚拟路径，所以根目录仍然是 C:\Inetpub\Wwwroot。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;SCRIPT LANGUAGE=VBScript RUNAT=Server&gt;
+<BR>
+<BR>&nbsp; '使用应用程序级变量跟踪
+<BR>&nbsp; '当前浏览网站的用户数量以及
+<BR>&nbsp; '访问过网站的用户总数
+<BR>&nbsp;  Sub Application_OnStart
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; '获取得此虚拟目录的物理路径，并附加文件名。
+<BR>&nbsp;&nbsp;&nbsp; Application("PhysPath") = Server.MapPath(".") & "\hits.txt"
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; '设置 Visual Basic 变量，并实例化 FileSystemObject 对象。
+<BR>&nbsp;&nbsp;&nbsp; Const cForReading = 1
+<BR>&nbsp;&nbsp;&nbsp; Const cTristateUseDefault = -2
+<BR>&nbsp;&nbsp;&nbsp; Set fsoObject = Server.CreateObject("Scripting.FileSystemObject")
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; '获取上一次保存的网页点击数以及发生的日期。
+<BR>&nbsp;&nbsp;&nbsp; If fsoObject.FileExists(Application("PhysPath")) Then
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  '如果文件 hits.txt 存在，则设置 Application 变量。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Set tsObject = fsoObject.OpenTextFile(Application("PhysPath"), cForReading, cTristateUseDefault)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Application("HitCounter") = tsObject.ReadLine
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Application("AppStartDate") = tsObject.ReadLine
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  tsObject.Close  
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; Else '未保存任何文件，因此将这些值重置。
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Application("HitCounter") = 0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Application("AppStartDate") = Date
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; End If
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; Application("CurrentUsers") = 0
+<BR>
+<BR>&nbsp;  End Sub
+<BR>
+<BR>
+<BR>&nbsp;  Sub Application_OnEnd 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; Const cForWriting = 2
+<BR>&nbsp;&nbsp;&nbsp; Const cTristateUseDefault = -2
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; Set fsoObject = Server.CreateObject("Scripting.FileSystemObject")
+<BR>&nbsp;&nbsp;&nbsp; If fsoObject.FileExists(Application("PhysPath")) Then
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  '如果文件存在，以可写方式将其打开。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  set tsObject = fsoObject.OpenTextFile(Application("PhysPath"), cForWriting, cTristateUseDefault)
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; Else
+<BR>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  '如果文件不存在，创建一个新文件。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  set tsObject = fsoObject.CreateTextFile(Application("PhysPath"))
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; End If
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; '将网站总点击次数和最后一次记录的日期写入文件。
+<BR>&nbsp;&nbsp;&nbsp; tsObject.WriteLine(Application("HitCounter"))
+<BR>&nbsp;&nbsp;&nbsp; tsObject.WriteLine(Application("AppStartDate"))
+<BR>&nbsp;&nbsp;&nbsp; tsObject.Close  
+<BR>
+<BR>&nbsp;  End Sub 
+<BR>
+<BR>
+<BR>&nbsp;  Sub Session_OnStart 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; '为演示示例，将 Session 超时默认值
+<BR>&nbsp;&nbsp;&nbsp; ' 改为 1 分钟。
+<BR>&nbsp;&nbsp;&nbsp; Session.Timeout = 1 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; '改变 Application 变量时，应将其锁定，防止其他
+<BR>&nbsp;&nbsp;&nbsp; '会话同时对其进行修改。
+<BR>&nbsp;&nbsp;&nbsp; Application.Lock
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; '将网站点击计数器加 1。
+<BR>&nbsp;&nbsp;&nbsp; Application("HitCounter") = Application("HitCounter") + 1	
+<BR>&nbsp;&nbsp;&nbsp; Application("CurrentUsers") = Application("CurrentUsers") + 1
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; Application.UnLock
+<BR>
+<BR>&nbsp;  End Sub 
+<BR>
+<BR>
+<BR>&nbsp;  Sub Session_OnEnd 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; Application.Lock
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; '将当前用户计数器减一。
+<BR>&nbsp;&nbsp;&nbsp; Application("CurrentUsers") = Application("CurrentUsers") - 1
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; Application.UnLock
+<BR>
+<BR>&nbsp;  End Sub 
+<BR>
+<BR>&nbsp;  &lt;/SCRIPT&gt; 
+</p>
+</code>
+
+<BR><h4>VisitCount.asp</h4>
+
+<p>
+可以使用在 Global.asa 中设定的变量计算访问和会话值。
+</p>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件中，并将其保存为 <B>C:\Inetpub\Wwwroot\Tutorial\VisitCount.asp</B>。可以在浏览器中键入
+http&#58;&#47;&#47;Localhost&#47;Tutorial&#47;VisitCount.asp 查看效果。 </p>
+<p>在浏览器中打开 http&#58;&#47;&#47;Localhost&#47;Tutorial&#47;VisitCount.asp 的第二个实例，并在第一个浏览器中单击“刷新”。总访问人数和当前访问人数将加一。关闭第二个浏览器，等待一分钟，并在第一个浏览器中单击“刷新”。当前访问人数将会减一。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;% Response.Buffer = True%&gt; 
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;title&gt;检索在 Global.asa 中设置的变量&lt;/title&gt; 
+<BR>&nbsp; &lt;/head&gt; 
+<BR>&nbsp; &lt;body&gt; 
+<BR>&nbsp; &lt;font face="MS Gothic"&gt;
+<BR>
+<BR>&nbsp; &lt;H3 align=center&gt;检索在 Global.asa 中设置的变量&lt;/H3&gt;
+<BR>&nbsp; &lt;P&gt;
+<BR>&nbsp; 总访问人数 = &lt;%=Application("HitCounter")%&gt; （自 &lt;%=Application("AppStartDate")%&gt; 起）&lt;BR&gt;
+<BR>&nbsp; 当前访问人数 = &lt;%=Application("CurrentUsers")%&gt;
+<BR>&nbsp; &lt;/P&gt;
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt; 
+<BR>&nbsp; &lt;/html&gt; 
+</p>
+</code>
+
+<BR><h2><a name="without">不使用 cookie 维护会话状态</a></h2>
+
+<p>
+某些浏览器不识别 cookie，而且用户也可以选择在浏览器中禁用 cookie。HTTP POST 方法也提供了可以替代 cookie 的另一种维护会话状态的方法。HTTP POST 方法提供的状态信息与 cookie 相同，同时还具有在 cookie 不可用时依然能正常工作的优点。此方法在实践中并不常用，但它是一个非常好的示例。HTTP POST 方法的工作方式与内存 cookie 类似。也就是说，只能在访问期间维护用户信息，而在用户关闭浏览器后，会话状态信息将消失。
+</p>
+
+<BR><h3>DataEntry.asp</h3>
+
+<p>
+在文本编辑器中打开一个新文件，将下列脚本粘贴到文件，并将其保存为 <B>C:\Inetpub\Wwwroot\Tutorial\DataEntry.asp</b>。在浏览器中键入 &#58;&#47;&#47;Localhost&#47;Tutorial&#47;DataEntry.asp 查看效果。
+</p>
+
+<code>
+<p>
+&nbsp; &lt;%@ Language=VBScript %&gt; 
+<BR>
+<BR>&nbsp; &lt;html&gt; 
+<BR>&nbsp; &lt;head&gt; 
+<BR>&nbsp; &lt;title&gt;不使用 cookie 的数据项&lt;/title&gt; 
+<BR>&nbsp; &lt;/head&gt; 
+<BR>&nbsp; &lt;body&gt;
+<BR>&nbsp; &lt;font face="MS Gothic"&gt;
+<BR>
+<BR>&nbsp; &lt;!-- 在本示例中，首先列出子例程。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 订购过程的每个网页都具有一个相应的子例程。
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 主调用代码位于底部。 --&gt; 
+<BR>
+<BR>&nbsp; &lt;% Sub DisplayInitialPage %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; &lt;table border=1 cellpadding=3 cellspacing=0 width=500 bordercolor=#808080 align=center&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;tr&gt;&lt;td bgColor=#004080 align=center&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;font color=#ffffff&gt;&lt;H2&gt;订购表单&lt;/H2&gt;&lt;/font&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td bgColor=#e1e1e1 align=left&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;P&gt;&lt;B&gt;第 1 步，共 4 步&lt;/B&gt;&lt;/P&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;P align=center&gt;
+<BR>&nbsp;&nbsp;&nbsp; 此表单使用 HTTP POST 方法传递包含订购信息的隐藏值。&lt;BR&gt;此表单不使用 cookie。 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/P&gt; 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; &lt;FORM METHOD=POST ACTION="DataEntry.asp" NAME=DataEntryForm&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;P&gt;请输入您的姓名
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="TEXT" NAME=FullName&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;BR&gt;请输入虚构的信用卡号码
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="TEXT" NAME=CreditCard&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/P&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;!-- 使用隐藏的 HTML 表单变量“NextPage”保持对信息的跟踪。 --&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="HIDDEN" NAME=NextPage VALUE=2&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="SUBMIT" VALUE="下一步 -&gt;" NAME=NextButton&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/FORM&gt; 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/table&gt;
+<BR>
+<BR>&nbsp; &lt;% End Sub %&gt;
+<BR>
+<BR>
+<BR>&nbsp; &lt;% Sub DisplayDogBreed %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; &lt;table border=1 cellpadding=3 cellspacing=0 width=500 align=center&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;tr&gt;&lt;td bgColor=#004080 align=center&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;font color=#ffffff&gt;&lt;H2&gt;订购表单&lt;/H2&gt;&lt;/font&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td bgColor=#e1e1e1&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;P&gt;&lt;B&gt;第 2 步，共 4 步&lt;/B&gt;&lt;/P&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;P align=center&gt;
+<BR>&nbsp;&nbsp;&nbsp; 请选择您想要的爱犬类型。
+<BR>&nbsp;&nbsp;&nbsp; &lt;/P&gt; 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; &lt;FORM METHOD=POST ACTION="DataEntry.asp" NAME=DataEntryForm&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;P&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE=RADIO NAME=DogSelected VALUE="小猎犬" CHECKED&gt;小猎犬&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE=RADIO NAME=DogSelected VALUE="黑贝"&gt;黑贝&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE=RADIO NAME=DogSelected VALUE="灰狼"&gt;灰狼&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE=RADIO NAME=DogSelected VALUE="藏獒"&gt;藏獒&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/P&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;!--通过使用隐藏的 HTML 表单变量“NextPage”保持对信息的跟踪。 --&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="HIDDEN" NAME=NextPage VALUE=3&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="SUBMIT" VALUE="下一步 -&gt;" NAME=NextButton&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/FORM&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/table&gt; 
+<BR>
+<BR>&nbsp; &lt;% End Sub %&gt;
+<BR>
+<BR>
+<BR>&nbsp; &lt;% Sub DisplayCity %&gt; 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; &lt;table border=1 cellpadding=3 cellspacing=0 width=500 align=center&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;tr&gt;&lt;td bgColor=#004080 align=center&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;font color=#ffffff&gt;&lt;H2&gt;订购表单&lt;/H2&gt;&lt;/font&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td bgColor=#e1e1e1&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;P&gt;&lt;B&gt;第 3 步，共 4 步&lt;/B&gt;&lt;/P&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;P align=center&gt;
+<BR>&nbsp;&nbsp;&nbsp; 我们会从下列城市中送出您订购的爱犬。请选择与您最近的城市。
+<BR>&nbsp;&nbsp;&nbsp; &lt;/P&gt; 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; &lt;FORM METHOD=POST ACTION="DataEntry.asp" NAME=DataEntryForm&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;P&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE=RADIO NAME=CitySelected VALUE="西安" CHECKED&gt;西安&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE=RADIO NAME=CitySelected VALUE="重庆"&gt;重庆&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE=RADIO NAME=CitySelected VALUE="上海"&gt;上海&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE=RADIO NAME=CitySelected VALUE="北京"&gt;北京&lt;BR&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/P&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;!--使用隐藏的 HTML 表单变量“NextPage”保持对信息的跟踪。--&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="HIDDEN" NAME=NextPage VALUE=4&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;INPUT TYPE="SUBMIT" VALUE="下一步 -&gt;" NAME=NextButton&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/FORM&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;/table&gt; 
+<BR>
+<BR>&nbsp; &lt;% End Sub %&gt;
+<BR>
+<BR>
+<BR>&nbsp; &lt;% Sub DisplaySummary %&gt;
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; &lt;table border=1 cellpadding=3 cellspacing=0 width=500 align=center&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;tr&gt;&lt;td bgColor=#004080 align=center&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;font color=#ffffff&gt;&lt;H2&gt;订购表单完成&lt;/H2&gt;&lt;/font&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td bgColor=#e1e1e1&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;P&gt;&lt;B&gt;第 4 步，共 4 步&lt;/B&gt;&lt;/P&gt;
+<BR>&nbsp;&nbsp;&nbsp; &lt;P align=center&gt;
+<BR>&nbsp;&nbsp;&nbsp; 您输入了下列信息。&lt;BR&gt; 
+<BR>&nbsp;&nbsp;&nbsp; 如果您的姓名和信用卡号码正确，<BR>将进行交易，完成订购过程。
+<BR>&nbsp;&nbsp;&nbsp; &lt;/P&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;table cellpadding=4&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;tr bgcolor=#ffffcc&gt;&lt;td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Name
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;%=Session.Value("FullName")%&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=Beige&gt;&lt;td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 信用卡
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;%=Session.Value("CreditCard")%&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=Beige&gt;&lt;td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 订购的爱犬 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;%=Session.Value("DogSelected")%&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt;&lt;tr bgcolor=Beige&gt;&lt;td&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 订购的城市
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;td&gt;  
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;%=Session.Value("CitySelected")%&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/td&gt;&lt;/tr&gt; 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/table&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/td&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/tr&gt; 
+<BR>&nbsp;&nbsp;&nbsp; &lt;/table&gt; 
+<BR>
+<BR>&nbsp; &lt;% End Sub %&gt;
+<BR>
+<BR>
+<BR>&nbsp; &lt;% Sub StoreUserDataInSessionObject  %&gt;
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp;&nbsp; Dim FormKey
+<BR>&nbsp;&nbsp;&nbsp; For Each FormKey in Request.Form
+<BR>&nbsp;&nbsp;&nbsp; Session(FormKey) = Request.Form.Item(FormKey)
+<BR>&nbsp;&nbsp;&nbsp; Next 
+<BR>&nbsp; %&gt;
+<BR>&nbsp; &lt;% End Sub  %&gt;
+<BR>
+<BR>
+<BR>&nbsp; &lt;%
+<BR>&nbsp;&nbsp;&nbsp; '此处为根据隐藏表单元素调用子例程的
+<BR>&nbsp;&nbsp;&nbsp; ' 主代码。
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; Dim CurrentPage 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; If Request.Form.Item("NextPage") = "" Then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CurrentPage = 1 
+<BR>&nbsp;&nbsp;&nbsp; Else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CurrentPage = Request.Form.Item("NextPage")
+<BR>&nbsp;&nbsp;&nbsp; End If 
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; '保存所有用户数据。
+<BR>&nbsp;&nbsp;&nbsp; Call StoreUserDataInSessionObject
+<BR>
+<BR>&nbsp;&nbsp;&nbsp; Select Case CurrentPage 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Case 1 : Call DisplayInitialPage 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Case 2 : Call DisplayDogBreed 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Case 3 : Call DisplayCity 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Case 4 : Call DisplaySummary 
+<BR>&nbsp;&nbsp;&nbsp; End Select %&gt; 
+<BR>
+<BR>&nbsp; &lt;BR&gt; 
+<BR>&nbsp; &lt;HR&gt; 
+<BR>&nbsp; &lt;H3 align=center&gt;&lt;A HREF="DataEntry.asp"&gt;重置表单&lt;/A&gt;&lt;/H3&gt; 
+<BR>
+<BR>&nbsp; &lt;/font&gt;
+<BR>&nbsp; &lt;/body&gt; 
+<BR>&nbsp; &lt;/html&gt; 
+</p>
+</code>
+
+
+
+<hr class="iis" size="1">
+<p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+</font>
+</body>
+</html>

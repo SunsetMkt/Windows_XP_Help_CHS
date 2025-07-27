@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+
+<title>“主目录”属性页</title>
+
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 dir=ltr>
+<FONT FACE="宋体">
+
+<p><a name="hidd_directory_properties"></a> <strong>“主目录”属性页</strong></p>
+
+<p>可以将主目录的位置更改为下列位置：</p>
+
+<ul>
+<li>此计算机上的目录。</li>
+<li>另一台计算机上的共享。</li>
+</ul>
+
+<p>出现提示时，请输入访问计算机所需的用户名和密码。</p>
+
+<p><strong>FTP 站点目录</strong></p>
+
+<p>在文本框中，输入目录或目标 URL 的路径。语法必须与所选路径类型相匹配：</p>
+
+<p>对于本地目录，应使用完整路径，例如，C:\Catalog\Shoes。也可以不输入路径，而单击“浏览”按钮选择本地目录。</p>
+
+<p>对于网络共享，应使用通用命名约定 (UNC) 服务器和共享名，例如，\\Webserver\Htmlfiles。</p>
+
+<p>如果要选择本地目录，但不想在“本地路径”文本框中输入目录路径，请单击“浏览”。</p>
+
+<p><strong>读取</strong></p>
+
+<p>选择此选项，允许用户阅读或下载存储在主目录或虚拟目录中的文件。</p> 
+
+<p><strong>写入</strong></p>  
+
+<p>如果允许用户将文件上载到服务器上已启用的目录中，请选中此选项。仅对准备接收用户文件的目录选择此权限。</p>
+
+<p><strong>记录访问</strong></p>
+  
+<p>如果要将对此目录的访问记录到日志文件，请选中此复选框。只当此 FTP 站点启用了日志记录时方可记录访问。默认情况下，启用日志记录。</p>
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

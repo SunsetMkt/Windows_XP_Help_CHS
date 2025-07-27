@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>更改继承的默认值</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何更改现有和新创建站点的全局默认设置的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37763543">更改继承的默认值</a></h1>
+
+<p>在 IIS 安装过程中，将为属性页上的各种属性指定默认值。属性可以分别在站点级别、目录级别或文件级别进行设置。较高级别（如站点级）的设置可以由较低级别（如目录级别）自动使用或继承，但仍然可以在较低级别单独进行编辑。在个别站点、目录或文件上更改某属性后，日后对主默认值的更改不会自动覆盖个别设置，而是向您发出警告消息，询问是否要对个别站点、目录或文件的设置进行更改，以便与新的默认值匹配。</p>
+
+<big>为指派给计算机的所有站点设置主属性</big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择“计算机”图标，然后单击“属性”显示其属性页。</li>
+<li>在“主属性”下，选择“WWW 服务”或“FTP 服务”。</li>
+<li>单击“编辑”按钮。</li>
+<li>详细信息，请单击属性页上的“帮助”按钮。</li>
+</ol>
+
+<p class="bigfix">&nbsp;<big></big></p>
+
+<big>在个别站点上设置属性：</big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站并单击“属性”显示其属性页。</li>
+<li>详细信息，请单击属性页上的“帮助”按钮。</li>
+</ol>
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li>有关如何继承默认属性的详细信息，请参阅“关于网站和 FTP 站点”中的<a href="iivsovr.htm#propertiesandinheritanceofpropertiesonvirtualservers">站点属性和属性继承</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE> 
+（下列单词只用于搜索，不会显示在网页中。） W3SVC
+</layer></span>
+
+</font>
+</body>
+</html>

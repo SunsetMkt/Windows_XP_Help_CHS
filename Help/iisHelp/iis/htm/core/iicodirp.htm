@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>将请求重定向到程序</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何将浏览器请求重定向到程序的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="redirectingrequeststoaprogram">将请求重定向到程序</a></h1>
+
+<p>作为重定向方法的高级应用，可以将对特定目录中文件的所有请求重定向到某个程序。通常，您还可能希望将原始 URL 中的所有参数也传递到此程序，使用重定向变量可以实现这一目的。 </p>
+
+<big>将请求重定向到程序</big><!--</p>--><br>
+
+<ol>
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站或目录，并打开其属性页。</li>
+<li>单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+<li>选择“重定向到 URL”。</li>
+<li>在“重定向到”文本框中，输入程序的 URL，包括将参数传递给程序所需的任何重定向变量。</li>
+<p>例如，若要将对脚本目录中脚本的所有请求都重定向到日志记录程序（此程序记录请求的 URL 以及与此 URL 一起传递的任何参数），请输入 <strong>/Scripts/Logger.exe?URL=$V+PARAMS=$P</strong>。$V 和 $P 是重定向变量。</p>
+<li>选中“上面输入的准确 URL”复选框，防止 Web 服务器将原始文件名追加到目标 URL 中。</li>
+</ol>
+
+<p>有关重定向变量的详细信息，请参阅<A HREF="iiabdsk.htm">重定向参考</A>。</p>
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

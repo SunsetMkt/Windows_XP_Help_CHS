@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>启动和停止站点</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何启动和停止网站和 FTP 站点发布的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37756904">启动和停止站点</a></h1>
+
+<p>默认情况下，重新启动计算机时将自动启动站点。停止站点将停止 Internet 服务，并从计算机内存中卸载  Internet 服务。暂停站点将阻止 Internet 服务接受新的连接，但不影响已在处理的请求。启动站点将重新启动或恢复 Internet 服务。</p>
+
+
+
+<big>开始、停止或暂停站点。</big><br>
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要开始、停止或暂停的站点。</li>
+<li>单击工具栏中的“开始”、“停止”或“暂停”按钮。</li>
+</ol>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果站点意外停止，<a href="iiabuti.htm">Internet 信息服务管理单元</a>将无法正确显示服务器的状态。重新启动之前，请先单击“停止”，然后再单击“开始”重新启动站点。</p>
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li>有关重新启动所有 Internet 服务的信息，请参阅<a href="iicodira.htm">重新启动 IIS</a>。</li>
+<li>若要使用默认设置快速建立站点，请参阅<a href="iitstart.htm">使用 IIS 快速建立站点</a>。</li>
+<li>若要更改现有网站或 FTP 站点的属性，请参阅<a href="iivspro.htm">更改继承的默认值</a>。</li>
+
+<li>若要从命令行脚本执行常规任务，请参阅<a href="../adminsamples/default.htm">管理脚本</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

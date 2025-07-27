@@ -1,0 +1,269 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html dir=ltr><hEAD><TITLE>将内容发送到浏览器</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+
+
+<META NAME="DESCRIPTION" CONTENT="说明如何控制返回到浏览器的响应，包括缓存内容等。概述将文件从浏览器发送到服务器。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+
+<font face="宋体">	
+
+<h1><a name="H1_37769139">将内容发送到浏览器</a></h1>
+
+
+<p>与在 ASP 网页中处理的脚本一样，任何未封闭在 ASP 分隔符或 &lt;SCRIPT&gt; 标记内的文本或图形将直接返回到浏览器。也可以使用 Response 对象，将内容明确地发送到浏览器。</p>
+
+<h2><a name="H2_37769829">发送内容</a></h2>
+
+<p>要将 ASP 分隔符或过程中的内容发送到浏览器，可使用 Response 对象的 Write 方法。例如，根据用户此前是否访问过此页，下列语句给用户发送不同的问候：</p>
+
+<pre>&lt;% 
+  If blnFirstTime Then 
+    Response.Write &quot;&lt;H3 ALIGN=CENTER&gt;欢迎进入概述网页。&lt;/H3&gt;&quot;
+  Else
+    Response.Write &quot;&lt;H3 ALIGN=CENTER&gt;欢迎返回概述网页。&lt;/H3&gt;&quot; 
+  End If 
+%&gt;</pre>
+
+<p>在过程之外，不必使用 Response.Write 将内容发回给用户。脚本分隔符以外的内容将直接发送到浏览器，浏览器则相应地格式化并显示此内容。例如，下列脚本的输出结果与前面的脚本一样：</p>
+
+<pre>&lt;H3 ALIGN=CENTER&gt; 
+&lt;% If blnFirstTime Then %&gt; 
+  欢迎进入概述网页。 
+&lt;% Else %&gt; 
+  欢迎返回概述网页。 
+&lt;% End If %&gt; 
+&lt;/H3&gt;</pre>
+
+<p>如果只需要一次性返回输出，或者向现有 HTML 文本添加语句更为方便，请分散使用脚本命令和 HTML。如果不想用分隔符打断一条语句，或想生成返回到浏览器的字符串，则使用 Response.Write。例如，可以构建一个文本字符串，使用 HTML 表单发送的值创建表格的某一行：</p>
+
+<pre>Response.Write &quot;&lt;TR&gt;&lt;TD&gt;&quot; &amp; Request.Form(&quot;FirstName&quot;) _
+ &amp; &quot;&lt;/TD&gt;&lt;TD&gt;&quot; &amp; Request.Form(&quot;LastName&quot;) &amp; &quot;&lt;/TD&gt;&lt;/TR&gt;&quot;</pre>
+
+<p><b>Request.Form</b> 返回从 HTML 表单中发送的值（请参阅<a href="iiwaform.htm">处理用户输入</a>）。</P>
+
+<p><b>注意</b>&nbsp;&nbsp;&nbsp;“&”符号是 VBScript 的连字符。下划线 (_) 是 VBScript 的行连接字符。</p>
+
+
+<h2><a name="H2_37772109">设置内容类型</a></h2>
+
+<p>当 Web 服务器将某个文件返回给浏览器时，它告诉浏览器在文件中包含了什么类型的内容。这样，浏览器就可以确定是自己就能显示文件，还是必须调用其他应用程序。例如，如果 Web 服务器返回一个 Microsoft Excel 工作表，浏览器必须启动一个 Microsoft Excel 的副本来显示此页。Web 服务器通过将文件扩展名映射到 MIME（多用途网际邮件扩充协议）类型列表，从而识别文件的类型。例如，要启动 Microsoft Excel，浏览器需要识别 application/vnd.ms-excel MIME 类型。</p>
+
+<p>可以使用 Response 对象的 <A HREF="vbob67ol.htm"><strong>ContentType</strong></A> 属性为要发送给用户的内容设置 HTTP 内容类型字符串。例如，下列命令为频道定义设置内容类型：</p>
+
+<pre>&lt;% Response.ContentType = &quot;application/x-cdf&quot; %&gt;</pre>
+
+<p>有关频道的详细信息，请参阅本主题中的<a href="#channels">创建动态频道</a>。</p>
+
+<p>其他通用内容类型是 text/plain （用于返回文本而不是 HTML 语句的内容）、image/gif （用于 GIF 图像）、image/jpeg （用于 JPEG 图像）、video/quicktime （用于 Apple QuickTime 格式的视频电影）以及 text/xml （用于 XML 文档）。另外，Web 服务器或 Web 浏览器还可以支持自定义的 MIME 类型。要查看已经由 Microsoft Web 服务器定义的内容类型，请使用 <a href="javascript://" onclick="Activate(); return false">Internet 信息服务管理单元</a>
+<script language="javascript">
+<!--
+function Activate() {
+if (navigator.appName == "Microsoft Internet Explorer"){
+	window.open("../core/iisnapin.htm", "NewWin", 'toolbar=no, left=200, top=200, scrollbars=no, resizeable=no,  width=350, height=350');
+	}
+	else if (navigator.appName == "Netscape") {
+		window.open("../core/iisnapin.htm", "NewWin",  'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=yes,resizable=0,width=350,height=350,top=200,left=200');
+	}
+}
+//-->
+</script>打开网站的属性表，单击“HTTP 头”选项卡，然后单击“文件类型”选项卡。这些文件类型可以在您使用 ASP 手动设置内容类型时作为参考。</p>
+
+<h2><a name="H2_37773741">重定向浏览器</a></h2>
+
+<p>您可以使用 <b>Redirect</b> 方法将浏览器重定向到其他 URL，而不是将内容发送到用户。例如，如果要确保用户从主页进入应用程序，并接收到一个客户 ID 号，您可以检查他们是否具有客户 ID 号；如果没有，可以将他们重定向到主页上。</p>
+
+<pre>&lt;%
+  If Session(&quot;CustomerID&quot;) = &quot;&quot; Then
+    Response.Redirect &quot;Register.asp&quot; 
+  End If
+%&gt;</pre>
+
+<p>在将任何内容发送到用户之前所处理的服务器端脚本被称为“被缓冲”。ASP 允许您打开或关闭缓冲功能，并且此配置对 <STRONG>Redirect</STRONG> 方法影响深远。尤其是在关闭缓冲时，必须在网页的 HTTP 头被返回浏览器之前重定向浏览器。</P>
+
+<P>将语句 <b>Response.Redirect</b> 置于网页的顶部，在所有文本或 &lt;HTML&gt; 标签之前，确保不向浏览器返回任何内容。如果在内容或头返回到浏览器之后使用 <b>Response.Redirect</b>，就会出现一条错误消息。还需注意的是：<b>Response.Redirect</b> 后面并不需要 <STRONG><A HREF="vbob2sis.htm">Response.End</A></STRONG>。</p>
+
+<p>如果要在网页中间使用 <b>Response.Redirect</b>，请与 <b>Response.Buffer</b> 属性一起使用。具体方法，请参阅本主题中的<a href="#buffcnt">缓冲内容</a>部分。</p>
+
+<h2><A NAME="H2_633205286"></A>在 .ASP 文件之间转移</h2>
+
+<p>使用 <strong>Response.Redirect</strong> 重定向浏览器需要“往返过程”，这意味着服务器向浏览器发送一个 HTTP 响应，并指出新 URL 的位置。浏览器将自动离开服务器请求队列，并发送对此 URL 的新的 HTTP 请求。然后，服务器将此请求连同一同到达的其他客户端的请求添加到请求队列。对于工作繁忙的网站，来回往返既浪费带宽又降低服务器的性能，特别是在将浏览器重定向到位于同一个服务器上的文件时。</p>
+
+<p>可以使用 <b>Server.Transfer</b> 方法而不是 <b>Response.Redirect</b> 方法从一个 .asp 文件转移到位于同一服务器上的另一个文件中。使用 <b>Server.Transfer</b> 可以直接转移 .asp 文件的请求，而不必离开服务器队列，这样可以节省昂贵的往返费用。</p>
+
+<p>例如，下列脚本演示了如何使用 <b>Server.Transfer</b> 根据状态信息在应用程序网页之间跳转：</p>
+
+<pre>&lt;%
+  If Session(&quot;blnSaleCompleted&quot;) Then
+    Server.Transfer(&quot;/Order/ThankYou.asp&quot;)
+  Else
+    Server.Transfer(&quot;/Order/MoreInfo.asp&quot;)
+  End if
+%&gt;
+</pre>
+
+<p><b>Server.Transfer</b> 将请求从一个正在执行的 .asp 文件发送到另一个文件中。在转移过程中，原来请求的 .asp 文件立即终止执行，但并不清除输出缓冲（详细信息，请参阅<a href="#buffcnt">缓冲内容</a>部分）。然后，开始执行时请求信息便可用于目标文件。在执行过程中，此文件与原来请求的文件访问同一组内部对象（<b>Request</b>、<b>Response</b>、<b>Server</b>、<b>Session</b> 和 <b>Application</b>）。</p>
+
+<p>也可以使用 <b>Server.Transfer</b> 在位于不同应用程序的 .asp 文件之间转移。然而，当转移到位于其他应用程序的 .asp 文件时，从此文件的运行方式来看，似乎此文件就是启动此转移过程的应用程序的一部分（也就是说，此文件只访问作用于启动应用程序的变量，而不是访问文件实际上所在的应用程序的变量）。例如，如果从位于 Sales 应用程序中的文件转移到位于 Personnel 应用程序的文件，则 Sales 应用程序将有效地从 Personnel 应用程序中借用和运行此文件，从运行方式来看，仿佛此文件就是 Sales 应用程序的一部分。</p>
+
+<p>ASP 还提供 <b>Server.Execute</b> 命令，可以用来转移到一个文件、执行其内容，然后再返回到启动传输的文件。如果熟悉 VBScript，可以将 <b>Server.Execute</b> 与过程调用进行类比，不同之处在于过程调用执行一个过程，而 <b>Server.Execute</b> 则是执行一个完整的 .asp 文件。 </p>
+
+<p>例如，下列脚本演示了如何使用 <b>Server.Execute</b> 进行 .asp 文件的动态包含：</p>
+
+<pre>&lt;%
+  .
+  .
+  .
+  If blnUseDHTML Then
+    Server.Execute(&quot;DHTML.asp&quot;)
+  Else
+    Server.Execute(&quot;HTML.asp&quot;)
+  End If
+  .
+  .
+  .
+%&gt;
+</pre>
+
+<p>只要目标文件属于同一服务器上的某个应用程序，原始应用程序将转到此文件并执行它的内容，然后继续执行启动转换过程的那个文件。正象 <STRONG>Server.Transfer</STRONG> 一样，被执行的 .asp 文件的行为就象它是原始应用程序的一部分。但是，<strong>Server.Execute</strong>“无法”跨服务器工作。详细信息，请参阅 <a href="vbob9pid.htm"><STRONG>Server.Execute</STRONG></a>。</p>
+
+<h2><a name="buffcnt">缓冲内容</a></h2>
+
+<p>默认情况下，在将任何内容发送到用户之前，Web 服务器首先处理网页上所有的脚本命令。这个处理过程被称为“缓冲”。您可以使用 <strong>Response</strong> 对象的 <strong>Buffer</strong> 属性来禁用缓冲，这样 Web 服务器将在处理网页的时候随时返回 HTML 和脚本结果。</p>
+
+<p>缓冲 .asp 文件的优势在于，您可以根据实际情况（如脚本处理不正确或用户没有适当的安全证书）中止发送网页。此时，您可以使用 <strong>Server.Transfer</strong> 将用户转移到其他页上，或者使用 <strong>Response</strong> 对象的 <STRONG>Clear</STRONG> 方法清除缓冲区，以便向用户发送不同的内容。根据应用程序的不同，可能需要在进行转移之前使用 <STRONG>Clear</STRONG> 方法。下列示例使用了这两种方法：</p>
+
+<pre>
+&lt;HTML&gt;
+  &lt;BODY&gt;
+  .
+  .
+  .
+  &lt;%
+    If Request(&quot;CustomerStatus&quot;) = &quot;&quot; Then
+      Response.Clear
+      Server.Transfer(&quot;/CustomerInfo/Register.asp&quot;)
+    Else
+      Response.Write &quot;欢迎返回 &quot; &amp; Request(&quot;FirstName&quot;) &amp; &quot;!&quot;
+		    .
+		    .
+		    .
+    End If
+  %&gt;
+  &lt;/BODY&gt;
+&lt;/HTML&gt;</pre>
+
+<p>还可以使用 <strong>Response.Buffer</strong> 防止 Web 服务器在脚本修改 HTTP 头之前返回此头。某些属性和方法，例如 <strong>Response.Expires</strong> 和 <strong>Response.Redirect</strong>，可以用来修改 HTTP 头。</p>
+
+<p>如果脚本的 <strong>Buffer</strong> 属性设置为 TRUE，并且没有调用 <strong>Flush</strong> 方法将缓冲的内容立即发送到浏览器，那么服务器将保留客户端发出的“保持连接”请求。采用这种方法编写脚本的优点在于服务器的性能得到了提高，这是因为服务器不必为每一个客户端请求都创建新连接（假定服务器、客户端和代理服务器都支持“保持连接”请求）。然而，这种方法的一个潜在缺点是，在服务器处理完整个脚本之前，缓冲阻止了向用户发送服务器响应。对于又长又复杂的脚本，用户在看见网页之前可能会经历漫长的等待过程。</p>
+
+<p>默认情况下，对 ASP 应用程序开启缓冲功能。当然，可以使用 <a href="javascript://" onclick="Activate(); return false">Internet 信息服务管理单元</a>
+
+<script language="javascript">
+<!--
+function Activate() {
+if (navigator.appName == "Microsoft Internet Explorer"){
+	window.open("../core/../core/iisnapin.htm", "NewWin", 'toolbar=no, left=200, top=200, scrollbars=no, resizeable=no,  width=350, height=350');
+	}
+	else if (navigator.appName == "Netscape") {
+		window.open("../core/../core/iisnapin.htm", "NewWin",  'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=yes,resizable=0,width=350,height=350,top=200,left=200');
+	}
+}
+//-->
+</script> 对整个 ASP 应用程序关闭缓冲功能。详细信息，请参阅<a href="../core/iiwarndh.htm">配置 ASP 应用程序</a>。</p>
+
+<h2><a name="H2_37777557">允许代理服务器缓存网页</a></h2>
+
+<p>应用程序可能会通过“代理服务器”将网页发送到客户端。代理服务器代表客户端浏览器向 Web 服务器请求网页，并缓存 HTML 网页，这样对同一网页的重复请求就会迅速高效地返回到浏览器。用代理服务器处理请求并缓存网页可以减少网络和 Web 服务器的负载。</p>
+
+<p>虽然对于许多 HTML 网页而言，缓存可以正常工作，但对于包含经常更新信息的 ASP 网页而言，缓存却常常不能很好地工作。例如，用来报告股市行情或显示大宗业务库存清单的网页必须提供实时信息，而这些信息即使仅仅过去一个小时就可能变得不精确。如果应用程序返回的是个人信息，如自定义主页，您可能需要确保没有用户能看见其他用户的个人信息。</p>
+
+<p>默认情况下，ASP 指示代理服务器不要缓存 ASP 网页本身（虽然页中所引用的图像、图像映射、小程序和其他项目已经被缓存）。使用 <strong>Response.CacheControl</strong> 属性设置 Cache-Control HTTP 头字段，就可以允许缓存特定页。<strong>Response.CacheControl</strong> 的默认值是字符串“Private”，它防止代理服务器对网页进行调整缓存。要允许进行缓存，请将 Cache-Control 头字段设置成“Public”：</p>
+
+<pre>&lt;% Response.CacheControl = &quot;Public&quot; %&gt;</pre>
+
+<p>由于必须在发送任何页之前将 HTTP 头发送给浏览器或代理服务器，所以可以将 <strong>Response.CacheControl</strong> 属性置于所有 HTML 标记的前面，如果禁用了缓冲，还可以使用 <strong>Response.Buffer</strong> 来缓冲此页。</p>
+
+<p>Cache-Control 头字段是 HTTP 1.1 规范的一部分。ASP 网页不在只支持 HTTP 1.0 的代理服务器上进行缓存，这是因为不会发送 Expires 头字段。</p>
+
+<h2><a name="H2_37779593">防止浏览器缓存网页</a></h2>
+
+<p>对于是否缓存网页，每一个浏览器版本都有其自己的规则。要防止浏览器缓存网页，可使用 <strong>Response.Expires</strong>  设置 Expires 头：</p>
+
+<pre>&lt;% Response.Expires = 0 %&gt;</pre>
+
+<p>值 0 强制缓存的网页立即过期。由于必须在发送任何网页之前将 HTTP 头发送给浏览器，所以可以将 <strong>Response.Expires</strong> 属性置于所有 HTML 标记之前，也可以缓冲此页。</p>
+
+<h2><a name="H2_37780216"></a><a name="channels">创建动态频道</a></h2>
+
+<p>“频道”是由 Microsoft Internet Explorer 4.0 或更高版本提供的一项 Web 技术。通过它，您可以自动将新的或更新过的 Web 内容发送给用户。频道可以为用户计算机制订一个计划，使之定期连接到服务器并检索更新信息。（此检索过程通常又被称为“客户端拉”，因为信息是从服务器上“拉”（或者说收集）过来的。当指定的网站上提供有新的信息时，内容将下载到浏览器缓存中以供脱机浏览使用。灵活地使用频道分发基于网站的信息（特别在 Intranet 上）有助于集中信息并减少服务器通信量。有关频道的详细信息，请访问 <a href="http://www.microsoft.com/isapi/redir.dll?prd=ie&ar=inews" TARGET="_blank">Microsoft Internet Explorer 网站</a>。</p>
+
+<p>可以使用 ASP 编写脚本，通过生成“频道定义文件”来动态创建频道。基于 XML 的频道定义文件 (.cdf) 描述了频道内容的体系结构和更新时间表。.cdf 文件中的命令使用与 HTML 标记相似的语法，因此很容易学习并从脚本中生成此文件。通过编写服务器端脚本创建频道定义文件时，文件应使用 .cdx 扩展名。当 ASP 读取带有 .cdx 扩展名的文件时，它自动发送 application/x-cdf 内容类型，通知浏览器将字节解释为频道定义。如果未使用 .cdx 扩展名，您必须使用 <strong>Response.ContentType</strong> 手动将内容类型设置成 application/x-cdf。</p>
+
+<p>下面是一个如何使用频道的示例。下列 HTML 表单要求用户选择频道。提交时，此表单调用 .cdx 文件中的脚本创建频道定义。</p>
+
+<pre>&lt;P&gt; 请选择您喜爱的频道。&lt;/P&gt;
+&lt;FORM METHOD=&quot;POST&quot; ACTION=&quot;Chan.cdx&quot;&gt;
+&lt;P&gt;&lt;INPUT TYPE=CHECKBOX NAME=Movies&gt; 电影
+&lt;P&gt;&lt;INPUT TYPE=CHECKBOX NAME=Sports&gt; 体育
+&lt;P&gt;&lt;INPUT TYPE=&quot;SUBMIT&quot; VALUE=&quot;提交&quot;&gt;
+&lt;/FORM&gt;</pre>
+
+<p>Chan.cdx 中的脚本根据随请求提交的表单值来构造频道定义。</p>
+
+<pre>&lt;% If Request.Form(&quot;Movies&quot;) &lt;&gt; &quot;&quot; Then %&gt;
+  &lt;CHANNEL&gt;
+    <em>电影网页的频道定义语句</em>
+  &lt;/CHANNEL&gt;
+&lt;% End If %&gt;
+
+&lt;% If Request.Form(&quot;Sports&quot;) &lt;&gt; &quot;&quot; Then %&gt;
+  &lt;CHANNEL&gt;
+    <em>体育网页的频道定义语句</em>
+  &lt;/CHANNEL&gt;
+&lt;% End If %&gt;</pre>
+
+<h2><a name="H2_37783243">使用 WebDAV 访问服务器资源</a></h2>
+
+<p>分布式创作与版本管理 (WebDAV) 是 HTTP 1.1 协议的一个功能强大的扩展。通过它，使用 HTTP 连接即可访问网站文件存储媒体，比如本地文件系统。WebDAV 强烈承诺将网站带入一个无缝的、协作的创作环境。在 IIS 5.1 中实现 WebDAV 后，可以允许远程作者对 Web 服务器上的文件和目录进行创建、删除、移动、搜索或应用属性。详细信息，请参阅 <A HREF="../core/wcwbdav.htm">WebDav 发布</A>。  
+
+</p>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+</font>
+
+</font>
+</body>
+
+</html>

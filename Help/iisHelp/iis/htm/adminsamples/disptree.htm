@@ -1,0 +1,87 @@
+<html dir=ltr><head><title>显示管理树 (disptree)</title>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<meta name="description" content="本主题包含了有关显示管理树 (disptree) 管理脚本的概述和用法信息。">
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<font face="宋体">
+
+<h1 ALIGN="left">显示管理树 (disptree)</h1>
+
+<p><strong>概述：</strong></p>
+
+<p>此功能显示从指定根节点 <em>ROOT</em> 开始的管理对象的树，如果未指定根节点，则从 IIS://LocalHost 开始。对于每个节点，将显示节点的名称和类，对于虚拟服务器，还将显示 ServerComment。默认情况下，脚本将遍历整个树，并显示所有深层节点。可以通过变量 NoRecurse 禁用该行为。</p>
+
+<p><strong>用法：</strong></p>
+
+<table cellspacing="2" cellpadding="5">
+<tr>
+<td valign="TOP">disptree</td> <td>[--adspath|-a <em>ROOT</em>]<br> [--NoRecurse|-n]<br> &lt;--help|-h&gt;</td>
+</tr>
+</table>
+
+<p><strong>参数：</strong></p>
+
+<table cellspacing="2" cellpadding="5">
+<tr>
+<td valign="TOP"><em>ROOT</em></td> <td>树的根节点的完整 ADSI 路径。</td>
+</tr>
+
+<tr>
+<td valign="TOP">NORECURSE</td> <td>如果指定该变量，则脚本不会遍历容器对象，因此不会显示整个树。</td>
+</tr>
+</table>
+
+<p><STRONG>示例：</STRONG></p>
+
+<p>Disptree -a IIS://LocalHost/w3svc -n</p>
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>选择创作工具</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关选择理想的 HTML 创作工具的概述。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37703369">选择创作工具</a></h1>
+
+<p>本主题概述如何选择理想的创作工具。</p>
+
+<ul>
+<li><a href="#righttool">理解可用选项</a></li>
+<li><a href="#multimedia">多媒体内容和其他文件格式</a></li>
+<li><a href="#WebApplications">高级网站开发</a></li>
+</ul>
+
+<h2><a name="righttool">理解可用选项</a></h2>
+
+<p>随着 Internet 和 Intranet 技术的发展，对专用网站创作工具的需求越来越强烈。如果对 Web 发布还感到很陌生，则选择 Web 发布工具无疑会使您更感到不知所措。出于这个原因，在选择创作工具之前，应该先利用一些时间熟悉主要的创作工具。</p>
+
+
+<h3>WYSIWYG（所见即所得）</h3>
+<p>如果对网页创作还很陌生，则可能需要对 HTML 知识要求不高的创建工具，以便马上就能开始发布工作。某些工具具有 WYSIWYG（“所见即所得”）用户界面，与 Microsoft&#174;&nbsp;Word 等字处理程序的用户界面相似。这样，只要会使用字处理程序，就可以创建网页。Microsoft&#174;&nbsp;FrontPage&#174;&nbsp; 是一个简单易用的 WYSIWYG 编辑器，它具有友好的用户界面、方便的格式向导以及可以用来在网页中轻松添加表格和图形的模板。创建和编辑网页时，FrontPage 中显示的网页与在 Web 浏览器中要显示的网页是一致的。FrontPage 还具有特定的编程扩展，可以增强它在 Web 服务器中的功能。有关详细信息，请访问 <a href="http://www.microsoft.com/isapi/redir.dll?prd=frontpage express&ar=home" target="_blank">Microsoft FrontPage 网站</a>。</p>
+
+<h3>HTML 转换</h3>
+<p>另外一种创建网页的方式是将已有的文档转换为 HTML 文档来发布 Web 内容。通过将字处理文件和电子表格文件导入到转换器，可以很方便地将这些文件转换为网页。许多字处理程序，如 Word 现在都支持 HTML 转换功能。但是应该注意，大部分转换器只是将 HTML 格式标记添加到文本，在保持原始文件风格方面效果很差。如果希望发布一大批现有文档并且不需要频繁更新，则应选择实用性更强的转换器。</p>
+
+<h3>文本编辑器</h3>
+<p>当然，也可以使用几乎所有标准文本编辑器（如使用记事本）创建网页，方法是输入 HTML 标记并保存文件，然后在 Web 浏览器中打开文件。许多经验丰富的用户更喜欢使用这种方式，因为它可以更好地控制网页格式，并且可以快速应用和测试最新 Web 技术。但是，如果要使用文本编辑器创建网页，需要对 HTML 相当熟悉，并且愿意花费时间解决 HTML 文件中遇到的问题。</p>
+
+<p>还有几种“混合”工具，其功能与标准的文本编辑器类似。但是，这些工具包括许多非常有帮助的快捷键功能（如 WYSIWYG 编辑器中的快捷键），用户可以很容易地将预定义的 HTML 标记插入到网页中，从而减少了额外的输入工作。若要获取详细信息，可以访问 Internet 或向当地计算机软件提供商咨询。若要获取各种商业 Web 创作工具的信息，一种效果非常好的方式是访问 <A HREF="http://www.microsoft.com/isapi/redir.dll?Prd=msdn&Ar=downloads" TARGET="_blank">Microsoft MSDN Online 网站</A>。
+
+
+<h2><a name="multimedia">多媒体内容和其他文件格式</a></h2>
+
+<p>如果您浏览过 Internet，一定会知道网页的内容决不仅仅限于文字、表格和图片。音频和视频正日益成为商业网站的组成部分。仅仅使用标准的 HTML 标记就可以将迷人的多媒体功能添加到网页中。例如，如果要将一段视频插入网页，只需使用 HTML &lt;IMG&gt; 标记的 DYNSRC 属性即可：</p>
+
+<pre> &lt;IMG DYNSRC=&quot;MyVideo.avi&quot; &gt;</pre>
+
+<p>当用户加载了包含此标记的网页时，将播放 MyVideo.avi 视频片断。</p>
+
+<p>要实现视频流等高级多媒体功能，需要使用专门的编辑和创作软件。使用 Microsoft&#174;&nbsp;Windows Media Technologies&#153; 可以很容易地创建、传递或播放流媒体文件。有关流媒体技术的详细信息，请访问 <a href="http://www.microsoft.com/isapi/redir.dll?prd=windows&ar=windowsmedia" target="_blank">Microsoft&#174;&nbsp;Windows Media 网站</A>。</p>
+
+<p>也可以使用 HTML 创建与其他文件格式的链接，包括 Microsoft Office 文件。如果要查看此类格式的文档，浏览器必须具有查看非 HTML 文件的功能。例如，如果内部网的所有用户都安装了 Microsoft&reg Excel 和 Microsoft&reg Internet Explorer 2.0 或更高版本，那么可以从网站创建与 Excel 电子表格的链接。当用户单击此链接时，文档将在用户的 Web 浏览器中按 Excel 格式显示。这是一个功能很强的方法，可以用来创建网站共享和分发文档，提高工作效率。</p>
+
+<h2><a name="WebApplications">高级网站开发</a></h2>
+
+<p>现在，许多商业网站使用高级交互式网页为用户提供丰富多彩的内容。这些网站一般称作“Web 应用程序”或 <em>Weblications</em>，它们使用称为“脚本”的处理程序检索信息以响应用户输入。在线书店或服装店就是很好的 Web 应用程序的例子，他们可以为用户提供多种选择并跟踪用户的选择。</p> 
+
+<p>一种可以创建的、非常有价值的 Web 应用程序是 Active Server Pages (ASP) 应用程序。ASP 应用程序包括“服务器端”脚本和专由服务器处理的命令。可以使用 ASP 服务器端脚本向网站添加数据库连接，或根据用户的 Web 浏览器功能传送 Web 内容。要了解如何使用 ASP，请参阅 <A HREF="../asp/iiwawelc.htm">Active Server Pages</A>。</p> 
+
+<p>如果已为创建 Web 应用程序做好了准备，这时便需要一种可靠并通用的创作工具。Microsoft&#174;&nbsp; Visual InterDev&#153;&nbsp; 是一种高效的 Web 应用程序开发工具，可用来快速构建极富特色的网站。Visual InterDev 带有一套集成数据库工具，大大简化了网站与 OLE DB 数据源以及开放式数据库连接 (ODBC) 兼容数据库的连接。有关详细信息，请访问 <A HREF="http://www.microsoft.com/isapi/redir.dll?prd=vinterdev&ar=home&pver=6.0" target="_blank">Microsoft Visual InterDev 网站</A>。</p>  
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

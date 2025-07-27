@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>使用“服务器端包含”指令</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+
+<META NAME="DESCRIPTION" CONTENT="有关如何将 SSI 命令插入到 HTML 文件中的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+
+<h1><a name="H1_37754921">使用“服务器端包含”指令</a></h1>
+
+<p>在向客户端浏览器发送网页之前，可以使用“服务器端包含 (SSI)”指令指示 Web 服务器将文本、图形或应用程序信息添加到网页中。SSI 提供了一些特殊处理指令，可以帮助获得与文件有关的信息或显示 CGI 变量的值。SSI 还提供了一个可以将应用程序或 shell 命令的输出插入网页的指令。</p>
+
+<p><strong><font color="#0000FF">要点</strong></font>&nbsp;&nbsp;&nbsp;#include 语句是在编译时而不是在运行时处理的，因此不能将此语句包含在客户端过程的逻辑中。</p>
+
+<h2><a name="includingfiles">包含文件</a></h2>
+
+<p>可以使用 <a href="iisiinc.htm">#include</a> 命令包含文件。例如，要在请求网页时将名为 Copyright.inc 的文件插入网页中，请在网页中使用下列命令：</p>
+
+<pre>&lt;!-- #include file="Copyright.inc" --&gt;</pre>
+
+<p>在此示例中，Copyright.inc 文件必须与包含文件处于同一目录中。包含 <strong>#include</strong> 指令的文件必须是网站中的已发布文件。被包含文件不需要特殊的文件扩展名，但是一般认为，在编程时最好为所包含文件加上 .inc 扩展名，以与其他类型的文件区分开。</p>
+
+<p>若要通过指定相对于当前目录的路径来查找包含文件，请使用 <strong>file</strong> 参数。例如，如果调用文件位于目录 Documents 中，而包含文件位于 Documents\Common 子目录中，请使用下列指令：</p>
+
+<pre>&lt;!-- #include file="Common\Copyright.inc" --&gt;</pre>
+
+<p>处理网站中的文档时，可能要将共享文件保存在特殊的虚拟目录中。若要通过指定文件的完整虚拟路径来定位包含文件，请使用 <strong>virtual</strong> 参数。例如，若要包含 /Common 虚拟目录中的文件，请使用下列指令：</p>
+
+<pre>&lt;!-- #include virtual="/Common/Copyright.inc" --&gt;</pre>
+
+
+<h2><a name="H2_37756964"> 包含应用程序的输出</a></h2>
+
+<p>除了包含文件内容外，还可以使用 SSI 指令运行应用程序或 shell 命令,并将输出结果包含到网页中。要运行应用程序或 shell 命令，请使用 <a href="iisiexc.htm">#exec</a> 指令。应用程序可以是 CGI 程序、ASP 应用程序或 ISAPI 扩展。例如：</p>
+
+<pre>&lt;!-- #exec cgi=/scripts/guestbook.exe?FirstName+LastName&gt;</pre>
+
+<p>应用程序的路径必须是完整虚拟路径或 URL。可以通过在应用程序文件名后跟随问号 (?) 和加号 (+) 连接的参数列表，将参数传递给应用程序。</p>
+
+<p><font color="#0000FF"><strong>要点</strong></font>&nbsp;&nbsp;&nbsp;允许普通 Web 文件运行应用程序是不安全的。可以禁用 <strong>#exec</strong> 指令，但仍然允许网页使用其他 SSI 指令。
+
+<p>详细信息，请参阅<a href="iisiref.htm">“服务器端包含”参考</a>。</p>
+
+<hr class="iis" size="1">
+<p align="center"><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+</font>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html dir=ltr>
+<HEAD>
+
+<title>Active Server Pages</title>
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000>
+<FONT FACE="宋体">
+<p><strong>Active Server Pages</strong></p>
+
+<p>使用此属性页控制 ASP 脚本在所选应用程序内的运行方式。</p>
+
+<p><strong>启用会话状态</strong></p>
+
+<p>使用此复选框可以启用或禁用会话状态。</p> 
+
+<p>当启用会话状态时，Active Server Pages 为每个访问 ASP 应用程序的用户创建会话，以便标识访问应用程序中不同网页的用户。当禁用会话状态时，ASP 不跟踪用户，并且不允许 ASP 脚本在“会话”对象中存储信息或者使用“Session_OnStart”或“Session_OnEnd”事件。如果超时时间结束时，用户没有请求或刷新应用程序中的网页，会话将自动结束。</p> 
+
+<p>要更改超时时间，在“会话超时”文本框中输入新的数字。 </p>
+
+<p>使用 <strong>Session.Abandon</strong> 方法，脚本可以明确结束一个会话。甚至当启用应用程序的会话状态时，也可以通过使用 &lt;%@ ENABLESESSIONSTATE = False %&gt; 命令禁用单个 ASP 网页的会话状态。</p>
+
+<p><strong>启用缓冲</strong></p>
+
+<p>选中此复选框可以缓冲输出到浏览器的内容。</p>
+
+<p>选中此选项时，ASP 网页生成的所有输出在发送到浏览器之前被收集在一起。清除此选项时后，处理网页时生成的输出随时返回到浏览器。使用缓冲输出，可以在 ASP 脚本的任何位置设置 HTTP 头。可以在脚本中使用 <strong>Response.Buffer</strong> 方法覆盖此选项。</p>
+
+<p><strong>启用父路径</strong></p>
+
+<p>选中此复选框可以允许 ASP 脚本使用至当前目录的父目录的相对路径（路径使用 .. 语法）。</p>
+
+<p>如果启用此选项，请不要授予父目录“执行”权限；否则，脚本可能会试图运行父目录中的未授权程序。</p>
+
+<p><strong>默认 ASP 语言</strong></p>
+
+<p>指定 Active Server Pages 的主要脚本语言，此语言处理在 ASP 分割符 (&lt;% 和 %&gt;) 之间的进程命令。</p>
+
+<p>要为所选应用程序中的所有网页选择其他主脚本语言，请在文本框中输入语言名称。</p>
+
+<p>ASP 具有两个 ActiveX 脚本引擎：Microsoft Visual Basic Scripting Edition (VBScript) 和 Microsoft JScript (JScript)。默认的 ASP 语言是 vbscript。可以指定任何语言名称，条件是服务器上必须已经安装了此语言的 ActiveX 脚本引擎。必须按脚本引擎提供程序文档中所述，准确使用引擎所需的关键字。可以使用 &lt;%@ LANGUAGE %&gt; 命令覆盖 ASP 网页的默认语言。</p>
+
+<p><strong>脚本超时</strong></p>
+
+<p>指定 ASP 允许脚本运行的时间长度。</p>
+
+<p>如果超时时间结束时脚本尚未运行完毕，ASP 将停止脚本并将事件写入 Windows 事件日志。超时时间值的范围是 1 到 2147483647。可以在 ASP 脚本中使用 <strong>Server.ScriptTimeout</strong> 方法覆盖此选项。</p>
+
+<p>
+<strong>注意</strong>&nbsp;&nbsp;&nbsp;可以在网站、虚拟目录和目录级别上设置应用程序配置属性。</p>
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</BODY>
+</HTML>

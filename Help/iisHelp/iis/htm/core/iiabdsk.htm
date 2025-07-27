@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>重定向参考</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="重定向参考。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><A NAME="H1_448393581">重定向参考</A></h1>
+
+<p>如果站点尚处于建设阶段或标识已更改，则可以通过重定向客户请求，来确保用户能够到达正确的网页。可以将客户请求重定向到运行 IIS 的服务器上的某个目录、另一计算机上的 UNC 共享目录或其他 URL。 </p>
+
+<h2><a name="redir1">重定向变量</a></h2>
+
+<p>可以通过重定向变量，同时传递原始 URL 中的某些部分与目标 URL。在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中打开目录属性页，然后选择“主目录”、“虚拟目录”或“目录”选项卡，可以使用这些变量。</p>
+
+<table width="100%" border="1" cellspacing="0" cellpadding="2">
+
+<tr>
+<th bgcolor="#C0C0C0" align="Left" valign="top">变量</th>
+<th align="CENTER" valign="TOP" bgcolor="#C0C0C0">说明</th>
+<th align="CENTER" valign="TOP" bgcolor="#C0C0C0">示例：</th>
+</tr>
+
+<tr>
+<td valign="top"><strong>$S</strong></td>
+<td valign="top">传送与所请求的 URL 匹配的后缀。匹配后缀是用重定向的 URL 代替之后，原始 URL 中所保留的部分。</td>
+<td valign="top">如果 /scripts 重定向到 /newscripts，而原来的请求是 /scripts/program.exe，那么 /program.exe 便是后缀。服务器将自动代入此后缀；$S 变量必须与其他变量一起使用。</td>
+</tr>
+
+<tr>
+<td valign="top"><strong>$P</strong></td>
+<td valign="top">传送原始 URL 中的参数。 </td>
+<td valign="top">例如，如果原始 URL 是 /scripts/myscript.asp?number=1，那么字符串“number=1”将映射到目标 URL 中。</td>
+</tr>
+
+<tr>
+<td valign="top"><strong>$Q</strong></td>
+<td valign="top">传送原始 URL 的问号和参数。</td>
+<td valign="top">例如，如果原始 URL 是 /scripts/myscript.asp?number=1，那么字符串“?number=1”将映射到目标 URL 中。</td>
+</tr>
+
+<tr>
+<td valign="top"><strong>$V</strong></td>
+<td valign="top">传送请求的 URL，不包括服务器名。</td>
+<td valign="top">例如，如果原始 URL 是 //myserver/scripts/myscript.asp，那么字符串“/scripts/myscript.asp”将映射到目标 URL 中。</td>
+</tr>
+
+<tr>
+<td valign="top"><strong>$0</strong> 到 <strong>$9</strong></td>
+<td valign="top">传送请求的 URL 中与指定通配符相匹配的部分。</td>
+<td valign="top">例如，如果通配符用于最低级别的目录名（如 */default.htm），将传递指定了包含 Default.htm 的目录的 URL 部分。</td>
+</tr>
+
+<tr>
+<td valign="top"><strong>!</strong></td>
+<td valign="top">不重定向。 </td>
+<td valign="top">使用此变量防止对虚拟目录中已重定向的子目录或单个文件进行重定向。</td>
+</tr>
+
+</table>
+
+<h2><a name="redir2">重定向通配符</a></h2>
+
+<p>可以使用重定向通配符与原始 URL 中任意数目的字符相匹配。请在目录的“主目录”、“虚拟目录”或“目录”选项卡的“重定向到”文本框中插入通配符 (*)。目标 URL 以星号和分号开头，通配符和目标 URL 对用分号分开。</p>
+
+<p>例如，要将所有对 /scripts/filename.stm 的请求重定向到文件 Default.stm，将所有对 /scripts/filename.htm 的请求重定向到文件 Default.htm，请在 /scripts 虚拟目录的“重定向到”文本框中输入：</p>
+
+<blockquote><strong>*;*.stm;/default.stm;*.htm;/default.htm</strong></blockquote>
+
+<p>使用通配符时，确保选中了“上面输入的准确 URL”复选框。在 URL 中输入重定向路径。</p>
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li><p>有关重定向的概念，请参阅<a href="iihtmat.htm">关于网站管理</a>中的<a href="iihtmat.htm#browserredirects">使用重定向重新路由请求</a>。</li>
+<li>有关重定向的步骤，请参阅<a href="iicodirr.htm">将请求重定向到目录</a>或<a href="iicodirp.htm">将请求重定向到程序</a>。</li>
+
+</ul>
+
+
+ <hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<script language="javascript">
+<!--
+function Activate() {
+if (navigator.appName == "Microsoft Internet Explorer"){
+	window.open("iisnapin.htm", "NewWin", 'toolbar=no, left=200, top=200, scrollbars=no, resizeable=no,  width=350, height=350');
+	}
+	else if (navigator.appName == "Netscape") {
+		window.open("iisnapin.htm", "NewWin",  'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=yes,resizable=0,width=350,height=350,top=200,left=200');
+	}
+}
+//-->
+</script>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>记录站点活动</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<meta name="DESCRIPTION" content="包含链接的导航页，这些链接指向有关记录站点活动的主题。可以使用 IIS 中的日志来收集有关网站上用户活动的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37708915">记录站点活动</a></h1>
+
+<p>启用网站日志可以收集有关用户活动的信息。此信息存储在 ASCII 文件中。IIS 中的日志信息超出了 Windows 事件日志或性能监视功能的范围。此日志可以包含站点的访问者、访问者查看的内容以及最后一次查看信息时间等信息。可以使用日志来评估内容的受欢迎程度或识别信息瓶颈。</p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iiabtlg.htm">关于记录站点活动</a>：有关日志、日志格式的描述、日志文件大小的讨论以及创建新的日志文件的概述。</li>
+<li><a href="iienblg.htm">启用日志记录</a>：启用或禁用网站或 FTP 站点或目录的日志。 </li>
+
+<li><a href="iiconlg.htm">自定义 W3C 扩展日志记录</a>：指定 W3C 扩展日志文件中所包括的字段。</li>
+<li><a href="iinamlg.htm">保存日志文件</a>：指定日志文件目录和用于创建新日志文件的选项。</li>
+<li><a href="iicnvlg.htm">将日志文件转换为 NCSA 格式</a>：使用命令行实用程序 Convlog.exe 将日志转换为 NCSA 通用日志文件格式。</li>
+</ul>
+
+<p>本节不包含：</p>
+
+<ul> 
+<li>若要使用监视工具而不使用日志，请参阅<a href="iiptnov.htm">性能调整</a>。</li>
+<li>若要生成、查看或了解安全日志（审核），请参阅<a href="iisecsa.htm">安全性</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE>
+（下列单词只用于搜索，不会显示在网页中。）日志, 日志, 日志记录, 跟踪, 跟踪, 反馈, 模式, 流, gridlock, 不可用, 太忙, 凸出, 冲, 并发, 大, 快, 快, 改善, 改善, 改善, 分析, 调整, 调优, 图表, 图形, 表, stats, 收集, 点击, 点击数, 统计数据, 报告, 报告, 服务器活动, 记录, 记录, 记录, odbc, 数据库, 事件, 事件, 执行, 执行, 访问, 访问者, 使用, 通信量, 上载, 忙, 较忙, 最忙, 重, 轻, 处理器, 使用, 句柄, 处理, 监视器, 查看, 总, 小时, 小时, 每小时, 天, 天, 每天, 周, 周, 每周, 月, 月, 每月, 午夜, 中午, 格林威治, gmt, 当地时间, 当地, 地点, 日期, 时间, 日期/时间, 时间/日期, 瓶颈, 瓶颈, 进程计数, 每站点, 处理器, cpu, 使用率, 资源, 脚本, cgi, 故障, 故障, 慢, 低, 不成比例, 带宽, 进程外, 进程外, oop, 进程外, 应用程序, 应用程序, 应用程序, 应用程序, 程序, 日志文件, 日志文件, 文件, 目录, 目录, 创建, 翻转, 翻转, 循环, 新, ncsa, 公用, 格式, 格式, iis, w3c, 扩展, convlog, convlog.exe, 转换, 链接, 详细信息
+</layer></span>
+</font>
+</body>
+</html>

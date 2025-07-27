@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>设置对象作用域</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+ 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="解释如何使用 ASP 脚本命令设置对象作用域，并提供建议。同时还提供执行技巧和建议，用于确定在不同情况下使用的线程模型。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name="settingcomponentscope">设置对象作用域</a></h1>
+
+
+<p>对象作用域确定哪些脚本可以使用此对象。默认情况下，创建对象例程时，对象具有 page 作用域。同一 ASP 网页内的任何脚本命令都可以使用 page 作用域的对象；.asp 文件处理完请求后将释放此对象。大多数对象的推荐作用域是 page 作用域。不过，可以更改对象作用域以便使其他页的脚本访问此对象。本主题解释如何使用 page 作用域对象以及如何更改对象作用域。<p>
+
+<h2><a name="H2_37778304">使用 page 作用域对象</a></h2>
+
+<p>通过 <strong>Server.CreateObject</strong> 或 HTML &lt;OBJECT&gt; 标签在 ASP 网页上创建的对象在网页的持续时间内都存在。此页上的任何脚本命令都可以访问此对象，并且当 ASP 处理完此页时释放此对象。因此对象具有 page 作用域或生存期。</p>
+
+<H3>在循环中创建对象</H3>
+
+<p>通常，应避免在循环中创建对象。如果必须在循环中创建对象，则需要手动释放此对象使用的资源：</p>
+
+<pre>&lt;%
+  Dim objAd
+  For i = 0 To 1000
+    Set objAd = Server.CreateObject("MSWC.AdRotator")
+    .
+    .
+    .		
+    objAd.GetAdvertisement
+    .
+    .
+    .
+    Set objAd = Nothing		
+  Next
+%&gt;</pre>
+
+<h2><a name="sessionscope">指定对象 Session 作用域</a></h2>
+
+<p>session-scope 对象是为应用程序中的每个新会话创建的，并且在会话结束后释放；因此，每个活动会话都有一个对象。Session 作用域用于那些由多个脚本调用但只影响一个用户会话的对象。只应在必要时指定对象 Session 作用域。如果使用 Session 作用域，则必须知道提供对象的组件的线程模型，这是因为线程模型影响对象的性能和安全环境。详细信息，请参阅本主题中的<a href="#performanceissues">高级信息：性能问题</a>。</p>
+
+<p>要指定对象 Session 作用域，可将对象存储在 ASP 的 Session 内置对象中。可以通过在 Global.asa 文件中使用 HTML &lt;OBJECT&gt; 标签或在 ASP 网页中使用 Server.CreateObject 方法来创建 Session 作用域对象例程。</p>
+
+<p>在 Global.asa 文件中，可以使用 &lt;OBJECT&gt; 标签，并扩展 RUNAT 属性（必须设置为 SERVER）和 SCOPE 属性（必须设置为 Session）。下例将创建“浏览器能力”组件的 Browser Type 对象的 Session 作用域实例：</p>
+
+<pre>&lt;OBJECT RUNAT=SERVER SCOPE=Session ID=MyBrowser PROGID="MSWC.BrowserType"&gt;
+&lt;/OBJECT&gt;</pre>
+
+<p>当对象已经存储在 Session 对象中后，即可从应用程序的任何页访问此对象。下面语句使用在前例中通过 &lt;OBJECT&gt; 标签创建的对象实例：</p>
+
+<pre>&lt;%= If MyBrowser.browser = "IE"  and  MyBrowser.majorver >= 4  Then . . .%&gt;</pre>
+
+<p>在 ASP 网页中，也可以使用 Server.CreateObject 方法将对象存储到 Session 内置对象中。下列示例将 Browser Type 对象的一个实例存储到 Session 对象中。</p>
+
+<pre>&lt;% Set Session("MyBrowser") = Server.CreateObject("MSWC.BrowserType") %&gt; </pre>
+
+<p>要在其他 .asp 文件中显示浏览器信息，必须首先检索 Session 对象中存储的 BrowserType 对象的实例，然后调用 Browser 方法来显示浏览器名称。</p>
+
+<pre>&lt;% Set MyBrowser = Session("MyBrowser") %&gt; 
+&lt;%= MyBrowser.browser %&gt;</pre>
+
+<p>对于通过 &lt;OBJECT&gt; 标签声明的对象，在 .asp 文件脚本命令引用此对象之前 ASP，不会将其实例化。Server.CreateObject 方法可立即实例化对象。因此，对于 Session 作用域对象来说，&lt;OBJECT&gt; 标签可以比 Server.CreateObject 方法提供更好的伸缩性。</p>
+
+<h2><a name="H2_37783263">指定对象 Application 作用域</a></h2>
+
+<p>application-scope 对象是应用程序启动时创建的对象的单个实例。所有客户端请求都可以共享此对象。某些实用程序对象，如<A HREF="comp00vo.htm">网页计数器组件</A>的对象，可能更适合于在 application 作用域内执行，但通常需要使用下节中建议的其他方式。另外，线程模型会影响对象的性能和安全环境（请参阅本主题中的<a href="#performanceissues">高级信息：性能问题</a>）。</p>
+
+<p>要指定对象 application 作用域，可将对象存储在 ASP 的 Application 内置对象中。可以通过使用 Global.asa 文件中的 &lt;OBJECT&gt; 标签或使用 .asp 文件中的 Server.CreateObject 方法来创建 application 作用域对象实例。</p>
+
+<p>在 Global.asa 文件中，可以使用 &lt;OBJECT&gt; 标签，并扩展 RUNAT 属性（必须设置为 Server）和 SCOPE 属性（必须设置为 Application）。例如，下列示例使用 &lt;OBJECT&gt; 标签来创建 Ad Rotator 对象的作用域实例：
+
+<pre>&lt;OBJECT RUNAT=SERVER SCOPE=Application ID=MyAds PROGID="MSWC.AdRotator"&gt;
+&lt;/OBJECT&gt;</pre>
+
+<P>以 Application 状态存储 Ad Rotator 对象后，即可使用下列语句从应用程序的任何页中访问此对象：</P>
+
+<PRE>&lt;%=MyAds.GetAdvertisement("CustomerAds.txt")&nbsp;%&gt;</PRE>
+
+<P>另外，在 .asp 文件中，可以使用 Server.CreateObject 将对象实例存储到 Application 内置对象中，如下例所示：</P>
+
+&lt;% Set Application("MyAds") = Server.CreateObject("MSWC.Adrotator")%&gt;
+
+<P>可以通过检索 Application 状态中 Ad Rotator 对象的实例来显示应用程序 .asp 文件中的广告，如下例所示：</P>
+
+&lt;%Set MyAds = Application("MyAds")  %&gt;
+&lt;%=MyAds.GetAdvertisement("CustomerAds.txt")  %&gt;
+
+<h2><a name="alternativestosession">Session 和 Application 作用域的替代方案</a></h2>
+
+<p>通常，对于那些初始化时间很长的项目或对象，如字典对象或记录集，应尽可能地使用 Session 和 Application 作用域。不过，如果 session 或 application 状态的对象占用太多的资源，如内存或数据库连接，则应寻求其他方案来实施这些对象。例如，组件的线程模型会影响从此组件创建的对象性能，尤其是具有 Session 和 Application 作用域的对象的性能。</p>
+
+<p>在许多情况下，比创建 Session 或 Application 作用域对象更好的一种方案是使用 Session 或 Application 作用域变量，这些变量可以将信息传递给在网页级创建的对象。例如，不应为 ADO <strong>Connection</strong> 对象指定 Session 或 Application 作用域，因为此对象创建的连接会长时间保持打开状态，而且脚本不再利用连接池。不过，可以在 <strong>Session</strong> 或 <strong>Application</strong> 内置对象中存储 ODBC 或 OLE DB 连接字符串，并访问此字符串以便为在网页上创建的 <strong>Connection</strong> 对象实例设置属性。这样，可以将经常使用的信息存储为 session 或 application 状态，而且只在需要时才创建使用此信息的对象。关于作用域变量的详细信息，请参阅<a href="iiwavar.htm">使用变量和常量</a>。</p>
+
+<h2><a name="jscriptobjects">用户定义的 JScript 对象</a></h2>
+
+<p>可以创建自己的 JScript 对象，方法是定义一个用来创建和初始化新对象属性和方法的构造器函数。当脚本使用 <strong>new</strong> 操作符调用构造器时，将创建对象实例。ASP 服务器端脚本支持用户定义的 JScript 对象，并且当具有 page 作用域时这些对象能正常工作。不过，不能为用户定义的对象指定 application 作用域。同样，为用户定义的 JScript 对象指定 Session 作用域可能影响对象的功能性。特别地，如果对象具有 Session 作用域，则其他页的脚本可以访问此对象的属性但无法调用它的方法。同样，为用户定义的 JScript 对象指定 Session 作用域可能影响 Web 应用程序的性能。</p>
+
+<h2><a name="performanceissues">高级信息：性能问题</a></h2>
+
+<p>组件的线程模型可能影响网站的性能。通常，如果对象要存储为 <strong>Session</strong> 和 <strong>Application</strong> 状态，则标记有“Both”的对象是推荐在 .asp 文件中使用的对象。不推荐使用单线程、单元线程以及自由线程的对象。</p>
+
+<p>因为不可能总是控制所用对象的线程模型，所以下列原则有助于获得最佳性能：</p>
+
+<ul>
+<li><strong>Page 作用域对象</strong>  标记为“Both”或“Apartment”的对象将提供最佳性能。</li>
+
+<li><strong>Application 作用域对象</strong>  标记为“Both”并且集成了 FreeThreadedMarshaler 的对象将提供最佳性能。可以使用 &lt;OBJECT&gt; 标签或 <strong>Server.CreateObject</strong> 方法将标记为“Both”的对象存储到 <strong>Application</strong> 对象中。必须对单元线程对象使用 HTML &lt;OBJECT&gt; 标签。</li>
+
+<li><strong>Session 作用域对象</strong>  标记为“Both”的对象将提供最佳性能。使用单线程或单元线程对象会导致 Web 服务器将会话锁定为一个线程。自由线程对象不锁定会话，但速度很慢。可以使用 &lt;OBJECT&gt; 标签或 <strong>Server.CreateObject</strong> 方法将对象存储到 <strong>Session</strong> 对象中。</li>
+
+</ul>
+
+
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

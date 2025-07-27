@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>Internet 信息服务管理单元中超时设置的位置</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+
+<h1><a name="time2">Internet 信息服务管理单元中超时设置的位置</a></h1>
+
+<p>此页是对<a href="iitime.htm">超时表</a>主题的补充。</p>
+
+<hr><!--1-->
+
+<big><a name="1">更改 AspScriptTimeout 值</a></big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站或应用程序的开始位置目录。</li>
+<li>打开目录的属性页，然后单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+<li> 单击“配置”按钮，然后单击“应用程序选项”选项卡。</li>
+<li> 在“ASP 脚本超时”中，输入期望值。</li>
+</ol>
+
+<pre><font face="arial">
+--或者--
+Internet 信息服务管理单元|属性|配置按钮|应用程序选项|ASP 脚本超时
+</font></pre>
+
+<hr><!--2-->
+
+<big><a name="2">更改 AspSessionTimeout 值</a></big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站或应用程序的开始位置目录。</li>
+<li>打开目录的属性页，然后单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+<li> 单击“配置”按钮，然后单击“应用程序选项”选项卡。</li>
+<li> 在“会话超时”文本框中，输入期望值。</li>
+</ol>
+
+<hr><!--3-->
+
+<big><a name="3">更改 ConnectionTimeout 值</a></big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站或应用程序的开始位置目录。</li>
+<li>打开目录的属性页，然后单击“网站”选项卡。</li>
+<li> 在“连接超时”文本框中，输入期望值。</li>
+</ol>
+
+<hr><!--4-->
+
+<big><a name="4">更改 CGITimeout 值</a></big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站或应用程序的开始位置目录。</li>
+<li>打开目录的属性页，然后单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+<li> 单击“配置”按钮，然后单击“进程选项”选项卡。</li>
+<li> 在“CGI 脚本超时”文本框中，输入期望值。</li>
+</ol>
+
+<hr><!--5-->
+
+<big><a name="5">记录网站的处理器使用情况 </a></big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要记录其处理器使用情况的网站。</li>
+<li>打开网站的属性页，然后单击“性能”选项卡。</li>
+<li>选择“启用进程限制”并输入限制此站点占用 CPU 时间的百分比。 </li>
+<li>如果希望启用 CpuLimitPriority 和 CpuLimitProcStop，请选择“强制性限制”。</li>
+</ol>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

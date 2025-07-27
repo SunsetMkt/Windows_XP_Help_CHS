@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>“服务器端包含”文件</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+
+<META NAME="DESCRIPTION" CONTENT="包含链接的导航页，这些链接指向有关“服务器端包含”的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="serversideincludes">服务器端包含</a></h1>
+
+<p>“服务器端包含 (SSI)”指令指示 Web 服务器将另一文件的内容插入网页。使用包含文件，可以将多个网页所使用的信息存储到一个文件中。例如，可以使用 SSI 命令将版权声明插入网站中的所有文档中。
+
+<p>本节包含：</p>
+<ul>
+<li><a href="iisiabt.htm">关于“服务器端包含”</a>：解释“服务器端包含”指令。</li>
+<li><a href="iisienab.htm">启用“服务器端包含”</a>：解释如何开启 SSI 指令的处理。</li>
+<li><a href="iisincf.htm">使用“服务器端包含”指令</a>：解释如何将 SSI 命令插入到 HTML 网页中。</li>
+<li><A HREF="iisiref.htm">“服务器端包含”参考</A>：使用 SSI 指令的参考信息。</li>
+</ul>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE>
+（下列单词只用于搜索，不会显示在网页中。）ssi, 服务器端, 包含, 标题, 页脚, 命令, 添加, on the fly, 预处理, 徽标, 时间戳, 日期, 时间, 版权, 太多引用, 样板文件, 注意, 自动的, 站点范围, 每个, 启用, 属性, 属性页
+</layer></span>
+</font>
+</body>
+</html>

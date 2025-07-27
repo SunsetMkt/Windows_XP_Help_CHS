@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>证书</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="导航页包含有关 SSL 和证书功能的主题。可以通过 SSL 和证书功能建立安全连接以及加密数据。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="Certificates">证书</a></h1>
+
+<p>证书是服务器或从服务器请求信息的客户端的一种数字标识，其功能与护照或其他标识持有者身份的官方证件相似。证书是 IIS 安全套接字层 (SSL) 功能的一部分，通过安全套接字层，可以建立安全连接以发送敏感信息。</p>
+
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iiabcsc.htm">关于证书</a>：证书的概念性概述。</li>
+<li><a href="iisslsc.htm">在服务器上设置 SSL</a>：概述如何在服务器上设置和管理安全套接字层 (SSL)。</li>
+<li><a href="iikeysc.htm">使用新的安全任务向导</a>：证书、CTL 和权限向导中可用功能的概念性概述。</li>
+<li><a href="iiocrsc.htm">获取服务器证书</a>：了解如何获取使用 SLL 所需的服务器证书。</li>
+<li><a href="iicarsc.htm">使用证书信任列表</a>：概述如何将新的证书颁发机构添加到服务器的可信任颁发机构列表中。
+<li><a href="iiclisc.htm">获取客户证书</a>：概述如何获取称为客户证书的用户数字标识。</li>
+<li><a href="iiectsc.htm">启用客户证书</a>：概述启用客户证书 SLL 身份验证的过程。</li>
+<li><a href="iimapsc.htm">将客户证书映射到用户帐户</a>：概述如何使用客户证书将用户直接连接到 Windows 用户帐户。</li>
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>控制用户访问 Web 服务器文件及目录的方法；请参阅<a href="iiaclsc.htm">访问控制</a>。</li>
+<li>有关设置或更改加密方法的信息；请参阅<a href="iiencsc.htm">加密</a>。</li>
+</ul>
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

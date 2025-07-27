@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>添加自定义错误消息</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何添加自定义 HTTP 错误消息的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37701508">添加自定义错误消息</a></h1>
+
+<p>可以用 Internet 信息服务管理单元中的“自定义错误”属性页将自定义错误消息映射到某个文件或某个 URL。</p>
+
+<p><big>采用映射为文件的形式自定义错误消息。</big></p>
+ 
+<ol>
+<li>创建包含自定义错误消息的文件，并将此文件保存在某个目录中。</li>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择想在其中自定义 HTTP 错误信息的网站、虚拟目录、目录或文件，然后单击“属性”。</li>
+<li>选择“自定义错误消息”属性页。</li>
+<li>选择想要更改的 HTTP 错误信息。</li>
+<li>单击“编辑属性”按钮。</li>
+<li>从“信息类型”框中选择“文件”。</li>
+<li>输入指向自定义错误消息的路径和文件名，或使用“浏览”按钮在计算机硬盘上确定文件位置。</li>
+<li>单击“确定”。</li>
+</ol>
+
+<p><big>采用映射为 URL 的方式自定义错误消息。</big></p>
+ 
+<ol>
+<li>创建包含自定义错误消息的文件，并将其保存在某个虚拟目录中。</li>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择想在其中自定义 HTTP 错误信息的网站、虚拟目录、目录或文件，然后单击“属性”按钮。</li>
+<li>选择“自定义错误消息”属性页。</li>
+<li>选择想要更改的 HTTP 错误信息。</li>
+<li>单击“编辑属性”按钮。</li>
+<li>从“信息类型”框中选择“文件”。</li>
+<li>输入指向自定义错误消息的 URL，方式是输入以虚拟目录开始的 URL 路径。</li>
+<li>单击“确定”。</li>
+</ol>
+
+<p><strong>注意</strong></p>
+
+<ul>
+<li>如果定义了某个 ASP 文件，用于处理自定义错误消息，则将以传递上下文的 URL 形式调用此脚本。例如，如果已经定义了一个用于处理 HTTP 405 错误信息的 .asp 文件 Handle405.asp，如果用户试图访问 Example.htm 时出现 405 错误，就会调用此 Handle405.asp 文件，如同用户在 Web 浏览器中输入了 <strong>http://example.microsoft.com/handle405.asp?405;http://example.microsoft.com/example.htm</strong>。</li>
+
+<li>如果正在使用静态自定义错误文件（HTML 文件），应该总是使用“文件”选项。如果打算开发一个应用程序（使用 ISAPI 或 ASP）来处理错误信息，则应使用 URL 选项。注意，错误状态是用 URL 参数传递给应用程序的，而设置 HTTP 头状态则是应用程序的职责；否则，HTTP 的响应状态就是“HTTP 1.1 200 OK”。</li>
+
+<li>如果使用 Windows 附带的 Internet Explorer 5.0，Internet Explorer 将用自己的 HTTP 错误信息代替下列自定义错误消息。如果自定义错误文件小于下面列出的大小，将不会使用自定义错误消息。
+
+<p>403、405 和 410 - 必须大于 256 字节<br> 400、404、406、 408、409、500、500.12、500.13、500.15、501 和 505 - 必须大于 512 字节</p></li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

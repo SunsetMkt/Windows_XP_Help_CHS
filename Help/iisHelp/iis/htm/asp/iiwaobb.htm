@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>内置 ASP 对象</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+ 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="简单讲述 Active Server Pages 附带的内置对象；这些对象不需要实例化。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37775607">内置 ASP 对象</a></h1>
+
+
+<p>Active Server Pages 提供内置对象，可方便您搜集随浏览器请求发送的信息、响应浏览器、存储特定用户信息（如用户选定的参数）。本主题简单讲述每个对象。</p>
+
+<h2><a name="H2_37776108">Application 对象</a></h2>
+
+<p>可以使用 <a href="vbob8zw4.htm">Application</a> 对象在特定应用程序的所有用户间共享信息。</p>
+
+<h2><a name="H2_37776283">Request 对象</a></h2>
+
+<p>可以使用 <a href="vbob5ulw.htm">Request</a> 对象来获取对 HTTP 请求中传递的任何信息的访问。这包括通过 POST 方法或 GET 方法、cookies 以及客户端证书从 HTML 表单传递的参数。通过 Request 对象也可以访问发送到服务器的二进制数据，如文件上载。</p>
+
+
+<h2><a name="H2_37776813">Response 对象</a></h2>
+
+<p>可以使用 <a href="vbob5sj8.htm">Response</a> 对象来控制发送给用户的信息。这包括直接发送信息到浏览器、重定向浏览器到其他 URL 或设置 cookie 值。</p>
+
+<h2><a name="H2_37777094">Server 对象</a></h2>
+
+<p>通过 <a href="vbob7838.htm">Server</a> 对象可以访问服务器上的方法和属性。最常用的方法就是用来创建 COM 组件 Server.CreateObject 例程的那个。其他方法可对字符串应用 URL 或 HTML 编码、将虚拟目录映射到物理路径、以及设置脚本超时期间。</p>
+
+<h2><a name="H2_37777518">Session 对象</a></h2>
+
+<p>可以使用 <a href="vbob12d0.htm">Session</a> 对象来存储特定用户会话所需的信息。当用户在应用程序不同页间跳转时，不会丢弃存储在 Session 对象中的变量；这些变量在用户访问应用程序页的整个期间都会保留。可以使用 Session 方法来显式结束会话并设置闲置会话的超时期间。</p>
+
+<h2><a name="H2_37778059">ObjectContext 对象</a></h2>
+
+<p>可以使用 <a href="vbob554k.htm">ObjectContext</a> 对象来提交或中止由 ASP 脚本启动的事务。</p>
+
+
+<H2>ASPError 对象</H2>
+
+<P>可以使用 <A HREF="vbob1dtg.htm">ASPError</A> 对象来捕捉 ASP 错误并向用户返回详细的信息描述。</P>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

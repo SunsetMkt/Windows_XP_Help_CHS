@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于审核</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关监视大范围用户和 Web 服务器安全活动的审核技术的概念性信息。"> 
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="Auditing">关于审核</a></h1>
+
+<p>可以使用审核技术大范围监视与安全相关的活动。审核包括为目录和文件访问或服务器事件创建审核策略，以及监视安全日志以侦测任何未经授权人员的访问尝试。</p>
+
+<p>可以配置安全日志，记录有关目录和文件访问、服务器事件或这两方面的信息。这些信息都记录在 Windows 安全日志中。同时，IIS 日志记录功能还可以记录 IIS 所特有的事件。定期检查这些文件，可以检测服务器或站点上可能受到攻击或存在其他安全问题的区域。有关检查这些日志的详细信息，请参阅<a href="iidetsc.htm">侦测未授权的访问</a>。有关 IIS 日志的详细信息，请参阅<a href="iilogsa.htm">记录站点活动</a>。</p>
+
+
+
+<h2><a name="FileAccess">审核目录或文件访问</a></h2>
+<p>可以监视目录或文件级的访问尝试（无论这些尝试是成功的还是不成功的），包括读取文件、写入文件和浏览目录等事件。可以为任何文件或目录选择要审核的事件。这一级别的审核使用 Windows 资源管理器进行设置。详细信息，请参阅<a href="iimacsc.htm">配置和监视审核</a>。</p>
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;要使用这些审核功能，服务器的文件系统必须配置为 NTFS。有关转换文件系统的信息，请参阅 Windows 文档。</p>
+
+<h2><a name="ServerEvents">审核服务器事件</a></h2>
+
+<p>可以监视服务器范围内的事件，例如登录和注销 Web 服务器，更改 Web 服务器安全策略以及关闭服务器计算机等。事件审核将对整个计算机进行，而不是仅针对于某个目录或文件。这一级别的审核可使用 Microsoft Management Console 中的“审核策略”进行设置。详细信息，请参阅<a href="iimacsc.htm#H1_37709189">配置和监视审核</a>。</p>
+
+
+<h2><a name="IISlogs">审核网站或 FTP 站点访问</a></h2>
+<p>可以监视对网站或 FTP 站点、虚拟目录或文件的访问尝试（无论这些尝试是成功的还是不成功的），包括读取文件或写入文件等事件。可以对任何站点、虚拟目录或文件选择要审核的事件。这一级别的审核可使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>进行设置。详细信息，请参阅<a href="iilogsa.htm">记录站点活动</a>。</p>
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

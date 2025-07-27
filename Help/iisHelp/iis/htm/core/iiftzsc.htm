@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>在 IIS 中使用 Fortezza 安全性</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="包含有关 Fortezza 安全功能的概念和过程信息，如智能卡。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+<h1><A NAME="H1_448399553"></A>在 IIS 中使用 Fortezza 安全性</h1>
+
+<h2><A NAME="H2_448399642"></A>Fortezza 背景</h2>
+
+<p>IIS 支持通常称为 Fortezza 的美国政府安全标准。此标准使用一种加密机制，保证消息、组件和系统的消息机密性、完整性，并为消息、组件和系统提供身份验证及访问控制，从而满足防御消息系统安全性结构的要求。可以通过服务器和浏览器软件或者 PCMCIA 卡硬件来实现这些功能。Fortezza 是美国政府内部广泛使用的一种机制。有关详细信息，请参阅位于 <a HREF="http://go.microsoft.com/fwlink/?linkid=1769"
+target="_blank">Infosec</a> 的 Fortezza 开发人员指南（由美国国家安全局和国防部管理）。</p>
+
+<h2><A NAME="H2_448400416"></A>使用 Fortezza</h2>
+
+<p>请执行如下步骤在 IIS 中实施 Fortezza 安全机制。这些步骤将 Fortezza 方案完全集成到 IIS 中，以便可以按照 Fortezza 安全标准进行操作。</p>
+
+<h3>使用 Fortezza 证书</h3>
+
+<p>Fortezza 卡（一种 PCMCIA 类型的卡，与笔记本电脑以及其它小型设备中使用的卡类似）包含验证此卡用户的用户证书；其工作原理与 IIS 中的服务器和客户证书完全一样。为了保证 IIS 可以使用这些 Fortezza 证书，必须将它们复制到计算机上的安全存储区内：</p>
+
+<ol>
+	<li>从位于 http://www.microsoft.com/security/ 的 <A HREF="http://www.microsoft.com/isapi/redir.dll?prd=ie&ar=security" target="_blank">Microsoft 网站</A>获得 Schannel.dll 的非出口副本。</li>
+	<li>安装卡读取设备和驱动文件。有关信息，请参阅读卡机文档。</li>
+	<LI>安装设备供应商提供的 Cryptographic Service Provider (CSP)。有关信息，请参阅读卡机文档。</LI>
+	<LI>运行命令行工具 Fortutil.exe。</LI>
+</ol>
+
+<P>此工具提供安装、确认和删除卡证书以及相关信息等多种功能。要启用某项功能，请在命令行下输入相应的命令：</P>
+
+<TABLE BORDER="1" CELLSPACING="2" CELLPADDING="2">
+<TR BGCOLOR="#C0C0C0">
+	<TD ALIGN="CENTER"><STRONG>动作</STRONG></TD>
+	<TD ALIGN="CENTER"><STRONG>命令</STRONG></TD>
+	<TD ALIGN="CENTER"><STRONG>参数</STRONG></TD>
+
+</TR>
+
+<TR>
+	<TD><STRONG>添加证书</STRONG></TD>
+	<TD><code>fortutil.exe /a</code></TD>
+	<TD>网站名、卡序列号、PIN、卡特性</TD>
+
+</TR>
+<TR>
+	<TD><STRONG>确认证书</STRONG></TD>
+	<TD><code>fortutil.exe /q</code></TD>
+	<TD>Web 服务器名称</TD>
+</TR>
+<TR>
+	<TD><STRONG>删除证书</STRONG></TD>
+	<TD><code>fortutil.exe /r</code></TD>
+	<TD>网站名</TD>
+</TR>
+<TR>
+	<TD><STRONG>帮助</STRONG></TD>
+	<TD><code>fortutil.exe /?</code></TD>
+	<TD>无</TD>
+</TR>
+</TABLE>
+
+
+<p><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;任何被复制到服务器上的 Fortezza 证书都可以用作“Web 服务器证书向导”、“CTL 向导”或者 Windows 证书功能中的证书。</p>
+
+
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;如果正在运行 Web 服务时，将卡从读取器中拔出后再插入，可能导致 SSL 连接错误。如果出现这些错误，需要将卡插入读取器之后重新启动 Web 服务。</P>
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

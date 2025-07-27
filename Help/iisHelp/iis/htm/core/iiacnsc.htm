@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于访问控制</title>
+
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关使用 Web 服务器的功能允许或拒绝用户访问 FTP 或 Web 内容的概念性信息和建议。包含有关分布式创作与版本管理 (WebDAV) 的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name="aboutauthentication">关于访问控制</a></h1>
+  
+<p>正确控制对 Web 和 FTP 内容的访问对于 Web 服务器的安全运行至关重要。使用 Windows 和 IIS 中的安全功能，可以有效地控制用户对 Web 和 FTP 内容的访问方式。可以控制对各级内容的访问权限，包括从整个网站和 FTP 站点到单个文件。</p>
+
+<ul>
+<li><a href="#anonaccess">匿名访问</a></li>
+<li><a href="#dav">分布式创作与版本管理</a></li>
+<li><a href="#overviewaccess">访问控制的原理</a></li>
+<li><a href="#guidelines">控制访问的准则</a></li>	
+</ul>
+
+<h2><a name="anonaccess">匿名访问</a></h2>
+
+<p>匿名访问是最常用的网站访问控制方式，允许任意用户访问网站上的公共部分，而禁止未经授权的用户访问 Web 服务器的重要管理功能和私人信息。  </p>
+
+<p>例如，您可以把 Web 服务器想象成一个博物馆，允许匿名访问就像邀请公众去参观博物馆的公开画廊和展品。但是，您也许要锁上某些特殊的房间（例如办公室和实验室），不希望公众参观这些房间。同样，为 Web 服务器配置匿名访问后，可以使用 NTFS 权限禁止普通用户访问私人文件和目录。有关 NTFS 权限的详细信息，请参阅 <a href="#NTFSpermissions">NTFS 权限</a>一节的详细内容。</p>
+
+<p>默认情况下，Web 服务器通过一个匿名帐户允许所有用户登录。安装过程中，服务器创建一个特定的匿名帐户 IUSR_<em>computername</em>。例如，如果计算机名称是 SalesDept1，则匿名帐户的名称为 IUSR_SalesDept1。服务器上的每个网站可以使用相同的匿名用户登录帐户，也可以使用不同的帐户。使用“Windows 本地用户和组”工具，可以新建一个&#147;匿名登录&#148;用户帐户。详细信息，请参阅<a href="iiabasc.htm">关于身份验证</a>。</p>
+
+<h2><a name="dav"></a>分布式创作与版本管理</h2>
+<P>分布式创作与版本管理 (WebDAV) 是 HTTP 1.1 标准的扩展，用于通过 HTTP 连接显示任意存储媒体，例如文件系统。通过在 IIS 中实现 WebDAV，允许远程作者移动、搜索或删除服务器上的文件和目录及其属性。可以通过 Web 服务器权限设置对 WebDAV 进行配置。详细信息，请参阅 <A href="wcwbdav.htm">WebDAV 发布</A>。</p>
+
+<p>可以设置 WebDAV 权限，用于：</p>
+
+<ul>
+<li>搜索目录和文件及其属性。</li>
+<li>创建、修改、删除以及浏览目录和文件及其属性。</li>
+<li>存储和检索文件和目录的自定义属性。</li>
+<li>在协作工作环境中锁定文件。</li> 
+</ul>
+
+
+<p>WebDAV 可以运行在文件分配表 (FAT) 格式和 NTFS 格式。有关 WebDAV 规范草稿的详细信息，请在 <a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=W3org&pver=1.0&ar=protocols" target=_blank>World Wide Web Consortium（WWW 协会）网站</a>上搜索 WWW Distributed Authoring and Versioning（WWW 分布式创作与版本管理）。有关 NTFS 的详细信息，请参阅<a href="iintfsc.htm">使用 NTFS 保护文件安全</a>。</P>
+
+<P><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;WebDAV 是 HTTP 1.1 建议书草稿的具体实现，因此不能用于非 HTTP 服务，例如 FTP 站点。</P>
+
+<h2><a name="overviewaccess">访问控制的原理</a></h2>
+<p>通过正确配置 Windows 文件系统和 Web 服务器安全功能，可以控制用户对 Web 服务器内容的访问。当用户试图访问 Web 服务器时，服务器通过几个访问控制步骤，识别用户并确定允许的访问级别。</p> 
+
+
+<img src="iiacnsc2.GIF" width="425" height="444" border="0" align="MIDDLE" alt="访问控制流程图">
+
+<p>下面是处理过程概述：</p>
+
+
+
+<ol>
+<li>客户端请求访问服务器上的资源。</li>
+<li>服务器请求客户端发出身份验证信息（如果服务器配置了此要求）。浏览器既可以提示用户输入用户名和密码，也可以自动提供这些信息。详细信息，请参阅<a href="iiabasc.htm">关于身份验证</a>。</li>
+<li>IIS 检查用户是否具有有效的 Windows 用户帐户。如果用户没有此帐户，请求将失败，并收到消息“403 禁止访问”。</li>
+<li>IIS 检查用户是否具有访问所请求的资源的 Web 权限。如果用户没有此权限，请求将失败，并收到消息“403 禁止访问”。 </li>
+<li>此时可使用网站管理员添加的任意第三方安全模块。</li>
+<li>IIS 检查资源的 NTFS 权限。如果用户没有此权限，请求将失败，并收到消息“401 拒绝访问”。</li>
+<li>如果用户具有 NTFS 权限，则可完成此请求。</li>
+</ol>
+
+
+
+
+<h3><a name="H3_37683323">Web 服务器权限</a></h3>
+
+<p>可以为特定的站点、目录和文件配置 Web 服务器访问权限。这些权限适用于所有用户，而不管他们拥有何种特定的访问权限。例如，在更新特定站点的内容时，可以禁止对此网站的“读取”权限，以便禁止用户访问此网站。此时，如果用户试图访问此网站，服务器将返回错误消息“禁止访问”。但是，如果启用了“读取”权限，将允许所有用户查看网站，除非 NTFS 权限限制了哪些用户可以查看此站点。详细信息，请参阅<a href="iiwspsc.htm">设置 Web 和 FTP 权限</a>。</p>
+
+<p>Web 权限具有下列级别：</p>
+<ul> 
+	<li><strong>读取</strong> （默认选中）用户可以查看文件内容及其属性。</li>
+	<li><strong>写入</strong> 用户可以更改文件内容及其属性。</li>
+	<li><strong>脚本资源访问</strong> 用户可以访问源文件。如果选中了“读取”，则可以读取源代码；如果选中了“写入”，则可对源代码执行写操作。“脚本资源访问”允许访问文件源代码，例如 ASP 应用程序中的脚本。此选项仅在选中了“读取”或“写入”时可用。</li>
+	<li><strong>目录浏览</strong> 用户可以浏览文件列表和集合。</li>
+	<li><strong>记录访问</strong> 针对每次网站访问创建的日志项。</li>
+	<li><strong>索引资源</strong> 允许索引服务索引此资源。</li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;Web 服务器权限设置会影响可用于站点、虚拟目录或文件的 HTTP 动作。</p>
+</ul>
+
+
+<h3><a name="NTFSpermissions">NTFS 权限</a></h3>
+
+<p>Internet 信息服务依赖于 NTFS 权限来保证个人文件和目录的安全，避免未经授权用户的访问。与应用于所有用户的 Web 服务器权限不同，使用 NTFS 权限可以准确定义允许哪些用户访问站点内容，以及允许每个用户进行哪些操作。</p>
+
+<p>NTFS 权限具有下列级别：</p>
+
+<ul>
+<li><strong>完全控制</strong> 用户可以修改、添加、移动以及删除文件（及其相关属性）和目录。此外，用户还可以更改所有文件和子目录的权限设置。</li>
+
+<li><strong>修改</strong> 用户可以查看并修改文件及文件属性，包括在目录中增删文件或增删文件属性。</li>
+
+<li><strong>读取及运行</strong> 用户可以运行可执行文件，包括脚本。</li>
+
+<li><strong>列出文件夹目录</strong> 用户可以查看文件夹目录列表。</li>
+
+<li><strong>读取</strong> 用户可以查看文件及文件属性。</li>
+
+<li><strong>写入</strong> 用户可以向文件写入内容。</li>
+
+<li><strong>拒绝访问</strong> 如果未选中任何复选框，用户将完全无法访问任何资源，即使此用户拥有对更高级别父目录的访问权限。</li>
+
+<p><font color="#0000FF"><strong>要点</strong></font>&nbsp;&nbsp;&nbsp;将 IUSR_<em>computername</em> 帐户对某资源的访问权限设置为“拒绝访问”，将拒绝匿名用户访问此资源。</p>
+</ul>
+
+<p>对于单个文件或目录，可以定义一个权限列表，即自由访问控制列表 (DACL)。如果定义了此列表，则可以选择特定的 Windows 用户帐户或用户组，然后为此用户或组指定访问权限。</p>
+
+
+<p>下表以一个假想的 Microsoft Word 文档 <EM>(MYSERVER:\Administration\Accounts.doc)</EM> 为例，说明权限列表的内容：</p>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+<th width="50%" align="LEFT" valign="TOP" bgcolor="#C0C0C0"><strong>用户帐户或用户组</strong></th>
+<th width="50%" bgcolor="#C0C0C0" align="Left" valign="top"><strong>权限</strong></th>
+</tr>
+<tr>
+<td width="50%" valign="Top">MYSERVER\Administrators</td>
+<td width="50%" valign="Top">完全控制</td>
+</tr>
+<tr>
+<td width="50%" valign="Top">MYSERVER\JeffSmith</td>
+<td width="50%" valign="Top">更改</td>
+</tr>
+<tr>
+<td width="50%" valign="Top">MYSERVER\Guests</td>
+<td width="50%" valign="Top">拒绝访问</td>
+</tr>
+</table>
+
+<p>除 Administrator 组的成员之外，只有名为 JeffSmith 的帐户有权更改 Accounts.doc。显然，以 Windows Guests 用户组成员身份登录的普通用户无法访问此文件。</p>
+
+<p>设置 NTFS 权限后，Web 服务器在允许用户访问受限访问的文件之前，需要通过一种方法对此用户进行标识或身份验证。可以配置服务器的身份验证功能，要求用户使用有效的 Windows 帐户用户名和密码登录。详细信息，请参阅<a href="iiabasc.htm">关于身份验证</a>。</p>
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;如果 NTFS DACL 设置不正确，浏览器将提示用户输入用户信息。例如，用户可能没有对某个文件的访问权限（由于 DACL 设置不正确），这时 IIS 将发出“拒绝访问”错误消息，浏览器将提示用户输入其他用户名和密码。</P>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;为了确保服务器的安全性，应删除不必要的用户和组或对您没有太大作用的组。但如果从 Web 资源的 DACL 中删除了 Everyone 组，而未进一步指定其他用户或组，则非匿名访问也将失败。如果希望非匿名访问能够正常工作，则必须具有下列权限以及任意特定的用户或用户组。
+<ul>
+<li>Administrator [完全控制]</li>
+<li>Creator/Owner [完全控制]</li>
+<li>System [完全控制]</li>
+</ul>
+
+<p>有关如何设置这些权限的信息，请参阅<a href="iintfsc.htm">使用 NTFS 保护文件安全</a>和<a href="iidfpsc.htm">设置目录或文件的 NTFS 权限</a>。</p>
+
+
+<h2><a name="guidelines">控制访问的准则</a></h2>
+
+<p>遵循下列准则，可以减小 Web 服务器受到安全威胁的可能性。如果在制定完善的访问控制策略并正确配置安全功能的同时，能够考虑到这些准则，则可以实现可靠的安全配置。</p>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;对于高度机密的应用程序（例如涉及金融或银行业的那些应用程序），应求助于专业安全咨询公司。咨询公司可以帮助您制定适当的安全策略以及实施过程。</p>
+
+<p>为了充分确保 Web 服务器内容的安全性，应基于下列准则制定安全策略：</p>
+
+<h3><a name="H3_37687994">维护安全的密码策略</a></h3>
+
+<p>未经授权的个别用户可能会通过盗取或猜测用户帐户密码获得 Web 服务器的访问权限。必须确保所有密码，特别是用于保护管理权限的密码难以猜测。请遵循下列准则选择一个安全的密码：</p>
+
+<ul>
+<li> 避免使用常见的某些词作为密码。企图攻击系统安全的个别用户可以使用特殊的词典查找程序猜出您的密码。</li>
+<li>要求密码长度大于 8 个字符，而且应该既有大写字母，也有小写字母。密码还应包含数字，如果可能，也可包含非标准字符。</li>
+<li>用户应定期更换密码。</li>
+</ul>
+
+<h3><a name="H3_37688822">限制 Web 服务器管理权限</a></h3>
+
+<p>务必限制对 Web 服务器 Administrators 组的访问权限。Administrators 组成员对整个 Web 服务器及其安全功能拥有完全控制权限。请遵循下列准则控制 Administrators 组的成员：</p>
+
+<ul>
+<li>仅对可信任的个别用户授予 Administrator 权限。</li>
+<li>仅使用 Administrator 帐户管理所在网络域。浏览 Internet 时，应使用其权限类似于 Windows 用户组 Guest 的单独用户帐户，这样可以避免计算机上的进程暴露于 Internet 上。</li>
+<li>新建用户组时，应避免将“完全控制”权限指派给此组，以防止用户可以随心所欲地操作内容。</li>
+<li>定期更改 Administrator 帐户的密码。</li>
+<li>以 Administrator 身份登录时，不要运行可疑的程序。</li>
+<li>远程管理 Web 服务器时，请使用 SSL 安全功能。</li>
+</ul> 
+
+<h3><a name="H3_37689712">维护严格的帐户策略</a></h3>
+
+<p>使用“Windows 组策略”工具，可以指定 Windows 用户组的用户权限策略。用户权限策略定义了用户可以执行的 Web 服务器和 Windows 管理操作。例如，可以建立一条策略，确保公用用户无权远程关闭 Web 服务器。通常，应该建立一种限制极其严格的用户权限策略，并且应该小心操作，避免意外地授予用户更改 Web 服务器及其资源的权限。详细信息，请参阅 Windows 文档。</p>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>安全性</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="包含链接的导航页，这些链接指向安全问题的概念性概述、以及有关验证、访问控制、加密、证书和审核的主题。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="Security">安全性</a></h1>
+
+<p>正确的计算机安全保护措施可以降低或消除各种安全威胁，防止怀有恶意的个人和善意的用户意外访问到限制信息或无意中更改重要文件。</p>
+
+<p> 本节说明如何配置 Web 服务器和 Windows 以正确保护网站及执行其他基本安全功能。</p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iiabtsc.htm">关于安全性</a>：Web 服务器安全功能的概念性概述，以及有关入门和学习如何使用具有高度安全性的安全套接字层 (SSL) 功能的技巧。</li>
+<li><a href="iisckl.htm">IIS 安全性检查表</a>：针对计算机安全保护措施所提供的建议的列表，包括 Windows 设置、IIS Web 权限和物理安全性。</li>
+<li><a href="iiathsc.htm">身份验证</a>：确认试图与限制内容建立连接的用户的标识。</li>
+<li><a href="iiaclsc.htm">访问控制</a>：控制用户如何访问和操作文件与目录。</li>
+<li><a href="iiencsc.htm">加密</a>：使用 SSL 加密功能保护信息的保密性。</li>
+<li><a href="iicerts.htm">证书</a>：使用证书和 SSL 功能建立安全连接。</li>
+<li><a href="iiaudsc.htm">审核</a>：监视安全活动以防止篡改和非法访问。</li>
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>独立服务器应用程序，使它们在独立于 Web 服务器进程的进程中运行；请参阅<a href="iiisol.htm">独立应用程序</a>。</li>
+<li>验证网络名和计算机地址；请参阅<a href="iiverid.htm">验证计算机标识</a>。</li>
+<li>ASP 应用程序安全性；请参阅<a href="../asp/eadg4n77.htm"> IIS 应用程序安全分支</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE>
+（下列单词只用于搜索，不会显示在网页中。）安全, 锁定, 不安全, 风险, 黑客, 使用, 防火墙, 未经授权, 非法, 探查, 探查器, satan, 检查表, 弱点, 易受攻击, 缝隙, 漏洞, 打开, 哄骗, 欺骗, 假, 虚, 病毒, 丑化, 攻击, 拒绝服务, exe, .exe, 可执行的, 脚本, 过载, 垃圾邮件, harrass, 溢出, 系统溢出, 缓冲区溢出, 缓冲区过载, 长 url, 违反, 战胜, 智取, 改写, 密码, 链接, 详细信息密码, 标识, 登录, 凭据, 控制, 用户, 验证, 摘要式身份验证, 质询/响应, 基本, ntlm, 摘要, 控制, 限制, 拒绝, 安全, 秘密的, 敏感的, 秘密, 保护, 隐藏, 防御, 反对, 战胜, 停止, 防止, 文件, 目录, ntfs, 用户帐户, nt 帐户, 权限, 特权, 管理, 管理员, 操作员, 无效, 有效, 目录, 共享, 公用, 私有, 保密, 访问, 限制, 加密, 散列算法, 编码, 截取, 代码, 编码器, md5,  kerberos, base64, base64, base 64数字的, 完全文本, 清除, 文本, 证书, 服务器证书, 个人证书, 证书提供者, 颁发机构, 验证, base-64, base64, base 64, 密钥, 40 位, 128 位, 密码, 翻译, ssl, 安全套接字层, fortezza, 跟踪, 审核, 监视, 检测, 警告, 通知, 重复的, 失败的尝试, 入侵, 入侵者, sneak, 日志, 尝试, 获得进入权, 进入, 上载, 特洛伊木马, back orifice, backorifice, html.internal, 向导, 信任, 帐户
+</layer></span>
+</font>
+</body>
+</html>

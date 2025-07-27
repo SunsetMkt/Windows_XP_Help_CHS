@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>设置 Web 和 FTP 权限</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何设置 Web 和 FTP 权限，以便控制用户对特定 FTP 站点及网站、目录或文件的访问以及如何与这些站点、目录或文件进行交互的过程信息。还包含有关分布式创作与版本管理 (WebDAV) 的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37784235">设置 Web 和 FTP 权限</a></h1>
+
+<p>了解 Web 和 FTP 权限与 NTFS 权限之间的差别非常重要。与 NTFS 不同，Web 和 FTP 权限适用于所有访问网站和 FTP 站点的用户，而 NTFS 权限只应用于拥有有效 Windows 帐户的特定用户或用户组。NTFS 控制对服务器的物理目录的访问，而 Web 和 FTP 权限控制对网站或 FTP 站点的虚拟目录的访问。详细信息，请参阅<a href="iivrtsv.htm">网站和 FTP 站点</a>。</p>
+
+<p>默认情况下，网站和 FTP 访问权限使用 Windows 帐户 IUSR_<em>computername</em>。用户通过匿名身份验证访问站点时将使用此帐户。默认情况下，IIS 为 IUSR_<em>computername</em> 授予 NTFS 权限，用于访问构成网站或 FTP 站点的实际文件夹。但是可以更改站点中任何文件夹或文件的这些许可权限。例如，可以使用 Web 权限控制是否允许访问网站的用户查看某一特定页、上载信息或运行站点上的脚本。详细信息，请参阅<a href="iiacnsc.htm">关于访问控制</a>。</p>
+
+<p><strong><font color="#0000FF">要点</font></strong></p>
+
+<ul>
+<li>如果某个目录或文件的 Web 或 FTP 权限与 NTFS 权限不同，则使用限制更加严格的设置。</li>
+
+<li>尝试设置网站、FTP 站点或虚拟目录的安全性属性时，IIS 将提示用户是否重置各个目录和文件的属性。如果重置这些属性，以前的安全性设置将由新的设置所替代。有关设置属性的详细信息，请参阅<a href="iivsovr.htm">关于网站和 FTP 站点</a>中的“站点属性和属性继承”。</li>
+
+<li>分布式创作与版本管理 (WebDAV) 是对 HTTP 1.1 标准的扩展，用于确定 HTTP 连接上的任何存储媒体（如文件系统）。使用 IIS 中实现的 WebDAV，可以允许远程作者创建、移动、搜索或删除服务器上的文件和目录。由于 WebDAV 是 HTTP 1.1 提议草案的实现，因此它不适用于非 HTTP 服务（如 FTP 站点）。详细信息，请参阅 <a href="wcwbdav.htm">WebDAV 发布</A>。</li> 
+</ul>
+
+<p class="bigfix">&nbsp;<big></big></p>
+
+<big>为 Web 内容（包括 WebDAV）设置权限</big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站、虚拟目录或文件，并打开其属性页。</li>
+<li>在“主目录”、“虚拟目录”或“文件”属性页中，选中或清除下列任意一个复选框（如果有的话）：</li>
+
+<ul> 
+	<li><strong>读取</strong>&nbsp;&nbsp;&nbsp;（默认选中）用户可以查看目录或文件的内容及属性。</li>
+	<li><strong>写入</strong>&nbsp;&nbsp;&nbsp;用户可以更改目录或文件的内容及属性。</li>
+	<li><strong>脚本资源访问</strong>&nbsp;&nbsp;&nbsp;用户可以访问资源文件。如果选中“读取”，则可以读取原代码；如果选中“写入”，则可以在原代码中写入内容。“脚本资源访问”包括脚本的源代码，例如 ASP 应用程序中的脚本。如果读取和写入都没有被选中，则此选项不可用。</li>
+	<li><strong>目录浏览</strong>&nbsp;&nbsp;&nbsp;用户可以查看文件列表和集合。</li>
+	<li><strong>记录访问</strong>&nbsp;&nbsp;&nbsp;为每次对网站的访问创建日志项目。</li>
+	<li><strong>索引资源</strong>&nbsp;&nbsp;&nbsp;允许索引服务索引此资源，以便对资源执行搜索功能。</li>
+</ul>
+
+<LI>在“执行权限”下，选择脚本执行的适当级别：</LI>
+<UL>
+<li><STRONG>无</STRONG>&nbsp;&nbsp;&nbsp;不能在服务器上运行脚本（如 ASP 应用程序）或可执行程序。</li>
+<li><STRONG>纯脚本</STRONG>&nbsp;&nbsp;&nbsp;只能在服务器上运行脚本，如 ASP 应用程序。</li>
+<li><STRONG>脚本和可执行文件</STRONG>&nbsp;&nbsp;&nbsp;可以在服务器上同时运行脚本（如 ASP 应用程序）和可执行程序。</li>
+</UL>
+
+<li>单击“确定”。</li>
+
+<p><strong>注意</strong></p>
+
+<ul>
+<li>禁用权限将会限制所有用户。例如，禁用“读取”权限将限制所有用户查看文件，而与这些用户帐户的 NTFS 权限无关。然而，启用“读取”权限则允许所有用户查看此文件，除非 NTFS 权限同时限制了此访问权限。</li>
+<li>如果同时设置了 IIS 和 NTFS 权限，则明确拒绝访问的许可权限将优于准许访问的许可权限。</li>
+</ul>
+</ol>
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;选中“脚本资源访问”时，用户可以从 ASP 应用程序的脚本中查看敏感信息，如用户名和密码。用户可能还可以更改在服务器上运行的源代码，严重影响服务器的安全和性能。最好通过单独的 Windows 帐户和高级别身份验证（如摘要式或集成 Windows 身份验证）访问这些类型的信息和功能。</p>
+
+
+<big>设置 FTP 内容的权限</big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个 FTP 站点、虚拟目录或文件，并打开其属性页。</li>
+<li>在“主目录”、“虚拟目录”或“文件”属性页中，选中或清除下列任何一个复选框选项：</li>
+
+<ul>
+<li><strong>读取</strong>&nbsp;&nbsp;&nbsp;用户可以查看文件内容。</li>
+<li><strong>写入</strong>&nbsp;&nbsp;&nbsp;用户可以更改文件内容。</li>
+<li><strong>记录访问</strong>&nbsp;&nbsp;&nbsp;可以在日志文件中记录用户访问。</li>
+</ul>	
+</ol>
+
+<p><b>注意&nbsp;&nbsp;&nbsp;</b>更改帐户信息之后，如果启动进程外应用程序时发生问题，则可能是由于在更改信息之后，没有将用户帐户的名称和密码信息同步。您可能会收到“事件日志”错误，告之无法登录 IWAM_computername 帐户。如果遇到此问题，请运行 synciwam 脚本将密码同步。要运行此脚本，请在命令提示符下输入：cscript synciwam.vbs [-v|-h] </p>
+<p>-v 使用详细模式，并打印脚本活动的日志。</p> 
+<p>-h 打印脚本的“帮助”信息。</p> 
+<p>synciwam.vbs 文件的位置：%systemdrive%\inetpub\adminscripts</p>
+
+<p>有关这些属性页的详细信息，请单击相应属性页中的“帮助”。</p>
+
+
+<hr class="iis" size="1"><p align="center"><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>ASP Script Examples</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT><META NAME="DESCRIPTION" CONTENT="Internet Information Services reference information">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="EN-US">
+<META NAME="MS-IT-LOC" Content="Internet Information Services"> 
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<H1><A NAME="_asp_script_examples"></A><SUP></SUP>ASP Script Examples</H1>
+
+<P>Active Servers Pages (ASP) is one of the features that make IIS the premier Web server. Never before has it been so easy to create useful, interactive, Web-based applications, even if you have relatively little experience with programming. If you are a more advanced user, ASP provides a way to rapidly create sophisticated and robust Web applications without dedicating the often substantial resources required for development in a more conventional programming language environment, such as C++ or Java.</P>
+
+<P>This section provides an overview of the capabilities of server-side scripting in general, and ASP in particular, while at the same time providing more advanced examples for experienced developers who want to discover what ASP can do for them. </P>
+
+<P>For each sample script, you will be provided a menu bar with which you can:
+
+<UL type=disc>
+	<LI>Read the overview to find out what the sample demonstrates, how it works, and what to look for.</li>
+
+	<LI>View the source. The sample scripts, provided in both VBScript and JScript, are well documented and carefully organized.</li>
+
+	<LI>Run the VBScript version of the sample.</li>
+</UL>
+
+<P>Sample scripts provided in this documentation are divided into several categories:
+
+<UL type=disc>
+	<LI><A HREF="/iishelp/iis/htm/asp/asps1lrn.htm">Simple Scripts</A>: Learn the basics of script syntax, flow control, functions, and procedures.</li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps3n5f.htm">Building ASP Applications</A>: Study samples that demonstrate the structure and function of a Web-based application.</li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps3fsg.htm">Web Interactivity using ASP</A>: Discover how to make your application more useful and versatile by incorporating cookies, client-side scripting, and other techniques.</li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps473n.htm">Using Installable Components</A>: Learn how to leverage the functionality provided by the Active Server Pages components that are installed with IIS.</li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps2os9.htm">Database Connectivity</A>: Explore examples that illustrate the power of the bundled database access component, ActiveX<sup>&reg;</sup> Data Objects (ADO).</li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps6243.htm">ASP Transaction Services</A>: Study samples that demonstrate the alliance between Component Services and ASP scripts.</li>
+</UL>
+
+<P>Although the samples in this section are provided as an educational resource, this is not a tutorial on ASP scripting or application creation. For more information, see <A HREF="/iishelp/iis/htm/asp/iiwawelc.htm">Active Server Pages</A> and <A HREF="/iishelp/iis/htm/asp/eadg01v7.htm">Developing Web Applications</A>.</P>
+<hr class="iis" size="1">
+<p align="center"><em><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. All rights reserved.</a></em></p>
+</BODY>
+</HTML>

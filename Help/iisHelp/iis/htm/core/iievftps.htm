@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>FTP 服务事件</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="列出为 IIS的 Windows 事件记录的 FTP 服务事件使用的数字和错误消息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="ftpevents">FTP 服务事件</a></h1>
+
+<table border="1" cellpadding="4" cellspacing="1">
+<tr>
+<td align="center" bgcolor="#C0C0C0"><strong>事件 ID</strong></td>
+<td align="center" bgcolor="#C0C0C0"><strong>描述</strong></td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td>FTP 服务器不能初始化安全信息。数据错误。</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td>FTP 服务器不能初始化套接字库。数据错误。</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td>FTP 服务器由于内存不足而不能初始化。数据错误。 </td>
+</tr>
+<tr>
+<td align="center"> 5</td>
+<td>FTP 服务器找不到 FTP/TCP 服务。数据错误。 </td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td>FTP 服务器不能创建主连接套接字。数据错误。 </td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td>FTP 服务器不能创建主连接线程。数据错误。 </td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td>FTP 服务器不能为主机 %1 上的用户创建客户端工作线程。到此用户的连接被终止。数据错误。 </td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td>对系统服务的调用意外失败。数据错误。</td>
+</tr>
+<tr>
+<td align="center">10 </td>
+<td>主机 %2 上的用户 %1 在 %3 秒内不活动而超时。</td>
+</tr>
+<tr>
+<td align="center">11 </td>
+<td>收到主机 %2 上的 %1 的匿名登录请求。</td>
+</tr>
+<tr>
+<td align="center">12 </td>
+<td>收到主机 %2 上的 %1 的用户登录请求。</td>
+</tr>
+<tr>
+<td align="center">13 </td>
+<td>用户 %1 登录失败，不能访问主目录 %2。</td>
+</tr>
+<tr>
+<td align="center">14 </td>
+<td>由于安全信息已经修改，用户 %1 被拒绝访问当前目录 %2。</td>
+</tr>
+<tr>
+<td align="center">1000 </td>
+<td>无法收集 FTP 性能统计数据。服务返回的错误码为 DWORD 0。</td>
+</tr>
+</table>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;在事件日志或 Web 浏览器中显示消息时，文档中出现的符号（如 %s、%X、%1、%2 等）将由实际发生错误时此错误的详细信息所替换。</p>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于 Windows 事件</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关记录 Windows 事件的总体信息。简述对 IIS 事件日志记录有效的选项。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="About Windows&nbsp;NT Events">关于 Windows 事件</a></h1>
+
+<P>每次启动 Windows 时都会自动启动日志记录。日志有三种类型：“系统”、“安全性”和“应用程序”。对于每种日志，都可以筛选要查看的事件、指定要查看的项目数、决定储存项目的周期以及确定日志充满之后是否自动覆盖现有事件。</P>
+
+<P>可以按下列几种方式打开“事件查看器”：</P>
+
+<ul>
+  <li>单击“开始”，选择“运行”，然后在“打开”文本框中输入“eventvwr”，按 Enter 键。</li>
+  <li>在命令窗口中输入“start eventvwr”，并按 Enter 键。</li>
+  <li>单击“开始”，选择“程序”，选择“管理工具”，再选择“事件查看器”。</li>
+  <li>单击“开始”，选择“程序”，选择“管理工具”，再选择“计算机管理”。“事件查看器”显示在“系统工具”节点下。此种显示方式的优点是“Internet 信息服务”管理单元出现在同一窗口中的“服务和应用程序”节点下。</li>
+</ul>
+
+<h2><a name="aspevents">ASP 错误和 Windows 事件日志</a></h2>
+
+<p>在“事件查看器”中，可以打开每种类型日志的属性页，并配置普遍应用于所有事件的筛选器选项。</p>
+
+<p>IIS 通过两个配置数据库关键字提高控制程度。可以使用这两个关键字指定发生 ASP 错误时发送给 Windows 事件日志的内容。</p>
+
+<ul>
+  <li><a href="../asp/apro2qur.htm">AspLogErrorRequests</a>：如果此关键字设置为 TRUE，IIS 会允许将 ASP 错误发送到“应用程序”事件日志。如果此关键字设置为 FALSE，则不发送 ASP 错误。可以在 Internet 信息服务管理单元中设置此关键字，也可以用编程方式设置。在 Internet 信息服务管理单元中，显示虚拟目录的属性，将“应用程序保护”设置为“高（独立）”，然后单击“配置”。单击“进程选项”选项卡，选中“将不成功的客户端请求写入事件日志”复选框。选中此复选框时，此配置数据库关键字将被设置为 TRUE。</li>
+  <li> <a href="../asp/apro9zfr.htm">AspErrorsToNTLog</a>：如果此关键字设置为 TRUE，则所有可能的 ASP 错误都会发送给“应用程序”事件日志。如果此关键字设置为 FALSE，则只发送所有 ASP 错误的一个子集。子集包括下列错误号：100、101、102、103、104、105、106、107、115、190、191、192、193、194、240、241、242。不能在 Internet 信息服务管理单元中设置此关键字，而必须通过编程方式进行设置。</li>
+</ul>
+<p>有关这些 ASP 事件错误的说明，请参阅 <a href="iievtasp.htm">Active Server Pages 事件</a>。</p>
+<p>有关配置数据库以及以编程方式管理 IIS 的详细信息，请参阅<a href="../asp/aint7e9l.htm">以编程方式管理 IIS</a>。快速设置这些关键字的一种方式是使用 <a href="file:///X:/inetpub/adminscripts">X:\inetpub\adminscripts</a> 中的 adsutil.vbs 脚本示例，其中 X: 是安装 IIS 的驱动器。例如，若要向 Windows 事件日志发送 ASP 事件错误的子集，可以在命令窗口输入下列命令：</p>
+<p>&nbsp;&nbsp;&nbsp;<font face="Courier New"> cscript adsutil.vbs SET
+w3svc/1/root/&lt;vdir_name&gt;/AspLogErrorRequests TRUE</font></p>
+<p>&nbsp;&nbsp;&nbsp;
+
+</font>
+<font face="Courier New"> cscript adsutil.vbs SET w3svc/1/root/&lt;vdir_name&gt;/AspErrorsToNTLog
+FALSE</font></p>
+<font face="宋体">
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;也可以将 ASP 错误记入 
+IIS 日志文件。这需要在 Internet 信息服务管理单元中进行配置。如果无法将 ASP 错误记入 IIS 日志文件，则将错误发送到 Windows 事件日志中。</p>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

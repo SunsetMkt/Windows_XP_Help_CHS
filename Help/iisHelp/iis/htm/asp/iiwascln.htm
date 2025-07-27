@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>使用脚本语言</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+
+
+<META NAME="DESCRIPTION" CONTENT="解释如何设置网页或应用程序的主脚本语言，以及如何在 ASP 脚本环境中使用 VBScript 和 JScript。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+
+<font face="宋体">
+
+
+<h1><a name="H1_37779074">使用脚本语言</a></h1>
+
+
+<p>编程语言（如 Visual Basic、C++ 和 Java）提供对计算机资源的低级访问，可用来创建复杂的大型程序。而脚本语言则用来创建功能有限的“脚本”程序，以便在 Web 服务器或浏览器上执行网站功能。与其他较复杂的编程语言不同，脚本语言是可以“解释”的，指令语句由中间程序（即命令解释程序）顺序执行。虽然解释过程降低了执行效率，但脚本语言简单易学并提供了强大的功能。脚本可以嵌入 HTML 网页中，确定内容的格式，也可以用来实现封装高级商业逻辑的 COM 组件。</p>
+
+<p>通过 Active Server Pages，Web 开发人员可以使用多种脚本语言编写在服务器上执行的脚本。实际上，在同一 .asp 文件中可以使用多种脚本语言。另外，由于脚本在服务器端读取和处理，因此，请求 .asp 文件的浏览器并不需要支持脚本。</p>
+
+<p>虽然可以使用任何脚本语言，但 Web 服务器上必须安装了该语言相应的脚本引擎。所谓“脚本引擎”就是一种处理以特定语言编写的命令的程序。Active Server Pages 提供两种脚本引擎：Microsoft Visual Basic Scripting Edition (VBScript) 和 Microsoft JScript。也可以安装和使用其他脚本语言的引擎，如 REXX、PERL 和 Python。</p>
+
+<p>VBScript 是 Visual Basic 的一个子集。因此，对于 Visual Basic 编程人员，可以立即开始使用。尽管 JScript 与 Java 或 C 没有直接关系，但对于 Java、C 或 C++ 编程人员，可能会发现 JScript 语法非常熟悉。</p>
+
+<p>对于熟悉其他脚本语言（如 REXX、Perl 或 Python）的开发人员，可以获取并安装相应的脚本引擎，以便继续使用已经熟知的语言。Active Server Pages 是一种 COM 脚本主机；要使用脚本语言，必须安装一种脚本引擎，而且此脚本引擎需要符合 COM 脚本标准并作为 COM（组件对象模型）驻留在 Web 服务器上。</p>
+
+<h2><a name="settingtheprimaryscriptinglanguage">设置主脚本语言 </a></h2>
+ 
+<p>ASP 主脚本语言是一种用于处理 &lt;% 和 %&gt; 分隔符内命令的语言。默认情况下，主脚本语言为 VBScript。可以使用任何脚本语言作为主脚本语言，但必须安装此语言相应的脚本引擎。既可以逐页设置主脚本语言，也可以一次性设置 ASP 应用程序中所有网页的主脚本语言。</p>
+
+<h3><a name="H3_37782962">设置应用程序的语言</a></h3>
+
+<p>要设置对应用程序中所有网页的主脚本语言，只需在 Internet 信息服务管理单元中“应用程序选项”选项卡上设置“默认 ASP 语言”。详细信息，请参阅<a href="../core/iiwarndh.htm">配置 ASP 应用程序</a>。</p>
+
+<h3><a name="H3_37781925">设置网页的语言</a></h3>
+
+<p>要单独设置每个网页的主脚本语言，只需在 .asp 文件开始处添加 <code>&lt;%@ LANGUAGE %&gt;</code>。此命令的语法为：</p>
+
+<pre>&lt;%@ LANGUAGE=<em>ScriptingLanguage </em>%&gt;</pre>
+
+<p>其中，<code><em>ScriptingLanguage</em></code> 是要设置的特定网页的主脚本语言。单独网页的主语言将覆盖对应用程序中所有网页的全局设置。</p> 
+
+<p>必须遵守 ASP 命令的使用原则；详细信息，请参阅<a href="iiwabasi.htm">创建 ASP 网页</a>。</p>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;要使用不支持 Object.Method 语法的语言作为主脚本语言，必须首先创建 LanguageEngines 注册表项。详细信息，请参阅<a href="../core/iiregovr.htm" >关于注册表</a>。</p>
+
+<h2><a name="usingvbscriptandjscript">在服务器上使用 VBScript 和 JScript</a></h2>
+
+<p>在服务器上与 ASP 一起使用 VBScript 时，将禁用两个 VBScript 功能。因为使用 Active Server Pages 编写的脚本将在服务器上执行，所以不支持用来提供用户界面元素的 VBScript 语句 InputBox 和 MsgBox。另外，不要在服务器端脚本中使用 VBScript 函数 CreateObject 和 GetObject。而应使用 Server.CreateObject，以便 ASP 可以跟踪对象例程。由 CreateObject 语句或 GetObject 语句创建的对象既不能访问 ASP 内置对象，也不能参与事务。但在使用 IIS Admin 对象或 Java 标记时例外。详细信息，请参阅<a href="aogu2wab.htm">使用 IIS Admin 对象</a>和<a href="iiwacomu.htm#H2_37772661">从 Java 类创建对象</a>。</p>
+
+<p>关于所有 VBScript 和 JScript 操作符、函数、语句、对象、属性和方法的列表与说明，请参阅“VBScript 语言参考”和“JScript 语言参考”。可以在 <a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&pver=6.0&ar=scripting" target=_blank>Windows Script Technologies</a> 网站上找到这些参考。</p>
+
+<h3><a name="includingcomments">包含注释</a></h3>
+
+<p>因为 ASP 中的所有脚本都在服务器端进行处理，所以，没有必要使用 HTML 注释标记对不支持脚本的浏览器隐藏脚本，但这是客户端脚本的通常做法。所有 ASP 命令都将在内容发送到浏览器之前处理。可以使用 HTML 注释向 HTML 页中添加备注；这些注释将被返回给浏览器，如果用户查看 HTML 源文件，将可以看到这些注释。</p>
+
+<h4><a name="H4_37784996">VBScript 注释</a></h4>
+
+<p>VBScript 支持撇号格式的注释。与 HTML 注释不同，处理脚本时将删除这些注释并且不会发送到浏览器。</p>
+
+<pre>&lt;% 
+  '此行以及下面的两行是注释。 
+  'PrintTable 函数打印数据中的
+  '所有元素。 
+  PrintTable MyArray() 
+%&gt;</pre>
+
+<p>输出表达式中不能包含注释。例如，下面第一行能正常工作，而第二行则无法工作，因为此行以 <code>&lt;%=</code> 开始。</p>
+
+<pre>&lt;% i = i +1 '此语句用于递增 i 值。（此脚本将正常运行。）%&gt; 
+
+&lt;%= name '此语句用于打印变量名。（此脚本将失败。）%&gt;</pre>
+
+<h4><a name="H4_37785830">JScript 注释</a></h4>
+
+<p>JScript 支持使用 <code>//</code> 作为注释符。每个注释行都必须使用这些符号。</p>
+
+<pre>&lt;%
+  var x
+  x = new Date() 
+  // 此行用于将当前日期发送给浏览器，
+  // 并转换为字符串。
+  Response.Write(x.toString()) 
+%&gt;</pre>
+
+<h3><a name="H3_37786236">区分大小写</a></h3>
+
+<p>VBScript 不区分大小写。例如，使用 Request 或 request 都可以引用 ASP Request 对象。因为不区分大小写，所以无法通过大小写来区分变量名。例如，无法创建两个单独的变量 Color 和 color。</p>
+
+<p>JScript 区分大小写。在脚本中使用 JScript 关键字时，键入的关键字必须与参考页中的关键字完全一样。例如，如果使用 date 而不是 Date 就会导致错误。本文档中所示 ASP 内置对象的大小写适用于 JScript 命令。</p>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+
+</font>
+</body>
+
+</html>

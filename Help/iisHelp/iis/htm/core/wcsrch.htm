@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>搜索 WebDAV 目录</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+
+<META NAME="DESCRIPTION" CONTENT="有关在服务器上设置索引服务的程序上的信息，以便用户搜索 WebDAV 目录上的文档内容和属性。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="SearchingaWebDAVDirectory">搜索 WebDAV 目录</a></h1>
+
+<p>创建 WebDAV 发布目录后，您可能想允许用户搜索内容和文件属性。</p>
+
+<big>将发布目录设置为可以搜索</big><br>
+
+<ol>
+<li>如果想允许客户端搜索资源属性，请确保此目录位于格式化为 NTFS 的驱动器上。</li>
+<p>如果放置目录的驱动器的格式为文件分配表 (FAT) 文件系统，客户端可以搜索资源内容，但无法搜索资源属性。</p>
+<li>通过在命令提示符下输入下列命令确保索引服务正在服务器上运行：</li>
+<p><code>net start cisvc</code></p>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，检查 WebTV 目录的“虚拟目录”属性，确保选中了“索引资源”和“读取”权限。</li>
+<p>如果没有选中“索引资源”，“索引服务”就不会为此目录创建编录，因而无法对它进行搜索。如果没有选中“读取”权限，则客户端可以搜索此目录，但无法看到搜索结果。有关设置虚拟目录的 IIS 权限的详细信息，请参阅<a href="iiwspsc.htm">设置 Web 和 FTP 权限</a>。</p>
+</ol>
+
+<h2>创建搜索工具</h2>
+
+<p>通过 Microsoft 的 WebDAV 实现，您可以为客户端创建工具，用于搜索目录中的内容或（和）属性。下例给出了一个基本搜索命令。您可以根据它创建搜索工具：</p>
+
+<PRE>
+SEARCH /webdav HTTP/1.1
+Host: iis
+Content-Type: text/xml
+Content-Length: 157
+
+&lt;?xml version="1.0"?&gt;
+&lt;g:searchrequest xmlns:g="DAV:"&gt;
+  &lt;g:sql&gt; Select "DAV:displayname"
+                FROM SCOPE()
+  &lt;/g:sql&gt;
+&lt;/g:searchrequest&gt;
+</PRE>
+
+<p>有关创建搜索工具的详细信息，请参阅 Microsoft&reg; Platform SDK。</p>
+
+<h2>搜索属性</h2>
+
+<p>具有两种类型的属性：“服务器定义的”和“用户定义的”。</p>
+
+<p><strong>服务器定义的属性</strong>包含所有由服务器创建和维护的属性。这些属性都是只读的，因此不可修改。以上示例包含创建文档的日期，以及最后修改的时间。</p>
+
+<p><strong>用户定义的属性</strong>包含所有可由用户创建和修改的属性。以上示例中包含了文档作者和文档标题。如果想允许客户端能够根据用户定义的属性来查找文档，就必须创建此属性或确保此属性已经存在。</p>
+
+<p>除了可以定义和修改现有属性，用户还可以创建自己的“自定义属性”。也就是说，您可以创建一个自定义属性，称为 <strong>Source</strong>，用来命名文档开发过程中所参考的任何资源。然后用户可以在一个站点中搜索从某一文档源开发出来的所有文档。下例中的属性对国会图书馆 (Library of Congress) 中的资源进行了命名。</p>
+
+<PRE>
+where contains ("Source", "Library of Congress")
+</PRE>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;当前，WebDAV 仅支持搜索字符串类型的自定义属性。</p>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

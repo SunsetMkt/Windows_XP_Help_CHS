@@ -1,0 +1,81 @@
+	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>打开 Internet 信息服务管理单元</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关打开 Internet 信息服务管理单元的过程信息，此管理单元可以帮助您配置和管理网站和服务。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="snapin">打开 Internet 信息服务管理单元</a></h1>
+
+<p>Internet 信息服务管理单元由 Microsoft Management Console (MMC) 维护，此管理单元提供的服务器管理选项可以控制网站或 FTP 站点的内容及对这些站点的访问。在以前的版本中，此工具称为 Internet 服务管理器。</p>
+
+<h3>打开 Internet 信息服务管理单元 </h3><br>
+
+
+<ol>
+<li>在“开始”菜单上，单击“运行”，出现“运行”对话框。</li>
+<li>在“打开”文本框中，输入“inetmgr”并按 Enter 键，出现“Internet 信息服务”管理单元。</li>
+</ol>
+
+还可以通过“计算机管理”对话框访问 IIS。以这种方式访问 IIS 时，无法使用 Internet 信息服务管理单元提供的全部管理选项，但可以快速访问网站并使用有限的管理选项。
+
+<ol>
+<li>用鼠标右键单击“我的电脑”，单击“管理”，出现“计算机管理”对话框。</li>
+<li>在左窗格中，展开“服务和应用程序”目录树。</li>
+<li>单击“Internet 信息服务”。在右窗格中，将显示网站的名称和状态。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;展开左窗格中的“Internet 信息服务”目录树以及出现的任意网站目录树，可以查看此网页的目录和虚拟目录列表。</p>
+</ol>
+
+<p>有关如何使用 Internet 信息服务管理单元以及管理 IIS 的详细信息，请参阅<a href="iinewtp2.htm">管理</a>。</p>
+
+
+
+<hr class="iis" size="1">
+
+</font>
+</body>
+</html>

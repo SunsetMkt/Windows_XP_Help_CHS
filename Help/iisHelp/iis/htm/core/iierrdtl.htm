@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>启用详细自定义错误消息</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关启用详细自定义错误消息的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><A NAME="H1_19117967">启用详细自定义错误消息</A></h1>
+
+<p>IIS 拥有一套自己独特的自定义错误消息，提供的反馈量较默认的 HTTP 1.1 错误消息更大，而且更为“友好”。例如，默认的 HTTP 1.1 404 错误消息所包含的“找不到对象”语句已被扩展为：“Web 服务器找不到要求的文件/脚本。请检查 URL 以确保路径正确。如果问题仍然存在，请与服务器管理员联系。”默认情况下，在 Internet 信息服务管理单元的“默认网站”中设置这些详细的自定义错误消息。</p>
+
+<big>配置详细的自定义错误消息。</big><br>
+
+<ol> 
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要对其自定义 HTTP 错误消息的网站、虚拟目录、目录或文件，然后单击“属性”。</li>
+<li>选择“自定义错误”属性页。</li>
+<li>选择要更改的默认 HTTP 错误消息。</li>
+<li>单击“编辑属性”按钮。</li>
+<li>在“消息类型”框中，选择“文件”。</li>
+<li>单击“浏览”并导航到<em>驱动器号</em>:\WINNT\help\iisHelp\common\<em>文件名</em>。</li>
+</ol>
+
+<p>默认情况下，友好错误消息被安装到下列位置：<em>驱动器号</em>:\WINNT\Help\iisHelp\common。文件名是与特定 HTTP 错误相对应的数字；例如，400.htm、401-1.htm 等等。</p>
+
+<p><a name="custerrinstall"></a><strong>自定义错误消息安装位置 - IIS 4.0 到 IIS 5.1</strong></p>
+
+<p>如果从 IIS 4.0 升级到 IIS 5.1，并且以前创建了自己的自定义错误文件，或者修改过 IIS 4.0 安装在<em>驱动器号</em>:\WINNT\Help\common 目录中的自定义错误文件，则自定义错误文件就会被移动到<em>驱动器号</em>:\WINNT\Help\iisHelp\common 目录，且文件扩展名改为 .bak。可以检索自定义错误消息并在 IIS 5.1 中重新使用。例如，IIS 4.0 安装的自定义错误文件 400.htm 现在已更名为 400.bak，并且位于<em>驱动器号</em>:\WINNT\Help\iisHelp\common 目录中（除了新的 IIS 5.1 自定义错误文件）。</p>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

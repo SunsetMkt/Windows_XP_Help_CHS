@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>使用 NTFS 保护文件安全</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关使用 NTFS 安全特性限制访问 Web 服务器上文件和目录的过程信息。可以配置文件和目录权限，设置授予特定用户帐户或用户组的访问级别。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37718788">使用 NTFS 保护文件安全</a></h1>
+
+<p>使用 NTFS 可以限制对 Web 服务器上文件和目录的访问。可以配置文件和目录权限，设置授予特定用户帐户或用户组的访问级别。例如，可以将 Web 服务器配置为允许特定用户查看和执行文件，而禁止其他所有用户访问此文件。</p>
+
+<big>使用 NTFS 保护文件安全</big><br>
+
+<ol>
+<li>将当前硬盘转换为 NTFS 分区。可以使用 Windows 转换工具将硬盘分区转换成 NTFS 格式。查看 Windows 文档获得特定信息。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;NTFS 硬盘分区提供访问控制安全，并且能比文件分配表 (FAT) 分区更有效的保存信息。</p>
+
+<li>创建 Windows 用户帐户或组：
+<ol>
+<li>单击“开始”，用鼠标右键单击“我的电脑”，然后选择“管理”，出现“计算机管理”窗口。</li> 
+<li>展开“系统工具”，然后展开“本地用户和组”。
+<li>要创建新的用户帐户，首先选择“用户”，然后在“操作”菜单上选择“新用户”。要创建新组，首先选择“组”，然后在“操作”菜单上选择“新建组”。</li>
+<li>将用户添加到合适的用户组。</li>
+</ol> 
+</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;要使用“本地用户和组”配置用户帐户，必须以管理员权限登录。详细信息，请参阅 Windows 文档。</p>
+
+<li>在 Windows 资源管理器中，为文件和目录设置访问权限。有关过程信息，请参阅<a href="iidfpsc.htm">设置目录或文件的 NTFS 权限</a>。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;配置 Web 服务器的 NTFS 权限时要小心谨慎。权限设置不恰当可能导致拒绝有效用户访问需要的文件和目录。例如，即使用户有权限查看和执行程序，但用户可能无权限访问运行此程序所需的特定动态链接库 (DLL)。要保证用户可以安全连续地访问文件，可将相关文件放在同一目录，并分配适当的 NTFS 权限。</p>
+</ol>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

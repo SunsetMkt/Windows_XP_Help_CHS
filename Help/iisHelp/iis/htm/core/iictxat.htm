@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>使用文本编辑器创建网页</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何通过使用文本编辑器（如记事本）创建网页的概述。包含一些基本 HTML 标记的列表。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="usinganeditor">使用文本编辑器创建网页</a></h1>
+
+<p>可以使用记事本等标准文本编辑器，通过输入 HTML 标记来创建网页。HTML 标记是一些格式化指令，它告诉 Web 浏览器如何显示文档。标记由一对包含在小于号和大于号之间的文字组成 (&lt; &gt;)。例如，下列 HTML 代码将 <em>Hello World</em> 用粗体显示在 Web 浏览器上：&lt;B&gt;Hello World&lt;/B&gt;。显示为 <b>Hello World</b>。</p>
+
+<p>也可以嵌套多个标记以应用多种属性。例如，如果只对 <em>World</em> 应用斜体，而对整句话应用粗体，则应采用如下形式：&lt;B&gt;Hello &lt;I&gt;World&lt;/I&gt;&lt;/B&gt;。结果显示为：<b>Hello <i>World</i></b>。注意应该避免标记重叠；下例是一个无效的 HTML 语法，并且根据 Web 浏览器的不同可能会产生不正常的结果：&lt;B&gt;Hello &lt;I&gt;World&lt;/B&gt;&lt;/I&gt;。</p>
+
+
+<big>使用文本编辑器创建网页</big><!--</p>--><br>
+
+<ol>
+<li>在标准文本 (ASCII) 编辑器中创建一个基本框架或模板，为浏览器提供一些重要的 HTML 标题和格式化信息。输入下列标记：</li>
+
+<pre>&lt;HTML&gt;
+&lt;HEAD&gt;
+  &lt;TITLE&gt;  &lt;/TITLE&gt;
+&lt;/HEAD&gt;
+  &lt;BODY&gt;
+
+  &lt;/BODY&gt;
+&lt;/HTML&gt;</pre>
+
+<li>将网页的标题放在 &lt;TITLE&gt; 标记之间。标题显示在 Web 浏览器的标题栏上而不是显示在页面中。选择标题时，请尽量简要地说明网页的内容。</li>
+<li>将要在 Web 浏览器上显示的正文和其他内容放在 &lt;BODY&gt; 标记之间。</li> 
+<li>将 HTML 文件用 .htm 扩展名保存（确保文本编辑器不在文档后自动添加 .txt 扩展名），然后在 Web 浏览器中打开此文件并查看所做的更改。</li>
+<li>将其他元素或格式化信息添加到网页中；有关信息，请参阅下列 HTML 标记表。重复第 4 步以查看所做的更改。</li>
+</ol>
+
+<p><strong>提示</strong>&nbsp;&nbsp;&nbsp;应阅读 HTML 规范（Internet 上的许多网站都有提供）以充分利用并理解 HTML。另外，可以使用 Web 浏览器的源文件查看功能可以查看几乎所有网页的 HTML 源文件。您可以使用此功能学习其他 HTML 编写者是如何设计他们的网页的。</p>
+<p>&nbsp;</p>
+
+<table border="1" cellpadding="5" cellspacing="1" width="95%">
+<tr>
+<th width="40%" bgcolor="#C0C0C0">HTML 标记</th>
+<th width="60%" bgcolor="#C0C0C0">说明</th>
+</tr>
+
+<tr>
+<td>&lt;P&gt; &lt;/P&gt;</td>
+<td>段落的起始和结束。 </td>
+</tr>
+
+<tr>
+<td>&lt;H<em>n</em>&gt; &lt;/H<em>n&gt;</em></td>
+<td>标题文本的起始和结束。值 <em>n</em> 表示不同的字体大小，应该是 1 到 6 的整数。</td>
+</tr>
+
+<tr>
+<td>&lt;U&gt; &lt;/U&gt; </td>
+<td> 下划线文本的起始和结束。</td>
+</tr>
+
+<tr>
+<td>&lt;UL&gt; &lt;/UL&gt;</td>
+<td>项目符号列表的起始和结束。每一条列表项必须以 &lt;LI&gt; 标记开头。 </td>
+</tr>
+
+<tr>
+<td>&lt;OL&gt; &lt;/OL&gt;</td>
+<td>项目编号列表的起始和结束。每一条列表项必须以 &lt;LI&gt; 标记开头。 </td>
+</tr>
+
+<tr>
+<td>&lt;LI&gt;</td>
+<td>表示一个项目列表。不需要结束标记。</td>
+</tr>
+
+<tr>
+<td>&lt;B&gt; &lt;/B&gt;</td>
+<td>粗体的起始和结束。</td>
+</tr>
+
+<tr>
+<td>&lt; IMG SRC=<EM>image file</EM>&gt;</td>
+<td>将图形文件插入网页。</td>
+</tr>
+
+<tr>
+<td>&lt; BGSOUND SRC=<EM>sound file</EM>&gt;</td>
+<td>加载页面后播放背景音乐。<strong>注意</strong>&nbsp;&nbsp;&nbsp;此特性只有 Microsoft Internet Explorer 4.0 或更高版本才支持。</td>
+</tr>
+
+<tr>
+<td>&lt;FONT SIZE=<EM>n</EM> FACE=<EM>font type</EM>&gt; &lt; /FONT &gt;</td>
+<td>文本字体特征（如大小、颜色或字体）的起始和结束。</td>
+</tr>
+
+<tr>
+<td>&lt;A HREF=<em>file</em> &gt; &lt;/A&gt;</td>
+<td>创建到文件中某个位置或其他文档的超级链接。例如，下面将创建一个链接，用户单击它可以查看另一个 HTML 文档：&lt;a href="mainpage.html"&gt; 返回主页&lt;/a&gt;</td>
+</tr>
+
+<tr>
+<td>&lt;HTML&gt; &lt;/HTML&gt;</td>
+<td>表示文件内容是以 HTML 语言编写的。通常，它们是 HTML 文档的第一个和最后一个标记。</td>
+</tr>
+
+<tr>
+<td>&lt;HEAD&gt; &lt;/HEAD&gt;</td>
+<td>包含 HTML 文档标题信息，例如文档标题和其他描述性的信息。Web 浏览器和网页搜索程序可以使用这些信息。但是不应将文档正文放在此标记之内。</td>
+</tr>
+
+<tr>
+<td>&lt;TITLE&gt; &lt;/TITLE&gt;</td>
+<td>表示 HTML 文档的标题。标题显示在 Web 浏览器的标题栏中，而不在正文中显示。</td>
+</tr>
+
+<tr>
+<td>&lt;BODY&gt; &lt;/BODY&gt;</td>
+<td>包含要在网页中显示的内容。</td>
+</tr>
+</table>
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

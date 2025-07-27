@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>进程回收</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="包含链接的导航页，这些链接指向有关进程回收的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="primarynodetoplevel">进程回收</a></h1>
+
+<p>本节讲解的内容包括进程回收、它的可配置事件、为什么要按不同的配置数据库级别配置设置，以及如何继承配置设置。本节的末尾是有关设置注意事项的讨论。</p>
+
+<p>本节包含：</p>
+<ul>
+<li><a href="iioopapr.htm">关于进程回收</a>：进程回收的概述、它能解决的问题、回收应用程序的方法以及对可配置事件的介绍。</li>
+
+<li><a href="iiooplai.htm">级别与继承</a>：描述可供配置进程回收的配置数据库的级别，以及配置设置是如何被继承的。</li>
+
+<li><a href="iioopcpr.htm">配置回收事件</a>：描述如何配置进程回收事件。</li>
+
+<li><a href="iioopsc.htm">设置注意事项</a>：描述全新安装 Windows 2000 与升级到 Windows 2000 两种情况之间，默认配置数据库关键字的区别。</li>
+</ul>
+
+<p>本节不包含：</p>
+<ul>
+<li>配置应用程序；请参阅<a href="iiwarndb.htm">配置应用程序</a>。</li>
+<li>配置数据库属性列表；请参阅<a href="../asp/apro1cms.htm">字母顺序属性列表</a>。</li>
+</ul>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+<span style="display:none"><LAYER VISIBILITY=HIDE>
+（下列文字只用于搜索，不会显示在网页中。) 配置, web 应用程序, 程序, 程序员, 开发, 开发者, 代码, 编码器, 应用程序根, 目录, 开始位置目录, 创建, 写, 映射, 关联, 文件名, 扩展名, dll, .dll, .exe, exe, 隔离, 进程外, oop, 故障, 可靠的, 稳定的, 可靠性, 稳定性, 可用性, 可用的, uptime, downtime, 保护, 单独的, 内存空间, cgi, 脚本, 超时, 缓存, isapi, 扩展名, 无脚本 asp, 流控制, 增强的, 对象, 自我调整, 精细调整, 调整, 自动的, 线程, 错误处理, 线, 数字, .asp, 文件, 服务器脚本小程序, 商业逻辑, 可重用的, com, 组件, j++, vb, vba, visual basic, jscript, javascript, 筛选器, 安装, asp, active server pages, 使自动化, 管理任务, 属性, 属性页, 启动, 终止, 暂停, 调试, 逐个查看, 错误, 链接, 详细信息
+</layer></span>
+</font>
+</body>
+</html>

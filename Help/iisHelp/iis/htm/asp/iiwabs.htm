@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>与客户端脚本交互操作</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+ 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何使用 ASP 生成由客户浏览器处理的客户端脚本的过程。可以编写服务器端脚本来组合发送到浏览器的脚本命令。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37766214">与客户端脚本交互操作</a></h1>
+
+
+<p>使用 ASP 生成或操作客户端脚本，可以增强 ASP 的有效性。例如，可以编写服务器端脚本，根据服务器特有的变量、用户浏览器类型或 HTTP 请求参数，对客户端脚本加以组合。</p>
+
+<p>如下例模板所示，向客户端脚本中添加一些服务器脚本语句（由 HTML &lt;SCRIPT&gt; 标记括起来），可以在请求时动态初始化和更改客户端脚本。</p>
+
+<pre>&lt;SCRIPT LANGUAGE="VBScript"&gt;	
+&lt;!--
+
+<EM>变量</EM> = &lt;%=<Em>服务器端定义的值</Em> %&gt;
+.
+.
+.
+
+<Em>客户端脚本</Em>
+
+&lt;% <Em>用于生成客户端语句的服务器端脚本</Em> %&gt; 
+
+<Em>客户端脚本</Em>
+.
+.
+.
+--&gt;
+&lt;/SCRIPT&gt;</pre>
+
+<p>结合这些功能，可开发出一些即有用又有趣的应用程序。例如，下面是一个对客户端脚本（使用 JScript 编写）进行操作的服务器端脚本（使用 VBScript 编写）示例：</p>
+
+<pre>&lt;%
+  Dim dtmTime, strServerName, strServerSoftware, intGreeting
+ 
+  dtmTime = Time()
+  strServerName = Request.ServerVariables("SERVER_NAME") 
+  strServerSoftware = Request.ServerVariables("SERVER_SOFTWARE") 
+
+  '生成一个随机数。 		
+  Randomize
+  intGreeting = int(rnd * 3)
+%&gt;
+
+  &lt;SCRIPT LANGUAGE="JScript"&gt;
+  &lt;!--
+
+  //调用函数显示问候语
+  showIntroMsg()
+
+  function showIntroMsg()
+  {  
+    switch(&lt;%= intGreeting %&gt;)
+    {
+    case 0:
+      msg =  "&lt;%= strServerName%&gt; Web 服务器正在运行 &lt;%= strServerSoftware %&gt;。"
+      break
+    case 1:			
+      msg = "欢迎使用 &lt;%= strServerName%&gt; Web 服务器。当地时间是 &lt;%= dtmTime %&gt;。"
+      break
+    case 2:
+      msg = "此服务器正在运行 &lt;%= strServerSoftware %&gt;。"
+      break
+    } 
+
+  document.write(msg)
+
+  }
+
+--&gt;
+&lt;/SCRIPT&gt;
+</pre>
+
+<p>可以扩展这种类型的脚本，例如配置客户端数据库或 DHTML 个性化脚本。创造性地运用这项技术，还可以减少往返过程和服务器处理时间。</p>
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

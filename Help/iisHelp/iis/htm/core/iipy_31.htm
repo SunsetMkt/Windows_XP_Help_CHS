@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html dir=ltr>
+<head>
+
+<title>“ISAPI 筛选器”属性页</title>
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000>
+<FONT FACE="宋体">
+
+<p><strong>“ISAPI 筛选器”属性页</strong></p>
+
+<p>使用此属性页设置 ISAPI 筛选器选项。ISAPI 筛选器是一种在处理 HTTP 请求过程中响应事件的程序。</p>
+
+<p>要添加 ISAPI 筛选器，单击“添加”按钮。在“筛选器名称”框中输入可识别的筛选器名称，并在“可执行文件”框中输入筛选器的路径。</p>
+
+<p>要删除 ISAPI 筛选器，选中筛选器并单击“删除”按钮。</p>
+
+<p>要更改 ISAPI 筛选器的属性，选中筛选器并根据需要更改“筛选器名称”和“可执行文件”文本框。</p>
+
+<p>要更改 ISAPI 筛选器执行的顺序，选中筛选器并单击“上移”或“下移”按钮。只能更改具有相同优先级的筛选器的加载顺序。</p>
+
+<P><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;在主属性级配置的 ISAPI 筛选器是全局性的。即，它们适用于在服务器上创建的所有网站。在主属性级配置的 ISAPI 筛选器可以与在单独网站级配置的 ISAPI 筛选器不同。另外，在网站级不会显示全局筛选器。</P>
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

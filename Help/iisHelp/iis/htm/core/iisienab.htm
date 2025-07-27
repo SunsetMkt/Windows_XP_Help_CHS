@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>启用“服务器端包含”</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+
+<META NAME="DESCRIPTION" CONTENT="有关如何启用和禁用“服务器端包含”命令的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+
+<h1><a name="H1_37753133">启用“服务器端包含”</a></h1>
+
+<p>在处理文件之前，Web 服务器必须检测到文件包含了“服务器端包含”命令。默认情况下，将 Web 服务器设置为处理具有.stm、.shtm 或 .shtml 文件扩展名的文件。可以针对整个 Web 服务器、网站、应用程序或某个目录禁用“服务器端包含”命令的处理。</p> 
+
+<big>启用“服务器端包含”</big><br>
+
+<ol>
+<li>为包含 SSI 命令的文件指定 SSI 文件扩展名（.stm、.shtm 或 .shtml)。</li>
+<p>可以添加其他扩展名，请参阅<a href="iiwarndf.htm">设置应用程序映射</a>。</p>
+<li>将 SSI 文件放入具有“脚本”或“执行”访问权限的目录中。详细信息，请参阅<a href="iidfpsc.htm">设置目录或文件的 NTFS 权限</a>。</li>
+</ol>
+
+<p class="bigfix">&nbsp;<big></big></p>
+
+<big>禁用“服务器端包含”</big>
+<p>如果 Web 服务器收到对某个网页的请求，而此网页的文件扩展名是已删除的 SSI 文件扩展名，则不处理此网页中的“服务器端包含”指令。
+<ol>
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站或目录，打开其属性页，然后单击“主目录”或“目录”选项卡。若要禁用应用程序的 SSI，请选择应用程序的开始位置目录。</li>
+<li>单击“配置”按钮。</li>
+<li>在“映射”选项卡上，选择扩展名并单击“删除”。</li>
+</ol>
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML dir=ltr>
+<HEAD>
+
+<TITLE>#config</TITLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="Internet 信息服务参考信息。#config 命令指定用于返回客户浏览器的错误消息、日期和文件大小的格式。">
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"><font face="宋体">
+
+<H2><A NAME="_k2_config"></A>#config</H2>
+
+<P><b>#config</b> 指令指定用于 SSI 错误信息的字符串，及由 #flastmod 和 #fsize 返回的日期和文件大小所使用的格式。必须使用 HTML 注释分隔符将指令括起来。</P>
+
+<P>默认情况下，此指令仅可用于 STM 网页，无法用于 ASP 网页。若要用 ASP 脚本执行同样的任务，可以使用 <b>FileSystemObject</b> 对象，可以在 <a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&amp;pver=6.0&amp;ar=scripting" target="_blank">MSDN</a> 中（在 VBScript 或 JScript 下）找到有关此对象的说明。</P>
+
+<h6><STRONG>语法</STRONG></h6>
+
+<P><STRONG>&lt;!-- #config </STRONG><em>Output</em><STRONG> = </STRONG><em>String</em> <STRONG>--&gt;</STRONG></P>
+
+<h6><STRONG>参数</STRONG></h6>
+
+<P><em>Output</em></P>
+
+<P>指定要被格式化的输出，输出可以是下列形式之一：</P>
+
+<TABLE border=0 cellpadding=5 cols=2 frame=box rules=all width=100%>
+
+<TR VALIGN="top">
+<TD width=20%><STRONG>输出</STRONG></TD>
+<TD width=80%><STRONG>含义</STRONG></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>ERRMSG</TD>
+<TD width=80%>当 SSI 指令处理过程中出现错误时将覆盖返回给客户端浏览器的消息。默认情况下，错误信息将提供详细描述出错情况的调试信息。如果取消显示这些详细情况，将提供短小、简单的错误信息，例如“出现 SSI 错误”。<i>String</i> 参数包含新的错误信息。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>TIMEFMT</TD>
+<TD width=80%>指定发出 #flastmod 指令时，返回客户端浏览器的日期格式。String 参数指定格式。可用 String 中的格式符号抽取日期中的个别部分，例如星期几或者几号。（格式符号与用于 ANSI C strftime 函数的符号相同）。<p><font face="宋体"><strong>注意</strong>&nbsp;&nbsp;&nbsp;下列时间和日期函数使用 C 库区域设置（而不是操作系统区域设置）设定的语言。C 库区域设置通常设为英语。</font></p>
+<P>%a</P>
+
+<P>“一周内的第几天”的缩写（例如，Mon）。</P>
+
+<P>%A</P>
+
+<P>“一周内的第几天”的完整名称（例如，Monday）。 </P>
+
+<P>%b</P>
+
+<P>月份的缩写（例如，Feb）。</P>
+
+<P>%B</P>
+
+<P>完整的月份名称（例如，February）。</P>
+
+<P>%c</P>
+
+<P>对应于 C 区域设置的日期和时间表示方法（例如，05/06/01 12:51:32）。</P>
+
+<P>%d</P>
+
+<P>十进制数表示的“一个月中的第几天” (01-31)。</P>
+
+<P>%H</P>
+
+<P>24 小时格式表示的小时 (00-23)。</P>
+
+<P>%I</P>
+
+<P>12 小时格式表示的小时 (01-12)。</P>
+
+<P>%j</P>
+
+<P>十进制数表示的“一年中的第几天”(001-366)。</P>
+
+<P>%m</P>
+
+<P>十进制数表示的月份 (01-12)。</P>
+
+<P>%M</P>
+
+<P>十进制数表示的分钟 (00-59)。</P>
+
+<P>%p</P>
+
+<P>与 12 小时格式对应的当前 C 区域设置的 A.M. 或 P.M. 标识符（例如，PM）。</P>
+
+<P>%S</P>
+
+<P>十进制数表示的秒 (00-59)。</P>
+
+<P>%U</P>
+
+<P>十进制数表示的“一年中的第几个星期”，以星期天作为每星期的第一天 (00-51)。</P>
+
+<P>%w</P>
+
+<P>十进制数表示的“一周内的第几天”，以星期天作为第一天 (0-6)。</P>
+
+<P>%W</P>
+
+<P>十进制数表示的“一年中的第几个星期”，以星期一作为每星期的第一天 (00-51)。</P>
+
+<P>%x</P>
+
+<P>当前 C 区域设置的日期表示方法（例如，05/06/01）。</P>
+
+<P>%X</P>
+
+<P>当前 C 区域设置的时间表示方法（例如，12:51:32）。</P>
+
+<P>%y</P>
+
+<P>十进制数表示的两位年份（例如，01）。</P>
+
+<P>%Y</P>
+
+<P>十进制数表示的四位年份（例如，2001）。</P>
+
+<P>%z, %Z</P>
+
+<P>时区名或缩写；如果时区未知，则没有字符。</P>
+
+<P>%%</P>
+
+<P>百分比符号。</P>
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=18%>SIZEFMT</TD>
+<TD width=82%>对 #fsize 指令的输出进行配置，以 KB 或字节为单位显示文件大小。String 参数可以为下列两个值之一：“ABBREV”以 KB 为单位显示文件大小，“BYTES”以字节为单位显示文件大小。</TD>
+</TR>
+</TABLE><BR>
+
+<P><strong><font color="#0000FF">要点</strong></font>&nbsp;&nbsp;&nbsp;包含此指令的文件必须使用已映射到 SSI 解释程序的扩展名。否则，Web 服务器将不处理此指令。默认情况下，文件扩展名 .stm、.shtm 和 .shtml 将映射到 SSI 解释程序 
+(ssinc.dll)。</P>
+
+<P>使用 #echo 指令的 STM 网页既可以自运行，也可以通过 Response.Redirect 从 ASP 网页调用它来运行。用 Server.Transfer、Server.Execute 或 #include 从 ASP 网页中调用 STM 网页是行不通的，因为这样会迫使 STM 网页通过 asp.dll 而不是通过 ssinc.dll 进行解释。</P>
+
+<P>如果安装了 <a href="iiabuti.htm">Internet 信息服务管理单元</a>，则可以修改默认扩展名映射并添加新映射，<font face="宋体">请参阅<A HREF="iiwarndf.htm">设置应用程序映射</A>。
+
+</font>由于不能将一个文件扩展名映射到多个可执行文件，所以不能在 ASP 文件中使用此指令。ASP 文件已映射到 asp.dll，并且必须保持此状态。</P>
+
+<H6><b>示例</b></H6>
+
+<p>--- SSI.stm ---</p>
+
+<PRE>&lt;!-- #config ERRMSG = &quot;An error occurred processing a directive.&quot; --&gt;</PRE>
+
+<PRE>SSI.stm was last formatted on 
+&lt;!-- #config TIMEFMT = &quot;%A, the %d of %B, %Y, at %H:%M&quot; --&gt;
+&lt;!-- #flastmod FILE = &quot;ssi.stm&quot; --&gt;
+&lt;BR&gt;
+
+The size of SSI.stm in bytes is
+&lt;!-- #config SIZEFMT = &quot;BYTES&quot; --&gt;
+&lt;!-- #fsize FILE = &quot;ssi.stm&quot; --&gt;
+&lt;BR&gt;&lt;BR&gt;
+
+This line will print out the ERRMSG configured above&lt;BR&gt;
+&lt;!-- #config SIZEFMT = &quot;BYTE&quot; --&gt;
+</PRE>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</BODY>
+</HTML>

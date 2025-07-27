@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head>
+<!--Helium-sbrk--><title>关于身份验证</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="本主题是对 Web 服务器身份验证安全功能的概念性概述。身份验证用于在用户与受限制内容建立连接之前确认用户的身份。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name="H1_37675702">关于身份验证</a></h1>
+
+<p>可以要求用户在访问服务器上的信息之前，提供有效的 Microsoft Windows 用户帐户名称和密码，这种标识过程称为“身份验证”。与 IIS 中的其他许多功能一样，身份验证也可以分网站、目录或文件级进行设置。IIS 提供了下列身份验证方法，用以控制对服务器内容的访问：</p>
+
+<H3>WWW 方法</H3>
+	<ul>
+		<li><a href="#Anonymous">匿名身份验证</a></li>
+		<li><a href="#basic">基本身份验证</a></li>
+		<li><a href="#Digest">摘要式身份验证</a></li>
+		<li><a href="#advancedDigest">高级摘要式身份验证</a></li>
+		<li><a href="#challenge">集成 Windows 身份验证</a></li>
+		<li><a href="#ssl">证书身份验证</a></li>
+	</ul>
+	
+<H3>FTP 方法</H3>
+	<ul>
+		<li><a href="#ftp_anon">匿名 FTP 身份验证</a></li>
+		<li><a href="#ftp_nonanon">基本 FTP 身份验证</a></li>
+	</ul>
+
+<p>有关设置身份验证的信息，请参阅<a href="iiauths.htm">启用和配置身份验证</a>。</p>
+
+<br>
+<center><strong>身份验证方法概述</strong></center><br>
+
+<table width="100%" cellspacing="2" cellpadding="2" bordercolor="#000000" frame="BORDER">
+<tr align="CENTER" bgcolor="#C0C0C0" bordercolor="#000000">
+    <td><strong>方法</strong></td>
+    <td><strong>安全级别</strong></td>
+    <td><strong>密码发送方式</strong></td>
+	<td><strong>是否可跨代理服务器和防火墙使用</strong></td>
+    <td><strong>客户端要求</strong></td>
+</tr>
+<tr>
+    <td><a href="#Anonymous">匿名</a></td>
+    <td>无</td>
+    <td><!>N/A<!></td>
+    <td>是</td>
+    <td>任意浏览器</td>
+</tr>
+<tr>
+    <td><a href="#basic">基本</a></td>
+    <td>低</td>
+    <td>Base64 编码的明文</td>
+    <td>是；但是，以明文方式跨代理服务器或防火墙发送密码具有安全风险，因为 Base64 编码的明文是未加密的</td>
+    <TD>大多数浏览器</td>
+</tr>
+<tr>
+    <td><a href="#digest">摘要式</a></td>
+    <td>中</td>
+    <td>散列</td>
+    <td>是</td>
+    <td>Internet Explorer 5.0 或更高版本</td>
+</tr>
+<tr>
+    <td><a href="#advancedDigest">高级摘要式</a></td>
+    <td>中</td>
+    <td>散列</td>
+    <td>是</td>
+    <td>Internet Explorer 5.0 或更高版本</td>
+</tr>
+<tr>
+    <td><a href="#challenge">集成 Windows</a></td>
+    <td>高</td>
+    <td>使用 NTLM 时为散列，<br>使用 Kerberos 时为 Kerberos 票证</td>
+    <td>否，除非通过 PPTP 连接使用</td>
+    <td>对于 NTLM，要求 Internet Explorer 2.0 或更高版本；对于 Kerberos，要求带有 Internet Explorer 5.0 或更高版本的 Windows 2000 或更高版本</td>
+</tr>
+<tr>
+    <td><a href="#ssl">证书</a></td>
+    <td>高</td>
+    <td><!>N/A<!></td>
+    <td>是，使用 SSL 连接</td>
+    <td>Internet Explorer 及 Netscape</td>
+</tr>
+<tr>
+    <td><a href="#ftp_anon">匿名 FTP</a></td>
+    <td>无</td>
+    <td><!>N/A<!></td>
+    <td>是</td>
+    <td>任意 FTP 客户端</td>
+</tr>
+<tr>
+    <td><a href="#ftp_nonanon">基本 FTP</a></td>
+    <td>低</td>
+    <td>明文</td>
+    <td>是</td>
+    <TD>任意 FTP 客户端</td></td>
+</tr>
+</table><br><br>
+
+
+<h2><a name="Anonymous">匿名身份验证</a></h2> 
+<p>匿名身份验证使用户无需输入用户名或密码即可访问网站或 FTP 站点上的公共部分。当用户试图连接到公共网站或 FTP 站点时，Web 服务器将此连接的用户指定为 Windows 用户帐户 IUSR_<em>computername</em>，其中 <em>computername</em> 是运行 IIS 的服务器的名称。默认情况下，IUSR_<em>computername</em> 帐户包含在 Windows 用户组 Guests 中。此组具有一定的安全限制（由 NTFS 权限硬性设置），指定了公共用户的访问级别以及可以访问的内容类型。</p>
+
+<p>如果服务器上有多个站点，或站点上的不同区域要求不同的访问权限，则可以创建多个匿名帐户，分别用于网站或 FTP 站点、目录或文件。通过为这些帐户授予不同的访问权限，或将这些帐户分配到不同的 Windows 用户组，即授予了用户对公共 Web 和 FTP 内容的不同区域进行匿名访问的权限。</p>
+
+<p>下面解释 IIS 如何使用 IUSR_<em>computername</em> 帐户：</p>
+	<ol>
+	<li>安装 IIS 时，IUSR_<em>computername</em> 帐户将被添加到 IIS 所在计算机的 Guests 组中。</li>
+	<li>收到请求时，IIS 将在执行任何代码或访问任何文件之前模拟 IUSR_<em>computername</em> 帐户。IIS 之所以能够模拟 IUSR_<em>computername</em> 帐户，是因为 IIS 知道此帐户的用户名和密码。</li>
+	<li>将网页返回客户端之前，IIS 将检查 NTFS 文件和目录权限，查看是否允许 IUSR_<em>computername</em> 帐户访问此文件。
+	<li>如果允许访问，身份验证过程即告完成，这些资源也可供用户使用。
+	<li>如果不允许访问，IIS 将尝试使用其他身份验证方法。如果未选择其他任何方法，IIS 将向浏览器返回错误消息“HTTP 403 拒绝访问”。</li>
+	</ol>
+	
+<P><FONT COLOR="#0000ff"><strong>要点</strong></FONT>&nbsp;&nbsp;&nbsp;如果启用了匿名身份验证，则即使启用了其他身份验证方法，IIS 也总是首先尝试使用匿名身份验证对用户进行身份验证。</p>
+
+
+<p>无论是在 Web 服务器服务级，还是对于单独的虚拟目录和文件，都可以通过 <a href="iiabuti.htm">Internet 信息服务管理单元</a>更改匿名身份验证所使用的帐户。匿名帐户必须具有“本地登录”用户权限。如果帐户没有“本地登录”权限，IIS 将无法为任何匿名请求提供服务。安装 IIS 时，特别为 IUSR_computername 帐户授予了“本地登录”权限。默认情况下，域控制器上的 IUSR_<em>computername</em> 帐户不会添加到 Guest 组中。要允许匿名登录，必须将 IUSR_<em>computername</em> 的权限更改为“本地登录”。</p>
+
+<P><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;可以使用 Active Directory 服务接口 (ADSI)，以编程方式更改对“本地登录”权限的要求。有关信息，请参阅“Active Server Pages 指南”中的 <A HREF="../asp/apro1zms.htm">LogonMethod</A>。</P>
+
+<p>还可以使用 Microsoft Management Console (MMC) 中的“组策略管理器”管理单元更改 Windows 中 IUSR_<em>computername</em> 帐户的安全权限。但是，如果匿名用户帐户不具有对特定文件或资源的访问权限，Web 服务器将拒绝为此资源建立匿名连接。有关详细信息，请参阅<a href="iiwspsc.htm">设置 Web 和 FTP 权限</a>。</p>
+
+<p><FONT COLOR="#0000ff"><strong>要点</strong></FONT>&nbsp;&nbsp;&nbsp;如果更改 IUSR_<em>computername</em> 帐户，将影响 Web 服务器应答的所有匿名 HTTP 请求。修改此账户时须小心谨慎。</p>
+
+<h2><a name="basic">基本身份验证</a></h2> 
+
+<p>基本身份验证方法是一种被广泛使用的行业标准方法，用于收集用户名和密码信息。</p>
+
+<h3>客户端身份验证过程</h3>
+<ol>
+<li>Internet Explorer Web 浏览器显示一个对话框，用户可以在此输入以前为其分配的 Windows 帐户用户名和密码（也称为凭据）。</li>
+
+<li>然后，Web 浏览器尝试使用用户凭据与服务器建立连接。明文密码在通过网络发送之前是 Base64 编码的。</li>
+
+<P><FONT COLOR="#0000ff"><strong>要点</strong></FONT>&nbsp;&nbsp;&nbsp;Base64 编码是未加密的。如果 Base64 编码的密码通过网络时被网络探测器截获，则非法用户可以很容易地将密码解码并重新使用。</p>
+
+<li>如果用户的凭据被拒绝，Internet Explorer 将显示身份验证对话框窗口，用户可以重新输入凭据。在连接失败并向用户报告错误之前，Internet Explorer 允许用户进行三次连接尝试。</li>
+
+<li>如果 Web 服务器验证用户名和密码与某个有效的 Microsoft Windows 用户帐户相对应，则建立连接。</li>
+</ol>
+	
+<p>有关设置基本身份验证的信息，请参阅<a href="iiauths.htm">启用和配置身份验证</a>。</p>
+
+<p>基本身份验证的优点在于，它是 HTTP 规范的一部分，而且大多数浏览器都支持这种方式。缺点是使用基本身份验证的 Web 浏览器以未加密的形式传输密码。某些人通过监视网络通信，使用某些通用工具，很容易截获和破解这些密码。因此，建议一般不要使用基本身份验证，除非确信用户和 Web 服务器之间的连接是安全的，例如使用专线连接或安全套接字层 (SSL) 连接。详细信息，请参阅<a href="iiencsc.htm">加密</a>。</p>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;集成 Windows 身份验证优先于基本身份验证。在提示用户输入用户名和密码之前，浏览器将选择集成 Windows 身份验证方法，并尝试使用当前的 Windows 登录信息。目前，只有 Internet Explorer 2.0 及更高版本支持集成 Windows 身份验证。<a href="#challenge"></a></p>
+
+<h2><a name="Digest">摘要式身份验证</a></h2> 
+
+摘要式身份验证提供的功能与基本身份验证相同，但它增强了通过网络发送用户凭据的安全性。摘要式身份验证以 <a href="sec_auth_md5hash.htm" target=new>MD5 散列</a>（也称为消息摘要）方式通过网络传输凭据，非法用户将无法根据散列破解其中的原始用户名和密码。Web 分布式创作与版本管理 (WebDAV) 目录可以使用摘要式身份验证。
+
+<p>摘要式身份验证不需要安装其他客户端软件，但它依赖于 HTTP 1.1 协议，如 <a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=W3org&pver=1.0&ar=specs" target=_blank>World Wide Web Consortium（WWW 协会）网站</a> RFC 2617 规范中的定义所述。由于摘要式身份验证要求 HTTP 1.1 兼容性，所以并非所有浏览器都支持这种方法。如果非 HTTP 1.1 兼容的浏览器从使用摘要式身份验证的服务器请求文件，服务器将请求客户端提供摘要式凭据。非 HTTP 1.1 兼容的客户端将拒绝此请求，因为此客户端不支持摘要式身份验证。</p>
+
+<h3><a name="bdigestRequirements">摘要式身份验证的要求</a></h3>
+在 IIS 服务器上启用摘要式身份验证之前，请确保满足下列所有基本要求。只有域管理员可以验证是否满足域控制器 (DC) 的要求。如果不能确定 DC 是否满足下列要求，请与域管理员联系：
+<ul>
+<li>访问采用摘要式身份验证进行安全保护的资源时，客户端需使用 Internet Explorer 5.0 或更高版本。</li> 
+<li>用户和 IIS 服务器必须是同一个域的成员或被同一个域信任。</li>
+<li>用户必须将有效的 Windows 用户帐户存储在 DC 上的 Active Directory 中。</li>
+<li>域必须具有 Windows 2000 或更高版本的 DC。</li> 
+<li>IIS 服务器必须是 Windows 2000 或更高版本。</li>
+</ul> 
+
+<h3>客户端身份验证过程</h3>
+下列步骤概述如何使用摘要式身份验证对客户端进行身份验证：
+ 
+<img src="SecAuthAD01.gif" align="right" alt="使用摘要式身份验证对客户端进行身份验证。">
+<ol>
+<li type="1">客户端从 IIS 服务器请求文件。</li>
+<li type="1">IIS 服务器拒绝请求并向客户端发送下列信息：</li>
+<ul>
+<li type="1">正在使用摘要式身份验证</li>
+<li type="1">领域名</li>
+</ul>
+<li type="1">Internet Explorer 将提示用户输入凭据（用户名和密码）。然后，Internet Explorer 将凭据与领域名合并，创建 MD5 散列，并将文件请求重新提交给 IIS 服务器，此次将发送 MD5 散列。</li> 
+<li type="1">IIS 服务器接收客户端的散列，并将其发送到域控制器进行验证。</li>
+<li>域控制器将身份验证结果通知 IIS 服务器。</li> 
+<li>如果客户端通过身份验证，IIS 则将请求的文档或数据发送给客户端。</li>
+</ol>
+
+<p><FONT COLOR="#0000ff"><strong>要点</strong></FONT>&nbsp;&nbsp;&nbsp;DC 必须将提交请求的用户密码的明文副本存储在 Active Directory 中，才能完成摘要式身份验证过程。而且由于 DC 将密码的明文副本存储在 Active Directory 中，所以必须保护 Active Directory 的安全，使其免受物理破坏和网络攻击。</p>
+
+<h2><a name="advancedDigest">高级摘要式身份验证</a></h2>
+除用户凭据在域控制器 (DC) 上的存储方式不同之外，高级摘要式身份验证与摘要式身份验证完全相同。高级摘要式身份验证比摘要式身份验证更安全，因为高级摘要式身份验证不仅以 <a href="sec_auth_md5hash.htm" target=new>MD5 散列</a>方式通过网络发送用户凭据，而且以 <a href="sec_auth_md5hash.htm" target=new>MD5 散列</a>（也称为消息摘要）方式将用户凭据存储在 DC 的 Active Directory 中。由于凭据是以 MD5 散列方式存储在 Active Directory 中，因此可以访问 DC 的用户也不可能获得密码。Web 分布式创作与版本管理 (WebDAV) 目录可以使用高级摘要式身份验证，而且高级摘要式身份验证不会替代摘要式身份验证。<p>高级摘要式身份验证不需要安装其他客户端软件，但是它依赖于 HTTP 1.1 协议，如 <a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=W3org&pver=1.0&ar=specs" target=_blank><b>World Wide Web Consortium（WWW 协会）网站</b></a> <B>RFC 2617</B> 规范中的定义所述。因为高级摘要式身份验证依赖于 HTTP 1.1 协议，因此并非所有浏览器都支持这种方法。如果非 HTTP 1.1 兼容的浏览器从使用摘要式身份验证的服务器请求文件，服务器将请求客户端提供摘要式凭据。非 HTTP 1.1 兼容的客户端将拒绝此请求，因为此类客户端不支持摘要式身份验证。
+
+<h3><a name="advanceddigestRequirements">高级摘要式身份验证的要求</a></h3>
+
+在 IIS 服务器上启用高级摘要式身份验证之前，请确保满足下列所有基本要求。只有域管理员可以验证是否满足域控制器 (DC) 的要求。如果不能确定 DC 是否满足下列要求，请与域管理员联系：
+<ul>
+<li>访问采用摘要式身份验证进行安全保护的资源时，客户端需使用 Internet Explorer 5.0 或更高版本。</li> 
+<li>用户和 IIS 服务器必须是同一个域的成员或被同一个域信任。</li>
+<li>用户必须将有效的 Windows 用户帐户存储在 DC 上的 Active Directory 中。</li>
+<li>域必须具有 Windows DC。</li> 
+<li>IIS 服务器必须是 Windows XP。</li> 
+</ul>
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;只有 DC 和 IIS 服务器运行的都是 Windows XP，才可以启用高级摘要式身份验证。如果 DC 或 IIS 服务器之一运行的是 Windows 2000 或更低版本，IIS 将默认使用<a href="#digest">摘要式身份验证</a>，并且不会对此操作发出警告。</p> 
+
+<h3><a name="ClientAuthAD">客户端身份验证过程</a></h3>
+
+下列步骤概述如何使用高级摘要式身份验证对客户端进行身份验证：
+
+
+<p><img src="SecAuthAD01.gif" align="right" alt="使用摘要式身份验证对客户端进行身份验证。"></p>
+
+<ol>
+<li type="1">客户端从 IIS 服务器请求文件。</li>
+
+<li type="1">IIS 服务器拒绝最初的请求，并向客户端发送下列信息：</li>
+<ul>
+<li type="1">正在使用摘要式身份验证</li>
+<li type="1">领域名</li>
+</ul>
+
+<li type="1">Internet Explorer 将提示用户输入凭据（用户名和密码）。然后，Internet Explorer 将凭据与领域名合并，创建 MD5 散列，并将文件请求重新提交给 IIS 服务器，此次还将在 HTTP 请求头中发送 MD5 散列。</li> 
+
+<li type="1">IIS 服务器接收客户端的散列，并将其发送到域控制器进行验证。</li>
+
+<li>域控制器将客户端的散列与 Active Directory 中存储的副本进行比较。如果两个散列值相匹配，域控制器将通知 IIS 服务器客户端已通过身份验证。</li> 
+
+<li>IIS 服务器将请求的文件发送给客户端。</li>
+</ol>
+
+<p><b>注意</b>&nbsp;&nbsp;&nbsp;在步骤 2 中，IIS 服务器向客户端 (Internet Explorer) 报告“正在使用摘要式身份验证”，而不是“正在使用高级摘要式身份验证”，这是因为对于摘要式身份验证和高级摘要式身份验证而言，IIS 服务器和客户端之间使用相同的摘要式身份验证算法。
+<ul>
+<li type="1">有关配置高级摘要式身份验证的信息，请参阅<a href="iiauths.htm#enableadvanceddigest">配置高级摘要式身份验证</A>。</li>
+<li type="1">有关摘要式身份验证的详细信息，请参阅<a href="#digest">摘要式身份验证</a>和 <a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=W3org&pver=1.0&ar=specs" target=_blank><b>World Wide Web Consortium（WWW 协会）网站</b></a>中定义的 <B>RFC 2617</B> 规范。</li>
+<li type="1">有关 Active Directory 或域控制器的详细信息，请参阅 Windows XP 联机文档。</li>
+</ul>
+
+
+<h2><a name="challenge">集成 Windows 身份验证</a></h2>
+
+<p>集成 Windows 身份验证（以前称为 NTLM 或 Windows NT 质询/响应身份验证）是一种安全的身份验证形式，因为用户名和密码在通过网络发送之前就进行了散列处理。启用集成 Windows 身份验证时，用户浏览器通过与 Web 服务器进行加密信息交换（包括散列算法）来证明自己知晓密码。</p>
+
+<p>集成 Windows 身份验证使用 Kerberos&nbsp;v5 身份验证和 NTLM 身份验证。如果 Windows 2000 或更高版本的域控制器上安装了 Active Directory 服务，而且用户浏览器支持 Kerberos&nbsp;v5 身份验证协议，则使用 Kerberos&nbsp;v5 身份验证；否则，将使用 NTLM 身份验证。</p>
+
+<p>Kerberos v5 身份验证协议是 Windows 2000 分布式服务架构的一个特性。为了成功进行 Kerberos v5 身份验证，客户端和服务器都必须与密钥发行中心 (KDC) 建立可信的连接，而且与目录服务兼容。有关 Kerberos 和 NTLM 的详细信息，请参阅 Windows XP 联机文档。</p>
+
+
+<h3>集成 Windows 身份验证过程</h3>
+下列步骤概述如何使用集成 Windows 身份验证对客户端进行验证：
+
+<ol>
+	<li>与基本身份验证不同，集成 Windows 身份验证并不会先提示用户输入用户名和密码。可将客户端计算机上的当前 Windows 用户信息用于集成 Windows 身份验证。</li>
+
+<P><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;如有必要，可将 Internet Explorer 4.0 及其更高版本配置为先提示输入用户信息。详细信息，请参阅 Internet Explorer 文档。</P>
+
+	<li>如果最初的身份验证信息交换未能识别用户，浏览器将提示用户输入 Windows 用户帐户的用户名和密码，并使用集成 Windows 身份验证进行处理。</li>
+	<li>Internet Explorer 将继续提示用户，直到用户输入了有效的用户名和密码，或者关闭了提示对话框。</li>
+</ol>
+
+<p>集成 Windows 身份验证虽然非常安全，但存在下列局限性：</p>
+<OL>
+<LI>只有 Microsoft Internet Explorer 2.0 及更高版本支持此身份验证方法。</li>
+<LI>通过 HTTP 代理连接时，无法使用集成 Windows 身份验证。</li>
+</OL>
+<p>因此，集成 Windows 身份验证最适用于 Intranet 环境，其中的用户和 Web 服务器计算机都在同一个域中，而且管理员可以确保每个用户都使用 Microsoft Internet Explorer 2.0 或更高版本。</p>
+
+
+<h2><a name="ssl">证书身份验证</a></h2>
+
+<p>还可以使用 Web 服务器的安全套接字层 (SSL) 安全功能进行两种类型的身份验证。可以使用“服务器证书”，使用户在传输个人信息（如信用卡号码）之前对网站进行身份验证。同样，可以使用“客户证书”对请求网站上信息的用户进行身份验证。通过检查登录过程中用户 Web 浏览器提交的加密数字标识的内容，可进行 SSL 身份验证。（用户从一个互相信任的第三方机构获取客户证书。）服务器证书通常包含有关用户所在公司以及证书颁发机构的信息。客户证书通常包含有关用户和证书颁发机构的标识信息。详细信息，请参阅<a href="iiabcsc.htm">关于证书</a>。</p>
+
+<h3><a name="H4_37683048">客户证书映射</a></h3>
+<p>因为访问文件等资源需要 Windows 用户帐户，所以可以将客户证书关联或“映射”到 Web 服务器上的 Windows 用户帐户。创建并启用证书映射后，每次用户使用客户证书登录时，Web 服务器都自动将此用户与相应的 Windows 用户帐户关联。这样，可以自动对使用客户证书登录的用户进行身份验证，而不必请求使用基本、摘要式或集成 Windows 等身份验证方法。可以将一个客户证书映射到一个 Windows 用户帐户，也可以将多个客户证书映射到一个帐户。例如，如果服务器上有几个不同的部门或公司，而且每个部门或公司都有自己的网站，则可以使用多对一映射将每个部门或公司的所有客户证书映射到它们各自的网站。这样，每个站点仅允许自己的客户访问。详细信息，请参阅<a href="iimapsc.htm">将客户证书映射到用户帐户</a>。</p>
+
+<h2><a name="ftp_anon">FTP 身份验证</a></h2>
+
+<H3>匿名 FTP 身份验证</H3>
+
+<P>可以配置 FTP 服务器以允许匿名访问 FTP 资源。如果为某一资源选择了匿名 FTP 身份验证，那么对此资源的所有请求都不会提示用户输入用户名或密码。这是可以做到的，因为 IIS 自动创建一个称为 IUSR_<em>computername</em> 的 Windows 用户帐户（其中 <em>computername</em> 是运行 IIS 的服务器的名称），这一点与基于 Web 的匿名身份验证非常相似。如果启用了匿名 FTP 身份验证，则即使启用了基本 FTP 身份验证，IIS 也将始终首先尝试使用匿名 FTP 身份验证进行身份验证。详细信息，请参阅<A HREF="#Anonymous">匿名身份验证</A>。</P>
+
+
+<H3><a name="ftp_nonanon">基本 FTP 身份验证</a></H3>
+<p>要通过基本 FTP 身份验证与 Web 服务器建立 FTP 连接，用户必须使用与一个有效的 Windows 用户帐户对应的用户名和密码登录。如果 FTP 服务器无法验证用户身份，服务器将返回错误消息。FTP 身份验证不太安全，因为通过网络传输的用户名及密码是未加密的。详细信息，请参阅<a href="iiacnsc.htm">关于访问控制</a>。</p>
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

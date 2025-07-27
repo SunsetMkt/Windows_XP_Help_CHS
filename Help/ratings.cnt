@@ -1,0 +1,6 @@
+:Base ratings.hlp>proc4
+:Title 分级审查帮助
+2 什么是分级审查？=rating_overview
+2 启用分级审查并设置限制内容=rating_setup
+2 允许他人查看受限制或未分级的内容=rating_override
+2 指定他人始终能够或不能查看的网站=Approved_Sites

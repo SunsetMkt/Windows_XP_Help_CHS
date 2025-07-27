@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>Programmatic Administration Examples</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT><META NAME="DESCRIPTION" CONTENT="Internet Information Services reference information">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="EN-US">
+<META NAME="MS-IT-LOC" Content="Internet Information Services"> 
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<H1><A NAME="_programmatic_administration_examples"></A><SUP></SUP>Programmatic Administration Examples</H1>
+
+<P>The samples presented here demonstrate how you can create scripts that use the ADSI interfaces provided by IIS to administer the IIS installation.</P>
+
+<P>Scripting languages, such as Microsoft<sup>&reg;</sup> Visual Basic<sup>&reg;</sup> Scripting Edition (VBScript) and JScript<sup>&reg;</sup>, can be used to automate time-consuming administrative tasks. This section provides some simple example scripts designed to run on your local machine, written in VBScript and JScript, and executed by the Windows Script Host (WSH). The samples provided here illustrate basic techniques for accomplishing common tasks.
+
+<UL type=disc>
+	<LI><A HREF="/iishelp/iis/htm/asp/asps716a.htm">Logging Module Enumerator</A></li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps90qh.htm">Metabase Backup Utility</A></li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps4m7t.htm">Metabase Backup Restore Utility</A></li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps2242.htm">Web Server Creator</A></li>
+</UL>
+
+<P>The general format for invoking a WSH script is either Cscript.exe <I>ScriptName</I> to execute the script at the command line, or Wscript.exe <I>ScriptName</I> to execute the script in a window. You can also create a batch file that will execute Cscript.exe or Wscript.exe and your script. For more information about WSH, please refer to the <B>Windows Script Host</B> documentation.</P>
+
+<P><span class=le><B>Important&nbsp;&nbsp;&nbsp;</B></span>WSH must be locally installed to execute these sample scripts. In addition, most of these scripts access functionality provided by IIS, and therefore require that IIS and WSH be installed locally.</P>
+<hr class="iis" size="1">
+<p align="center"><em><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. All rights reserved.</a></em></p>
+</BODY>
+</HTML>

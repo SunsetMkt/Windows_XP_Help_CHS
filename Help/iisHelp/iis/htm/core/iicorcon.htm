@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0041)file://\\catbox\iisuevss\temp\iicorcon.htm -->
+<HTML dir=ltr><HEAD><TITLE>管理与远程共享的连接</TITLE>
+<SCRIPT language=JavaScript>
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</SCRIPT>
+
+<SCRIPT language=VBScript>
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META 
+content="讨论如何管理 IIS 与运行 Windows XP 的计算机上的远程共享的连接，以确保 ASP 模板缓存文件中的数据始终是新的。" 
+name=DESCRIPTION>
+<META content="text/html; charset=gb2312" http-equiv=Content-Type>
+<META 
+content='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))' 
+http-equiv=PICS-Label>
+<META content=ZH-CN name=MS.LOCALE>
+<META content="Internet 信息服务" name=MS-IT-LOC>
+<META content="Microsoft FrontPage 4.0" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff text=#000000><FONT face=宋体>
+
+<H1><A name=H1_448394830></A>管理与远程共享的连接</H1>
+
+<P>如果网站将虚拟目录与运行 Windows 2000 或更高版本的远程计算机上的共享相连接，IIS 将通过服务器信息块 (SMB) 工作上下文检测远程计算机上的目录更改通知。IIS 侦听更改通知以清除 ASP 模板缓存和 IIS 静态文件缓存中的文件，并用远程共享上的已更改文件中的新数据替换这些文件。如果这些缓存没有打开，IIS 必须从远程共享检索内容。而对于 ASP 网页，则需要针对每个用户请求编译内容中包含的所有脚本。这些进程占用很多资源。
+
+<p>默认情况下，Windows XP 接受对 50 个 SMB 工作上下文的请求，但是最大限度只能建立 2048 个 SMB 工作上下文。因为远程计算机限制它所接受的 SMB 工作上下文的数量，因此自动更新缓存的文件将会失败。下列错误表示 SMB 调用失败：
+<ul>
+<li>RPC 1792 - 远程过程失败，未执行。
+<li>Netlogon 5719 - 找不到域控制器。</ul>
+
+<p>当 SMB 调用失败时，IIS 继续为 ASP 模板缓存中未更改的过期 ASP 脚本以及 IIS 静态文件缓存中的过期静态页提供服务。这种情况下，刷新缓存需要重新启动 IIS。可以用下列方法管理与远程共享连接有关的问题：</P>
+<ul>
+  <li><A href="#structuring">构建虚拟目录</a>
+  <li><A href="#moving">移动内容</a>
+  <li><A href="#raising">提高远程服务器上的连接限制</a>
+  <li><A href="#turning">关闭 ASP 模板缓存</a></ul>
+
+<h2><a name="structuring">构建虚拟目录</a></h2>
+<p>如果需要创建几千个从一台远程计算机上获取数据的虚拟目录，请建立一个深的虚拟目录树，而不是宽的虚拟目录树。IIS 可以监视高层虚拟目录下的子目录中的更改。例如，如果需要 2500 个虚拟目录中的数据，而这些目录都访问一个远程服务器，则可以创建 25 个顶层虚拟目录，每个目录下再创建 100 个子目录。Windows XP 的默认远程连接限制为每个客户端最多 50 个远程连接，而以这种方式创建出来的虚拟目录树的远程连接数要小于此值。
+</p>
+<h2><a name="moving">移动内容</a>  </h2>
+<p>可以用下列方法解决动态数据和静态文件数据的连接限制问题：</p>
+<ul>
+<li>将内容分配给更多的远程服务器，或
+<li>将部分数据或全部数据移到本地服务器。</ul>
+<p>在两台或多台远程服务器之间分配内容可以解决此问题，而不必重新构建网站的虚拟目录。例如，假设要将网站上的 3000 个虚拟目录连接到一台远程服务器，如果将一半内容移到第二台服务器，就可以将半数虚拟目录连接到第二台远程服务器，使每台远程服务器的连接数降为 1500。</p>
+
+<p>将部分内容存到本地也可以获得类似效果，即减少所需的过程调用总数。通过将所有内容移到或复制到本地服务器，可以消除与“管理与远程共享的连接”有关的问题，并且不必侦听 UNC 目录更改。</p>
+
+<h2><a name="raising"></a>提高远程服务器上的连接限制</h2>
+<p>还可以将远程计算机上的连接限制提高到每个客户端最多 2048 个连接来解决这一问题。这样，网站就可以与服务器建立更多的并发连接。</p>
+<p>若要将连接数设置为最大，服务器需要在注册表中设置两个注册表项：</p>
+<UL>
+  <li>使用下列注册表路径：
+  <br><br> HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters<br><br>
+
+  <LI>将 MaxMpxCt 设置为 2048。此注册表项指定服务器可以接受的、每个客户端的最大建议并发请求数。当 IIS 从远程服务器请求数据时，它便作为一个客户端。<LI>将 MaxWorkItems 设置为 8192。此注册表项指定服务器可以分配的最大缓冲区数（也称作工作项目）。达到此数目时，服务器必须启动流控制，这会降低性能。MaxWorkItems 至少应该是 MaxMpxCt 设置的四倍。</LI></UL>
+<p>有关更改注册表的详细信息，请参阅“在注册表编辑器中添加和删除信息”以及 RegEdt32.exe 帮助主题中的“编辑注册表数据”。</p>
+
+<H2><a name="turning">关闭 ASP 模板缓存</a></h2>
+<P>如果无法使用上述某个方法有效地解决连接限制问题，可以关闭 ASP 模板缓存、IIS 静态文件缓存，或同时关闭这两个缓存，以减少或消除连接远程服务器以侦听更改的需要。但是，这会降低向客户端传送页面的速度，使性能低得让人无法接受。</P>
+
+<p><b>关闭 ASP 模板缓存：</b></P>
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站或独立应用程序的开始位置目录。
+<li>打开此目录的属性页，然后单击“应用程序设置”部分的“配置”按钮。如果“配置”按钮是非活动的，则此目录或开始位置不包含独立应用程序。可以单击“创建”按钮创建一个新应用程序。</p>
+
+<li>单击“缓存选项”选项卡。如果“缓存选项”选项卡不可用，请确认“应用程序设置”部分的“应用程序保护”设置为“高（独立）”。将“应用程序保护”改为“高（独立）”后，必须单击“应用”，更改才会生效。</p>
+
+<li>在“ASP 文件缓存”下面，选择“不缓存 ASP 文件”。
+<li>单击“确定”。</li>
+<li>重新启动 IIS。</li></ol>
+
+<p><b>关闭 IIS 文件缓存：</b></p>
+<ol>
+  <li>   使用下列注册表路径：<br><br> HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\InetInfo\Parameters<br><br>
+
+  <li>将 DisableMemoryCache 设置为 1。
+  <li>重新启动 IIS。</li></ol>
+
+  <hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+  
+</font></body></html>

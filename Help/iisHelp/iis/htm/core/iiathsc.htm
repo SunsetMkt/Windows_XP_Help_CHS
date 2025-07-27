@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>身份验证</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="导航页包含与身份验证有关的主题。身份验证是标识试图连接到 Web 服务器内容的用户身份的过程，通常是要求用户提供用户名和密码。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="Authentication">身份验证</a></h1>
+
+<p>可以配置 IIS 在允许用户与服务器建立网络连接之前，对其进行身份验证，或确定用户的 Windows 用户帐户标识。但是，只有禁用了匿名访问，或者 NTFS 权限要求用户通过有效的 Windows 用户帐户的用户名和密码证明自己的身份时，才可以对用户进行身份验证。</p>
+
+<p>IIS 提供了多种身份验证选项，您可以选择既能满足安全需求，又符合用户的 Web 浏览器的功能的身份验证方法。</p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iiabasc.htm">关于身份验证</a>：与身份验证有关的一些概念性信息。</li>
+<li><a href="iiauths.htm">启用和配置身份验证</a>：启用和配置基本、摘要式和集成 Windows 身份验证方法的过程。</li>			
+<li><a href="iidlgsc.htm">设置默认登录域</a>：配置基本身份验证登录域的过程。</li>
+<li><a href="iiftzsc.htm">在 IIS 中使用 Fortezza 安全性</a>：在 IIS 中配置 Fortezza 安全功能的过程。</li>
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>控制用户访问 Web 服务器文件和目录的方法；请参阅<a href="iiaclsc.htm">访问控制</a>。</li>
+<li>使用 SSL 或证书；请参阅<a href="iicerts.htm">证书</a>。</li>
+</ul>
+
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>Internet 信息服务管理单元</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关用于管理服务器的 Internet 信息服务管理单元工具的概念性信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="Options">Internet 信息服务管理单元</a></h1>
+
+<p>Internet 信息服务管理单元提供了一些服务器管理选项，用于控制网站或 FTP 站点的内容以及对这些站点的访问。例如，如果您是一位开发人员，在将站点上载到公司 Intranet 或 Internet 之前要对站点进行测试，则可以使用此工具测试您的设置并查看这些设置在最终服务器上的精确效果。在以前版本的 IIS 中，此工具称为“Internet 服务管理器”。Internet 信息服务管理单元包含下列功能：</p>
+
+<ul>
+<li>服务器的一些附加设置，如管理 FTP 站点、隔离应用程序、映射 MIME 类型或指定其他脚本引擎等。</li>
+<li>新建虚拟目录的向导。</li>
+<li>管理 Internet 信息服务网络安装的能力。</li>
+</ul>
+
+<H3>打开 Internet 信息服务管理单元</H3>
+
+<strong>第一种方法</strong>
+<ol>
+<li>从“开始”菜单，选择“设置”，然后选择“控制面板”。</li>
+<li>打开“管理工具”。 </li>
+<li>打开“Internet 服务管理器”。</li>
+</ol>
+
+<strong>第二种方法</strong>
+<ol>
+<li>在桌面上，用鼠标右键单击“我的电脑”，再单击“管理”。</li>
+<li>在“服务和应用程序”下面，选择“Internet 信息服务”。</li>
+</ol>
+
+<p>除此之外，还可以创建到 %SystemRoot%\System32\inetsrv\inetmgr.exe 的快捷方式。从“开始”菜单启动 Windows 2000 帮助，然后在其中搜索“添加快捷方式”获取有关创建快捷方式的指导。</p>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;Internet 信息服务管理单元是 IIS&nbsp;5.1 的管理工具，与 Windows&nbsp;2000 的其他管理功能集成在一起。在以前的版本中，此工具称为“Internet 服务管理器”。 </p>
+
+<p>有关此选项的详细信息，请参阅<a href="iinewtp2.htm">管理</a>。</p>
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

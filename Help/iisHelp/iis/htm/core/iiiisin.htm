@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>安装 IIS</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="安装 IIS、添加可选组件和卸载可选组件的步骤。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+
+<h1><a name="installing">安装 IIS</a></h1>
+
+
+
+
+<p>默认情况下，不会在 Windows XP Professional 上安装 Internet 信息服务。仅当以前版本的 Windows 上安装了 PWS 时，才会默认安装 IIS&nbsp;5.1。可以通过“控制面板”中的“添加或删除程序”应用程序删除 IIS 或选择附加组件。若要开始使用 IIS，请参阅<a href="iitstart.htm">使用 IIS 快速建立站点</a>和 <a href="iiabuti.htm">Internet 信息服务管理单元</a>。</p>
+
+<p>
+<big>安装 IIS、添加组件或删除组件</big>
+</p>
+
+<p>
+有关 IIS 可选组件的详细说明，请参阅<a href="gs_opcomp.htm">安装 IIS 可选组件</a>。
+</p>
+<ol>
+
+<li>单击“开始”，单击“控制面板”，双击“添加或删除程序”启动“添加或删除程序”应用程序。</li>
+<li>在“添加或删除程序”对话框左侧的列中，单击“添加/删除 Windows 组件”。</li>
+<li>出现“Windows 组件向导”后，单击“下一步”。
+<li>在“Windows 组件”列表中选中“Internet 信息服务”。</li>
+<li>单击“下一步”，然后根据指导进行操作。</li>
+</ol>
+
+
+<p><big>卸载后保留的目录</big></p>
+
+<p>卸载 IIS 之后，下列包含用户信息的目录仍将保留在计算机上：</p>
+
+<ul>
+<li>\Inetpub</li>
+<li>\<em>systemroot</em>\Help\IisHelp</li>
+<li>\<em>systemroot</em>\System32\Inetsrv</li>
+</ul>
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li>有关相关主题（如 IIS 软件清单、安全清单或疑难解答）的详细信息，请单击“开始”菜单中的“帮助和支持”查看 Windows 文档。</li>
+<li>要查看有关 IIS 的常见问题解答，请参阅<a href="iifaq.htm">常见问题</A>。</li>
+
+</ul>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

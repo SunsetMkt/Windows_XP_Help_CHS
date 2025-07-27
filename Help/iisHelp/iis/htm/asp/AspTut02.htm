@@ -1,0 +1,447 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML dir=ltr><HEAD>
+<!--Helium-sbrk--><TITLE>单元 2：使用 COM 组件</TITLE>
+<SCRIPT language=JavaScript>
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</SCRIPT>
+
+<SCRIPT language=VBScript>
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//-->
+</SCRIPT>
+
+<META 
+content="这是一个 Active Server Pages (ASP) 教程，您可以在此学习如何使用 COM 组件来扩充脚本功能。在本单元中，您将使用包含在 ASP 中的 COM 组件来激活一个示例网站并查询数据库。" 
+name=DESCRIPTION>
+<META content="text/html; charset=gb2312" http-equiv=Content-Type>
+<META content="Microsoft FrontPage 4.0" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff text=#000000><FONT face=宋体>
+<H1><A name=module1>单元 2：在 ASP 网页中使用 COM 组件</A></H1>
+<P>在 ASP 网页中使用 Microsoft&reg; 组件对象模型 (COM) 组件可以极大地扩展 ASP 的已有功能。COM 组件是已编译的代码段，可以从 ASP 网页进行调用。COM 组件是安全、简洁的对象，可以复用，它被编译为 DLL，可以用 Microsoft
+Visual C++&reg;、Microsoft Visual Basic&reg; 或其他任何支持 COM 的语言编写。例如，Microsoft
+ActiveX&reg; 数据对象 (ADO)（本教程的单元 1 中已经使用过）提供的方法和属性可以高效地查询数据库。通过使用 ADO，您不必自己编写复杂的数据访问代码，因为 ADO 对象是使用 COM 组件建立的。 </P>
+<P>在本单元中，您可以同时使用 COM 组件和 ASP，此外，您也可以编写自己的组件。本单元将展示如何开发能够为电子商务提供有用服务的 ASP 网页，其中包括下列教程：</P>
+<UL>
+  <LI><A 
+  href="#rotating">第 1 课：轮换广告</A>&nbsp;&nbsp;&nbsp;在网页上轮换广告，记录用户数据，并在用户单击广告时重定向用户。 
+  <LI><A 
+  href="#counting">第 2 课：统计网页点击次数</A>&nbsp;&nbsp;&nbsp;跟踪用户请求网页的次数。 
+  <LI><A 
+  href="#creating">第 3 课：创建 Visual Basic COM 对象</A>&nbsp;&nbsp;&nbsp;使用 Microsoft Visual Basic 创建自己的 ActiveX 对象。 
+  <LI><A 
+  href="#creatingj">第 4 课：创建 Java COM 对象</A>&nbsp;&nbsp;&nbsp;使用 Microsoft Visual J++&reg; 创建自己的 Java 对象。 </LI></UL><BR>
+<H2><A name=rotating>第 1 课：轮换广告</A></H2>
+<P>广告是网站的重要业务。本教程说明了如何使用与 IIS 一起安装的 Ad Rotator 组件在网页上轮换广告。Ad Rotator 组件在每次用户加载或刷新网页时为网页选择一个广告。另外，如果您需要更改广告，则只需要在重定向和轮换计划文件中更改此广告即可，而不必修改包含此广告的所有 ASP 文件。如果此广告出现在网站中的许多网页上，这样就可以节省开发时间。</P>
+<P>建立 Ad Rotator 组件需要两个文件：重定向文件（包含指向广告的 URL 链接）以及轮换计划文件（包含显示数据）。通过建立这两个文件，网站上的任何 ASP 网页都可调用 Ad Rotator 组件。 </P>
+<P>在本教程中，您将执行下列任务：</P>
+<UL>
+  <LI><b>示例 1</b>&nbsp;&nbsp; 创建一个 Ad Rotator 轮换计划文件，此文件在调用它的任何网页上创建一个广告图像链接。<LI><b>示例 2</b>&nbsp;&nbsp; 创建一个 Ad Rotator 重定向文件，此文件指定公共的广告显示数据以及每个广告的特定信息。
+  <LI><b>示例 3</b>&nbsp;&nbsp; 创建一个包含文件以保存 Ad Rotator 调用代码。 
+  <LI><b>示例 4</b>&nbsp;&nbsp; 创建一个调用 Ad Rotator 组件的 ASP 网页来显示和轮换广告，从而测试 Ad Rotator。本示例要求首先完成示例 1、2、3。</LI></UL>
+<P>
+<H3>示例 1：创建一个 Ad Rotator 轮换计划文件</H3>
+<P>轮换计划文件用于为要显示的广告编录信息，这些信息包括单击广告后的重定向信息、要显示的广告的大小、要显示的图象、广告的注释，以及表明特定广告被选中的频率的数字。在 ASP 网页中调用 Ad Rotator 组件的方法时，组件会使用此文件来选择要显示的广告。 </P>
+<P>轮换计划文件用星号 (*) 分成两节。第一节提供了所有广告的公共信息，第二节则列出了每个广告的特定数据。若要测试轮换计划文件，您可以使用 Microsoft.com 上的一些图像作为广告图像。下列列表概述了轮换计划文件的结构： </P>
+<h5>第 1 节</h5>
+<UL>
+  <LI><B>Redirection</B>&nbsp;&nbsp;&nbsp;URL 形式的、可在显示广告前执行的 ASP 文件的路径和名称。此文件可用于记录单击广告的用户的有关信息。您可以记录客户端 IP 地址、客户端看到的广告所在的网页、广告点击的频率等信息。如果没有任何 URL 与第 2 节中的广告相关联，ASP 文件也可以处理这种情况。在按广告点击次数向广告客户收费时，最好能够向客户证明这些点击不是同一位用户反复点击“刷新”的结果。 
+  <LI><B>Width</B>&nbsp;&nbsp;&nbsp;每个广告图像的宽度，以像素为单位。默认值为 440。
+  <LI><B>Height</B>&nbsp;&nbsp;&nbsp;每个广告图像的高度，以像素为单位。 默认值为 60。    
+  <LI><B>Border</B>&nbsp;&nbsp;&nbsp;环绕在每个广告图像周围的边框宽度。默认值为 1。 
+  <LI><B>星号 (*)</B>&nbsp;&nbsp;&nbsp;将第 1 节与第 2 节分开。此字符必须独立成行。</LI></UL>
+<h5>第 2 节</h5>
+<P>您需要为每个广告提供下列信息： 
+<UL>
+  <LI><B>图像 URL</B>&nbsp;&nbsp;&nbsp;广告的图像文件的虚拟路径和文件名。
+  <LI><B>广告客户主页的 URL</B>&nbsp;&nbsp;&nbsp;选择此链接时跳转到的 URL。如果没有链接，请使用连字符 (-)。 
+  <LI><B>文本</B>&nbsp;&nbsp;&nbsp;浏览器不支持图片时显示的文字。 
+
+  <LI><B>印记</B>&nbsp;&nbsp;&nbsp;一个整数，表示 Ad Rotator 组件选择广告时选中此广告的相对几率。例如，如果列出两个广告，印记值为 3 的广告被选中的几率为 30%，而印记值为 7 的广告被选中的几率为 70%。在本示例中，Ad Rotator 组件选中 Microsoft Windows&reg; 广告的几率为 2/5，而选中 Microsoft Office 广告的几率为 3/5。 </LI></UL>
+<P>将下列代码复制并粘贴到文本编辑器中，然后将此文件保存在 <I>x</I>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为 <B>MyAdRot.txt</B>。
+</P><CODE>
+<P>&nbsp; REDIRECT AdRotRedirect.asp <BR>&nbsp; WIDTH 250 <BR>&nbsp; HEIGHT 60 
+<BR>&nbsp; BORDER 0 <BR>&nbsp; * <BR>&nbsp; http://www.microsoft.com/windows/images/bnrWinfam.gif <BR>&nbsp; http://www.microsoft.com/windows <BR>&nbsp; Microsoft Windows <BR>&nbsp; 2 
+<BR>&nbsp; http://www.microsoft.com/office/images/office_logo.gif <BR>&nbsp; 
+http://www.microsoft.com/office <BR>&nbsp; Office 2000 <BR>&nbsp; 3 </P>
+<P><!>&nbsp;<!> </P></CODE>
+<h3>示例 2：创建一个 Ad Rotator 重定向文件 
+</h3>
+<P> 用户单击广告时，用 ASP 编写的 Ad Rotator 重定向文件可以在显示广告之前，捕获某些信息，并将这些信息写入一个文件。 
+</P>
+<P> 要使其生效，<I>x</I>:\InetPub\Wwwroot\Tutorial 文件夹必须为 IUSR_<I>ComputerName</I> 和 IWAM_<I>ComputerName</I> 
+帐号授予读/写的访问权限。您也可以使用本教程<A href="ASPTut01.htm#creating">单元 1 第 3 课</a>中的代码将此信息写入一个 Microsoft Access 数据库。 
+</P>
+<P>将下列代码复制并粘贴到文本编辑器中，然后将此文件保存在 <I>x</I>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为 <b>AdRotRedirect.asp</b>。 
+</P><CODE>
+<P>&nbsp; &lt;%@ Language=VBScript %&gt; <BR><BR>&nbsp; &lt;html&gt; <BR>&nbsp; 
+&lt;head&gt; <BR>&nbsp; &lt;title&gt;AdRotRedirect file&lt;/title&gt; <BR>&nbsp; 
+&lt;/head&gt; <BR>&nbsp; &lt;body&gt; <BR><BR>&nbsp; &lt;% <BR>&nbsp;&nbsp; 
+'创建一些变量。 <BR>&nbsp;&nbsp; dim strLogFile <BR><BR>&nbsp;&nbsp; 
+'获取 Web 目录的物理路径，这样我们就可以知道此路径确实存在。 
+<BR>&nbsp;&nbsp; 'ASP Server 对象有许多有用的方法。 <BR>&nbsp;&nbsp; strLogFile = Server.MapPath(".")&amp; 
+"\AdRotLog.txt" <BR><BR>&nbsp;&nbsp; '设置一些用于处理文件的常量。 
+<BR>&nbsp;&nbsp; Const cForAppending = 8 <BR>&nbsp;&nbsp; Const 
+cTristateUseDefault = -2 <BR><BR>&nbsp;&nbsp; '创建一个 FileSystemObject 对象，
+<BR>&nbsp;&nbsp; '此对象使您能够对系统中的文件和文件夹进行访问。 
+<BR>&nbsp;&nbsp; Set fsoObject = 
+Server.CreateObject("Scripting.FileSystemObject") <BR><BR>&nbsp;&nbsp; '打开指向此文件的句柄。 <BR>&nbsp;&nbsp; 'True 表示如果此文件不存在，则创建此文件。 <BR>&nbsp;&nbsp; Set tsObject = 
+fsoObject.OpenTextFile(strLogFile, cForAppending, True) <BR><BR>&nbsp;&nbsp; 
+'记录刚刚单击广告的用户的数据。 
+<BR>&nbsp;&nbsp; '我们已经使用过 ASP Request 对象的 Write 方法。 
+<BR>&nbsp;&nbsp; 'ASP Request 对象的 ServerVariables 集合可以保存&nbsp; <BR>&nbsp;&nbsp; '向 Web 服务器发出的每个请求的大量有关数据。 <BR>&nbsp;&nbsp; 
+tsObject.WriteLine "--------------------" <BR>&nbsp;&nbsp; tsObject.WriteLine 
+Date &amp; ", " &amp; Time <BR>&nbsp;&nbsp; tsObject.WriteLine 
+Request.ServerVariables("LOGON_USER") <BR>&nbsp;&nbsp; tsObject.WriteLine 
+Request.ServerVariables("REMOTE_ADDR") <BR>&nbsp;&nbsp; tsObject.WriteLine 
+Request.QueryString("url") <BR>&nbsp;&nbsp; tsObject.WriteLine 
+Request.ServerVariables("HTTP_REFERER") <BR>&nbsp;&nbsp; tsObject.WriteLine 
+Request.ServerVariables("HTTP_USER_AGENT") <BR>&nbsp;&nbsp; tsObject.Close 
+<BR><BR>&nbsp;&nbsp; '使用 ASP Response 对象的 Redirect 方法<BR>&nbsp;&nbsp; '重定向到广告客户的网站。 <BR>&nbsp;&nbsp; 'AdRotator 组件调用 AdRotRedirect.asp 时，&nbsp; <BR>&nbsp;&nbsp; '会自动将广告客户的 URL 传入到 QueryString 中。 
+<BR>&nbsp;&nbsp; Response.Redirect Request.QueryString("url") <BR>&nbsp; %&gt; 
+<BR><BR>&nbsp; &lt;/body&gt; <BR>&nbsp; &lt;/html&gt; </P></CODE>
+<P><!>&nbsp;<!> 
+</P>
+<h3>示例 3：创建一个 Ad Rotator 包含文件
+</h3>
+<P>包含文件可以存储那些要用于多个 ASP 或 HTML 文件的代码。将 Ad Rotator 代码放入包含文件中的一个简单函数将非常有用。利用 Ad Rotator 包含文件，您在希望显示一个广告时，只需要从任何 ASP 或 HTML 文件进行一次函数调用即可。您也可以将包含文件中的代码放入每一个要显示广告的 ASP 文件中。但是，这种情况下，如果需要修改此代码，就必须修改每一个 ASP 文件，而不是仅仅在一个包含文件中进行修改。 
+</P>
+<P>在本示例中，您将创建一个 Ad Rotator 包含文件，其中包含一个函数，名为 <b>GetAd</b>。此函数随机选择将显示在 ASP 网页上的广告。 
+</P>
+<P>将下列代码复制并粘贴到文本编辑器中，然后将此文件保存在 <I>x</I>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为 <b>AdRotatorLogic.inc</b>。 
+</P><CODE>
+<P>&nbsp; &lt;% <BR>&nbsp;&nbsp; Function GetAd() 
+<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp; dim objLoad <BR><BR>&nbsp;&nbsp;&nbsp;&nbsp; 
+'创建一个 AdRotator 组件的实例。 <BR>&nbsp;&nbsp;&nbsp;&nbsp; Set 
+objLoad = Server.CreateObject("MSWC.AdRotator") <BR><BR>&nbsp;&nbsp;&nbsp;&nbsp; 
+'设置 TargetFrame 属性（如果有）。如果网页使用框架，
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; '将在这个框架中打开此 URL。 <BR>&nbsp;&nbsp;&nbsp;&nbsp; '如果 HTML 网页没有找到这个 TARGET 名称，<BR>&nbsp;&nbsp;&nbsp;&nbsp; '则将在新窗口中打开此 URL。 <BR>&nbsp;&nbsp;&nbsp;&nbsp; objLoad.TargetFrame = "TARGET=new" 
+<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp; '设置一个其他的 AdRotator 属性。 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; objLoad.Border = 1 <BR><BR>&nbsp;&nbsp;&nbsp;&nbsp; 
+'从文本文件获取随机广告。 <BR>&nbsp;&nbsp;&nbsp;&nbsp; 
+GetAd = objLoad.GetAdvertisement("MyAdRot.txt") <BR><BR>&nbsp;&nbsp; End 
+Function <BR>&nbsp; %&gt; </P>
+<P><!>&nbsp;<!> </P></CODE>
+<H3>示例 4：测试 Ad Rotator</H3>
+<P>若要测试建立在 Ad Rotator 组件基础之上的应用程序，您需要一个 ASP 网页用来调用所创建的 Ad Rotator 包含文件中的函数。 
+</P>
+<P>将下列代码复制并粘贴到文本编辑器中，然后将此文件保存在 <I>x</I>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为 <b>DisplayAds.asp</b>。通过在浏览器地址栏中键入 <B>http://localhost/Tutorial/DisplayAds.asp</B>，可以在浏览器中查看此示例的效果。</P><CODE>
+<P>&nbsp; &lt;%@ Language=VBScript %&gt; <BR><BR>&nbsp; &lt;html&gt; <BR>&nbsp; 
+&lt;head&gt; <BR>&nbsp; &lt;title&gt;显示一个广告&lt;/title&gt; 
+<BR>&nbsp; &lt;/head&gt; <BR>&nbsp; &lt;body&gt; <BR><BR>&nbsp; &lt;font 
+face="MS Gothic"&gt; <BR>&nbsp; &lt;h2&gt;显示一个广告&lt;/h2&gt; 
+<BR><BR>&nbsp; &lt;comment&gt;包括您创建的文件以获取广告。&lt;/comment&gt; <BR>&nbsp; &lt;!--#include File = 
+"AdRotatorLogic.inc" --&gt; <BR><BR>&nbsp; &lt;comment&gt;调用包含文件中的函数。&lt;/comment&gt; <BR>&nbsp; &lt;%=GetAd()%&gt; <BR><BR>&nbsp; 
+&lt;/font&gt; <BR>&nbsp; &lt;/body&gt; <BR>&nbsp; &lt;/html&gt; </P></CODE>
+<P>在浏览器中，您应该看到下列结果：</P>
+<P><FONT face="MS Gothic">
+<H2>显示一个广告</H2>
+<IMG SRC="http://www.microsoft.com/windows/images/bnrWinfam.gif" ALT="Microsoft Windows " WIDTH=250 HEIGHT=60 BORDER=1></FONT>
+<P>在浏览器中单击“刷新”按钮大约 20 次，观察广告的变化。单击此广告，看看 AdRotRedirect.asp 如何将您重定向到广告用户的网站。打开 AdRotLog.txt 查看单击广告时记录的信息。 </P>
+<P><!>&nbsp;<!> </P>
+<H2><A name=counting>第 2 课：统计网页点击次数</A></H2>
+<P>了解人们请求（或点击）网页的次数可能会对您很有帮助。高流量的站点可以为您带来更多的广告收入。一些网站使用此数据按单次点击向广告用户收取统一的费用。流量信息也可说明用户在站点中浏览导航的方式，告诉您应当将广告置于何处。至于那些几乎从不被人点击的网页，说明需要对其设计进行修改。</P>
+<P>PageCounter 组件使用一个内部对象在服务器上记录网页的点击数。PageCounter 定期将所有信息保存在一个文本文件中，这样就不会因断电或系统故障而丢失任何统计数据。PageCounter 组件使用如下三种方法： </P>
+<UL>
+  <LI><B>Hits</B>&nbsp;&nbsp;&nbsp;此方法显示网页的点击次数。默认值为调用网页。 
+  <LI><B>PageHit</B>&nbsp;&nbsp;&nbsp;此方法增加当前网页的点击次数。如果需要记录 ASP 网页的点击次数，必须在此网页内部调用这个方法。
+  <LI><B>Reset</B>&nbsp;&nbsp;&nbsp;此方法将网页的点击次数设置为零。默认值为调用网页。</LI></UL>
+<P>将下列代码复制并粘贴到文本编辑器中，然后将此文件保存在 <I>x</I>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为 <b>PageCounter.asp</b>。通过在浏览器的地址栏中键入 <B>http://localhost/Tutorial/PageCounter.asp</B>，可以在浏览器中查看此示例的效果。</P><CODE>
+<P>&nbsp; &lt;%@ Language=VBScript %&gt; <BR><BR>&nbsp; &lt;html&gt; <BR>&nbsp; 
+&lt;head&gt; <BR>&nbsp; &lt;title&gt;网页计数器示例&lt;/title&gt; 
+<BR>&nbsp; &lt;/head&gt; <BR>&nbsp; &lt;body&gt; <BR>&nbsp; &lt;font face="MS 
+Gothic"&gt; <BR><BR>&nbsp; &lt;H3&gt;网页计数器示例&lt;/H3&gt; 
+<BR><BR>&nbsp; &lt;p&gt; <BR>&nbsp; &lt;FORM NAME="PageCounter" METHOD="GET" 
+ACTION="PageCounter.asp"&gt; <BR>&nbsp; &lt;INPUT TYPE="CHECKBOX" NAME="reset" 
+VALUE="True"&gt;是否要重新设置此网页的计数器？&lt;BR&gt; <BR>&nbsp; &lt;INPUT 
+TYPE="SUBMIT" VALUE="提交"&gt; <BR>&nbsp; &lt;/FORM&gt; <BR>&nbsp; &lt;/p&gt; 
+<BR><BR>&nbsp; &lt;% <BR>&nbsp;&nbsp; '设置 PageCounter 对象的实例。 
+<BR>&nbsp;&nbsp; Set MyPageCounter = Server.CreateObject("MSWC.PageCounter") 
+<BR><BR>&nbsp;&nbsp; '增加此网页的计数器值。 <BR>&nbsp;&nbsp; 
+MyPageCounter.PageHit <BR><BR>&nbsp;&nbsp; If Request.QueryString("reset") = 
+"True" Then <BR>&nbsp;&nbsp;&nbsp;&nbsp; '重新设置此网页的计数器。 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp; MyPageCounter.Reset("/Tutorial/PageCounter.asp") 
+<BR>&nbsp;&nbsp; End If <BR>&nbsp; %&gt; <BR><BR>&nbsp; 此网页的点击数为 
+&lt;%=MyPageCounter.Hits %&gt;&lt;BR&gt; <BR><BR>&nbsp; &lt;/font&gt; <BR>&nbsp; 
+&lt;/body&gt; <BR>&nbsp; &lt;/html&gt; </P></CODE>
+<P>在浏览器中，您应该看到下列结果：</P>
+<P><FONT face="宋体">
+<H3>&nbsp; 网页计数器示例</H3>
+<P>
+<FORM method=get name=PageCounter><!>&nbsp;<!> <INPUT name=reset type=checkbox 
+value=True>是否要重新设置此网页的计数器？<BR>&nbsp; <INPUT type=button value=提交> </FORM>
+<P>&nbsp; 此网页的点击数为 1<BR></FONT>
+<P>单击浏览器中的“刷新”按钮或网页上的“提交”按钮，观察点击计数器值的增加过程。如果需要重新设置计数器，请选中以上复选框。 </P><BR>
+<H2><A name=creating>第 3 课：创建 Visual Basic COM 对象</A></H2>
+<P>在本课中，您将使用 Visual Basic 创建简单的 COM 对象，此对象可以从 ASP 网页中进行调用。本示例需要 Visual Basic 带有 ActiveX 
+向导，64 位的平台不支持本示例，除非此 Visual Basic Runtime 是为 64 位平台开发的。您可以创建运行在 64 位平台上的 32 位 COM 对象，但必须从 32 位应用程序调用这个 32 位 COM 对象。因为 IIS 是 64 位平台上的 64 位应用程序，它无法调用 32 位对象。</P>
+<P>假定您需要创建一个 Web 应用程序，而此应用程序需要的功能 VBScript 却不具备。此时，必须创建一个自定义过程，并且需要时能从应用程序中的任何 ASP 网页进行调用。</P>
+<P>通常，这种解决方案对于封装自定义功能是足够的。然而，您可能要创建一个为数千用户提供服务的 Web 应用程序，而您的过程封装了不希望其他人看到的私有函数。此时，将功能封装为 COM 组件的形式应当是首选方案。组件提供的安全性和性能比脚本更高，因为它们是已编译的代码。组件还允许您使用由 Visual Basic、C++、Java 或其他兼容 COM 的语言提供的功能。</P>
+<H3>创建 ActiveX COM 对象</H3>
+<P>Visual Basic 的 ActiveX DLL 向导是创建 COM 组件最简便的方法。您也可以使用 Microsoft Visual C++ 创建 COM 组件，方法是通过 Active Template Library (ATL) 或自己编写全部代码，本示例使用 Visual Basic。</P>
+<P>在本课程中，您将学习如何创建一个 Visual Basic 函数，并将其封装为组件。Visual Basic 包含许多不能用于 VBScript 的财务函数。本示例根据固定的利率以及定期、固定的付款来计算一笔投资的未来价值。</P>
+<OL>
+  <LI>打开 Visual Basic。如果未出现标题为“新建工程”的窗口，请选择“文件”，然后单击“新建工程”。 
+  <LI>选择“ActiveX DLL”，单击“确定”。<LI>将打开一个名为“工程1 - Class1 (Code)”的窗口。可以在此处输入代码。 
+  <LI>在“工程”菜单中，单击“工程1 属性”。在“通用”属性页的“工程名称”框中，键入 <B>ASPTut</B>。您的 DLL 称为 ASPTut.dll。选中“执行无用户界面”复选框，这样工程就可以在没有用户交互的情况下运行，并且不出现用户界面元素。请确认“线程模型”为“单元线程”，这样，多个用户就可以同时访问 DLL。单击“确定”。<LI>在 Visual Basic 中，定义一个类，将方法和属性组合在一起。在“工程 - ASPTut”窗口之下，单击“Class1 (Class1)”节点，列出类的属性。在“属性 -  Class1”之下，在“（名称）”旁边的文本字段中单击，并将类名称更改为 <B>Finance</B>。当您在 ASP 网页或其他脚本中调用此 COM 组件时，需要使用 <b>ASPTut.Finance</b> 对其进行引用。单击“Instancing”旁边的下拉菜单，并选择“5 - MultiUse”。 
+  <LI>了解一下将要使用的 Visual Basic 函数。可在 <a href="http://go.microsoft.com/fwlink/?LinkId=1694" target="_blank">MSDN</A> 上的 Visual Basic 库中找到有关 <b>FV</b> 函数的信息。 
+  <LI>刚才标题为“工程1 - Class1 (Code)”的窗口的标题现在更改为 <B>ASPTut - Finance (Code)</B>。将下列文本复制并粘贴到此窗口中：<CODE> <BR><BR>Option Explicit<BR><BR>'声明将由 Property 函数设置的全局变量。<BR>Dim 
+  gAnnualIntRate As Double<BR>Dim gNumPayPeriods As Integer<BR>Dim gPayment As 
+  Double<BR>Dim gPresentSavings As Variant '可选<BR>Dim gWhenDue As Variant 
+  '可选<BR><BR>Public Function CalcFutureValue() As Double<BR><BR>&nbsp; 
+  '用户在 ASP 网页中设置属性时，<BR>&nbsp; '也就设置了要传递给 FV 函数的全局变量。<BR>&nbsp; '如果想避免使用属性，<BR>&nbsp; '可以将变量传递给 CalcFutureValue() 函数。<BR>&nbsp; 'CalcFutureValue 将成为组件中的一种方法。<BR><BR>&nbsp; Dim IntRatePerPeriod As Double<BR>&nbsp; Dim 
+  FullFutureValue As Double<BR><BR>&nbsp; If (gAnnualIntRate = Null) Or 
+  (gNumPayPeriods = Null) Or (gPayment = Null) Then<BR>&nbsp;&nbsp;&nbsp; 
+  CalcFutureValue = 0<BR>&nbsp; Else<BR>&nbsp;&nbsp;&nbsp; IntRatePerPeriod = 
+  gAnnualIntRate / 100 / 12<BR>&nbsp;&nbsp;&nbsp; FullFutureValue = 
+  FV(IntRatePerPeriod, gNumPayPeriods, gPayment, gPresentSavings, 
+  gWhenDue)<BR>&nbsp;&nbsp;&nbsp; CalcFutureValue = Round(FullFutureValue, 
+  2)<BR>&nbsp; End If<BR><BR>End Function<BR><BR>Public Property Get 
+  AnnualIntRate() As Double<BR>&nbsp; 'Get 函数以类似属性的形式<BR>&nbsp; '返回全局变量的值。<BR>&nbsp; '在 ASP 网页中，可以表述为 x = oASPTut.Rate。<BR>&nbsp; AnnualIntRate = 
+  gAnnualIntRate<BR>End Property<BR><BR>Public Property Let AnnualIntRate(ByVal 
+  vAnnualIntRate As Double)<BR>&nbsp; 'Let 函数在 ASP 网页进行调用（例如 oASPTut.Rate = 5）时<BR>&nbsp; '设置全局变量<BR>&nbsp; 
+  gAnnualIntRate = vAnnualIntRate<BR>End Property<BR><BR>Public Property Get 
+  NumPayPeriods() As Integer<BR>&nbsp; NumPayPeriods = gNumPayPeriods<BR>End 
+  Property<BR><BR>Public Property Let NumPayPeriods(ByVal vNumPayPeriods As 
+  Integer)<BR>&nbsp; gNumPayPeriods = vNumPayPeriods<BR>End 
+  Property<BR><BR>Public Property Get Payment() As Double<BR>&nbsp; Payment = 
+  gPayment<BR>End Property<BR><BR>Public Property Let Payment(ByVal vPayment As 
+  Double)<BR>&nbsp; gPayment = -(vPayment)<BR>End Property<BR><BR>Public 
+  Property Get PresentSavings() As Variant<BR>&nbsp; PresentSavings = 
+  gPresentSavings<BR>End Property<BR><BR>Public Property Let 
+  PresentSavings(ByVal vPresentSavings As Variant)<BR>&nbsp; gPresentSavings = 
+  -(vPresentSavings)<BR>End Property<BR><BR>Public Property Get WhenDue() As 
+  Variant<BR>&nbsp; WhenDue = gWhenDue<BR>End Property<BR><BR>Public Property 
+  Let WhenDue(ByVal vWhenDue As Variant)<BR>&nbsp; gWhenDue = vWhenDue<BR>End 
+  Property<BR><BR></CODE>
+  <LI>所有服务器组件都需要一个入口（起始）点。所谓入口点就是使用 <b>Server.CreateObject</b> 初次设置对象实例时要调用的代码。首次调用 ASPTut 组件时，无需进行任何特殊操作。因此，您可以提供一个空的 <b>Sub Main</b> 过程。在“工程”菜单中选择“添加模块”。在“添加模块”窗口中的“新建”选项卡之下，选择“模块”图标并单击“打开”。在“Module 1”代码窗口中，键入 <B>Sub Main</B> 并按 Enter 键。这样即创建了一个空的子过程。</FONT>
+  <LI><FONT face=宋体>将 <b>Sub Main</b> 模块保存为 <B>Main.bas</B>。将类文件保存为 <B>Finance.cls</B>。将工程保存为 <B>ASPTut.vbp</B>。
+  <LI>单击“文件”，再单击“生成 ASPTut.dll”。这将编译并注册 ASPTut.dll。从 ASP 网页调用 ASPTut.dll 之后，除非卸载运行 ASP 文件的应用程序，否则将不能再在 Visual Basic 中生成 DLL。卸载方法之一是使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>打开默认网站的属性，再单击“卸载”按钮。如果需要在另一个 Web 服务器上注册此 DLL，请将 ASPTut.dll 复制到此服务器，再单击“开始”，单击“运行”，然后在“打开”文本框中键入 <B>cmd</B>。在 ASPTut.dll 所在的目录中，键入 <B>regsvr32 ASPTut.dll</B>。 
+  <LI>退出 Visual Basic。</LI></OL>
+<H3>创建一个使用 Visual Basic COM 对象的 ASP 网页</H3>
+<P>本示例中的 ASP 网页使用表单读取用户数据，创建一个对象实例，并计算储蓄计划的未来价值。 </P>
+<P>将下列代码复制并粘贴到文本编辑器中，然后将此文件保存在 <I>x</I>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为 <b>CalculateFutureValue.asp</b>。通过在浏览器的地址栏中键入 <B>http://localhost/Tutorial/CalculateFutureValue.asp</B>，可以在浏览器中查看此示例的效果。   
+</P><CODE>
+<P>&nbsp; &lt;%@ Language=VBScript %&gt;<BR><BR>&nbsp; &lt;%<BR>&nbsp; 
+Response.Expires = 0<BR>&nbsp; Payment = Request.Form("Payment")<BR>&nbsp; 
+AnnualIntRate = Request.Form("AnnualIntRate")<BR>&nbsp; NumPayPeriods = 
+Request.Form("NumPayPeriods")<BR>&nbsp; WhenDue = 
+Request.Form("WhenDue")<BR>&nbsp; PresentSavings = 
+Request.Form("PresentSavings")<BR>&nbsp; %&gt;<BR><BR>&nbsp; 
+&lt;HTML&gt;<BR>&nbsp; &lt;HEAD&gt;&lt;TITLE&gt;计算未来价值&lt;/TITLE&gt;&lt;/HEAD&gt;<BR>&nbsp; &lt;BODY&gt;<BR>&nbsp; &lt;FONT 
+FACE="MS Gothic"&gt;<BR><BR>&nbsp; &lt;H2 align=center&gt;计算储蓄计划的未来价值&lt;/H2&gt;&nbsp;<BR><BR>&nbsp; &lt;FORM METHOD=POST 
+ACTION="calculatefuturevalue.asp"&gt;&nbsp;<BR>&nbsp; &lt;TABLE cellpadding=4 
+align=center&gt;&nbsp;<BR>&nbsp; &lt;TR&gt;<BR>&nbsp; &lt;TD&gt;每月计划存入多少钱？&lt;/TD&gt;<BR>&nbsp; &lt;TD&gt;&lt;INPUT TYPE=TEXT 
+NAME=Payment VALUE=&lt;%=Payment%&gt;&gt; （必填）&lt;/TD&gt;<BR>&nbsp; 
+&lt;/TR&gt;&lt;TR&gt;<BR>&nbsp; &lt;TD&gt;请输入年利率。&lt;/TD&gt;<BR>&nbsp; &lt;TD&gt;&lt;INPUT TYPE=TEXT NAME=AnnualIntRate 
+VALUE=&lt;%=AnnualIntRate%&gt;&gt; （必填）&lt;/TD&gt;<BR>&nbsp; 
+&lt;/TR&gt;&lt;TR&gt;&nbsp;<BR>&nbsp; &lt;TD&gt;您要存几个月？&lt;/TD&gt;<BR>&nbsp; &lt;TD&gt;&lt;INPUT TYPE=TEXT NAME=NumPayPeriods 
+VALUE=&lt;%=NumPayPeriods%&gt;&gt; （必填）&lt;/TD&gt;<BR>&nbsp; 
+&lt;/TR&gt;&lt;TR&gt;&nbsp;<BR>&nbsp; &lt;TD&gt;您将在每月的何时付款？&lt;/TD&gt;<BR>&nbsp; &lt;TD&gt;&lt;INPUT TYPE=RADIO NAME=WhenDue VALUE=1 
+&lt;%If 1=WhenDue Then Response.Write"CHECKED"%&gt;&gt;月初&nbsp;<BR>&nbsp; 
+&lt;INPUT TYPE=RADIO NAME=WhenDue VALUE=0 &lt;%If 0=WhenDue Then 
+Response.Write"CHECKED"%&gt;&gt;月末 &lt;/TD&gt;<BR>&nbsp; 
+&lt;/TR&gt;&lt;TR&gt;&nbsp;<BR>&nbsp; &lt;TD&gt;此储蓄帐号里现在有多少钱？&lt;/TD&gt;<BR>&nbsp; &lt;TD&gt;&lt;INPUT TYPE=TEXT 
+NAME=PresentSavings VALUE=&lt;%=PresentSavings%&gt;&gt; &lt;/TD&gt;<BR>&nbsp; 
+&lt;/TR&gt;<BR>&nbsp; &lt;/TABLE&gt;<BR>&nbsp; &lt;P align=center&gt;&lt;INPUT 
+TYPE=SUBMIT VALUE="计算未来价值"&gt;<BR>&nbsp; 
+&lt;/FORM&gt;&nbsp;<BR><BR>&nbsp; &lt;%<BR>&nbsp; If ("" = Payment) Or ("" = 
+AnnualIntRate) Or ("" = NumPayPeriods) Then<BR><BR>&nbsp;&nbsp;&nbsp; 
+Response.Write "&lt;H3 align=center&gt;尚未输入有效值。&lt;/H3&gt;"<BR><BR>&nbsp; ElseIf (IsNumeric(Payment)) And 
+(IsNumeric(AnnualIntRate)) And (IsNumeric(NumPayPeriods)) 
+Then<BR><BR>&nbsp;&nbsp;&nbsp; Dim FutureValue<BR>&nbsp;&nbsp;&nbsp; Set oASPTut 
+= Server.CreateObject("ASPTut.Finance")<BR>&nbsp;&nbsp;&nbsp; 
+oASPTut.AnnualIntRate = CDbl(AnnualIntRate)<BR>&nbsp;&nbsp;&nbsp; 
+oASPTut.NumPayPeriods = CInt(NumPayPeriods)<BR>&nbsp;&nbsp;&nbsp; 
+oASPTut.Payment = CDbl(Payment)<BR>&nbsp;&nbsp;&nbsp; If Not "" = PresentSavings 
+Then oASPTut.PresentSavings = CDbl(PresentSavings)<BR>&nbsp;&nbsp;&nbsp; 
+oASPTut.WhenDue = WhenDue<BR>&nbsp;&nbsp;&nbsp; FutureValue = 
+oASPTut.CalcFutureValue<BR>&nbsp;&nbsp;&nbsp; Response.Write "&lt;H3 
+align=center&gt;未来价值 = $" &amp; FutureValue &amp; 
+"&lt;/H3&gt;"<BR><BR>&nbsp; Else<BR><BR>&nbsp;&nbsp;&nbsp; Response.Write 
+"&lt;H3 align=center&gt;某些值不是数字。&lt;/H3&gt;"<BR><BR>&nbsp; End If<BR><BR>&nbsp; %&gt;<BR><BR>&nbsp; 
+&lt;/FONT&gt;&nbsp;<BR>&nbsp; &lt;/BODY&gt;&nbsp;<BR>&nbsp; &lt;/HTML&gt; 
+</P></CODE>
+<P>在浏览器中，您应看到下列结果： </P>
+<P><FONT face="MS Gothic">
+<H2 align=center>计算储蓄计划的未来价值</H2>
+<FORM method=post>
+<TABLE align=center cellPadding=4>
+  <TBODY>
+  <TR>
+    <TD>每月计划存入多少钱？</TD>
+    <TD><INPUT name=Payment> （必填）</TD></TR>
+  <TR>
+    <TD>请输入年利率。</TD>
+    <TD><INPUT name=AnnualIntRate> （必填）</TD></TR>
+  <TR>
+    <TD>您要存几个月？</TD>
+    <TD><INPUT name=NumPayPeriods> （必填）</TD></TR>
+  <TR>
+    <TD>您将在每月的何时付款？ </TD>
+    <TD><INPUT name=WhenDue type=radio value=1>月初<INPUT CHECKED 
+      name=WhenDue type=radio value=0>月末</TD></TR>
+  <TR>
+    <TD>此储蓄帐号里现在有多少钱？</TD>
+    <TD><INPUT name=PresentSavings> </TD></TR></TBODY></TABLE>
+<P align=center><INPUT type=button value=" 计算未来价值 "> </FORM>
+<H3 align=center>尚未输入有效值。</H3></FONT>
+<H2><A name=creatingj>第 4 课：创建 Java COM 对象</A></H2>
+<P>在本课程中，您将使用 Microsoft&reg; Visual J++&reg; 创建 COM 对象，其功能与第 3 课中的 Visual Basic 组件相同。这些步骤需要使用 Visual J++ 6.0 或更高版本。 </P>
+<H3>创建 Java COM 对象</H3>
+<OL>
+  <LI>打开 Visual J++。如果没有看到标题为“New Project”的窗口，请单击“File”菜单再单击“New Project”。 
+  <LI>选择“Visual J++ Projects”，再单击“Empty Project”图标。在“Name”文本框中，键入 <B>ASPTut</B>。单击“Open”。 
+  <LI>在“Project”菜单，单击“Add Class”。在“Name”文本框中，键入 <B>ASPTut.java</B>。类名称必须与 Java 服务器组件的工程名称相同。单击“Open”，将在文本编辑窗口中显示如下结果：<BR><BR><CODE>public class 
+  ASPTut<BR>{<BR>}<BR><BR></CODE>
+  <LI>复制下列代码，并将其粘贴到括号 {} 中。请留意大小写，因为 Java 是区分大小写的。下列是组件中的一个方法：<BR><BR><CODE>public double CalcFutureValue(<BR>&nbsp; double 
+  dblAnnualIntRate,<BR>&nbsp; double dblNumPayPeriods,<BR>&nbsp; double 
+  dblPayment,<BR>&nbsp; double dblPresentSavings,<BR>&nbsp; boolean 
+  bWhenDue)<BR>{<BR>&nbsp; double dblRet, dblTemp, dblTemp2, dblTemp3, 
+  dblIntRate;<BR><BR>&nbsp; if (dblAnnualIntRate == 0.0)<BR>&nbsp; 
+  {<BR>&nbsp;&nbsp;&nbsp; dblRet = -dblPresentSavings - dblPayment * 
+  dblNumPayPeriods;<BR>&nbsp; }<BR>&nbsp; else<BR>&nbsp; {<BR>&nbsp;&nbsp;&nbsp; 
+  dblIntRate = dblAnnualIntRate / 100 / 12;<BR>&nbsp;&nbsp;&nbsp; dblPayment = 
+  -dblPayment;<BR>&nbsp;&nbsp;&nbsp; dblPresentSavings = 
+  -dblPresentSavings;<BR><BR>&nbsp;&nbsp;&nbsp; dblTemp = (bWhenDue ? 1.0 + 
+  dblIntRate : 1.0);<BR>&nbsp;&nbsp;&nbsp; dblTemp3 = 1.0 + 
+  dblIntRate;<BR>&nbsp;&nbsp;&nbsp; dblTemp2 = Math.pow(dblTemp3, 
+  dblNumPayPeriods);&nbsp;<BR>&nbsp;&nbsp;&nbsp; dblRet = -dblPresentSavings * 
+  dblTemp2 - dblPayment * dblTemp * (dblTemp2 - 1.0) / dblIntRate;<BR>&nbsp; 
+  }<BR><BR>&nbsp; return dblRet;<BR>}</CODE><BR><BR>
+  <LI>在“Build”菜单上，单击“Build”。查看文本编辑窗口下方的“Task List”窗口，看看是否产生了错误。 
+  <LI>Java 类文件必须在 Web 服务器所在的计算机上注册。在命令提示符窗口，查找刚才编译的 ASPTut.class 文件。它最可能位于 %USERPROFILE%\My Documents\Visual Studio Projects\ASPTut，或 <I>x</I>:\Documents and Settings\<I>user name</I>\My Documents\Visual Studio 
+  Projects\ASPTut 中，其中 x: 是安装 Windows 的驱动器。将 ASPTut.class 复制到 <I>x</I>:\Winnt\Java\Trustlib。键入 <B>javareg /register /class:ASPTut /progid:MS.ASPTut.Java</B>，再按 Enter 键注册此 Java 类。 
+  <LI>关闭 Visual J++。 </LI></OL>
+<H3>创建使用 Java COM 组件的 ASP 网页</H3>
+<P>本示例中的 ASP 网页使用表单读取用户数据，创建一个对象实例，并计算储蓄计划的未来价值。本示例使用 JScript，但您也可以从 VBScript 中调用 Java 组件。 
+</P>
+<P>将下列代码复制并粘贴到文本编辑器中，然后将此文件保存在 <I>x</I>:\Inetpub\Wwwroot\Tutorial 目录中，文件名为 <b>CalculateFutureValueJava.asp</b>。通过在浏览器的地址栏中键入 <B>http://localhost/Tutorial/CalculateFutureValueJava.asp</B>，可以在浏览器中查看此示例的效果。</P><CODE>&nbsp; </CODE><CODE>&lt;%@ Language=JScript 
+%&gt;<BR><BR></CODE><CODE>&nbsp; </CODE><CODE>&lt;%<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>Response.Expires = 0;<BR></CODE><CODE>&nbsp; </CODE><CODE>Payment = 
+Request.Form("Payment");<BR></CODE><CODE>&nbsp; </CODE><CODE>AnnualIntRate = 
+Request.Form("AnnualIntRate");<BR></CODE><CODE>&nbsp; </CODE><CODE>NumPayPeriods 
+= Request.Form("NumPayPeriods");<BR></CODE><CODE>&nbsp; </CODE><CODE>WhenDue = 
+Request.Form("WhenDue");<BR></CODE><CODE>&nbsp; </CODE><CODE>PresentSavings = 
+Request.Form("PresentSavings");<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>%&gt;<BR><BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;HTML&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;HEAD&gt;&lt;TITLE&gt;计算未来价值 - 
+Java&lt;/TITLE&gt;&lt;/HEAD&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;BODY&gt;<BR></CODE><CODE>&nbsp; </CODE><CODE>&lt;FONT FACE="MS 
+Gothic"&gt;<BR><BR></CODE><CODE>&nbsp; </CODE><CODE>&lt;H2 
+align=center&gt;计算储蓄计划的未来价值&lt;/H2&gt;&nbsp;<BR><BR></CODE><CODE>&nbsp; </CODE><CODE>&lt;FORM 
+METHOD=POST 
+ACTION="calculatefuturevaluejava.asp"&gt;&nbsp;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;TABLE cellpadding=4 
+align=center&gt;&nbsp;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;TR&gt;<BR></CODE><CODE>&nbsp; </CODE><CODE>&lt;TD&gt;每月计划存入多少钱？&lt;/TD&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;TD&gt;&lt;INPUT TYPE=TEXT NAME=Payment 
+VALUE=&lt;%=Payment%&gt;&gt; (Required)&lt;/TD&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;/TR&gt;&lt;TR&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;TD&gt;请输入年利率。&lt;/TD&gt;<BR></CODE><CODE>&nbsp; </CODE><CODE>&lt;TD&gt;&lt;INPUT 
+TYPE=TEXT NAME=AnnualIntRate VALUE=&lt;%=AnnualIntRate%&gt;&gt; 
+(Required)&lt;/TD&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;/TR&gt;&lt;TR&gt;&nbsp;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;TD&gt;您要存几个月？&lt;/TD&gt;<BR></CODE><CODE>&nbsp; </CODE><CODE>&lt;TD&gt;&lt;INPUT 
+TYPE=TEXT NAME=NumPayPeriods VALUE=&lt;%=NumPayPeriods%&gt;&gt; 
+(Required)&lt;/TD&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;/TR&gt;&lt;TR&gt;&nbsp;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;TD&gt;您将在每月的何时付款？ 
+&lt;/TD&gt;<BR></CODE><CODE>&nbsp; </CODE><CODE>&lt;TD&gt;&lt;INPUT TYPE=RADIO 
+NAME=WhenDue VALUE=1 &lt;%if (1==WhenDue) 
+Response.Write("CHECKED")%&gt;&gt;月初&nbsp;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;INPUT TYPE=RADIO NAME=WhenDue VALUE=0 &lt;%if (0==WhenDue) 
+Response.Write("CHECKED")%&gt;&gt;月末 &lt;/TD&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;/TR&gt;&lt;TR&gt;&nbsp;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;TD&gt; 此储蓄帐号里现在有多少钱？&lt;/TD&gt;<BR></CODE><CODE>&nbsp; </CODE><CODE>&lt;TD&gt;&lt;INPUT 
+TYPE=TEXT NAME=PresentSavings VALUE=&lt;%=PresentSavings%&gt;&gt; 
+&lt;/TD&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;/TR&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;/TABLE&gt;<BR></CODE><CODE>&nbsp; </CODE><CODE>&lt;P 
+align=center&gt;&lt;INPUT TYPE=SUBMIT VALUE="计算未来价值
+"&gt;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;/FORM&gt;&nbsp;<BR><BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;%<BR><BR></CODE><CODE>&nbsp; </CODE><CODE>if (("" == Payment) 
+|| ("" == AnnualIntRate) || ("" == NumPayPeriods)) {<BR><BR></CODE><CODE>&nbsp; 
+&nbsp; </CODE><CODE>Response.Write("&lt;H3 align=center&gt;尚未输入有效值。&lt;/H3&gt;");<BR><BR></CODE><CODE>&nbsp; </CODE><CODE>} else 
+{<BR><BR></CODE><CODE>&nbsp; &nbsp; </CODE><CODE>AnnualIntRate = 
+parseFloat(AnnualIntRate)<BR></CODE><CODE>&nbsp; &nbsp; 
+</CODE><CODE>NumPayPeriods = parseFloat(NumPayPeriods)<BR></CODE><CODE>&nbsp; 
+&nbsp; </CODE><CODE>Payment = parseFloat(Payment)<BR></CODE><CODE>&nbsp; &nbsp; 
+</CODE><CODE>if ("" != PresentSavings) PresentSavings = 
+parseFloat(PresentSavings);<BR><BR></CODE><CODE>&nbsp; &nbsp; </CODE><CODE>if 
+((isNaN(Payment)) || (isNaN(AnnualIntRate)) || (isNaN(NumPayPeriods))) 
+{<BR><BR></CODE><CODE>&nbsp; &nbsp; &nbsp; </CODE><CODE>Response.Write("&lt;H3 
+align=center&gt; 某些值不是数字。&lt;/H3&gt;");<BR><BR></CODE><CODE>&nbsp; &nbsp; </CODE><CODE>} else 
+{<BR><BR></CODE><CODE>&nbsp; &nbsp; &nbsp; </CODE><CODE>var FutureValue, 
+Cents;<BR></CODE><CODE>&nbsp; &nbsp; &nbsp; </CODE><CODE>var oASPTut = 
+Server.CreateObject("MS.ASPTut.Java");<BR></CODE><CODE>&nbsp; &nbsp; &nbsp; 
+</CODE><CODE>FutureValue = oASPTut.CalcFutureValue(AnnualIntRate, NumPayPeriods, 
+Payment, PresentSavings, WhenDue);<BR><BR></CODE><CODE>&nbsp; &nbsp; &nbsp; 
+</CODE><CODE>Response.Write("&lt;H3 align=center&gt;Future value = $" + 
+parseInt(FutureValue) + "&lt;/H3&gt;");<BR><BR></CODE><CODE>&nbsp; &nbsp; 
+</CODE><CODE>}<BR></CODE><CODE>&nbsp; </CODE><CODE>}<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>%&gt;<BR><BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;/FONT&gt;&nbsp;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;/BODY&gt;&nbsp;<BR></CODE><CODE>&nbsp; 
+</CODE><CODE>&lt;/HTML&gt;<BR></CODE>
+<P></P>
+<P>在浏览器中，您将看到下列内容，这些内容应与本单元第 3 课中使用 Visual Basic 
+组件产生的显示内容相同。 </P>
+<P><FONT face="宋体">
+<H2 align=center>计算储蓄计划的未来价值</H2>
+<FORM method=post>
+<TABLE align=center cellPadding=4>
+  <TBODY>
+  <TR>
+    <TD>每月计划存入多少钱？</TD>
+    <TD><INPUT name=Payment> （必填）</TD></TR>
+  <TR>
+    <TD>请输入年利率。</TD>
+    <TD><INPUT name=AnnualIntRate> （必填）</TD></TR>
+  <TR>
+    <TD>您要存几个月？</TD>
+    <TD><INPUT name=NumPayPeriods> （必填）</TD></TR>
+  <TR>
+    <TD>您将在每月的何时付款？</TD>
+    <TD><INPUT name=WhenDue type=radio value=1>月初 <INPUT CHECKED 
+      name=WhenDue type=radio value=0>月末 </TD></TR>
+  <TR>
+    <TD>此储蓄帐号里现在有多少钱？</TD>
+    <TD><INPUT name=PresentSavings> </TD></TR></TBODY></TABLE>
+<P align=center><INPUT type=button value=" 计算未来价值 "> </FORM>
+<H3 align=center>尚未输入有效值。</H3></FONT>
+<br>
+<H2>下一单元：在 Web 应用程序中维护会话状态</H2>
+<HR class=iis SIZE=1>
+
+<P align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 
+Microsoft Corporation. 保留所有权利。</A></P></FONT></BODY></HTML>

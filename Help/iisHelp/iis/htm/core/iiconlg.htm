@@ -1,0 +1,82 @@
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>自定义 W3C 扩展日志记录</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<meta name="description" content="有关如何指定使用 W3C 扩展日志记录进行记录的字段的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="logproperties">自定义 W3C 扩展日志记录</a></h1>
+
+<p>如果在网站或 FTP 站点上使用 W3C 扩展日志文件格式，可以通过选择要记录的字段（项）进行自定义。可以使用那些对您很重要的字段收集详细信息，而略去不需要的字段以限制日志文件的大小。</p>
+
+<big>自定义 W3C 扩展日志记录</big><!--</p>--><br>
+
+<ol>
+<li>选择某个网站或 FTP 站点，打开其属性页。</li>
+
+<li>如果未启用日志记录，请启用，并选择 W3C 扩展日志文件格式。</li>
+
+<li>单击“属性”。</li>
+
+<li>在“扩展属性”属性页上，选择要记录的字段。</li>
+
+<li>单击“应用”。</li>
+</ol>
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li>有关 W3C 扩展日志文件格式的说明，请参阅<a href="iiabtlg.htm">关于记录站点活动</a>。</li>
+<li>有关日志记录频率和日志文件大小的信息，请参阅<a href="iinamlg.htm">保存日志文件</a>。</li>
+<li>有关日志记录属性的参考列表，请参阅<a href="iiintlg.htm">日志记录属性参考</a>。</li>
+</ul>
+
+
+<hr class="iis" size="1"><p align="center"><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

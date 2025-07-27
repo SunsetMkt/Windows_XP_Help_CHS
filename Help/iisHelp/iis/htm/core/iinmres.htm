@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于名称解析</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="Conceptual information on name resolution systems, including DHCP, WINS, and DNS.">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37717004">关于名称解析</a></h1>
+
+<p>为使用户能够访问您 Intranet 上的站点，您必须具有唯一的 IP 地址来标识网络上的计算机。此地址由一长串数字组成，中间用圆点分隔（例如，172.16.255.255）。由于数字地址难以记忆，所以使用文字名称（或称“友好名称”）向访问者提供容易记忆的地址，如 www.microsoft.com。名称解析将为在客户端浏览器中输入的友好名称提供正确的数字地址。本节将描述各种不同的名称解析系统。</p>
+
+
+
+<p>要查看详细信息，请单击“开始”菜单上的“帮助”参阅 Windows 文档。</p>
+
+<h2><a name="IntranetNameResolutionSystems">Intranet 名称解析系统</a></h2>
+
+<p>“Intranet”是使用 Internet 技术的专用局域网 (LAN)。要成功地接收和发送信息包，必须将每台计算机的 IP 地址成功地映射为它的文字名称。有多种不同的名称 - 地址解析系统，可以使用其中的任意一种系统分配名称和地址。应该根据 Intranet 的规模、添加或移动计算机的频率以及在 Microsoft&reg; Windows&nbsp;XP Professional 上安装的软件来作出选择。下面几部分将描述 Intranet 上的计算机如何接收自己的名称和地址。</p>
+
+<h3><a name="H3_37718937">IP 地址分配</a></h3>
+
+<p>IP 地址有两种分配方式：静态和动态。网络既可以使用静态 IP 地址或动态 IP 地址，也可以将两种方式混合使用。</p>
+
+<ul>
+<li><strong>静态</strong>&nbsp;系统管理员分配并跟踪 Intranet 上每台计算机的 IP 地址。在小型的、不常变动的网络中，静态分配的效果最好。</li>
+<li><strong>动态 </strong>当客户端登录到网络时，动态主机配置协议 (DHCP) 服务器临时“租用”一个 IP 地址给客户端。当客户端登录时，DHCP 服务器从当前可用地址池中分配一个IP 地址。当租用快到期时，如果必要，客户端计算机将与服务器协商以便继续租用。当客户端注销时，此地址重新释放并可分配给新的客户端。DHCP 服务器减轻了系统管理员跟踪 IP 地址分配的负担，对于大型的或经常变化的网络非常有用。DHCP 服务器只允许为网络上的每台计算机分配一个 IP 地址。</li>
+</ul>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果要为一个网卡分配多个 IP 地址，则必须对计算机使用静态地址分配。</p>
+
+<h3><a name="H3_37720420">名称解析系统</a></h3>
+
+<p>Windows 网络组件遵循 NetBIOS 命名约定，而TCP/IP 组件遵循所谓的域名系统 (DNS) 命名约定。在 Windows 中，DNS 主机名默认值与 NetBIOS 计算机名相同。计算机名到 IP 地址的映射可以按两种方式实现：</p>
+
+<ul>
+<li><strong>静态 </strong>系统管理员创建一个文本文件，叫做 HOSTS 文件（对于 DNS 名称）或 LMHOSTS 文件 (对于 NetBIOS 名称)，并输入每个计算机的名称和地址。然后在网络上发布此文件。当产生要连接到其他计算机的请求时，此文件用来将名称解析为正确的 IP 地址。此系统适用于不经常改变的简单网络。</li>
+<li><strong>动态 </strong>当客户端计算机登录时，DHCP 服务器分配一个地址，并将这种 IP 地址分配发送给 Windows Internet 名称服务 (WINS) 服务器。WINS 服务器注册计算机名，当产生对 NetBIOS 计算机名的请求时，WINS 服务器将此名称解析为正确的 IP 地址。这种自动识别功能以及计算机名到地址的映射简化了大型或经常改变的网络的管理负担。</li>
+</ul>
+
+<p>DNS 名称通常使用静态信息解析。DNS 服务器包含一部分静态数据库，其中列有主机名和地址。如果请求的名称不在 DNS 服务器的数据库中，它将向其它 DNS 服务器发送查询以便获得请求的信息。在 Windows 上运行的 DNS 服务器可以配置成查询 WINS 服务器，以便解析 DNS 名称层次结构中更低层的名称。因为 WINS 动态分配计算机名，从而可以有效地将 DNS 从静态系统变为动态系统。</p>
+
+<p>如果要在一台服务器上设置多个网站或 FTP 站点，并且每个站点都具有自己的 IP 地址，则可能会遇到自动 DNS 注册问题。为了确保 IP 绑定和 DNS 注册的正确性，需要禁用 Windows 2000&nbsp;Server 自动 DNS 注册，并手工配置这些站点的 DNS 注册。有关禁用自动 DNS 注册和手工配置 DNS 注册的详细信息，请参阅 Windows 2000&nbsp;Server 文档。</p>
+
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

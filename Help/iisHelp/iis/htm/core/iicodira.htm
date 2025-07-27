@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>重新启动 IIS</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="重新启动 IIS 服务">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="restart">重新启动 IIS</a></h1>
+
+<p>当应用程序出错或不可用时，可以通过 IIS 停止或重新启动计算机。由于多个 Internet 服务在同一个进程中运行，所以 Internet 服务的关机和重新启动与其他 Windows 服务不同，应该使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>而不是“计算机管理服务”管理单元重新启动 Internet 服务。如果启用了“可靠重新启动”，当应用程序发生故障时将自动重新启动 IIS。如果不希望 IIS 自动重新启动，请参阅下面的<a href="#relirestart">禁用可靠重新启动</a>。</p> 
+
+<big>重新启动 IIS</big><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要重新启动 IIS 的计算机图标并单击“操作”。<li>单击“重新启动 IIS”，出现“停止/启动/重新启动”对话框。</li>
+<li> 从下拉菜单中，选择“重新启动 Internet 服务”。</li>
+
+<p><b>注意</b>&nbsp;&nbsp;&nbsp;还可以选择“启动 Internet 服务”、“停止 Internet 服务”或“重新启动”。若要停止 Internet 服务，必须禁用“可靠重新启动”。</p>
+
+<li type="1">单击“确定”。IIS 将在选定计算机上重新启动 Web 服务。</li>
+</ol>
+
+
+<h3>可靠重新启动</h3>
+<p>如果 Inetinfo.exe 进程异常终止或者使用 Windows 任务管理器或 Kill.exe 停止了 Internet 服务，“可靠重新启动”将自动重新启动 Internet 服务。“可靠重新启动”默认为启用。必须禁用“可靠重新启动”以限制此自动重新启动功能。</p>
+
+<p><big><a name="relirestart">禁用可靠重新启动</a></big></p>
+<ol>
+<li>用鼠标右键单击“我的电脑”，单击“管理”，出现“计算机管理”窗口</li>。
+<li>展开左窗格中的“服务和应用程序”目录树，并单击“服务”，将在右窗格中显示所有 Windows 服务。</li> 
+    
+<li>用鼠标右键单击“IIS Admin”，单击“属性”，出现“IIS Admin 的属性”对话框。</li>
+<li>单击“恢复”选项卡，并在每个下拉菜单中选择“不操作”。</li>
+<li>单击“确定”。</li>
+</ol>
+
+<h3>使用命令行重新启动 IIS</h3>
+<p>还可以使用命令提示符和 Iisreset.exe 重新启动 IIS 以及禁用“可靠重新启动”。请参阅下列命令行用法和参数。</p>
+
+<font face="courier">
+<table border="0" cellpadding="4" cellspacing="1" width="95%">
+
+<tr>
+<td align="Left" valign="top" colspan="2"><a name="timeout"><strong>iisreset [computername]</strong><br>&nbsp;</a></td>
+</tr>
+
+<tr>
+<td valign="Top">/RESTART</td>
+<td valign="Top">停止并重新启动所有 Internet 服务。</td>
+</tr>
+
+<tr>
+<td valign="Top">/START </td>
+<td valign="Top">启动所有 Internet 服务。</td>
+</tr>
+
+<tr>
+<td valign="Top">/STOP</td>
+<td valign="Top">停止所有 Internet 服务。</td>
+</tr>
+
+<tr>
+<td valign="Top">/REBOOT </td>
+<td valign="Top">重新启动计算机。</td>
+</tr>
+
+<tr>
+<td valign="Top">/REBOOTONERROR</td>
+<td valign="Top">如果在启动、停止或重新启动 Internet 服务的过程中发生错误，请重新启动计算机。</td>
+</tr>
+
+<tr>
+<td valign="Top">/NOFORCE</td>
+<td valign="Top">无法正常停止 Internet 服务时不强行终止。</td>
+</tr>
+
+<tr>
+<td valign="Top">/TIMEOUT:val</td>
+<td valign="Top">指定<a href="iitime.htm#timetable">超时值</a>（以秒为单位），等待成功停止 Internet 服务。如果指定了 /REBOOTONERROR 参数，到达设置的超时值时，计算机将重新启动。默认值为 20 秒后重启，60 秒后停止，0 秒重新启动计算机。</td>
+</tr>
+
+<tr>
+<td valign="Top">/STATUS</td>
+<td valign="Top">显示所有 Internet 服务的状态。</td>
+</tr>
+
+<tr>
+<td valign="Top">/ENABLE </td>
+<td valign="Top">在本地系统上允许重新启动 Internet 服务。</td>
+</tr>
+
+<tr>
+<td valign="Top">/DISABLE</td>
+<td valign="Top">在本地系统上禁止重新启动 Internet 服务。</td>
+</tr>
+
+</table>
+</font>
+
+
+<p><strong>相关主题</strong></p>
+
+有关启动和停止个别网站和 FTP 站点的信息，请参阅<a href="iiststp.htm">启动和停止站点</a>。
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+</font>
+</body>
+</html>

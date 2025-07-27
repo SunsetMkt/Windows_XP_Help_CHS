@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML DIR=LTR><HEAD><title>Active Server Pages 指南</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META HTTP-EQUIV="Content-Type" Content="text-html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<BODY BGCOLOR=#FFFFFF TEXT=#000000><font face="宋体">
+
+<h1><a name="_Active_Server_Pages_Guide">Active Server Pages 指南</a></h1>
+
+
+<p>欢迎使用 Active Server Pages 指南。本节提供了有关如何创建 ASP 网页及开发 Web 应用程序的详细信息。还将说明可用于创建组件的特定事件方法和接口，以供 ASP 或 ISAPI 扩展访问使用。在本节中，您将了解到有关如何存储自定义的 IIS 配置数据以及如何使用内置对象来处理这些数据的信息。最后，本指南提供了一个脚本和程序示例库，用于演示与 IIS 进行交互的各种方法。</p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iiwawelc.htm">Active Server Pages</a>：介绍如何创建 Active Server Pages，并阐述许多与如何理解 IIS 编程平台有关的关键概念。</li>
+<li><a href="eadg01v7.htm">开发 Web 应用程序</a>：概述有关 IIS 如何满足 Microsoft 分布式应用程序体系结构要求的概念，同时提供如何设计和实施应用程序以便通过 HTTP 进行部署的特定详细信息。</li>
+<li><a href="aint7e9l.htm">以编程方式管理 IIS</a>：提供帮助您以程序方式管理 IIS 配置的概述和参考资料。</li>
+<li><a href="vbob6zkv.htm">内置 ASP 对象</a>：描述 ASP 内置对象的属性和方法。</li>
+
+<li><a href="comp275c.htm">ASP 的可安装组件</a>：概述可安装用于与 ASP 一起使用的各种组件。</li>
+<li><a href="scri8mcl.htm">脚本参考</a>：包含各种参考资料，包括 @ 指令和 Global.asa 参考。</li>
+<li><a href="asps6hmb.htm">ASP 示例</a>：把您带到 Platform SDK 的 IIS 一节或 <a href="http://go.microsoft.com/fwlink/?LinkId=1753" target="_blank">MSDN Online - Internet Information Services</a> 中的 ASP 脚本示例。</li>
+
+</ul>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</BODY>
+</HTML>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr>
+<head>
+<title>设置 FTP 消息和目录输出样式</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="Description" CONTENT="有关如何设置 FTP 站点的欢迎、退出和最大连接数以及目录输出格式的过程信息。" >
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<font face="宋体">
+
+<h1><A NAME="H1_325765885"></A>设置 FTP 消息和目录输出样式</h1>
+
+<p>建立 FTP 站点时，可以向用户发送消息提供有关此站点的详细信息。可以采用欢迎消息（当用户第一次登录时欢迎用户访问 FTP 站点）和退出消息（当用户注销时显示）的形式。也可以设计一个消息提示用户已经达到了最大连接数（可以在“FTP 站点”属性页中设置 FTP 连接限制)。</p>
+
+<big>设置 FTP 欢迎、退出或最大连接数消息</big><br>
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要设置消息的 FTP 站点。</li>
+<li>用鼠标右键单击站点并选择“属性”。</li>
+<li>选择“消息”属性页。</li>
+<li>在相应文本框中分别输入欢迎、退出或最大连接数消息。</li>
+</ol>
+
+<p>也可以设置 FTP 站点的目录输出样式。目录输出样式定义了 FTP 客户端发送 LIST 操作时所使用的格式；目录输出样式可以是 MS-DOS，也可以是 UNIX。默认目录输出样式是 MS-DOS。</p>
+
+<p>默认情况下，MS-DOS 目录列表样式以两位数字格式显示年份。可以通过启用 <a href="../asp/apro1k9x.htm">FtpDirBrowseShowLongDate</a> 配置数据库属性，将其更改为使用四位数字显示年份。</p>
+
+<p>当文件日期与 FTP 服务器的年份不一致时，UNIX 目录列表样式以四位数字显示年份。如果文件日期与 FTP 服务器年份相同，将不返回年份。</p>
+
+<big>设置 FTP 站点的目录输出样式</big><br>
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要设置目录输出样式的 FTP 站点。</li>
+<li>用鼠标右键单击此站点并选择“属性”。</li>
+<li>选择“主目录”属性页。</li>
+<li>在“目录列表样式”下，选择 UNIX 或 MS-DOS。</li>
+</ol>
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

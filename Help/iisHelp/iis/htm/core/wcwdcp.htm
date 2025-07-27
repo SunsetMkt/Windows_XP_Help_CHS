@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于 WebDAV</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion	
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关 WebDAV、工作原理和它具有强有力 Web 发布能力的概念上的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+
+<h1><a name="AboutWebDAV">关于 WebDAV</a></h1>
+
+<p>Web 分布式创作和版本管理 (WebDAV) 扩展了 HTTP/1.1 协议，允许客户端发布、锁定和管理 Web 上的资源。与 IIS 集成后，WebDAV 允许客户端进行下列操作：</p>
+
+<ul>
+<li>处理服务器上 WebDAV 发布目录中的资源。例如，使用此功能，具有正确权限的用户可以在 WebDAV 目录中复制和移动文件。</li>
+<li>修改与某些资源相关联的属性。例如，用户可写入并检索文件的属性信息。</li>
+<li>锁定并解锁资源以便多个用户可同时读取一个文件。但每次只能有一个人修改文件。</li>
+<li>搜索 WebDAV 目录中的文件的内容和属性。</li>
+</ul>
+
+<p>在服务器上设置 WebDAV 发布目录与通过 <a href="iiabuti.htm">Internet 信息服务管理单元</a>设置虚拟目录一样简单。设置好发布目录后，具有适当权限的用户就可以向服务器发布文档，并处理目录中的文件。在设置 WebDAV 目录之前，必须首先安装 Windows XP&nbsp;Professional。</p>
+
+<h2>WebDAV 客户端</h2>
+
+<p>可以通过下面列表中描述的任意一种 Microsoft 产品或通过其他任意的支持行业标准 WebDAV 协议的客户端来访问 WebDAV 发布目录。</p>  
+
+<ul>
+<li><strong>Windows XP</strong> 通过“添加网上邻居向导”与 WebDAV 服务器连接，并显示 WebDAV 目录中的内容，如同它是本地计算机上同一文件系统的组成部分。连接完成之后，就可以拖放文件、检索和修改文件属性以及执行许多其他文件系统任务。</li>
+<li><strong>Internet Explorer 5.0</strong> 与 WebDAV 目录连接，使您可以执行通过 Windows XP 所能执行的文件系统任务。</li>
+<li><strong>Office 2000</strong> 通过其中包含的任意应用程序创建、发布、编辑并直接将文档保存到 WebDAV 目录中。</li>
+</ul>
+
+<h2>在 WebDAV 中搜索</h2>
+
+<p>一旦与 WebDAV 目录建立连接，就可以快速搜索此目录中文件的内容和属性。例如，可以搜索包含 <em>table</em> 一词的所有文件或所有由 <em>Fred</em> 编写的文件。</p>
+
+<h2>集成安全性</h2>
+
+<p>由于 WebDAV 已与 Windows XP 和 IIS 集成，因此它具有这两者所提供的安全特性。其中包括 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中指定的 IIS 权限和 NTFS 文件系统中的自由选择访问控制列表 (DACL)。有关 IIS 安全性的信息，请参阅<a href="iisecsa.htm">安全性</a>。</p>
+
+<p> 由于具有适当权限的客户端可以对 WebDAV 目录进行写入操作，因此对允许哪些客户端访问目录进行控制向来都很重要。为了帮助您控制访问权限，IIS 已内置了对 Kerberos 5 身份验证协议的支持，从而增强了集成 Windows 身份验证的功能。选择集成 Windows 身份验证，可以确保只有具有权限的客户端才可访问 Intranet 上的 WebDAV 目录，并对它进行写入操作。有关 Kerberos 5 身份验证协议如何与 IIS 集成 Windows 身份验证协作的详细信息，请参阅<a href="iiabasc.htm#challenge">集成 Windows 身份验证</a>。有关 Kerberos 协议工作原理的总体信息，请参阅 Windows XP 文档中的“Kerberos v5 身份验证”。</p>
+
+<p>另外，IIS 还支持摘要式身份验证和高级摘要式身份验证。摘要式身份验证和高级摘要式身份验证是针对 Windows 域服务器创建的，为密码和通过 Internet 传输信息提供了更严格的安全性措施。有关摘要式身份验证的信息，请参阅<a href="iiabasc.htm#digest">摘要式身份验证</a>和<a href="iiauths.htm#enabledigest">配置摘要式身份验证</a>。有关高级摘要式身份验证的信息，请参阅<a href="iiabasc.htm#advancedDigest">高级摘要式身份验证</a>和<a href="iiauths.htm#enableadvanceddigest">配置高级摘要式身份验证</a>。</p>
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+</font>
+</body>
+</html>

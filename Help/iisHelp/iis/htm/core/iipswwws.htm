@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr>
+<head>
+<title>启用内容过期</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何通过“HTTP 头”属性页来配置发布网站内容的过期日期的过程信息。" >
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<font face="宋体">
+
+<h1><A NAME="H1_325765936"></A>启用内容过期</h1>
+
+<p>如果网站中具有时间敏感信息，可以通过配置一些设置来保证不发布任何过期的信息。通过“HTTP 头”属性页，可以将网站内容配置为在某个时间自动过期。当启用内容过期时，Web 浏览器将比较当前日期和过期日期，决定是显示缓存页还是从服务器请求更新的页。</p>
+
+<big>设置网站内容的过期时间</big><br>	
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要设置内容过期时间的网站、虚拟目录、目录或文件。</li>
+<li>用鼠标右键单击网站、虚拟目录、目录或文件，并选择“属性”。</li>
+<li>选择“HTTP 头”属性页。</li>
+<li>选中“启用内容过期”复选框。</li>
+<li>选择“立即过期”，“此时间段后过期”或“过期时间”单选按钮，并在相应文本框中输入适当的过期信息。</li>
+</ol>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;通常，时间敏感信息仅对单个文件、目录或网站有效；然而，通过配置“WWW 主属性”，也可以为计算机上的所有网站设置内容过期。详细信息，请参阅<a href="iivspro.htm">更改继承的默认值</a>。</p>
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

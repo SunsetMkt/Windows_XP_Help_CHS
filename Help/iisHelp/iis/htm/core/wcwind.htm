@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>通过 Windows XP 发布</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="介绍如何通过 Windows XP 发布到 WebDAV 目录。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="PublishingthroughWindows2000">通过 Windows XP 发布</a></h1>
+
+<p>通过 Windows XP&nbsp;Professional 可以与另一台服务器上的 WebDAV 发布目录连接。默认情况下，Windows XP&nbsp;Professional 上不会安装 IIS&nbsp;5.1。因此，如果没有在安装选项中选中 IIS 5.1，则必须进行手动安装。要安装 IIS，请参阅<a href="iiiisin.htm">安装 IIS</a>。</p>
+
+
+<big>通过 Windows XP 与 WebDAV 目录连接</big>
+<ol>
+<li>单击“开始”，单击“我的电脑”，再单击“网上邻居”。</li>
+<li>双击“添加网上邻居”。</li>
+<li>在“添加网上邻居向导”中，输入要连接 WebDAV 目录的 URL。</li>
+<li>单击“下一步”。</li>
+<li>输入要连接目录的友好名称。</li>
+<li>单击“完成”。</li>
+<li>双击“网上邻居”，会出现 WebDAV 站点的友好“Web 文件夹”名称。例如，如果输入 <i>My Publishing Folder</i> 作为友好名称，将会出现 <i>My Publishing Folder</i> 的快捷方式。
+<li>双击 Web 文件夹名称。 </li>
+<li>双击 <i>My Publishing Folder</i> 的快捷方式，将显示此目录中的文件。</li>
+</ol>
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

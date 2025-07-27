@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>更改主目录</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何更改网站或 FTP 站点主目录的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="changingthehomedirectory">更改主目录</a></h1>
+
+<p>每个网站都必须有一个主目录。如果在同一台计算机上同时设置了网站和 FTP 站点，必须为每种服务（WWW 和 FTP）指定不同的主目录。WWW 服务的默认主目录是 C:\Inetpub\Wwwroot。FTP 服务的默认主目录是 C:\Inetpub\Ftproot，也可以选择其他目录作为主目录。</p>
+
+<big>更改主目录</big><br>
+
+<ol> 
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站或 FTP 站点，并打开其属性页。</li>
+<li> 单击“主目录”选项卡，然后指定主目录的位置。可以选择：</li>
+
+<ul>
+<li>此计算机上的目录</li>
+<li>另一台计算机上的共享</li>
+<li>重定向到 URL </li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;请求此 URL 的浏览器将转到新的 URL。无法重定向 FTP 目录。<br>
+</ul>
+
+<li> 在文本框中，指定目录的路径名、共享名或 URL。</li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果选择了网络中的某个共享目录，可能需要输入用户名和密码才能访问此资源。建议使用 IUSR_<em>computername</em> 帐户。如果使用具有服务器管理权限的帐户，客户端将具有了对服务器进行操作的权限，这将严重威胁网络的安全性。<br>
+</ol>
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE> 
+（下列单词只用于搜索，不会显示在网页中。）W3SVC
+</layer></span>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>使用证书信任列表</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关证书信任列表的概念和过程。证书信任列表是每个网站可信的证书颁发机构列表。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="addingatrustedcertifcateauthority">使用证书信任列表</a></h1>
+
+<p>可以对计算机进行配置，使其从预先定义的证书颁发机构 (CA) 列表接受证书。可以根据 CTL 自动验证客户证书，还可以使用 CTL 向导创建和编辑 CTL，以及将新的根目录证书添加到 CTL 中。</p>
+
+<P>例如，Intranet 管理员可以通过 CTL 形式，为 Intranet 上某个部门的网站创建一个可信任的证书颁发机构列表。IIS 将只接收此部门的 CTL 中列出的证书颁发机构的证书。当此部门的成员使用此部门的 CTL 中某个 CA 提供的客户证书登录时，将自动对他们进行身份验证。</p>
+
+<p><STRONG>注意</STRONG></p>
+<ul>
+<li>IIS 安装了最常用的 CA 根目录证书。</li>
+<li>CTL 只能应用于网站，不能应用于虚拟目录或文件。</li>
+<li>CTL 对 FTP 站点不适用。</li>
+</ul>
+
+
+<A NAME="H2_448396667"></A><big>在计算机上创建 CTL</big>
+<ol>
+	<li>使用 Administrator 帐户登录计算机。</li>
+		
+	<p><strong><font color=#0000FF>要点</font></strong>&nbsp;&nbsp;&nbsp;必须使用 Administrator 帐户登录执行下列步骤，而不能使用 Windows Administrators 组的其他帐户。</p>	
+	
+	<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，打开网站的属性页。</li>
+
+	<li>在“目录安全性”属性页中的“安全通信”下，单击“编辑”。</li>
+
+<p><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;只有向站点附加或绑定了服务器证书，“编辑”按钮才可激活。有关获取和安装服务器证书的信息，请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>。</p>
+
+	<li>在“安全通信”对话框中，选中“启用证书信任列表”复选框，然后单击“新建”。CTL 向导将指导您完成创建 CTL 的整个过程。</li>
+</OL>
+
+<A NAME="H2_448397537"></A><big>修改计算机上的 CTL</big>
+<ol>
+	<li>使用 Administrator 帐户登录计算机。</li>
+		
+	<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，打开网站的属性页。</li>
+
+	<li>在“目录安全性”属性页中的“安全通信”下，单击“编辑”。</li>
+
+	<li>在“安全通信”对话框中，选中要修改的 CTL，然后单击“编辑”。将启动 CTL 向导，指导您完成修改 CTL 的整个过程。</li>
+</OL>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果使用 Microsoft Certificate Services 2.0 颁发证书，则必须安装根目录证书。详细信息，请参阅 Microsoft 证书服务文档。</p>
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr>
+<head>
+<title>启用 ASP 错误处理</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关使用 500-100.asp 自定义错误文件处理 ASP 错误的过程信息。">
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><A NAME="H1_325765828"></A>启用 ASP 错误处理</h1>
+
+<p>默认情况下，“默认网站”及其所有应用程序都将使用 500-100.asp 文件对 ASP 错误进行处理。但是，用户创建的任何新网站或其应用程序将使用默认的（而不是自定义的）错误文件对 500-100 错误进行处理。如果要使用其他的 .asp 错误处理文件，可以将 500-100 错误映射到 500-100.asp 文件，或者创建自己的 .asp 错误处理文件。</p>
+
+<p>500-100.asp 文件处理 .asp 文件编译和运行期间发生的任何错误。当发生 ASP 错误时，IIS 返回 500-100.asp 文件并附带详细的错误信息，如发生错误的行号和对错误的描述。</p>
+
+<p>要创建自己的 ASP 错误处理文件，需要在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中启用自定义错误文件。详细信息，请参阅<a href="iierradd.htm">添加自定义错误消息</a>。</p>
+
+<p>有关如何使用 <strong>ASPError</strong> 对象进行 ASP 错误处理的信息，请参阅 <a href="../asp/vbob1dtg.htm">ASPError</a> 参照页。</p>
+
+<p><strong>注意</strong></p>
+
+<ul>
+<li>如果 500-100.asp 文件本身包含 ASP 错误，则 ASP 不会再返回一个 500-100.asp 文件，而是会报告错误，就好像不存在与 500-100 错误相对应的自定义错误文件一样。</li>
+
+<li>如果错误处理文件（默认是 500-100.asp）中包含运行时错误，则只显示此错误，无论所请求的 .asp 文件中的错误是何种类型都如此。如果错误处理文件中有预处理器错误或编译错误，则在浏览器中将显示这两种错误，500-100.asp 文件中的错误以及所请求的 .asp 文件中的错误都会显示出来。</li>
+</ul>
+ 
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

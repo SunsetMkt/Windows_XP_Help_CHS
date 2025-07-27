@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>IIS 辅助功能</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="本主题介绍仅使用键盘访问 IIS 所需的步骤。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1>IIS 辅助功能</h1>
+
+<p>下列快捷键方法（或快捷键命令）是 IIS 特有的。要查看 Windows 所有快捷键的完整列表，请在 Windows 帮助的索引中查找“‘开始’菜单：键盘命令”。要了解有关在 Microsoft Management Console (MMC) 中导航的特定信息，请在 Windows 帮助索引中查找“MMC：辅助功能”。</p>
+
+
+<big>访问 Internet 信息服务管理单元</big>
+
+<ol>
+<li type="1">单击“开始”，再单击“运行”，出现“运行”对话框。</li> 
+<li type="1">输入 mmc %systemroot%\system32\inetsrv\iis.msc。</li>
+<li type="1">按 Enter 键，出现“Internet 信息服务”管理单元。</li> 
+</ol>
+
+<p><b>注意</b>&nbsp;&nbsp;&nbsp;如果没有出现 Internet 信息服务管理单元，请检查输入的命令是否正确。mmc 和百分号之间应有一个空格。</p>
+
+<p>还可以从“计算机管理”窗口访问 IIS。以这种方式访问 IIS 时，无法选择 Internet 信息服务管理单元提供的管理选项，但可以快速访问网站并执行受到一定限制的管理。 </p>
+
+<ol>
+<li type="1">单击“开始”，用鼠标右键单击“我的电脑”，从下拉列表中单击“管理”，出现“计算机管理”窗口。</li> 
+
+<li type="1">在左窗格中，展开“服务和应用程序”目录树。</li> 
+
+<li type="1">单击“Internet 信息服务”。在右窗格中，将显示网站的名称和状态。</li>
+</ol>
+
+<p><b>注意</b>&nbsp;&nbsp;&nbsp;展开左窗格中的“Internet 信息服务”目录树以及出现的任意网站目录树，可以查看此网页的目录和虚拟目录列表。</p>
+
+
+
+
+<big>访问特定的属性页</big>
+<ol>
+<li>在 Internet 信息服务管理单元中，可以使用方向键选择要管理的站点、虚拟目录或文件。要访问文件，请转到详细信息窗格。在 Internet 信息服务管理单元中，可以使用快捷键 ALT 在控制台树和详细信息窗格两者之间切换。</li>
+<li>按快捷键 Shift+F10，打开“操作”菜单选择项目。</li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;可以使用快捷键 Ctrl+V 打开“查看”菜单。</p>
+<li>使用向上键或向下键选择“属性”，再按 Enter 键。</li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;输入 P 将暂停站点。</p> 
+<li>按快捷键 Tab，直到选定了属性页标题。</li>
+<li>使用向左键或向右键在同一行中选择相应的属性页。</li>
+<li>要切换到其他属性页行，请使用向上键或向下键。</li>
+<li>要使用某一属性页，请按 Tab 键。可以使用快捷键 Tab 选择项目，或使用快捷键 Alt+&lt;带下划线的字母&gt;。</li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;要选中或清除某一复选框，请选中它并按空格键。</p>
+</ol>
+
+
+
+<big>导航 IIS 联机文档</big>
+<ol>
+<li>如果“目录”选项卡没有显示在最前面，请按快捷键 Tab 或 Shift+Tab，直到突出显示“目录”选项卡为止。</li>
+<li>按 Enter 键，将某一选项卡置于最前面。</li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;通过这种方法，可以在“目录”、“搜索”和“索引”选项卡之间切换。</p>
+<li>按 Tab 快捷键，直到突出显示了目录中的某个项目。</li>
+<li>使用向上键或向下键选择项目。</li>
+<li>要打开一本书，请使用向右键。</li>
+<li>要关闭一本书，请使用向左键。</li>
+<li>要打开一个文档，请选中它并按 Enter 键。</li>
+</ol>
+
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+</font>
+
+</BODY>
+</HTML>

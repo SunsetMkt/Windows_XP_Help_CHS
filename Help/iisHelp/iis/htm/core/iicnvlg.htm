@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>将日志文件转换为 NCSA 格式</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何使用 convlog 工具将日志文件转换为 NCSA 公用日志文件格式的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37691496">将日志文件转换为 NCSA 格式</a></h1>
+
+<p>可以使用 convlog 工具将 Web 服务器的日志文件转换为 NCSA 公用日志文件格式。在将 Microsoft IIS 和扩展格式的日志文件转换为 NCSA 格式的过程中，此转换器还可以将 IP 地址替换为 DNS 名称，或者在 NCSA 日志文件内部进行这种替换。时差也可以使用此工具进行转换。</p>
+
+<P><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;将此工具与包含进程计数日志信息的 W3C 扩展日志文件一起使用，将会丢失所有进程计数信息。</P>
+
+<big>将日志文件转换为其他格式</big><br>
+
+<ol>
+<li>在命令提示符窗口中，输入 <strong>convlog</strong> 及下列某个开关项。</li>
+
+<ul>
+<li TYPE=disc><strong>-i ( i , n , e )</strong>&nbsp;&nbsp;指定输入文件的格式类型。</li>
+	<ul>
+	<li TYPE=circle><strong>i</strong>&nbsp;&nbsp;Microsoft IIS 日志文件格式</li>
+	<li TYPE=circle><strong>n</strong>&nbsp;&nbsp;NCSA 公用日志文件格式</li>
+	<li TYPE=circle><strong>e</strong>&nbsp;&nbsp;W3C 扩展日志文件格式</li>
+	</ul>
+<li TYPE=disc><strong><em>filename</em>.log</strong>&nbsp;&nbsp;指定输入文件名。</li>
+<li TYPE=disc><strong>-t ( ncsa:GMTOffset )</strong>&nbsp;&nbsp;指定输出类型，默认为 NCSA 公用日志文件格式。</li>
+	<ul>
+	<li TYPE=circle><strong>GMTOffset</strong>&nbsp;&nbsp;与格林威治标准时间 (GMT) 的时差（以小时为单位）。时差以四位数字表示，而且前面带有加号或减号，这取决于当地时间与 GMT 的时差。GMT 时差后的空格表示用 DNS 名称替换 IP 地址，这仅适用于 Microsoft IIS 日志文件。</li>
+	</ul>
+<li TYPE=disc><strong>-l ( 0 , 1 , 2 )</strong>&nbsp;&nbsp;指定 IIS 日志输入文件中使用的日期格式。此工具将接受指定的任意格式，因此必须确定输入文件中使用何种格式。</li>
+	<ul>
+	<li TYPE=circle><strong>0</strong> - MM/DD/YY 默认格式（美国日期格式）</li>
+	<li TYPE=circle><strong>1</strong> - YY/MM/DD（日本日期格式）</li>
+	<li TYPE=circle><strong>2</strong> - DD.MM.YY（德国日期格式）</li>
+	</ul>
+<li TYPE=disc><strong>-o</strong><em>输出目录</em>&nbsp;&nbsp;指定输出目录。默认为当前目录（即 %WINNT%\System32）。</li>
+<li TYPE=disc><strong>-x</strong>&nbsp;&nbsp;将非 HTTP 事务项保存到 .dmp 文件中。</li>
+<li TYPE=disc><strong>-d</strong>&nbsp;&nbsp;在转换过程中允许将用户 IP 地址替换为 DNS 名称。</li>
+</ul>
+</ol>
+
+<p>示例：</p>
+
+<p>命令 <strong>convlog -ii inetsv1.log -d -t ncsa:-0700</strong> 将 Inetsv1.log 文件转换为 NCSA 公用日志文件格式，具有 DNS 名称，并纠正 7 小时的 GMT 时差。</p>
+
+<p>命令 <strong>convlog -ii inetsv1.log  -l1 -t ncsa:+0900 -o \Logfiles\Japan\</strong> 将 Inetsv1.log 文件从 Microsoft IIS 日志文件格式转换为 NCSA 公用日志文件格式，纠正 9 小时的 GMT 时差（即东京时间），将日期格式设置为日本日期格式，并将此文件发送到当前驱动器上 <EM>Logfiles</EM> 文件夹中的 <EM>Japan</EM> 文件夹中。</p>
+
+<p>命令 <strong>convlog -ie extend1.log -o D:\Temp\NCSALogs</strong> 将 Extend1.log 文件从 W3C 扩展日志文件格式转换为 NCSA 公用日志文件格式，并将其输出到位于 D:\Temp 目录下的 NCSALogs 文件夹中。未将 IP 地址替换为 DNS 名称。</p>
+
+<p>命令 <strong>convlog -in ncsa1.log -o -d \\REMOTE_MACHINE\REMOTE_SHARE\NCSALogs</strong> 将 Ncsa1.log 文件以 NCSA 公用日志文件格式输出到远程驱动器共享目录下的 NCSALogs 文件夹中。IP 地址被替换为 DNS 名称，没有进行文件格式转换。</p>
+
+<p>DNS 转换过程中生成的文件名遵守下列约定：</p>
+
+<ul>
+<li>转换为 NCSA 公用日志文件格式，但未进行 DNS 转换的日志文件保留原来的文件名，扩展名为 .ncsa。</li>
+<li>IP 地址转换为 DNS 名称的日志文件保留原来的文件名，扩展名为 .ncsa.dns。</li>
+</ul>
+
+<p>例如，如果 Inetsv1.log 日志文件使用 Microsoft IIS 日志文件格式，但未经过 DNS 转换，输出日志文件将为 Inetsv1.log.ncsa。但是，如果启用了 DNS 转换功能，输出日志文件将为 Inetsv1.log.ncsa.dns。</p>
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li>有关可用日志文件格式的说明，请参阅<a href="iiabtlg.htm">关于记录站点活动</a>。</li>
+<li>有关设置 W3C 扩展日志记录字段的详细信息，请参阅<a href="iiconlg.htm">自定义 W3C 扩展日志记录</a>。</li>
+<li>有关日志记录频率和日志文件大小的信息，请参阅<a href="iinamlg.htm">保存日志文件</a>。</li>
+<li>有关日志记录属性的参考列表，请参阅<a href="iiintlg.htm">日志记录属性参考</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

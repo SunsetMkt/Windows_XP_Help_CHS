@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html dir=ltr>
+<head>
+
+<title>“FTP 站点”属性页</title>
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000>
+<FONT FACE="宋体">
+
+<p><strong>“FTP 站点”属性页</strong></p>
+
+<p>使用此属性页设置服务器的标识参数。服务器和域名以及 IP 地址是可选的。</p>
+
+<p><strong>标识</strong></p>
+
+<p><strong>描述</strong></p>
+
+<p>可以任意指定服务器名称。此名称主要用于标识个人和组织身份。</p>
+
+<p><strong>IP 地址</strong></p>
+
+<p>对于显示在此框中的地址，必须已经在“控制面板”中定义。详细信息，请参阅 Windows 文档。</p>
+
+<p><strong>TCP 端口</strong></p>
+
+<p>确定正在运行服务的端口。</p>
+
+<p>默认值是端口 21。可以将此端口更改为任意唯一的 TCP 端口号；客户端必须事先知道应请求此端口号，否则请求将不能连接到服务器。</p>
+
+<p><strong>连接</strong></p>
+
+<p><strong>不受限制</strong></p>
+
+<p>同时连接到服务器的连接数不受限制。</p>
+
+<p><strong>限制为</strong></p>
+
+<p>设置允许同时连接到服务器的最大连接数。</p>
+
+<p><strong>连接超时</strong></p>
+
+<p>设置服务器断开非活动用户之前，应保持连接的时间长度。这将确保在 HTTP 协议无法关闭某个连接时，关闭所有的连接。</p>
+
+<p><strong>启用日志记录</strong></p>
+
+<p>选中此选项将启用 FTP 站点日志记录，此功能可以记录用户活动的详细信息，并创建不同格式的日志。启用日志记录后，请在“活动日志格式”列表中选择格式。活动日志格式如下：</p>
+
+<ul>
+<li><strong>Microsoft IIS 日志文件格式</strong> 一种固定的 ASCII 格式。</li>
+<li><strong>W3C 扩充日志文件格式</strong> 一种可自定义的 ASCII 格式，默认选中此格式。</li>
+<li><strong>ODBC 日志记录</strong> 一种固定的数据库日志记录格式（只适用于 Windows 2000 Server）。</li>
+</ul>
+
+<p>要配置日志文件创建（例如，每周或按文件大小）选项，或者配置 W3C 扩展日志或 ODBC 日志的属性，请单击“属性”。</p>
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>侦测未授权的访问</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关存档和查看安全性日志以检测未授权访问企图的过程信息和概述。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37697000">侦测未授权的访问</a></h1>
+
+<p>可以通过查看 IIS 日志记录和 Windows 安全性日志，监视较长一段时间内的安全性事件。可以使用 Microsoft Management Console 查看 Windows 安全性日志。IIS 日志可以用任何文本编辑器或文字处理软件查看。有关查看 IIS 日志的详细信息，请参阅<a href="iilogsa.htm">记录站点活动</a>。</p>
+
+<p>在 Windows 安全性日志中，可以发现未授权的访问尝试，它们显示为警告或错误日志条目。还可以将这些日志存档以备日后使用。有关审核的详细信息，请参阅 Windows 文档。</p>
+
+<big>通过查看 Windows 安全性日志检测潜在的安全性问题</big><br>
+
+<ol>
+<li>单击“开始”，指向“设置”，单击“控制面板”，双击“管理工具”，然后双击“计算机管理”。</li>
+<li>展开“系统工具”。</li>
+<li>展开“事件查看器”。</li>
+<li>选择“安全性”。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果无法查看安全性日志，则说明您所使用的用户帐户不具有这一权限。这是由于域级安全策略覆盖了本地计算机级的安全策略，也就是说您可以作为本地计算机的管理员登录，但不能访问计算机的安全性日志。要获得许可权限，请与网络管理员联系。有关安全策略的详细信息，请参阅计算机文档。</p>
+
+
+<li>检查可疑安全事件的日志文件，包括下列各项：</li>
+
+<ul>
+<li>无效登录尝试。</li>
+<li>权限使用失败。</li>
+<li>试图访问并修改 .bat 或 .cmd 文件失败。</li>
+<li>尝试改变安全权限或审核日志。</li>
+<li>尝试关闭服务器。</li>
+</ul>
+</ol>
+
+
+
+<big>将 Windows 安全性日志存档</big><br>
+<ol>
+<li>单击“开始”，指向“设置”，单击“控制面板”，双击“管理工具”，然后双击“计算机管理”。</li>
+<li>展开“系统工具”。</li>
+<li>展开“事件查看器”。</li>
+<li>选择“安全性”。</li>
+<li>在“操作”菜单上，单击“另存日志文件”。</li>
+<li>在“将‘安全性’另存为”对话框中，选择保存文件的目录，然后输入此文件的名称。</li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;安全性日志可以保存为事件 (.evt) 文件、文本 (.txt) 文件或逗号分割的 (.csv) 文件。</p>
+</ol>
+
+
+
+<big>打开存档的 Windows 安全性日志</big><br>
+<ol>
+<li>单击“开始”，指向“设置”，单击“控制面板”，双击“管理工具”，然后双击“计算机管理”。</li>
+<li>展开“系统工具”。</li>
+<li>展开“事件查看器”。</li>
+<li>在“日志”菜单上，选择“安全性”。</li>
+<li>在“操作”菜单上，指向“新建”，并单击“日志查看”。</li>
+<li>在“添加另一个日志查看”对话框中，选择“保存（打开先前保存的日志文件）”并浏览文件。</li>
+<li>在“日志类型”下拉列表中，选择“安全性”。</li>
+<li>单击“确定”，在查看器中打开此文件。</li>
+</ol>
+
+<big>通过查看 IIS 日志文件检测潜在的安全性问题</big><br>
+<ol>
+<li>在文本编辑器（如记事本）中打开日志文件。有关日志文件的详细信息，请参阅<a href="iilogsa.htm">记录站点活动</a>。</li>
+<li>检查可疑安全事件的日志文件，包括下列各项：</li>
+
+<ul>
+<li>多个尝试运行可执行文件或脚本的无效命令。（必须严密监视脚本目录。） </li>
+<li>单个 IP 地址的无效登录尝试过多，目的可能是增加网络通信量或拒绝其他用户的访问权限。
+<li>试图访问并修改 .bat 或 .cmd 文件失败。</li>
+<li>将文件上载到包含可执行文件目录的未授权尝试。</li>
+</ul>
+</ol>
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

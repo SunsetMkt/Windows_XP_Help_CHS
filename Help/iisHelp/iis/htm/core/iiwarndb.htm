@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>配置应用程序</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="导航页包含有关如何创建和配置 Web 应用程序的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="primarynodetoplevel">配置应用程序</a></h1>
+
+<p>本节说明如何使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>配置基于网站的应用程序。</p>
+
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iiwarndc.htm">关于应用程序</a>：定义基于网站的应用程序，并解释站点目录结构如何与应用程序的定义相关。</li>
+<li><a href="iiwarnde.htm">创建应用程序</a>：将目录设置为应用程序的开始位置或根。</li>
+<li><a href="iiwarndf.htm">设置应用程序映射</a>：使文件扩展名与处理这些文件的程序相关联。</li>
+<li><a href="iiisol.htm">独立应用程序</a>：在 Web 服务器内存空间之外的独立内存空间中运行应用程序。</li>
+<li><a href="iipoolc.htm">缓存应用程序</a>：设置 CGI 脚本超时，缓存 ISAPI DLL 以及更改 ASP 网页的缓存。 </li>
+<li><a href="iiwarndi.htm">终止独立的应用程序</a>：终止独立的应用程序。 </li>
+<li><a href="iioop.htm">进程回收</a>：对回收应用程序的方法、可配置事件、编程和设置注意事项进行了说明。</li>
+<li><a href="iiwarndh.htm">配置 ASP 应用程序</a>：为 ASP 应用程序设置属性。</li>
+<li><a href="iiwarndd.htm">启用 ASP 调试</a>：在 Web 服务器上启用调试，以便可以检查和改正 ASP 网页。</li>
+<li><a href="iicacgia.htm">配置 CGI 应用程序</a>：在 Web 服务器上安装和配置 CGI 应用程序。</li>
+<li><a href="iiwarndg.htm">安装 ISAPI 筛选器</a>：解释什么是 ISAPI 筛选器以及如何使其与 Web 服务器事件相关联。 </li>
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>编写 ASP 应用程序；请参阅 <a href="../asp/iiwawelc.htm">Active Server Pages</a>。</li>
+<li>使用证书；请参阅<a href="iicerts.htm">证书</a>。</li>
+</ul>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+<span style="display:none"><LAYER VISIBILITY=HIDE>
+（下列文字只用于搜索，不会显示在网页中。) 配置, web 应用程序, 程序, 程序员, 开发, 开发者, 代码, 编码器, 应用程序根, 目录, 开始位置目录, 创建, 写, 映射, 关联, 文件名, 扩展名, dll, .dll, .exe, exe, 独立, 进程外, oop, 故障, 可靠的, 稳定的, 可靠性, 稳定性, 可用性, 可用的, uptime, downtime, 保护, 单独的, 内存空间, cgi, 脚本, 超时, 缓存, isapi, 扩展名, 无脚本 asp, 流控制, 增强的, 对象, 自我调整, 精细调整, 调整, 自动的, 线程, 错误处理, 线, 数字, .asp, 文件, server scriptlet, 商业逻辑, 可重用的, com, 组件, j++, vb, vba, visual basic, jscript, javascript, 筛选器, 安装, asp, active server pages, 使自动化, 管理任务, 属性, 属性页, 启动, 终止, 暂停, 调试, 逐个查看, 错误, 链接, 详细信息
+</layer></span>
+</font>
+</body>
+</html>

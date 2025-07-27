@@ -1,0 +1,183 @@
+<html dir=ltr><head><title>IIS 管理脚本实用程序 (adsutil)</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<meta name="description" content="本主题包含了有关 IIS 管理脚本实用程序 (adsutil) 的概述及用法信息。">
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<font face="宋体">
+
+<h1 align="left">IIS 管理脚本实用程序 (adsutil)</h1>
+
+<p><STRONG>概述：</STRONG></p>
+
+<p>这是一个 IIS 管理实用程序，通过 Active Directory 服务接口 (ADSI) 使用 VBScript 来控制 IIS 配置。此脚本应使用随 Windows Script Host 一同安装的 CScript 来运行。</p>
+
+<p><STRONG>用法：</STRONG></p>
+ 
+<p>Cscript.exe adsutil.vbs 命令 &lt;路径&gt; [&lt;参数&gt;...]</p>
+<p>Cscript.exe adsutil.vbs 命令[&lt;路径&gt; [&lt;参数&gt;...]]</p>
+<p><strong>命令：</strong></p>
+
+<table cellspacing="2" cellpadding="5">
+
+<tr>
+	<td>GET 路径</td>
+	<td>显示所选参数。</td>
+</tr>
+
+<tr>
+    <td>SET 路径值</td>
+    <td>指定新值。</td>
+</tr>
+
+<tr>
+	<td valign="TOP">ENUM 路径 "/P"</td>
+	<td>列出用于路径的所有参数。<br>
+/P - 仅列出路径（无数据）。<br></td>
+</tr>
+
+<tr>
+	<td valign="TOP">ENUM_ALL "/P"</td>
+	<td>列出所有参数。<br>  /P - 仅列出路径（无数据）。<br></td>
+</tr>
+
+<tr>
+    <td>DELETE 路径</td>
+    <td>删除路径或参数。</td>
+</tr>
+
+<tr>
+    <td valign="TOP">CREATE 路径 [密钥类型]</td>
+    <td>创建路径并为其指定密钥类型。</td>
+</tr>
+
+<tr>
+    <td>APPCREATEINPROC 路径</td>
+    <td>创建进程内应用程序。</td>
+</tr>
+
+<tr>
+    <td valign="TOP">APPCREATEOUTPROC 路径</td>
+    <td>创建进程外应用程序。</td>
+</tr>
+
+<tr>
+    <td>APPDELETE 路径</td>
+    <td>删除应用程序（如果存在）。</td>
+</tr>
+
+<tr>
+    <td>APPUNLOAD 路径</td>
+    <td>卸载进程外应用程序。</td>
+</tr>
+
+<tr>
+    <td>APPGETSTATUS 路径</td>
+    <td>获取应用程序的状态。</td>
+</tr>
+
+<tr>
+    <td valign="TOP">FIND 路径</td>
+    <td>查找设置了参数的路径。</td>
+</tr>
+
+<tr>
+    <td valign="TOP">START_SERVER 路径</td>
+    <td>启动服务器。</td>
+</tr>
+
+<tr>
+    <td>STOP_SERVER 路径</td>
+    <td>停止网站。</td>
+</tr>
+
+<tr>
+    <td>PAUSE_SERVER 路径</td>
+    <td>暂停网站。</td>
+</tr>
+
+<tr>
+    <td>CONTINUE_SERVER 路径</td>
+    <td>网站取消暂停。</td>
+</tr>
+
+<tr>
+    <td>HELP</td>
+    <td>打印所有可用命令。</td>
+</tr>
+
+</table>
+
+<p><strong>注意</strong></p>
+
+<ul>
+<li>&lt;路径&gt; 指要设置其属性及名称的节点所在的路径。例如，要将“ServerComment”设置为“Web Server Number 1”，则命令如下：</li>
+
+<p><em><strong>adsutil SET w3svc/1/ServerComment "Web Server Number 1"</strong></em></p>
+
+<p>下一次打开 Internet 信息服务管理单元时，Web 服务器的名称将变为“Web Server Number 1”。</p>
+
+<li>开关“-s:服务器名称”可以在任何命令后面使用，用于在远程计算机上执行该命令。（请参阅下面第一个示例。）</li>
+</ul>
+
+<p><strong>示例：</strong></p>
+
+<p>Cscript.exe adsutil.vbs GET W3SVC/1/ServerBindings -s:remotecomputer1</p>
+
+<p>Cscript.exe adsutil.vbs SET W3SVC/1/ServerBindings &quot;:81:&quot;</p>
+
+<p>Cscript.exe adsutil.vbs CREATE W3SVC/1/Root/MyVdir &quot;IIsWebVirtualDir&quot;</p>
+
+<p>Cscript.exe adsutil.vbs START_SERVER W3SVC/1&nbsp;</p>
+
+<p>Cscript.exe adsutil.vbs ENUM /P W3SVC</p>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

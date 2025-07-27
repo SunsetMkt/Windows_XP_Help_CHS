@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>在服务器上设置 SSL</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何配置 Web 服务器安全套接字层 (SSL) 功能以加密通信、保护 Web 内容完整性和验证用户（可选）的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="sslsetup">在服务器上设置 SSL</a></h1>
+
+<p>可以配置 Web 服务器安全套接字层 (SSL) 的安全功能以验证内容的完整性、用户标识和加密网络传输。</p>
+
+<big>在 Web 服务器上设置 SSL</big><!--</p>--><br>
+
+<ol>
+<li>Web 服务器要求有效的服务器证书以建立 SSL 通信。使用 Web 服务器证书向导生成发送到证书颁发机构的证书请求文件（默认情况下为 NewKeyRq.txt），或生成对联机证书颁发机构（如 Microsoft 证书服务）的请求。详细信息，请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>。
+
+<p>如果未使用 Microsoft&reg Certificate Services 2.0 为自已颁发服务器证书，则必须由第三方证书颁发机构批准您的请求，并为您颁发服务器证书。详细信息，请参阅<a href="iiocrsc.htm">获取服务器证书</a>。</p></li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;根据服务器证书提供的标识保证级别，您可能需要等待几天到几个月，以便证书颁发机构批准您的请求并发送证书文件。</p>
+
+<li>接收到服务器证书文件后，可以使用向导安装它。安装过程将证书附加或“绑定”到网站。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;每个网站只能有一个服务器证书。</p>
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择需使用 SSL 保护的网站，并打开其属性页。在“网站”属性页的“网站标识”下，选择“高级”。</li>
+
+<li>在“多网站高级配置”对话框的“网站的多个 SSL 标识”下，确保网站 IP 地址分配到端口 443，即安全通信的默认端口。
+<p>每个网站可以有多个 SSL 端口。要配置更多的 SSL 端口，单击“网站的多个 SSL 标识”下的“添加”。</p></li>
+
+<li>在“目录安全性”或“文件安全性”属性页的“安全通信”下，单击“编辑”。</li>
+
+<li>在“安全通信”对话框中，将 Web 服务器配置为需要安全频道。如果要求 128 位的密钥加密，请确保用户的 Web 浏览器支持 128 位加密。详细信息，请参阅<a href="iiencsc.htm">加密</a>。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;有关升级到 128 位加密能力的信息，请访问 
+<a href="http://www.microsoft.com/isapi/redir.dll?prd=support&prd=ie&ar=support" target="_blank">Microsoft 产品支持服务网站</a>。</p>
+
+<li>在“安全通信”下，单击“编辑”。可以启用 Web 服务器的 SSL 客户证书验证和映射功能。请参阅下列内容：</li>
+
+<ul>
+<li><a href="iiectsc.htm">启用客户证书</a></li>
+<li><a href="iimapsc.htm">将客户证书映射到用户帐户</a></li>
+</ul>
+
+</ol>
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

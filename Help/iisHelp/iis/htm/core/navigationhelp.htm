@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>导航帮助</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关在 IIS 帮助中导航的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1>使用“IIS 帮助”功能</h1>
+<p>Internet 信息服务联机文档包含了几个功能，可以帮助您查找和使用所需信息。可以使用鼠标或<a href="#keyboard">使用键盘</a>浏览“IIS 帮助”。</p>
+
+<p><strong>目录</strong></p>
+
+<ul>
+<li>在导航窗格中，“目录”列出了所有可用功能和主题。</li>
+<li>选中或单击最高级别的主题标题时，将在主题窗格中出现一个页面，描述这一部分的内容。</li>
+<li>选中或单击主题标题旁的加号可以展开目录，显示这一部分的所有主题。</li>
+</ul>
+
+<p><strong>搜索</strong></p>
+
+<ul>
+<li>在导航窗格“搜索”选项卡的“搜索”文本框中输入一个词或句子，然后按“搜索”按钮。</li>
+<li>从“选择搜索类型”文本框中选择搜索类型。默认情况下，“标准搜索”将搜索与这个词或句子相近的几个词或句子。可以通过“精确词组”、“任意词”、“所有词”或“布尔搜索”来缩小搜索范围。</li>
+</ul>
+
+<p><strong>索引</strong></p>
+
+<ul>
+<li>在导航窗格“索引”选项卡的文本框中输入一个词，进一步缩小索引范围，使之与所输入单词最为接近。</li>
+<li>双击选定条目或在选定条目上按 Enter 键，便可查看包含关键字相关信息的文件或主题列表。</li>
+</ul>
+
+<p><strong>打印</strong></p>
+
+<p> <img src="../../misc/print.gif" border="0" alt="打印按钮"> 选中或单击“打印”按钮，可以打印一个或多个主题。</p>
+
+<p><strong>将目录与“索引”和“搜索”结果同步</strong></p>
+<p>从索引或搜索工具中选定主题后，可以查看此主题在目录中的位置。从“索引”或“搜索”选项卡中查看某一主题时，此主题将出现在文档窗口的右窗格中。
+<ul>
+<li>从“索引”或“搜索”选项卡中查看主题后，选中或单击“目录”选项卡，然后选中或单击“同步”<img src="../../misc/synch.gif" border="0" alt="“同步”按钮">按钮。
+</ul>
+
+<h1><a name="keyboard">使用键盘浏览“IIS 帮助”</a></h1>
+<P>TAB 键用作导航键。</P>
+<ul>
+	<li>按 Tab 键从一个窗格导航到另一个窗格，还可在每个窗格中的链接之间导航，包括目录所在窗格中的“目录”、“搜索”和“索引”选项卡。</li> 
+	<li>Shift+TAB 可以向相反的方向导航。</li>
+</ul>
+
+<p><strong>在目录窗格中选择主题或项目</strong></p>
+<ul>
+	<li>在所显示的任何所选内容上按 Enter 键。如果所选内容是目录中的父目录项，则展开从属主题。</li> 
+	<li>要浏览整个目录，请使用向上和向下箭头键或 Page Up 和 Page Down 键。</li>
+</ul>
+
+<p><strong>在索引窗格中选择主题</strong></p>
+<ul>
+	<li>选择要搜索的索引项，可以在文本框中直接输入索引项，也可以从所显示的索引项中选择。</li> 
+	<li>按 Alt+D 显示主题或其他选定内容。</li>
+</ul>
+
+<p><strong>搜索窗格中选择主题</strong></p>
+<ul>
+	<li>在“搜索”文本框中输入搜索项。</li> 
+	<li>选择搜索类型，方法是按 Tab 键导航到列表框，然后按 Alt+ 向上箭头或向下箭头键。</li>
+	<li>使用 Tab 键导航到“搜索”按钮，并按 Enter 键显示搜索结果。</li>
+</ul>
+
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+</font>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML DIR=LTR><HEAD><TITLE>使用组件和对象</TITLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+ 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="说明如何在 ASP 服务器端脚本中创建 COM 组件实例以及如何设置组件作用域。其中包括用于 Java 类和 moniker 的 VBScript 示例代码，以及使用脚本创建 COM 组件。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"><FONT FACE="宋体">	
+
+<H1><A NAME="H1_37767305">使用组件和对象</A></H1>
+
+
+<P>COM 组件是建立强大而实际的 Web 应用程序的关键。组件提供了在脚本中用来执行专门任务的功能，如执行金融交易或验证数据等。ASP 还提供有一套可以大大增强脚本性能的基本组件。  
+
+<H2><A NAME="H2_37767923">关于组件</A></H2>
+
+<P>COM 组件是可重复使用的编程模块，其中包含用于执行一项或一组任务的代码。组件可以（甚至通过网络）与其他组件合并，共同创建 Web 应用程序。COM 对象执行公共任务以便不必自己创建代码来执行这些任务。例如，可以在网页上使用股票接收机组件显示最新的股价信息。不过，创建具有同样功能的脚本并不轻松。同样，脚本无法象组件一样能够重复利用。
+
+<P>如果您对脚本编辑还不太熟悉，可以编写使用组件的脚本而无需了解组件的工作原理。ASP 中带有可以立即使用的基本组件。例如，可以使用 ActiveX 数据对象 (ADO) 组件在网页中添加数据库连接。还可以从第三方开发商获得其他组件。</P>
+
+<P>如果您是 Web 应用程序的开发人员，要将您的业务逻辑封装为可重复使用的安全模块，那么利用组件是最好的方法。例如，可以从处理销售订单的脚本中调用组件来验证信用卡号。由于验证过程独立于订购过程，因此可以在信用卡验证过程发生变化时更新组件，而不必改动您的订购过程。同样，由于 COM 组件是可重复使用的，因此可以在其他脚本和应用程序中重复利用。一旦在 Web 服务器中安装了组件，便可以从 ASP 服务器端脚本 ISAPI 扩展、服务器上的其他组件或用其他 COM 兼容语言编写的程序中调用它。</P>
+
+<P>可以用任何支持组件对象模型 (COM) 的编程语言（如 C、C++、Java、Visual Basic 或其他脚本编辑语言）创建组件。（如果熟悉 COM 编程的话，COM 组件也称为“自动服务器”）。要在 Web 服务器上运行，COM 组件不能具有任何图形用户界面元素，如 Visual Basic 的 <STRONG>MsgBox</STRONG> 函数；图形用户元素只可在服务器上查看，而不能在浏览器上查看。</P> 
+
+<H2><A NAME="H2_37769966">创建组件对象的实例</A></H2>
+
+<P>组件是包含动态链接库 (.dll) 或可执行 (.exe) 文件的可执行代码。组件可提供一个或多个“对象”，这是一种自包含的代码单元，可以在组件中执行指定的功能。每个对象都具有方法（被编程处理的过程）和属性（行为属性）。要使用由组件提供的对象，可以创建对象实例并为新的实例分配变量名称。使用 ASP 的 Server.CreateObject 方法或在 HTML 中使用 &lt;OBJECT&gt; 标记可创建对象实例。使用脚本语言变量赋值语句可为对象实例指定名称。创建对象实例时，必须提供其注册名 (PROGID)。对于 ASP 提供的基本组件，可以从参考信息（请参阅 <A HREF="comp275c.htm">ASP 的可安装组件</A>）中获得对象的 PROGID。</P>
+
+<P>例如，Ad Rotator 组件可以随机旋转一组图形广告。Ad Rotator 组件提供了一个对象，称为 Ad Rotator 对象，其 PROGID 为“MSWC.AdRotator”。可使用下列语句创建一个 Ad Rotator 对象实例：</P>
+
+<P><STRONG>VBScript:</STRONG></P>
+
+<PRE>&lt;% Set MyAds = Server.CreateObject("MSWC.AdRotator") %&gt;</PRE>
+
+<P><STRONG>JScript:</STRONG></P> 
+
+<PRE>&lt;% var MyAds = Server.CreateObject("MSWC.AdRotator") %&gt;</PRE>
+
+<P>如果熟悉 VBScript 或 JScript，请注意不要使用脚本语言函数创建新的对象实例（VBScript 中为 <STRONG>CreateObject</STRONG>；JScript 中为 <STRONG>New</STRONG>）。必须使用 ASP 的 <STRONG>Server.CreateObject</STRONG> 方法，否则，ASP 将无法跟踪脚本中对象的使用情况。</P>
+
+<P>还可以使用 HTML 的 &lt;OBJECT&gt; 标记创建对象实例。必须提供带有 Server 值的 RUNAT 属性，同时还应提供 ID 属性以设置将在脚本中使用的变量名称。使用注册名 (PROGID) 或注册码 (CLSID) 都可以标识对象，下列示例使用注册名创建 Ad Rotator 对象的实例：</P>
+
+<PRE>&lt;OBJECT RUNAT=Server ID=MyAds PROGID="MSWC.AdRotator"&gt;&lt;/OBJECT&gt;</PRE>
+
+<P>下列示例使用注册码 (CLSID) 创建 Ad Rotator 对象的实例：</P>
+
+<PRE>&lt;OBJECT RUNAT=SERVER ID=MyAds 
+CLASSID="Clsid:1621F7C0-60AC-11CF-9427-444553540000"&gt;&lt;/OBJECT&gt; </PRE>
+
+<H2><A NAME="scriptlets">使用脚本创建 COM 组件</A></H2>
+
+<P>ASP 支持 Windows 脚本组件，这是 Microsoft 提供的用来创建 COM 组件的功能强大的脚本技术。尤其是，您可以将用于数据库访问或内容生成等的通用脚本封装在可重复利用的组件中，以便在任何 .asp 文件或程序中使用。无需特殊的开发工具，使用 VBScript 或 JScript 编写脚本即可创建 Windows 脚本组件。也可以将 Windows 脚本组件与使用 COM 兼容编程语言编写的程序相结合，如 Visual Basic、C++ 或 Java 等。</P>
+
+<P>下面是一个用 VBScript 编写的脚本示例，它定义了将华氏温度值转换为摄氏温度值的方法：</P>
+
+<PRE>&lt;SCRIPTLET&gt;
+
+&lt;Registration
+	Description="ConvertTemp"
+	ProgID="ConvertTemp.Scriptlet"
+	Version="1.00"
+&gt;
+&lt;/Registration&gt;
+
+&lt;implements id=Automation type=Automation&gt;
+	&lt;method name=Celsius&gt;
+		&lt;PARAMETER name=F/&gt;
+	&lt;/method&gt;
+	&lt;method name=Fahrenheit&gt;
+		&lt;PARAMETER name=C/&gt;
+	&lt;/method&gt;
+&lt;/implements&gt;
+
+&lt;SCRIPT LANGUAGE=VBScript&gt;
+
+  Function Celsius(F)
+	  Celsius = 5/9 * (F - 32)
+  End Function
+
+  Function Fahrenheit(C)
+	  Fahrenheit = (9/5 * C) + 32
+  End Function
+
+&lt;/SCRIPT&gt;
+&lt;/SCRIPTLET&gt;</PRE>
+
+
+<P>在执行此 Windows 脚本组件之前，必须以 .sct 为扩展名保存此文件，然后在“Windows 资源管理器”中，用鼠标右键单击此文件并选择“注册”。要在网页中使用此 Windows 脚本组件，应使用下列所示的服务器端脚本：</P>
+
+<PRE>&lt;%
+  Option Explicit
+
+  Dim objConvert
+  Dim sngFvalue, sngCvalue
+
+  sngFvalue = 50
+  sngCvalue = 21 
+
+  Set objConvert = Server.CreateObject("ConvertTemp.Scriptlet")
+%&gt;
+
+&lt;%= sngFvalue %&gt; degrees Fahrenheit is equivalent to &lt;%= objConvert.Celsius(sngFvalue) %&gt; degrees Celsius&lt;BR&gt;
+
+&lt;%= sngCvalue %&gt; degrees Celsius is equivalent to &lt;%= objConvert.Fahrenheit(sngCValue) %&gt; degrees Fahrenheit&lt;BR&gt;</PRE>
+
+<H2><A NAME="H2_37773690">使用 ASP 内置对象</A></H2>
+
+<P>ASP 还提供可以简化 Web 开发任务的内置对象。例如，可以使用 Request 对象轻松访问与 HTTP 请求相关联的信息，如从 HTML 表单或 cookie 中得到的用户输入等。与 COM 组件所提供的对象不同，在脚本中使用实例时无需创建 ASP 内置对象的实例。这些对象在开始处理 ASP 请求时将自动创建。使用内置对象的方法和属性与使用组件对象的方法和属性的方式（已在上一主题中说明）相同。关于内置对象的完整说明，请参阅 <A HREF="iiwaref.htm">Active Server Pages 对象快速参考卡</A>。</P>
+
+<H2><A NAME="H2_37774333">调用对象方法</A></H2>
+
+<P>“方法”是可在对象上或使用对象执行的操作。调用方法的语法为：</P>
+
+<P><b>Object.Method</b> <EM>parameters</EM></P>
+
+<P><EM>parameters</EM> 根据方法的不同而有所不同。</P>
+
+
+<P>例如，可以使用 Response 内置对象的 Write 方法将信息发送到浏览器，如下列语句所示：</P>
+
+<PRE>&lt;% Response.Write "Hello World" %&gt;</PRE>
+
+<P><b>注意</b>&nbsp;&nbsp;&nbsp;某些脚本语言不支持 Object.Method 语法。如果使用的语言不支持，必须添加注册表项目以便将此语言作为主脚本语言。详细信息，请参阅<A HREF="iiwascln.htm">使用脚本语言</A>。</P>
+
+<H2><A NAME="H2_37775276">设置对象属性</A></H2>
+
+<P>“属性”用于说明对象的特征。属性定义对象类型等对象特征，或说明启用或禁用等对象状态。语法为：</P>
+
+<P><STRONG>Object.Property</STRONG></P>
+
+<P>有时可以读取和设置属性的值。此外，可以为某些对象添加新的属性。</P>
+
+<P>例如 Ad Rotator 组件具有属性 Border，它用于指定广告是否具有边框并确定边框的粗细。下列表达式指定不使用边框：</P>
+
+<PRE>&lt;% MyAds.Border = 0 %&gt;</PRE>
+
+<P>对于某些属性，可以使用 ASP 输出命令来显示当前值。例如，下列语句在浏览器仍与服务器连接时返回 TRUE：</P>
+
+<PRE>&lt;%= Response.IsClientConnected %&gt;</PRE>
+
+<H2><A NAME="H2_37772661">从 Java 类创建对象</A></H2>
+
+<P>要使用 Server.CreateObject 创建 Java 类的实例，必须使用 JavaReg 程序将类注册为 COM 组件。然后便可使用 Server.CreateObject 方法或 HTML 的&lt;OBJECT&gt; 标记和 PROGID 或 CLSID。</P>
+
+<P>此外，还可以使用 Java monikers 提供的机制直接实例化 Java 类，而不使用 JavaReg 程序。要通过 monikers 将类实例化，可以使用 VBScript 或 JScript 的 GetObject 语句，并提供 Java 类的完整名称，格式为：<CODE>java:<EM>类名</EM></CODE>。下列 VBScript 示例将创建 Java <b>Date</b> 类的实例。</P>
+
+<PRE>&lt;% 
+  Dim dtmDate
+  Set dtmDate = GetObject("java:java.util.Date")
+%&gt;
+
+The date is &lt;%= dtmDate.toString() %&gt;</PRE>
+
+<P>通过调用 GetObject（而不是 Server.CreateObject）创建的对象也可以使用 ASP 内置对象并参与事务操作。要使用 Java monikers，必须使用 Microsoft 虚拟机的 2.0 版或更高版本。</P>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</FONT>
+</BODY>
+</HTML>

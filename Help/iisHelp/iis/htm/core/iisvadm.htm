@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>服务器管理</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="包含链接的导航页，这些链接指向那些描述如何更改默认设置、记录站点通信和监视服务器性能的主题。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37757621">服务器管理</a></h1>
+
+<p>欢迎访问有关服务器管理的主题。本节描述了如何更改默认设置，以及如何记录站点通信和监视服务器性能。</p>
+
+<p> 可以在 IIS 中使用默认设置，也可以自定义这些设置以适应自己的 Web 发布需要。通过调整默认设置，可以提供附加值、更好的性能以及更高的安全性。 </p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iivrtsv.htm">网站和 FTP 站点</a>：有关网站和 FTP 站点的基本信息，包括操作指导、远程管理和命名站点。</li>
+<li><a href="wcwbdav.htm">WebDAV 发布</a>：用 WebDAV 向网站发布信息，是对 HTTP 1.1 提议草案的实现。</li>
+<li><a href="iinrsov.htm">名称解析</a>：设置 WINS 或 DNS 名称解析系统，以便将“友好”名称正确映射到 IP 地址。 </li>
+<li><a href="iiwarndb.htm">配置应用程序</a>：控制应用程序作用域以获得最佳的可靠性和性能。</li>
+<li><a href="iisecsa.htm">安全性</a>：保护服务器、内容和应用程序不受非法入侵。</li>
+<li><a href="iierrcst.htm">自定义错误消息</a>：为用户提供对用户友好的自定义 HTTP 1.1 错误消息。</li>
+<li><a href="iilogsa.htm">记录站点活动</a>：跟踪站点通信并解释日志文件。</li>
+<li><a href="iiptnov.htm">性能调整</a>：监视并提高服务器性能。</li>
+<li><a href="..\adminsamples\default.htm">管理脚本</a>：使用命令行脚本管理服务器。</li>
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>虚拟目录；请参阅<a href="iiwebcon.htm">网站管理</a>。</li>
+<li>脚本；请参阅 <a href="../asp/iiwawelc.htm">Active Server Pages</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

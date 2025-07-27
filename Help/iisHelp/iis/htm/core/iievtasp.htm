@@ -1,0 +1,630 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>Active Server Pages 事件</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="列出 Windows 事件为 IIS 记录的 ASP 事件的编号和错误消息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="ftpevents">Active Server Pages 事件</a></h1>
+
+<table border="1" cellpadding="4" cellspacing="1">
+<tr>
+<td align="center" bgcolor="#C0C0C0"><strong>事件 ID</strong></td>
+<td align="center" bgcolor="#C0C0C0"><strong>描述</strong></td>
+</tr>
+<tr>
+<td align="center">100</td>
+<td>内存不足 - 无法分配所需的内存。</td>
+</tr>
+<tr>
+<td align="center">101</td>
+<td>意外错误 - 函数返回 |。</td>
+</tr>
+<tr>
+<td align="center">102</td>
+<td>需要字符串输入 - 函数需要字符串输入。</td>
+</tr>
+<tr>
+<td align="center">103</td>
+<td>需要数字输入 - 函数需要数字输入。</td>
+</tr>
+<tr>
+<td align="center">104</td>
+<td>不允许操作。</td>
+</tr>
+<tr>
+<td align="center">105</td>
+<td>索引越界 - 数组索引越界。</td>
+</tr>
+<tr>
+<td align="center">106</td>
+<td>类型不匹配 - 遇到未处理的数据类型。</td>
+</tr>
+<tr>
+<td align="center">107</td>
+<td>堆栈溢出 - 处理中的数据超过允许的限制。</td>
+</tr>
+<tr>
+<td align="center">108</td>
+<td>创建对象失败。创建对象 '%s' 时出错。</td>
+</tr>
+<tr>
+<td align="center">109</td>
+<td>找不到成员。</td>
+</tr>
+<tr>
+<td align="center">110</td>
+<td>未知名称。</td>
+</tr>
+<tr>
+<td align="center">111</td>
+<td>未知接口。</td>
+</tr>
+<tr>
+<td align="center">112</td>
+<td>遗失参数。</td>
+</tr>
+<tr>
+<td align="center">113</td>
+<td>脚本超时 - 超过了脚本运行的最长时间。可以通过为 Server.ScriptTimeOut 属性指定新值，或通过 IIS 管理工具更改此值来修改此限制。</td>
+</tr>
+<tr>
+<td align="center">114</td>
+<td>非自由线程的对象 - 应用程序对象只接受自由线程的对象；'%s' 不是自由线程的对象。</td>
+</tr>
+<tr>
+<td align="center">115</td>
+<td>意外错误 - 外部对象中发生一个可捕捉的错误 (%X)。脚本无法继续执行。</td>
+</tr>
+<tr>
+<td align="center">116</td>
+<td>缺少脚本分隔符关闭符号 - Script 块缺少脚本关闭符号标记 (%&gt;)。</td>
+</tr>
+<tr>
+<td align="center">117</td>
+<td>缺少脚本标记关闭符号 - Script 块缺少脚本标记关闭符号 (&lt;/SCRIPT&gt;) 或标记关闭符号 (&gt;)。</td>
+</tr>
+<tr>
+<td align="center">118</td>
+<td>缺少对象标记关闭符号 - Object 块缺少对象标记关闭符号 (&lt;/OBJECT&gt;) 或标记关闭符号 (&gt;)。</td>
+</tr>
+<tr>
+<td align="center">119</td>
+<td>缺少 Classid 或 Progid 属性 - 对象实例 '|' 要求对象标记中具有正确的 Classid 或 Progid。</td>
+</tr>
+<tr>
+<td align="center">120</td>
+<td>无效 Runat 属性 - Script 标记或 Object 标记的 Runat 属性值只能为 'Server'。</td>
+</tr>
+<tr>
+<td align="center">121</td>
+<td>对象标记中的作用域无效 - 对象实例 '|' 不能具有 Application 或 Session 作用域。要创建具有 Session 或 Application 作用域的对象实例，请将 Object 标记放在 Global.asa 文件中。</td>
+</tr>
+<tr>
+<td align="center">122</td>
+<td>对象标记中的作用域无效 - 对象实例 '|' 必须具有 Application 或 Session 作用域。这适用于所有在 Global.asa 文件中创建的对象。</td>
+</tr>
+<tr>
+<td align="center">123</td>
+<td>缺少 ID 属性 - 缺少必需的 Object 标记的 ID 属性。</td>
+</tr>
+<tr>
+<td align="center">124</td>
+<td>缺少 Language 属性 - 缺少必需的 Script 标记的 Language 属性。</td>
+</tr>
+<tr>
+<td align="center">125</td>
+<td>缺少属性的关闭符 - '|' 属性值没有关闭符。</td>
+</tr>
+<tr>
+<td align="center">126</td>
+<td>找不到包含文件 - 找不到包含文件 '|'。</td>
+</tr>
+<tr>
+<td align="center">127</td>
+<td>缺少 HTML 注解的关闭符 - HTML 注解或“服务器端包含”缺少关闭标记 (--&gt;)。</td>
+</tr>
+<tr>
+<td align="center">128</td>
+<td>缺少 File 或 Virtual 属性 - 必须用 File 或 Virtual 属性指定包含文件名。</td>
+</tr>
+<tr>
+<td align="center">129</td>
+<td>未知的脚本语言 - 在服务器上找不到脚本语言 '|'。</td>
+</tr>
+<tr>
+<td align="center">130</td>
+<td>无效的 File 属性 - File 属性 '|' 不能以斜杠或反斜杠开头。</td>
+</tr>
+<tr>
+<td align="center">131</td>
+<td>不允许的父路径 - 包含文件 '|' 不能用 '..' 指定父目录。</td>
+</tr>
+<tr>
+<td align="center">132</td>
+<td>编译错误 - 无法处理 Active Server Page '|' 。</td>
+</tr>
+<tr>
+<td align="center">133</td>
+<td>ClassID 属性无效 - 对象标记具有无效的 '|' ClassID。</td>
+</tr>
+<tr>
+<td align="center">134</td>
+<td>ProgID 属性无效 - 对象标记具有无效的 '|' ProgID。</td>
+</tr>
+<tr>
+<td align="center">135</td>
+<td>循环包含 - 文件 '|' 包含其本身 (可能是间接包含) 。请检查包含文件中的其他 Include 语句。</td>
+</tr>
+<tr>
+<td align="center">136</td>
+<td>对象实例名无效 - 对象实例 '|' 正试图使用保留名称。此名称被 Active Server Pages 本身的对象使用。</td>
+</tr>
+<tr>
+<td align="center">137</td>
+<td>全局脚本无效 - Script 块必须是允许的 Global.asa 过程之一。&lt;% ...%&gt; 中的 Script 指令不允许出现在 global.asa 文件中。允许的过程只能是 Application_OnStart、Application_OnEnd、Session_OnStart 或 Session_OnEnd。</td>
+</tr>
+<tr>
+<td align="center">138</td>
+<td>嵌套的 Script 块 - Script 块不能放在另一个 Script 块内。</td>
+</tr>
+<tr>
+<td align="center">139</td>
+<td>嵌套的 Object - Object 标记不能放在另一个 Object 标记内。</td>
+</tr>
+<tr>
+<td align="center">140</td>
+<td>Page 命令顺序错误 - @ 命令必须是 Active Server Page 的第一个命令。</td>
+</tr>
+<tr>
+<td align="center">141</td>
+<td>Page 命令重复 - @ 命令只可以在 Active Server Page 中使用一次。</td>
+</tr>
+<tr>
+<td align="center">142</td>
+<td>线程令牌错误 - 打开线程令牌失败。</td>
+</tr>
+<tr>
+<td align="center">143</td>
+<td>无效应用程序名 - 找不到有效的应用程序名。</td>
+</tr>
+<tr>
+<td align="center">144</td>
+<td>初始化错误 - 初始化期间，页级对象列表失败。</td>
+</tr>
+<tr>
+<td align="center">145</td>
+<td>新建应用程序失败 - 不能添加新应用程序。</td>
+</tr>
+<tr>
+<td align="center">146</td>
+<td>新建会话失败 - 不能添加新会话。</td>
+</tr>
+<tr>
+<td align="center">147</td>
+<td>服务器错误。</td>
+</tr>
+<tr>
+<td align="center">148</td>
+<td>服务器太忙。</td>
+</tr>
+<tr>
+<td align="center">149</td>
+<td>应用程序正在重启动 - 当应用程序正在重新启动时不能处理请求。</td>
+</tr>
+<tr>
+<td align="center">150</td>
+<td>应用程序目录错误 - 不能打开应用程序目录。</td>
+</tr>
+<tr>
+<td align="center">151</td>
+<td>更改通知错误 - 不能创建更改通知事件。</td>
+</tr>
+<tr>
+<td align="center">152</td>
+<td>安全错误 - 处理用户安全凭据时发生错误。</td>
+</tr>
+<tr>
+<td align="center">153</td>
+<td>线程错误 - 新线程请求失败。</td>
+</tr>
+<tr>
+<td align="center">154</td>
+<td>写 HTTP 头错误 - HTTP 头不能写入到客户端浏览器。</td>
+</tr>
+<tr>
+<td align="center">155</td>
+<td>写页内容错误 - 页内容不能写入到客户端浏览器。</td>
+</tr>
+<tr>
+<td align="center">156</td>
+<td>HTTP 头错误 - HTTP 头已经写入到客户端浏览器。任何 HTTP 头的修改必须在写入页内容之前。</td>
+</tr>
+<tr>
+<td align="center">157</td>
+<td>缓冲区已打开 - 缓冲区打开后不能关闭。</td>
+</tr>
+<tr>
+<td align="center">158</td>
+<td>缺少 URL - 需要 URL。</td>
+</tr>
+<tr>
+<td align="center">159</td>
+<td>缓冲区已关闭 - 缓冲区必须打开。</td>
+</tr>
+<tr>
+<td align="center">160</td>
+<td>日志失败 - 将项目写入日志失败。</td>
+</tr>
+<tr>
+<td align="center">161</td>
+<td>数据类型错误 - Variant 变量转换到字符串变量失败。</td>
+</tr>
+<tr>
+<td align="center">162</td>
+<td>不能修改 Cookie - cookie 的 'ASPSessionID' 不能修改。它是一个保留的 cookie 名。</td>
+</tr>
+<tr>
+<td align="center">163</td>
+<td>逗号的使用不正确 - 日志项目中不能使用逗号。请选择另一个分隔符。</td>
+</tr>
+<tr>
+<td align="center">164</td>
+<td>超时无效 - 指定了不正确的超时值。</td>
+</tr>
+<tr>
+<td align="center">165</td>
+<td>SessionID 错误 - 无法创建 SessionID 字符串。</td>
+</tr>
+<tr>
+<td align="center">166</td>
+<td>对象未初始化 - 试图访问未初始化的对象。</td>
+</tr>
+<tr>
+<td align="center">167</td>
+<td>会话初始化错误 - 当初始化会话对象时发生错误。</td>
+</tr>
+<tr>
+<td align="center">168</td>
+<td>不允许的对象使用 - 在会话对象中不能存在本质对象。</td>
+</tr>
+<tr>
+<td align="center">169</td>
+<td>缺少对象信息 - 缺少信息的对象在会话对象中不能存在。需要对象的线程模型信息。</td>
+</tr>
+<tr>
+<td align="center">170</td>
+<td>删除会话错误 - 会话没有被适当地删除。</td>
+</tr>
+<tr>
+<td align="center">171</td>
+<td>缺少路径 - 必须为 MapPath 方法指定路径参数。</td>
+</tr>
+<tr>
+<td align="center">172</td>
+<td>路径无效 - MapPath 方法的路径参数必须是一个虚拟路径。使用了一个实际的路径。</td>
+</tr>
+<tr>
+<td align="center">173</td>
+<td>无效路径字符 - MapPath 方法的路径参数中有无效字符。</td>
+</tr>
+<tr>
+<td align="center">174</td>
+<td>无效路径字符 - MapPath 方法的路径参数中有无效字符 '/' 或 '\\'。</td>
+</tr>
+<tr>
+<td align="center">175</td>
+<td>不允许的路径字符 - MapPath 方法的路径参数中不能有 '..' 字符。</td>
+</tr>
+<tr>
+<td align="center">176</td>
+<td>找不到路径 - MapPath 方法的路径参数未对应到已知路径。</td>
+</tr>
+<tr>
+<td align="center">177</td>
+<td>Server.CreateObject 失败。</td>
+</tr>
+<tr>
+<td align="center">178</td>
+<td>Server.CreateObject 访问错误 - 检查权限时，对 Server.CreateObject 的调用失败。对此对象的访问被拒绝。</td>
+</tr>
+<tr>
+<td align="center">179</td>
+<td>应用程序初始化错误 - 初始化应用程序对象时发生错误。</td>
+</tr>
+<tr>
+<td align="center">180</td>
+<td>不允许的对象使用 - 在应用程序对象中不能存在实质对象。</td>
+</tr>
+<tr>
+<td align="center">181</td>
+<td>无效线程模型 - 在应用程序对象中不能存在使用 apartment 线程的对象。</td>
+</tr>
+<tr>
+<td align="center">182</td>
+<td>缺少对象信息 - 在 Application 对象中不能存在缺少信息的对象。需要此对象的线程模型信息。</td>
+</tr>
+<tr>
+<td align="center">183</td>
+<td>空 Cookie 关键字 - 不能存储具有空关键字的 cookie。</td>
+</tr>
+<tr>
+<td align="center">184</td>
+<td>缺少 Cookie 名 - 必须为 cookie 指定一个名称。</td>
+</tr>
+<tr>
+<td align="center">185</td>
+<td>缺少默认属性 - 找不到对象的默认属性。</td>
+</tr>
+<tr>
+<td align="center">186</td>
+<td>解析证书错误。</td>
+</tr>
+<tr>
+<td align="center">187</td>
+<td>对象添加冲突 - 不能将对象添加到应用程序中。应用程序被另一个添加对象的请求锁定。</td>
+</tr>
+<tr>
+<td align="center">188</td>
+<td>不允许的对象使用 - 不能将用 object 标记创建的对象添加到会话本质中。</td>
+</tr>
+<tr>
+<td align="center">189</td>
+<td>不允许的对象使用 - 不能将用 object 标记创建的对象添加到应用程序本质中。</td>
+</tr>
+<tr>
+<td align="center">190</td>
+<td>意外错误 - 释放外部对象时发生可捕获错误。</td>
+</tr>
+<tr>
+<td align="center">191</td>
+<td>意外错误 - 外部对象的 OnStartPage 方法中发生可捕获错误。</td>
+</tr>
+<tr>
+<td align="center">192</td>
+<td>意外错误 - 外部对象的 OnEndPage 方法中发生可捕获错误。</td>
+</tr>
+<tr>
+<td align="center">193</td>
+<td>OnStartPage 失败 - 外部对象的 OnStartPage 方法中出错。</td>
+</tr>
+<tr>
+<td align="center">194</td>
+<td>OnEndPage 失败 - 外部对象的 OnEndPage 方法中出错。</td>
+</tr>
+<tr>
+<td align="center">195</td>
+<td>无效服务器方法调用 - 在 Session_OnEnd 及 Application_OnEnd 期间，不能调用此服务器对象的方法。</td>
+</tr>
+<tr>
+<td align="center">197</td>
+<td>不允许的对象使用 - 不能将 apartment 型的对象添加到应用程序的实质对象中。</td>
+</tr>
+<tr>
+<td align="center">198</td>
+<td>服务器正在关闭。不能处理请求。</td>
+</tr>
+<tr>
+<td align="center">199</td>
+<td>不允许的对象使用 - 不能将 JScript 对象添加到会话中。</td>
+</tr>
+<tr>
+<td align="center">200</td>
+<td>过期日期属性越界 - 为过期日期指定的日期早于 1980 年 1 月 1 日，或晚于 2038 年 1 月19 日，3:14:07 GMT。</td>
+</tr>
+<tr>
+<td align="center">201</td>
+<td>注册表中存在未知脚本语言 - 注册表中指定的脚本语言 '|' 在服务器上找不到。</td>
+</tr>
+<tr>
+<td align="center">202</td>
+<td>缺少代码页 - 缺少代码页属性。</td>
+</tr>
+<tr>
+<td align="center">203</td>
+<td>无效代码页 - 指定的代码页属性无效。</td>
+</tr>
+<tr>
+<td align="center">205</td>
+<td>更改通知 - 不能创建更改通知事件。</td>
+</tr>
+<tr>
+<td align="center">206</td>
+<td>不能调用 BinaryRead - 使用 Request.Form 后不能调用 BinaryRead。</td>
+</tr>
+<tr>
+<td align="center">207</td>
+<td>不能使用 Request.Form - 调用 BinaryRead 后不能使用 Request.Form 集合。</td>
+</tr>
+<tr>
+<td align="center">208</td>
+<td>不能使用一般 Request 收集 - 调用 BinaryRead 后不能使用一般 Request 集合。</td>
+</tr>
+<tr>
+<td align="center">209</td>
+<td>为 TRANSACTION 属性指定的值非法 - TRANSACTION 属性只能是 REQUIRED，REQUIRES_NEW，SUPPORTED 或 NOT_SUPPORTED。</td>
+</tr>
+<tr>
+<td align="center">210</td>
+<td>方法未实现 - 此方法还未实现。</td>
+</tr>
+<tr>
+<td align="center">211</td>
+<td>对象越界 - 内建的 ASP 对象已被引用，此引用不再有效。</td>
+</tr>
+<tr>
+<td align="center">212</td>
+<td>不能清除缓冲区 - 启用客户端调试时，Response.Flush 之后不能有 Response.Clear。</td>
+</tr>
+<tr>
+<td align="center">214</td>
+<td>无效路径参数 - 路径参数超过最大允许长度。</td>
+</tr>
+<tr>
+<td align="center">215</td>
+<td>为 SESSION 属性指定的值非法 - SESSION 属性只可以是 TRUE 或 FALSE。</td>
+</tr>
+<tr>
+<td align="center">216</td>
+<td>MSDTC 服务未运行 - 如果 MSDTC 服务未运行，则不能运行事务处理的网页。</td>
+</tr>
+<tr>
+<td align="center">217</td>
+<td>对象标记内的范围无效 - 对象范围必须是页、会话或应用程序。</td>
+</tr>
+<tr>
+<td align="center">218</td>
+<td>缺少 LCID - 缺少 LCID 属性。</td>
+</tr>
+<tr>
+<td align="center">219</td>
+<td>无效 LCID - 没有指定的 LCID。</td>
+</tr>
+<tr>
+<td align="center">220</td>
+<td>不允许请求 GLOBAL.ASA - 不允许有 URL 指向 GLOBAL.ASA 的请求。</td>
+</tr>
+<tr>
+<td align="center">221</td>
+<td>无效 @ Command 指令 - 指定的 '|' 选项未知或无效。</td>
+</tr>
+<tr>
+<td align="center">222</td>
+<td>无效 TypeLib 规范 - METADATA 标签含有无效的类型库规范。</td>
+</tr>
+<tr>
+<td align="center">223</td>
+<td>未找到 TypeLib - METADATA 标签含有的类型库规范与注册表项不符。</td>
+</tr>
+<tr>
+<td align="center">224</td>
+<td>不能加载 TypeLib - 不能加载 METADATA 标签中指定的类型库。</td>
+</tr>
+<tr>
+<td align="center">225</td>
+<td>不能包装 TypeLibs - 不能通过 METADATA 标签中指定的类型库创建类型库包装对象。</td>
+</tr>
+<tr>
+<td align="center">226</td>
+<td>不能修改 StaticObjects - 运行时不能修改 StaticObjects 集合。</td>
+</tr>
+<tr>
+<td align="center">227</td>
+<td>Server.Execute 失败 - 调用 Server.Execute 失败。</td>
+</tr>
+<tr>
+<td align="center">228</td>
+<td>Server.Execute 错误 - 加载此页时调用 Server.Execute 失败。</td>
+</tr>
+<tr>
+<td align="center">229</td>
+<td>Server.Transfer 失败 - 调用 Server.Transfer 失败。</td>
+</tr>
+<tr>
+<td align="center">230</td>
+<td>Server.Transfer 错误 - 加载此页时调用 Server.Transfer 失败。</td>
+</tr>
+<tr>
+<td align="center">231</td>
+<td>Server.Execute 错误 - 加载此页时调用 Server.Execute 失败。使用相关的 URL。</td>
+</tr>
+<tr>
+<td align="center">232</td>
+<td>无效的 Cookie 定义 - METADATA 标签中包含一个无效的 cookie 定义。</td>
+</tr>
+<tr>
+<td align="center">233</td>
+<td>无法加载 cookie 脚本源 - 无法加载在 METADATA 标签中指定的 cookie 脚本源文件。</td>
+</tr>
+<tr>
+<td align="center">234</td>
+<td>包含无效的指令 - “服务器端包含”在脚本程序块中不能存在。请使用 SRC= &lt;SCRIPT&gt; 标签的属性。</td>
+</tr>
+<tr>
+<td align="center">235</td>
+<td>Server.Transfer 错误 - 使用的 URL 形式无效或使用的是绝对 URL。请使用相对 URL。</td>
+</tr>
+<tr>
+<td align="center">236</td>
+<td>无效的 Cookie 定义 - METADATA 标签中包含无效的 cookie 定义。</td>
+</tr>
+<tr>
+<td align="center">237</td>
+<td>无效的 Cookie 定义 - METADATA 标签包含无效的 NAME 参数或丢失 NAME 参数。</td>
+</tr>
+<tr>
+<td align="center">238</td>
+<td>缺少属性值 - 没有为 '|' 属性指定值。</td>
+</tr>
+<tr>
+<td align="center">239</td>
+<td>无法运行文件 - 不支持 UNICODE ASP 文件。</td>
+</tr>
+<tr>
+<td align="center">240</td>
+<td>脚本引擎异常 - ScriptEngine 引发了异常 '%X'，在 '%s' 中，来自 '%s' 。</td>
+</tr>
+<tr>
+<td align="center">241</td>
+<td>CreateObject 异常 - '%s' 的 CreateObject 引起异常 %X。</td>
+</tr>
+<tr>
+<td align="center">242</td>
+<td>查询 OnStartPage 接口异常 - 查询对象 '%s' 的 OnStartPage 或 OnEndPage 方法时引起异常 %X。</td>
+</tr>
+<tr>
+<td align="center">243</td>
+<td>无法使用 IStream on Request - 使用 Request.Form 集合或 Request.BinaryRead 后无法使用 IStream on Request 对象。</td>
+</tr>
+</table>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;在事件日志或 Web 浏览器中显示消息时，文档中出现的符号（如 %s、%X、%1、%2，等等）将由实际发生错误时此错误的详细信息所替换。</p>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>WebDAV 发布</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="带有到有关 WebDAV、如何设置 WebDAV 发布目录、发布到 WebDAV 目录以及允许用户搜索目录等信息的链接的导航页。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name="WebDAVPublishing">WebDAV 发布</a></h1>
+
+<p>本节说明如何在 IIS 服务器上设置 WebDAV 发布目录，并告之客户端如何连接到服务器以编辑和处理文件。</p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="wcwdcp.htm">关于 WebDAV</a>：解释了 WebDAV 如何创建目录供远程用户发布和处理文件。</li>
+<li><a href="wcservr.htm">创建发布目录</a>：如何设置 WebDAV 发布目录。</li>
+<li><a href="wcsecur.htm">管理 WebDAV 安全性</a>：提供一些提示，用于优化 IIS 和 Windows XP 安全性以保护 WebDAV 站点。</li>
+<li><a href="wcsrch.htm">搜索 WebDAV 目录</a>：如何配置 WebDAV 目录以便用户可以从中搜索内容和文档属性。</li>
+<li><a href="wcwdpub.htm">发布和管理文件</a>：如何通过 Windows XP、Internet Explorer 和 Office 2000 发布内容和处理文件。</li>
+</ul>
+
+<P><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;WebDAV 是 HTTP 1.1 提议草案的实现，因此不能用于非 HTTP 服务（如 FTP 站点）。同时，这一实现当前只用于 IIS 5.0 和 5.1。</p>
+
+<hr><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<SPAN STYLE="visibility:hidden"><LAYER VISIBILITY=HIDE>
+<SPAN STYLE="visibility:hidden">（下列单词只用于搜索，不会显示在网页中。）性能, 容量, 能够, 能力, 计划, 执行, 修改, 自定义, 调节, 调整, 扭, 改进, 加强, 加速, 详细, 另外, 更大, ram, 内存, cpu, 速度, 卷, 句柄, 加载, 连接, 池, http, 保持活动, 评估, 计算, 多少, 磁盘驱动器, 添加, 利用, 带宽, 限制, 处理, 处理器, oop, 外部进程, 应用程序, 超时, 压缩, 缓存, 网络, web,  internet,  intranet, 服务器, 要求, 加载, 重, 轻, 大, 更大, 电子邮件, 电子邮件, 容量, 链接, 详细信息, 工作对象 </SPAN></LAYER>
+
+</font>
+</body>
+</html>

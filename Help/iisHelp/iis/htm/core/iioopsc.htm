@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>设置注意事项</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="对与“进程回收”有关的设置注意事项进行说明。对于升级到的操作系统和直接安装的操作系统，配置数据库设置会有所不同。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="SetupConsiderations">设置注意事项</a></h1>
+
+本节讲述进程回收的默认配置设置，对于从 IIS 4.0 或 5.0 升级所得到的版本和全新安装的操作系统，这些设置有所不同。术语“全新安装”表示安装全新的操作系统版本，它的反义是从以前版本升级。
+
+<h2>升级</h2>
+如果是升级到 IIS 5.1，则只用于进程回收的配置数据库关键字名称将写入配置数据库，如下列示例中的粗体所示。然后，IIS 将它们的属性设为零以禁用这些功能。
+
+<p><strong>配置数据库配置示例</strong></p>
+<p>
+/W3SVC<br>
+&nbsp;&nbsp;&nbsp;AppIsolated             = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;<b>PeriodicRestartTime</b>     = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;<b>PeriodicRestartRequests</b> = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;<b>ShutdownTimeLimit</b> = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;…other default site/app settings…<br>
+</p>
+
+<p>属性 PeriodicRestartTime、PeriodicRestartRequests 和 ShutdownTimeLimit 是在 W3SVC 级别定义的。PeriodicRestartSchedule 属性根本没有定义。
+
+<p>有关从 IIS 4.0 或 5.0 升级之后禁用“进程回收”的说明，请参阅<a href="iioopcre.htm">配置回收事件</a>。
+
+<h2>全新安装</h2>
+
+下列示例将显示全新安装后的默认“进程回收”配置。
+
+<p><strong>配置数据库配置示例（全新安装）</strong><p>
+
+/W3SVC<br>
+&nbsp;&nbsp;&nbsp;AppIsolated             = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;<b>PeriodicRestartTime</b>     = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;<b>PeriodicRestartRequests</b> = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;<b>ShutdownTimeLimit</b> = (INTEGER) 600<br>
+&nbsp;&nbsp;&nbsp;…other default site/app settings…<br>
+
+<p>属性 PeriodicRestartTime、PeriodicRestartRequests 和 ShutdownTimeLimit 是在 W3SVC 级别定义的，它们的参数设为默认值。请注意，PeriodicRestartTime 和 PeriodicRestartRequests 的默认值是零，因而禁用这些事件。PeriodicRestartSchedule 属性根本没有定义。有关启用 PeriodicRestartSchedule 属性的说明，请参阅<a href="iioopcre.htm">配置回收事件</a>。
+
+<h2><a name="RelatedResources">相关资源</a></h2>
+
+<ul>
+<li><a href="iioopcre.htm">配置回收事件</a>&nbsp;&nbsp;&nbsp;有关如何配置应用程序，使其在各种不同进程中运行的逐步说明。</li>
+<li><a href="iiooplai.htm">级别与继承</a>&nbsp;&nbsp;&nbsp;描述可以配置“进程回收”的各个配置数据库级别，并讨论配置设置的继承。</li>
+<li><a href="iiwarndc.htm">关于应用程序</a>&nbsp;&nbsp;&nbsp;有关应用程序的概念信息，它们的起始点，以及应用程序可在其中运行的各种不同进程。</li>
+<li><a href="iiisol.htm">独立应用程序</a>&nbsp;&nbsp;&nbsp;有关如何配置应用程序，使其在各种不同进程中运行的逐步说明。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<script language="javascript">
+<!--
+function Activate() {
+if (navigator.appName == "Microsoft Internet Explorer"){
+	window.open("iisnapin.htm", "NewWin", 'toolbar=no, left=200, top=200, scrollbars=no, resizeable=no,  width=350, height=350');
+	}
+	else if (navigator.appName == "Netscape") {
+		window.open("iisnapin.htm", "NewWin",  'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=yes,resizable=0,width=350,height=350,top=200,left=200');
+	}
+}
+//-->
+</script>
+
+</font>
+</body>
+</html>

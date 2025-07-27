@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>Web Server Creator</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT><META NAME="DESCRIPTION" CONTENT="Internet Information Services reference information">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="EN-US">
+<META NAME="MS-IT-LOC" Content="Internet Information Services"> 
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<H1><A NAME="_web_server_creator"></A><SUP></SUP>Web Server Creator</H1>
+
+<H6>Overview</H6>
+
+<P>Server creation, deletion, stopping, starting, configuring: These are all tasks that can keep you very busy, especially if you are an administrator of a large Internet or intranet Web site. This sample tool demonstrates how you can automate many of those tasks.</P>
+
+<H6>Code Tour</H6>
+
+<P>This sample script provides a simple interface through which you can create a new Web server. Several steps are required to accomplish this, starting with invoking <B>GetObject</B> on the IIS://LocalHost/W3SVC node. The <B>IIsWebService</B> object's ADSI method <B>Create</B> is used to create a new <B>IIsWebServer</B> object. The server object is then configured, and the new information written back to the metabase with the <B>SetInfo</B> method.</P>
+
+<P>At this point in the script, the server is not a fully functional Web site. It now has a node in the metabase, but it is not running, nor does it have a root directory in which to store anything. To finish creating the Web site, the tool creates an instance of the <B>IIsWebVirtualDir</B> ADSI object, then configures that object to be the new root directory for the new server. <B>SetInfo</B> is once again called to save the information to the metabase, and finally, if all has gone well up to this point, the server object's <B>Start</B> method is invoked.</P>
+
+<H6>Remarks</H6>
+
+<P>Note that almost every major statement group in this sample has its own set of error-code checking. This is important when creating any tool in general, but especially for tools that use the IIS metabase.</P>
+
+<H6>Location</H6>
+
+<P>This script is available in the Internet services directory, at ...\iissamples\sdk\admin\mkwebsrv.vbs.</P>
+<hr class="iis" size="1">
+<p align="center"><em><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. All rights reserved.</a></em></p>
+</BODY>
+</HTML>

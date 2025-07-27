@@ -1,0 +1,84 @@
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>将请求重定向到目录</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META name="DESCRIPTION" content="有关如何将浏览器请求重定向到其他文件、目录或网站的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37693895">将请求重定向到目录</a></h1>
+
+<p>可以将对某个目录中文件的请求重定向到其他目录、网站或其他目录中的其他文件。当浏览器请求原始 URL 处的文件时，Web 服务器将指导浏览器使用新的 URL 请求此页。</p>
+
+<big>将请求重定向到其他目录或网站</big><!--</p>--><br>
+
+<ol>
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站或目录，并打开其属性页。</li>
+<li>单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+<li>选中“重定向到 URL”。</li>
+<li>在“重定向到”文本框中，输入目标目录或网站的 URL。例如，要将对 /Catalog 目录中文件的所有请求重定向到 /NewCatalog 目录，请输入 <strong>/NewCatalog</strong>。</li>
+</ol>
+
+<p class="bigfix">&nbsp;</p>
+<big>将所有请求重定向到单个文件</big><!--</p>--><br>
+
+<ol>
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站或目录，并打开其属性页。</li>
+<li>单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+<li>选择“重定向到 URL”。</li>
+<li>在“重定向到”文本框中，输入目标文件的 URL。</li>
+<li>选中“上面输入的准确 URL”复选框，防止 Web 服务器将原始文件名追加到目标 URL 中。</li>
+</ol>
+
+<p>可以在目标 URL 中使用通配符和重定向变量，来精确控制如何将原始 URL 转化为目标 URL。详细信息，请参阅<A HREF="iiabdsk.htm">重定向参考</A>。</p>
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>包含文件</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+ 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="解释如何使用服务器端包含命令在 ASP 文件中包含其他文件。提供性能提示和脚本范例。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37774682">包含文件</a></h1>
+
+
+<p>“服务器端包含”指令提供了一种方式，可在 Web 服务器处理文件之前，在此文件中插入其他文件的内容。ASP 只实现此机制的 <A HREF="../core/iisiinc.htm">#include</A>。可使用下列语法将文件插入 .asp 文件：</p>
+ 
+<pre>&lt;!-- #include virtual | file ="<em>filename</em>" --&gt; </pre>
+
+<p>关键字 <strong>virtual</strong> 和 <strong>file</strong> 表示包含文件的路径类型，<em>filename</em> 表示想要包含文件的路径和文件名。</p>
+
+<p>被包含的文件并不要求具有特定的文件扩展名；但是，赋予被包含文件 .inc 扩展名是一个良好的编程习惯，这样有助于将它们与其他类型的文件区分开来。</p>
+
+<h2><a name="usingthevirtualkeyword">使用 Virtual 关键字</a></h2>
+
+<p>可以使用关键字 <strong>virtual</strong> 表示以虚拟目录开始的路径。例如，如果文件 Footer.inc 驻留在虚拟目录 /Myapp 中，则下列命令将 Footer.inc 的内容插入到包含此行的文件中：</p>
+
+<pre>&lt;!-- #include virtual ="/myapp/footer.inc" --&gt;</pre>
+
+<h2><a name="usingthefilekeyword">使用 File 关键字</a></h2>
+
+<p>可以使用关键字 <strong>file</strong> 表示相对路径。相对路径以包含文件所在的路径开始。例如，如果文件 Header1.inc 在 Myapp\Headers 中，并且 Myapp 中有一个文件，则下列命令将 Header1.inc 插入到此文件中：</p>
+
+<pre>&lt;!-- #include file ="headers\header1.inc" --&gt;</pre>
+
+<p>注意，被包含文件 Headers\header1.inc 的路径是相对于包含文件的；如果包含此 <strong>#include</strong> 语句的脚本不位于目录 /Myapp 中，语句将不起作用。</p>
+
+<p>也可以使用关键字 <strong>file</strong> 和语法 (<code>..\</code>) 来包含父目录或更高层目录中的文件，但必须选中 <a href="javascript://" onclick="Activate(); return false">Internet 信息服务管理单元</a>中的“启用父路径”选项。
+
+<script language="javascript">
+<!--
+function Activate() {
+if (navigator.appName == "Microsoft Internet Explorer"){
+	window.open("../core/iisnapin.htm", "NewWin",'toolbar=no, left=200, top=200, scrollbars=no, resizeable=no,  width=350, height=350');
+	}
+	else if (navigator.appName == "Netscape") {
+		window.open("../core/iisnapin.htm", "NewWin",  'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=yes,resizable=0,width=350,height=350,top=200,left=200');
+	}
+}
+//-->
+</script>  有关说明，请参阅<a href="../../../iis/htm/core/iiwarndh.htm">配置 ASP 应用程序</a>。</p>
+
+
+<h2><a name="H2_37777384">被包含文件的位置</a></h2>
+
+<p>ASP 检测被包含文件的变化（不考虑位置），并当浏览器下一次请求包含此文件的 .asp 文件时插入此文件内容。不过，通常而言，如果包含文件驻留在同一应用程序或网站内部，则很容易维护这些文件的安全性。若需要更高安全性，最好将包含文件放到应用程序内的单独目录中（如 \Includes），并且只应用适当的“执行”（Web 服务器）权限。详细信息，请参阅<A HREF="../core/iiwspsc.htm">设置 Web 服务器权限</A>。</P>
+
+<p><strong><span style="color: #0000FF"><font color="#0000FF">要点</font></span></strong>&nbsp;&nbsp;&nbsp;默认情况下，对所有文件应用 Web 服务器“读取”权限。不过，要防止用户查看包含文件的内容，可以禁用 Include 目录的“读取”权限。 </p>
+
+<h2><a name="includingfilesdosanddonts">包含文件：提示和警告</a></h2>
+
+<p>被包含的文件也可以包含其他文件。只要 <strong>#include</strong> 命令不导致循环，.asp 文件也可以多次包含同一文件。例如，如果文件 First.asp 包含文件 Second.inc，则 Second.inc 不能反过来包含 First.asp。文件也不能包含其自身。ASP 检测这种循环或嵌套错误，生成错误消息，并停止处理请求的 .asp 文件。</p>
+
+<p>ASP 在执行脚本命令之前包含文件。因此，不能使用脚本命令建立被包含的文件名。举例来说，因为 ASP 试图在将文件名指派给变量 <code>name</code> 之前执行 <strong>#include</strong> 命令，所以下列脚本无法打开文件 Header1.inc。</p>
+
+<pre>&lt;!-- 此脚本将失败 --&gt;
+&lt;% name=(header1 &amp; ".inc") %&gt; 
+&lt;!-- #include file="&lt;%= name %&gt;" --&gt;</pre>
+
+<p>脚本命令和过程必须完全包含在脚本分隔符 &lt;% 和 %&gt;、HTML 标签 &lt;SCRIPT&gt; 和 &lt;/SCRIPT&gt;、或 HTML 标签 &lt;OBJECT&gt; 和 &lt;/OBJECT&gt; 之内。也就是说，不能在一个包含 .asp 文件中打开脚本分隔符，并在被包含的文件中关闭分隔符；脚本或脚本命令必须是一个完整的单元。例如，下列脚本将不起作用：</p>
+
+<pre>&lt;!-- 此脚本将失败 --&gt;
+&lt;%
+  For i = 1 To n
+    <em>主文件中的语句</em>
+    &lt;!--  #include file="header1.inc" --&gt;
+  Next
+%&gt;</pre>
+
+<p>但下列脚本可以正常工作：</p>
+
+<pre>&lt;% 
+  For i = 1 to n
+    <em>主文件中的语句</em>
+%&gt; 
+&lt;!--  #include file="header1.inc"   --&gt;
+&lt;% Next %&gt;</pre>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果 ASP 脚本包含的文件中存在包含脚本不需要的大量函数和变量，则这些无用的结构反而会影响性能，并最终降低 Web 应用程序的可扩展性。因此，通常将包含文件分成多个小文件，并且只包含那些服务器端脚本必需的文件，而不是包含那些带有冗余信息的一个或多个大型包含文件。</p>
+
+<p>有时，可能需要使用 HTML &lt;SCRIPT&gt;&lt;/SCRIPT&gt; 标签来包含服务器端文件。例如，下列脚本包含一个服务器可以执行的文件（使用相对路径）：</p>
+
+<pre>&lt;SCRIPT LANGUAGE="VBScript" RUNAT=SERVER SRC="Utils\datasrt.inc"&gt;&lt;/SCRIPT&gt;</pre>
+
+
+<P>下表说明通过 SRC 属性使用虚拟或相对路径来包含文件的正确语法：</P>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr>
+<!--Column 1--><th width="15%" bgcolor="#C0C0C0" align="Left" valign="top">路径类型</th>
+<!--Column 2--><th width="33%" bgcolor="#C0C0C0" align="Left" valign="top">语法</th>
+<!--Column 3--><th width="33%" bgcolor="#C0C0C0" align="Left" valign="top">示例：</th>
+</tr>
+<tr>
+<!--Column 1--><td width="15%" valign="Top">相对</td>
+<!--Column 2--><td width="33%" valign="Top">SRC="<EM>Path\Filename</EM>"</td>
+<!--Column 3--><td width="33%" valign="Top">SRC="Utilities\Test.asp"</td>
+</tr>
+<tr>
+<!--Column 1--><td width="15%" valign="Top">虚拟</td>
+<!--Column 2--><td width="33%" valign="Top">SRC="/<EM>Path/Filename</EM>"</td>
+<!--Column 3--><td width="33%" valign="Top">SRC="/MyScripts/Digital.asp"</td>
+</tr>
+<tr>
+<!--Column 1--><td width="15%" valign="Top">虚拟</td>
+<!--Column 2--><td width="33%" valign="Top">SRC="\<EM>Path\Filename</EM>"</td>
+<!--Column 3--><td width="33%" valign="Top">SRC="\RegApps\Process.asp"</td>
+</tr>
+
+</table>
+
+
+
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;当使用此方法包含文件时，不要在 &lt;SCRIPT&gt; 标签内放置任何编程逻辑；使用另外一组 &lt;SCRIPT&gt; 标签添加此类逻辑。</p>
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

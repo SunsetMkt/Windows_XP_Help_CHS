@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>调试 ASP 脚本</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+
+
+<META NAME="DESCRIPTION" CONTENT="本主题描述如何使用 Microsoft Script Debugger 查找并改正 ASP 脚本错误。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+
+<font face="宋体">
+
+
+<h1><a name="debuggingaspscripts">调试 ASP 脚本</a></h1>
+
+
+<p>无论是否有经验，您都可能会遇到程序错误，这将影响服务器端脚本正常工作。因此，为了成功开发强大的 ASP 应用程序，特别是当应用程序变得越来越复杂时，查找和改正脚本错误的调试过程就显得极其重要。</p>
+
+<h2><a name="themicrosoftscriptdebuggertool">Microsoft Script Debugger 工具</a></h2>
+
+<p>Microsoft Script Debugger 是一个强大的调试工具，可以帮助您快速定位错误，并可以交互测试服务器端脚本。脚本调试器还可以与 Windows Internet Explorer 3.0 或更高版本一起使用，使用它，您可以：</p>
+
+<ul>
+<li>每次运行一行服务器端脚本。</li>
+<li>执行服务器端脚本期间，打开命令窗口，监视变量、属性或数组元素的值。</li>
+<li>在脚本的特定行，（使用调试器或脚本命令）设置断点以暂停执行服务器端脚本。</li>
+<li>跟踪服务器端脚本的运行过程。</li>
+</ul>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;可以使用调试器查看脚本和定位错误，但不能直接编辑脚本。要更正错误，必须使用编辑程序编辑脚本，保存更改，然后再次运行此脚本。</p>
+
+<h2><a name="enablingdebugging">启用调试</a></h2>
+
+<p>开始调试服务器端脚本之前，首先必须将 Web 服务器配置为支持 ASP 调试。有关指导和信息，请参阅<a href="../core/iiwarndd.htm">启用 ASP 调试</a>。</p>
+
+<p>启用 Web 服务器调试后，您可以使用下列任意一种方法调试脚本：</p>
+
+<ul>
+<li>手动打开脚本调试器以调试 ASP 服务器端脚本。</li>
+<li>使用 Internet Explorer 请求 .asp 文件。如果文件包含错误或故意用来中断执行的语句，脚本调试器将自动启动，显示脚本并标出错误的来源。</li>
+</ul>
+
+<h2><a name="scriptingerrors">脚本错误</a></h2>
+
+<p>调试服务器端脚本的过程中，可能会遇见几种类型的错误。有些错误可能会导致脚本无法正确执行、中断程序的执行或返回错误的结果。</p>
+
+<h3><a name="syntaxerrors">语法错误</a></h3>
+
+<p>“语法”错误是一种经常遇到的错误，它是由于脚本语法不正确引起的。例如，命令拼写错误或传递给函数的参数数目不对都可能产生错误。如果语法不正确，脚本将无法执行。</p>
+
+<h3><a name="runtimeerrors">运行时错误</a></h3>
+
+<p>“运行时”错误发生在脚本开始执行之后，它是由于脚本指令试图执行不可能的操作而引起的。例如，下列脚本包含一个函数，此函数以 0 作为变量的除数（这是一种非法的数学运算），将产生运行时错误：</p>
+
+<pre>&lt;SCRIPT LANGUAGE=VBScript RUNAT=SERVER&gt;
+  Result = Findanswer(15)
+  Document.Write (&quot;结果是 &quot; &amp;Result)
+
+  Function Findanswer(x) 
+  '此语句产生运行时错误。
+   Findanswer = x/0      
+  End Function
+&lt;/SCRIPT&gt;</pre>
+
+<p>必须更正运行时错误，脚本才会无中断执行。</p>
+
+<h3><a name="logicalerrors">逻辑错误</a></h3>
+
+<p>逻辑错误是最难以发现的错误。逻辑错误是由于键入错误或程序逻辑上的缺陷引起的，脚本能够运行，但产生的结果不正确。例如，如果服务器端脚本将对列表中的值进行排序，但在脚本中本该使用 &lt; 符号（小于号）比较值的地方错误地使用了 &gt; 符号（大于号），将导致排序结果不正确。</p>    
+
+<h2><a name="errordebuggingtechniques">错误调试技术</a></h2>
+
+<p>您可以使用几种不同的调试技术定位错误源并测试应用程序。</p>
+
+<h3><a name="justintimedebugging">实时（JIT）调试</a></h3> 
+
+<p>当运行时错误中断了服务器端脚本执行时，Microsoft Script Debugger 自动启动，显示一个 .asp 文件，其中的语句指针指向导致错误的行，并生成错误消息。使用这种类型的调试（也叫“实时调试”），计算机将暂停进一步执行程序。您必须使用编辑程序更正错误并保存所作更改，然后才能继续运行脚本。</p>
+
+<h3><a name="breakpointdebugging">断点调试</a></h3>
+
+<p>当发生错误但无法轻松地找到错误源的时候，预先设置“断点”有时会很有用。断点在指定的脚本行暂停执行脚本。可以在可疑的脚本行前面设置一个或多个不同的断点，然后使用调试器检查脚本中设置的变量或属性的值。更正错误后，可以清除断点，这样脚本就可以无间断地运行。</p>
+
+<p>要设置断点，可以使用脚本调试器打开脚本，选择脚本中希望中断执行的行，然后从“调试”菜单中选择“切换断点”。然后使用 Web 浏览器重新请求脚本。执行到设置了断点的脚本行时，计算机启动脚本调试器，它将显示脚本，并且语句指针指向设置了断点的行。</p> 
+
+<h4>在下一条语句中断</h4>
+
+<p>在某些情况下，如果要运行的下一条语句不在您所工作的 .asp 文件中，您可能希望启用脚本调试器“在下一条语句中断”。例如，如果在 Sales 应用程序中的 .asp 文件中设置了“在下一条语句中断”，则当运行 Sales 应用程序（或已经启用了调试的应用程序）中任何文件中的脚本时，都将启动调试器。有鉴于此，当设置“在下一条语句中断”时，您需要注意，无论下一条运行的是何种脚本语句，都将启动调试器。</p>
+
+
+<h3><a name="vbscriptstopstatementdebugging">VBScript Stop 语句调试</a></h3>
+
+<p>也可以向使用 VBScript 编写的服务器端脚本中添加断点，方法是在服务器端脚本的可疑部分之前的某个位置插入一个 <strong>Stop</strong> 语句。例如，下列服务器端脚本包含一条 <strong>Stop</strong> 语句，此语句将在脚本调用自定义函数之前暂停执行脚本：</p>
+
+<pre>&lt;%	
+  intDay = Day(Now())
+  lngAccount = Request.Form(&quot;AccountNumber&quot;)
+  dtmExpires = Request.Form(&quot;ExpirationDate&quot;)
+   	  
+  strCustomerID  =  &quot;RETAIL&quot; &amp; intDay &amp; lngAccount &amp; dtmExpires
+
+  '在此设置断点。
+  Stop
+
+  '调用注册组件。				
+  RegisterUser(strCustomerID)
+%&gt;</pre>
+
+<p>请求此脚本时，调试器启动并自动显示 .asp 文件，并且用语句指针指示出 <strong>Stop</strong> 语句的位置。在此断点处，您可以选择检查在将变量传递给组件之前赋给变量的值。</p>
+
+<p><strong><FONT COLOR="#0000FF">要点</FONT></strong>&nbsp;&nbsp;&nbsp;必须将 <strong>Stop</strong> 语句从生成的 .asp 文件中删除。</p> 
+
+<h3><a name="jscriptdebuggerstatementdebugging">JScript Debugger 语句调试</a></h3>
+
+<p>要向使用 VBScript 编写的服务器端脚本中添加断点，请在脚本的可疑行之前插入一个 <strong>debugger</strong> 语句。例如，下列脚本中包含一个 <strong>debugger</strong> 语句，每次脚本循环通过一个新值时都将中断执行，并自动启动脚本调试器。</p>
+
+<pre>&lt;%@ LANGUAGE=JScript %&gt;
+&lt;%
+  for (var count = 1; count &lt;= 10; count++)
+  {        
+    var eventest = count%2
+    //设置断点，使用户可以单步执行脚本。
+    debugger						    
+    if (eventest == 0)
+          Response.Write(&quot;平均值是 &quot; + count + &quot;&lt;br&gt;&quot;)
+   }
+%&gt;</pre>
+
+<p>必须将  <strong>debugger</strong> 语句从生成的 .asp 文件中删除。</p>  
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;不要将 <strong>debugger</strong> 语句与 JScript 的 <strong>break</strong> 语句混淆。<strong>break</strong> 语句在执行期间退出当前正在运行的循环，并不激活 Microsoft Script Debugger，也不暂停执行。</p>
+
+<h2><a name="tipsfordebuggingscripts">调试脚本的技巧</a></h2>
+
+<p>除了脚本调试器，一套优秀的调试技巧可以大大减少研究脚本错误源所花费的时间。虽然大多数错误的来源很明显（如命令拼写错误或缺少变量），但某些类型的逻辑错误和执行错误很难发现。</p>
+
+<p></P>有关 Microsoft Script Debugger 的详细信息，请参阅 <a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&pver=6.0&ar=scripting" target=_blank>Windows Script Technologies</a>。
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+
+</font>
+</body>
+
+</html>

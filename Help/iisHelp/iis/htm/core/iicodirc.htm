@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>使用内容分级</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何使用 Web 服务器的内容分级功能帮助用户了解您的网站提供的内容种类的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37692038">使用内容分级</a></h1>
+
+<p>可以配置 Web 服务器的内容分级功能，将说明性标签嵌入网页的 HTTP 头中。某些 Web 浏览器（例如 Microsoft Internet Explorer 3.0 或更高版本）可以检测到这些内容标签，并帮助用户识别那些不受欢迎的 Web 内容。Web 服务器默认的基于分级系统的 Internet 内容选择平台 (PICS) 使用 Recreational Software Advisory Council (RSAC) 开发的系统，此系统根据暴力、裸体、性及冒犯性语言的级别对内容进行分级。设置 Web 内容分级之前，应填写 RSAC 问卷了解为您的特定 Web 内容建议的内容分级。</p>
+
+<big>对内容进行分级</big><br>
+
+<ol>
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站、目录或文件，并打开其属性页。</li>
+<li>单击“HTTP 头”选项卡，然后单击“内容分级”下的“编辑分级”。</li>
+<li>在“分级服务”属性页中的“RSAC 注册”下，单击“分级问卷”，然后按照 RSAC 提供的指导进行操作。</li>
+<li>单击“确定”。</li>
+</ol>
+
+<p class="bigfix">&nbsp;</p>
+
+<big>设置内容分级</big><br>
+
+<ol>
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站、目录或文件，并打开其属性页。</li>	
+<li>单击“HTTP 头”选项卡，然后单击“内容分级”下的“编辑分级”。</li>
+<li>在“分级”属性页中，选中“对资源启用分级”复选框。</li>
+<li>在“类别”文本框中，单击分级类别。使用分级标尺设置不受欢迎内容所属类别的级别。每项设置还将显示对指定等级的说明。</li>
+<li>在“内容分级人员的电子邮件”中，输入对内容进行分级的人员的电子邮件地址，然后选择“过期日期”列表，并从日历中选择分级的过期日期。</li>
+<li>单击“确定”。</li>
+</ol>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

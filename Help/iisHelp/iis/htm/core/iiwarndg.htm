@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>安装 ISAPI 筛选器</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何在网站上安装 ISAPI 筛选器的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="installingisapifilters">安装 ISAPI 筛选器</a></h1>
+
+<p>与 ISAPI 扩展类似，ISAPI 筛选器是当 Web 服务器收到 HTTP 请求时进行响应的程序。但是与 ISAPI 扩展不同的是，ISAPI 筛选器总是在服务器进程中运行。ISAPI 筛选器不同于应用程序，因为它们由 Web 服务器事件驱动而不是由客户端请求驱动。可以将 ISAPI 筛选器与特定 Web 服务器事件相关联，此后每当发生关联事件时都将通知筛选器。例如，发生“读取”或“写入”事件时会通知筛选器，然后筛选器对要返回到客户端的原始数据进行加密。</p>
+
+<p>可以为服务器上的所有站点安装筛选器（全局筛选器），也可以为单个网站安装筛选器。如果同时安装全局筛选器和站点筛选器，这两种筛选器将被合并。</p>
+
+<p>如果为同一事件注册了多个筛选器，将按顺序对其进行调用。优先级较高的筛选器在优先级较低的筛选器之前运行。如果几个筛选器的优先级相同，则在主属性中设置的全局筛选器将在站点级设置的筛选器之前运行。在同一继承级别具有相同优先级的筛选器将根据其加载顺序运行。可以在 Web 服务器或网站的属性页中更改筛选器的加载顺序。</p> 
+
+<big>将筛选器添加到 Web 服务器或网站</big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择 Web 服务器或网站，并打开其属性页。</li>
+<li>单击“ISAPI 筛选器”选项卡。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果正将筛选器添加到网站，将无法看到任何从 Web 服务器主属性继承的全局筛选器。您只能看到为此网站安装的筛选器，尽管两组筛选器都在运行。</p>
+
+<li>单击“添加”按钮。</li>
+<li>在“筛选器名称”框中输入筛选器名并在“可执行文件”框中输入或浏览 DLL 文件。</li>
+<li>单击“确定”。</li>
+<li> 可以使用箭头更改筛选器的加载顺序。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;只能更改具有相同优先级的筛选器的加载顺序。</p>
+
+<li>如果已经添加或更改了全局筛选器，则必须终止和重新启动 Web 服务器，才能将新筛选器加载到内存中。在网站级添加的筛选器将在添加它时自动加载。</li>
+</ol>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果 HTTP 请求触发了一个已注册了筛选器的事件，则筛选器将接收包含在请求中的数据，不管此请求是针对文件、CGI 应用程序或是 ISAPI 扩展。</p>
+
+<hr class="iis" size="1"><p align="center"><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

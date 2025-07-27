@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>审核</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="导航页包含下列主题：如何使用安全审核技术跟踪用户活动，并侦测未经授权用户对 NTFS 目录及文件的访问尝试。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="Auditing">审核</a></h1>
+
+<p>可以使用安全审核技术跟踪用户活动，并侦测未经授权用户对 NTFS 目录和文件的访问尝试。可以审核的活动包括：</p>
+
+<ul>
+<li>所有登录尝试（成功和不成功的）。</li>
+<li>访问限制帐户的用户尝试。</li>
+<li>执行限制命令的用户尝试。</li>
+</ul>
+ 
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iiaausc.htm">关于审核</a>：了解如何监视和评估 Web 服务器的安全性。</li>
+<li><a href="iimacsc.htm">配置和监视审核</a>：创建安全日志。</li>
+<li><a href="iidetsc.htm">侦测未授权的访问</a>：了解如何解释安全日志以识别未经授权的访问。</li>
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>如何记录用户网站和 FTP 站点的活动；请参阅<a href="iilogsa.htm">记录站点活动</a>。</li>
+<li>如何控制对网站和 FTP 站点的访问；请参阅<a href="iiaclsc.htm">访问控制</a>。</li>
+
+</ul>
+
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

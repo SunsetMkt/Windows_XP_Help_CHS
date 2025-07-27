@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>发布和管理文件</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion	
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="告诉用户如何通过 Windows 2000、Internet Explorer 5.0 和 Office 2000 发布到 WebDAV 目录。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+
+<h1><a name="PublishingandManagingFiles">发布和管理文件</a></h1>
+
+<p>本节讲述如何与 WebDAV 发布目录连接。如何将文档从所在的计算机拖放到发布目录中进行发布以及如何处理发布目录中的文件。</p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="wcwind.htm">通过 Windows XP 发布</a>：介绍如何使用“网上邻居”中的“Web 文件夹”功能与 WebDAV 服务器连接。</li>
+<li><a href="wcie50.htm">通过 Internet Explorer 5.0 发布</a>：介绍如何在 Internet Explorer 5.0 中连接到 WebDAV 服务器并复制文件。</li>
+<li><a href="wcoffic.htm">通过 Office 2000 发布</a>：介绍如何在 WebDAV 虚拟目录中直接管理和编辑文件。</li></font>
+</ul>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;即使用户从防火墙后面连接，在具有适当权限并且防火墙配置为允许发布的情况下，用户仍可以在 WebDAV 目录中发布文档。</p>
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</body>
+</html>

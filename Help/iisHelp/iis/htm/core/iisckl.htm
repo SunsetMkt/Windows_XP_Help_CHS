@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>IIS 安全性检查表</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="审阅安全性检查表设置可以确定是否能够提高计算机的安全性。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><A NAME="H1_324736748"></A>IIS 安全性检查表</h1>
+<p>有几种方法可以增强在 Intranet 上发布信息的计算机的安全性。如果对系统安全性具有疑问，请查看此检查表，并确定是否可提高某些方面的安全性。
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;对于高度敏感的信息，应寻求专业安全咨询公司的帮助。咨询公司可帮助您建立正确的安全策略和过程。</p>
+
+<p>
+<a href="#NTsecurity">Windows 安全性</a><br> <a href="#IISsecurity">Internet 信息服务安全性</a><br> <a href="#Physicalsecurity">物理安全性</a><br> <a href="#Personnelsecurity">个人安全性</a><br> <a href="#MoreInfo">有关安全性的详细信息</a><br>
+</p>
+
+<h2><a name="NTsecurity">Windows 安全性</a></h2>
+<p>IIS 的安全功能是建立在 Windows 安全性功能之上的。下列 Windows 设置将有助于确保网站的安全性。</p>
+
+<h3>文件系统</h3>
+<table border="0">
+<tr>
+	<td></td>
+	<td width="40%" bgcolor="#C0C0C0"><strong>动作</strong></td>
+	<td width="60%" bgcolor="#C0C0C0"><strong>原因</strong></td>
+</tr>
+<tr bordercolor="#000000">
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">使用 NTFS</td>
+	<td>NTFS 系统比 FAT 系统安全性更强。有关将计算机硬盘从 FAT 转换为 NTFS 的信息，请参阅 Windows 文档。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">查看目录权限</td>
+	<td>默认情况下，Windows 创建新文件夹，并将“完全控制”权限指派给“Everyone”组。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">设置 IUSR_<em>computername</em> 帐户的访问控制</td>
+	<td>这将有助于限制匿名用户对计算机的访问权限。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">将可执行文件存储在单独的目录中</td>
+	<td>这样便于管理员指派访问权限和审核。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">检查网络驱动器的 NTFS 权限</td>
+	<td>默认情况下，Windows 创建新的共享资源，并将“完全控制”权限指定给“Everyone”组。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+</table>
+
+<h3>用户帐户</h3>
+<table border="0">
+<tr>
+	<td></td>
+	<td width="40%" bgcolor="#C0C0C0"><strong>动作</strong></td>
+	<td width="60%" bgcolor="#C0C0C0"><strong>原因</strong></td>
+</tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">经常查看用户帐户</td>
+	<td>检查不是由有效管理员创建的新帐户。检查指派给 IUSR_<em>computername</em> 帐户的权限。所有能够匿名访问您站点的用户都具有指派给此帐户的权限。您也可以使用审核来监视何时由何人更改了安全策略。详细信息，请参阅<a href="iiaudsc.htm">审核</a>。</td>
+</tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">选择复杂密码</td>
+	<td>如果密码由大小写字母、数字和特殊字符组合而成，则很难被破译。</td>
+</tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">维护严格的帐户策略</td>
+	<td>跟踪指派给重要用户帐户和组的访问类型。其中包括要了解谁有能力更改安全策略。</td>
+</tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">限制管理员组的成员</td>
+	<td>此组通常具有对计算机的完全访问权限。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr><tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">指派管理员帐户的密码</td>
+	<td>默认情况下，管理员帐户的密码为空。要提高安全性，请按以前所述为此帐户设置复杂密码。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+</table>
+
+
+
+<h3>服务和其他问题</h3>
+<table border="0">
+<tr>
+	<td></td>
+	<td width="40%" bgcolor="#C0C0C0"><strong>动作</strong></td>
+	<td width="60%" bgcolor="#C0C0C0"><strong>原因</strong></td>
+</tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">最小限度地运行服务</td>
+	<td>仅运行那些完成您目标所绝对必需的服务。您运行的每个附加服务都可能成为恶意攻击的入口。关于服务和安全性的详细信息，请参阅 Microsoft Windows 2000 Server Resource Kit。</td>
+</tr>
+
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">启用审核</td>
+	<td>审核是非常有用的工具，可用来跟踪对安全或重要文件的访问。审核也可用来跟踪服务器事件，如安全策略的更改。可以存档审核日志供日后使用。详细信息，请参阅<a href="iiaudsc.htm">审核</a>。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">远程管理计算机时使用加密</td>
+	<td>通常，远程管理涉及交换敏感信息，如管理员帐户的密码。要在开放式网络上保护此信息，请使用安全套接字层 (SSL) 加密。详细信息，请参阅<a href="iiencsc.htm">加密</a>。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">使用低级帐户浏览 Internet</td>
+	<td>使用管理员、超级用户或其他高级帐户浏览 Internet，可能会在计算机上打开入口，使其容易受到攻击。同样地，不要从主域控制器 (PDC) 浏览 Internet。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">经常备份重要文件和注册表</td>
+	<td>没有任何安全努力可以完全保证数据的安全。详细信息，请参阅 Microsoft Windows 2000 Server Resource Kit。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">定期检查病毒</td>
+	<td>开放式网络中的所有计算机都容易感染上计算机病毒。定期检查有助于避免不必要的数据丢失。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+
+<tr><td>&nbsp;<big></big></td></tr>
+</table>
+
+
+
+
+
+
+
+<h2><a name="IISsecurity">Internet 信息服务的安全性</a></h2>
+<p>IIS 为您的网站提供最前沿的安全性，包括身份验证和 Web 权限。</p>
+
+<h3>身份验证</h3>
+<table border="0">
+<tr>
+	<td></td>
+	<td width="40%" bgcolor="#C0C0C0"><strong>动作</strong></td>
+	<td width="60%" bgcolor="#C0C0C0"><strong>原因</strong></td>
+</tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">尽可能使用最安全的身份验证方法</td>
+	<td>使用客户端能够支持的最安全的身份验证方法。例如，集成 Windows 身份验证和摘要式身份验证就比基本身份验证安全性更高。也可以使用客户证书进行安全性更高的身份验证。有关身份验证的详细信息，请参阅<a href="iiathsc.htm">身份验证</a>。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">一对一映射与多对一映射</td>
+	<td>可以使用其中的任意一种方法、也可以同时使用这两种方法将客户证书映射到 Windows 用户帐户。一对一映射提供更高的确定性，但需要在服务器上存储客户证书副本。多对一映射易于实现，而且不需要在服务器上存储证书副本。详细信息，请参阅<a href="iimapsc.htm">将客户证书映射到用户帐户</a>。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+</table>
+
+
+<h3>Web 权限</h3>
+<table border="0">
+<tr>
+	<td></td>
+	<td width="40%" bgcolor="#C0C0C0"><strong>动作</strong></td>
+	<td width="60%" bgcolor="#C0C0C0"><strong>原因</strong></td>
+</tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">同步 Web 和 NTFS 权限</td>
+	<td>如果 Web 权限和 NTFS 权限不同步，将使用二者中较为严格的权限。可以手动执行同步，也可以使用“权限向导”。有关 Web 权限的详细信息，请参阅<a href="iiacnsc.htm">关于访问控制</a>。有关 NTFS 权限的信息，请参阅 Windows 文档。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">尽可能使用限制性最强的权限</td>
+	<td>例如，如果只需查看网站信息，则指派“读取”权限即可。如果目录或站点包含 ASP 应用程序，则可以指派“纯脚本”权限而不是“脚本和可执行文件”权限。详细信息，请参阅<a href="iiwspsc.htm">设置 Web 和 FTP 权限</a>。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">“写入”、“脚本和可执行文件”权限</td>
+	<td>使用此组合时需特别谨慎。它使用户可将具有潜在危险的可执行文件上载到服务器并运行这些文件。详细信息，请参阅<a href="iiwspsc.htm">设置 Web 和 FTP 权限</a>。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+</table>
+
+
+<h2><a name="Physicalsecurity">物理安全性</a></h2>
+<table border="0">
+<tr>
+	<td></td>
+	<td width="40%" bgcolor="#C0C0C0"><strong>动作</strong></td>
+	<td width="60%" bgcolor="#C0C0C0"><strong>原因</strong></td>
+</tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">离开时锁定工作站</td>
+	<td>当您不在计算机旁边时，可按快捷键 CTRL + ALT + DELETE、然后选择“锁定工作站”来锁定桌面。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">使用带密码保护的屏幕保护程序</td>
+	<td>时间延迟应很短，以确保没有人能够在您离开后使用计算机。屏幕保护程序应该为空；动画屏幕保护程序会降低服务器性能。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">锁定计算机</td>
+	<td>将计算机锁在安全的房间内，以减少危险人物的访问机会。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+</table>
+
+
+<h2><a name="Personnelsecurity">个人安全性</a></h2>
+<table border="0">
+<tr>
+	<td></td>
+	<td width="40%" bgcolor="#C0C0C0"><strong>动作</strong></td>
+	<td width="60%" bgcolor="#C0C0C0"><strong>原因</strong></td>
+</tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">使用不同的管理员帐户</td>
+	<td>应为具有管理员权限的每个人指派明显不同的用户帐户和密码。这将有利于跟踪所做的任何更改。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">使用非泄漏协议</td>
+	<td>使用非泄漏协议可进一步增强用户的责任感。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">定期重新指派帐户</td>
+	<td>要降低危及用户帐户信息的可能性，请为具有管理员或其他高级权限的人员指派新帐户。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+<tr>
+	<td align="RIGHT" valign="TOP">&nbsp;</td>
+	<td align="LEFT" valign="TOP">尽快删除不用的帐户</td>
+	<td>这样可以防止心怀不满的前职员或供应商访问网络。</td>
+</tr>
+<tr><td>&nbsp;<big></big></td></tr>
+</table>
+
+
+<h2><a name="MoreInfo">有关安全性的详细信息</a></h2>
+<p>下列资源提供有关网站安全性的附加信息：</p>
+<ul>
+<li>Microsoft Windows 2000 Server 资源大全</li>
+<li>Microsoft 的 <a href="http://www.microsoft.com/isapi/redir.dll?prd=ie&ar=security" target=_blank>Microsoft Security 网站</a></li>
+<li><a HREF="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=RSA&ar=securitystandards&pver=1.0" target="_blank">RSA 网站</a></li>
+<li>Microsoft 的 <a href="http://www.microsoft.com/isapi/redir.dll?prd=win2000&ar=security&sbp=Server&pver=5.0&os=Win2000" target=_blank>Windows Security 网站</a></li>
+</ul>
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+</font>
+
+</BODY>
+</HTML>

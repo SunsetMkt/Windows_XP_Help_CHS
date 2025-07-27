@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html dir=ltr><head><title>Internet 服务管理器 (HTML)</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<p><strong><a name="internetservicemanager">Internet 服务管理器 (HTML)</a></strong></p>
+
+<p>Internet 服务管理器的 HTML 版本在浏览器中具有拆分式屏幕布局，它包括浏览器导航窗格中的“菜单视图”和浏览器内容窗格中的“树视图”。</p>
+
+<p> “树视图”显示可管理的所有计算机、网站、FTP 站点、虚拟目录和目录。选择树视图中的任何项目后，它将在浏览器中突出显示。当项目突出显示时，可以从“菜单视图”选择命令，此命令将影响突出显示的树视图项目。</p> 
+
+<p>“菜单视图”列出如下命令：</p>
+
+<P><strong>新建</strong><br> 新建网站或 FTP 站点。</P>
+
+<p><strong>删除</strong><br> 删除网站、FTP 站点、虚拟目录或目录。</p>
+
+<p><strong>重命名</strong><br> 重命名网站、FTP 站点或虚拟目录。</p>
+
+<p><strong>属性</strong><br> 显示所选树视图项目的属性。</p>
+
+<p><strong>启动</strong><br> 启动选定的网站或 FTP 站点。</p>
+
+<p><strong>停止</strong><br> 停止选定的网站或 FTP 站点。</p>
+
+<p><strong>暂停</strong><br> 暂停选定的网站或 FTP 站点。</p>
+
+<p><strong>恢复</strong><br> 恢复选定的网站或 FTP 站点。</p>
+
+<p><strong>权限向导</strong><br> 设置 Web 和 FTP 权限、访问权限和身份验证方案。</p>
+
+<p><strong>主属性</strong><br> 设置计算机上所有当前（或新的）网站和 FTP 站点使用的默认值。 </p>
+
+<p><strong>备份配置</strong><br> 保存所有在 Internet 服务管理器 (HTML) 会话中配置的设置。</p>
+
+<p><strong><font color="#FF0000">警告</font></strong>&nbsp;&nbsp;&nbsp;当使用不安全的连接时，使用 Internet 服务管理器 (HTML) 的唯一安全方法是通过安全套接字层 (SSL)。</p>
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+</font>
+</body>
+</html>

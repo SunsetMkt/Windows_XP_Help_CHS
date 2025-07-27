@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>保存日志文件</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如果指定保存日志文件的目录，以及如何指定创建新日志文件的条件（不是继续向现有日志文件中添加条目）的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37716023">保存日志文件</a></h1>
+
+<p>可以指定保存日志文件的目录，并设置影响新日志文件启动时间的选项。</p>
+
+<big>设置保存日志文件的选项</big><br>
+
+<ol>
+<li>选中某个网站或 FTP 站点并打开其属性页。</li>
+
+<li>在网站或 FTP 站点的属性页中，单击“属性”。</li>
+
+<li>在“常规属性”属性页中，选择启动新日志文件时所使用的选项。这些选项包括：</li>
+
+<ul>
+<li><strong>每小时：</strong>每小时创建一个日志文件，此文件从每小时产生的第一项记录开始。此选项通常用于高容量网站。</li>
+
+<li><strong>每天：</strong>每天创建一个日志文件，此文件以午夜后产生的第一项记录开始。</li>
+
+<li><strong>每周：</strong>每周创建一个日志文件，此文件以周六午夜后产生的第一项记录开始。</li>
+
+<li><strong>每月：</strong>每月创建一个日志文件，此文件以每月最后一天午夜后产生的第一项记录开始。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;对于 W3C 扩展格式以外的所有日志文件格式，“午夜”都指当地时间的午夜。对于 W3C 扩展日志文件格式，“午夜”默认为格林威治标准时间的午夜，但可以改为当地时间的午夜。要使用当地时间打开新的 W3C 扩展日志，请选中“文件命名和回卷使用当地时间”复选框。新日志从当地时间午夜开始记录，不过日志文件中所记录的时间仍为格林威治标准时间。</p>
+
+<li><strong>文件大小无限：</strong>数据始终附加到同一个日志文件中。只有停止站点后，才能访问此日志文件。</li>
+
+<li><strong>当文件大小达到：</strong>在当前日志文件达到给定大小时创建新的日志文件；指定所希望的文件大小。</li>
+</ul>
+
+<li>在“日志文件目录”下，输入要保存日志文件的目录。目录必须为本地驱动器，且路径不能是相对路径。在指定日志文件目录时，不能使用映射驱动器或 UNC 路径（如  \\server1\share1\）或字符“. .\”。有关如何映射到网络驱动器的信息，请参阅 Windows&nbsp;XP 文档。<li>单击“应用”。</li>
+</ol>
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li>有关可用日志文件格式的说明，请参阅<a href="iiabtlg.htm">关于记录站点活动</a>。</li>
+<li>有关日志记录属性的参考列表，请参阅<a href="iiintlg.htm">日志记录属性参考</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

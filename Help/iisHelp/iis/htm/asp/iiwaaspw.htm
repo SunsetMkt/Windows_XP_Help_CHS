@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>了解 Active Server Pages</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+ 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="关于 ASP 主题的导航页，包含到有关 ASP 概述的链接，以及使用它来创建服务器端脚本的程序。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="introducingactiveserverpages">了解 Active Server Pages</a></h1>
+
+
+<p>Active Server Pages (ASP) 使生成动态 Web 内容和建立功能强大的 Web 应用程序变得十分简单。无论您是 Web 设计人员还是 Web 开发人员，此简介中关于 ASP 的说明都会对您大有裨益。</p>
+
+<p>本节包含：</p>
+<ul>
+<li><a href="iiwaabt.htm">Active Server Pages 简介</a>：包含 Active Server Pages 的概述信息。</li>
+<li><a href="iiwanew.htm">ASP 新增功能</a>：介绍此版本中新添加的功能。</li>
+<li><A HREF="iiwachng.htm">ASP 的重要变化</A>：介绍此版本中有所变化的功能及其用法。</li>
+<li><a href="ASPtut00.htm">ASP 教程</a>：有关如何使用 ASP 创建服务器端脚本的循序渐进指导课程。</li>
+
+</ul>
+
+<p>本节不包含：</p>
+<ul>
+<li>有关如何使用 ASP 编写服务器端脚本的基本概念；请参阅<a href="iiwauslw.htm">建立 ASP 网页</a>。</li>
+<li>有关编写更高级脚本的信息；请参阅 <a href="eadg8qpj.htm">Web 应用程序：概述</a>。</li>
+</ul>
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

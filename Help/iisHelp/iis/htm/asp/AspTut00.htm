@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr>
+<head>
+
+<title>ASP 教程</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</SCRIPT> 
+
+<link disabled rel="stylesheet" href="cocss.css"> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//-->
+</SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="介绍可自我控制进度的、交互式 ASP 指南。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+</head>
+
+<body bgcolor="#ffffff" text="#000000">
+
+<font face="宋体">
+
+<h1><a name="H1_37685983">ASP 教程</a></h1>
+
+<p>
+可以使用 Microsoft&reg; Active Server Pages (ASP) 创建动态交互式网页。ASP 网页是一种包含脚本命令的超文本标记语言 (HTML) 网页，在发送到客户端浏览器之前，站点服务器对脚本命令进行处理。下面解释“服务器端脚本”的来龙去脉。
+</p>
+
+
+
+<P>
+HTML 是最简单的网页编写语言，但只能创建静态网页。当一个站点客户端向站点服务器请求静态 HTML 文件时，站点服务器向客户端直接发送 HTML 文件而不经过任何计算（图&nbsp;1）。随后，客户端浏览器处理文件中的 HTML 代码并显示其内容。
+</P>
+
+<TABLE align=center>
+<tr><td><IMG src="art/00_01.gif"></td></tr>
+<tr><td>图 1</td></tr>
+</TABLE>
+
+<p>
+VBScript 是最简单的 ASP 网页编写语言。除为了进行比较而使用 JScript 编写的示例外，本教程中的全部代码示例都是以 VBScript 写成的。当站点客户端向站点服务器请求 ASP 文件时，站点服务器将 ASP 文件发送至 ASP 引擎，服务器端脚本代码在此处执行或转化为 HTML 代码（图&nbsp;2）。然后将转换后的代码发送到站点客户端。
+</p>
+
+<TABLE align=center>
+<tr><td><IMG src="art/00_02.gif"></td></tr>
+<tr><td>图 2</td></tr>
+</TABLE>
+
+<p>
+不同于以往较难创建的公用网关接口 (CGI) 应用程序，ASP 极大地简化了 Web 应用程序的开发过程。只需几行脚本，就可以在网页中添加数据库连接或高级自定义功能。过去，您必须了解 PERL 或 C 才能添加这些功能，但有了 ASP，就可以使用普通的站点脚本语言，如 Microsoft JScript（符合 ECMA 262 语言规范 Microsoft 版本）、Microsoft Visual Basic&reg; Scripting Edition&nbsp;(VBScript)，或任何与 COM 兼容的脚本语言，包括 JavaScript、PERL 等等。
+</p>
+<p>通过在 ASP 网页中使用组件对象模型 (COM)，可以极大地扩展 ASP 的功能。COM 组件是一些可以从 ASP 网页调用的已编译好的代码段。COM 组件是安全、压缩、可复用的对象，通常被编译为 DLL。可以使用 Visual C++、Visual Basic 或其他支持 COM 的语言编写 COM 组件。
+</p>
+
+<p>
+本教程包括下列单元：
+</p>
+
+<ul>
+	<li>
+	<A href="AspTut01.htm">单元 1：创建 ASP 网页</A>&nbsp;&nbsp;&nbsp;在此单元中，您将编写并运行您的第一个 ASP 网页，创建数据收集表单，连接到数据库，以及显示 Microsoft Excel 电子表格。在开始之前，您应该对如何创建 HTML 网页有所了解。
+	</li> 
+	<li>
+	<A href="AspTut02.htm">单元 2：在 ASP 网页中使用 COM 组件</A>&nbsp;&nbsp;&nbsp;在此单元中，您将在 Active Server Pages 中使用 COM 组件滚动站点广告横幅并记录网站流量。
+	</li>  
+	<li>
+	<A href="AspTut03.htm">单元 3：维护 Web 应用程序的会话状态</A>&nbsp;&nbsp;&nbsp;在此单元中，您将学习在 ASP 中维护会话状态的各种方法。</li>
+</ul>
+<h2>开始之前……</h2>
+<p>
+本教程分为三个单元，以循序渐进的方式及相应示例，帮助您使用 VBScript 实现 ASP。要加载并运行教程示例，您必须在运行 IIS 的计算机上具有管理员权限。默认 IIS 安全设置应允许您运行教程，但如果发生访问冲突，则可能需要更改安全设置。
+</p>
+
+
+<P>如果在浏览器中打开 ASP 网页时出错，请尝试执行下列操作：
+<ul>
+    <li>
+	关闭文本编辑器中的 ASP 文件。服务器可能无法显示正在文本编辑器中打开的 HTML 网页。</li><li>
+	确保 <i>x</i>:\InetPub\Wwwroot\Tutorial 中的文件具有正确的文件名和扩展名。</li><li>
+	检查浏览器地址栏中的 URL 拼写，并在必要时改正。此地址应类似于 http&#58;&#47;&#47;localhost&#47;Tutorial&#47;<i>MyFile</i>.asp
+    或 http&#58;&#47;&#47;<i>ComputerName</i>&#47;Tutorial&#47;<i>MyFile</i>.asp。
+    </li><li>
+	验证站点服务器正在运行。要快速实现此目的，在地址栏中键入 <a href="http://localhost/localstart.asp">http://localhost/localstart.asp</a>。如果收到“无法显示网页”错误，则表示站点服务没有运行。要启动站点服务，请单击“开始”，单击“运行”，在“打开”文本框中，键入“cmd”。然后在命令行窗口中，键入“net start w3svc”。</li>
+</ul>
+如果问题依然存在，则不是一般性错误。请仔细阅读浏览器中显示的错误，并尝试确定错误原因。下面是可能发生的错误及相应的解释：
+
+<ul>
+ <li><B>服务器错误</B>&nbsp;&nbsp;&nbsp;错误来自 IIS。</li>
+ <li><B>VBScript</B> 或 <B>JScript 错误</B>&nbsp;&nbsp;&nbsp;可能是编码错误。</li>
+ <li><B>ADODB</B>&nbsp;&nbsp;&nbsp;数据库可能存在问题。</li>
+<li><B>安全</B>和<B>拒绝访问</B>&nbsp;&nbsp;&nbsp;这些错误更加错综复杂，需要检查文件和文件夹的权限，尤其是那些更改数据的操作要求对于数据库文件应具有读取/写入访问权限。</li></ul>
+<P>
+可以通过 <a href="iiabuti.htm">Internet 信息服务管理单元</a>在 IIS 中设置站点权限。然而，这些权限可能会在特定文件和文件夹上被 NTFS 权限破坏。您可以允许一个用户访问 IIS 上的网站，但如果 NTFS 文件权限拒绝对某一 ASP 文件或数据库文件进行访问，则站点用户就无法看到此文件。如果使用匿名身份验证，您必须为 IWAM_<i>ComputerName</i> 和 IUSR_<i>ComputerName</i> 帐户设置 NTFS 权限才能进行访问。有关安全和设置权限的信息，请参阅 IIS 帮助中的相关章节，或参阅 <a href="http://www.microsoft.com/isapi/redir.dll?prd=technet&ar=iis" target="_blank">IIS
+TechNet</a> 有关 NTFS 安全的文章。
+</P>
+
+<p>         
+如果没有自定义安装 IIS，则会创建 <i>x</i>:\Inetpub\Wwwroot 并作为默认主目录，此处 <i>x</i> 是指安装了 Windows 的驱动器。在 <i>x</i>:\Inetpub\Wwwroot 中，将创建一个称为 <b>Tutorial</b> 的目录。学习每个单元的课程时，工作将保存在 <i>x</i>:\Inetpub\Wwwroot\Tutorial 
+目录中。通过在浏览器中键入 http&#58;&#47;&#47;<b>localhost&#47;Tutorial&#47;<i>file_name.asp</i></b> 可查看您的学习结果，此处 <i>file_name.asp</i> 是您文件的名称。</P> 
+
+<p>
+默认情况下，在网页发生错误时，Internet Explorer 会显示一般性消息。您可能希望在 Internet Explorer 中查看详细的错误消息，为此，需要禁用 Internet Explorer 忽略 IIS 发送的错误的功能。方法是在 Internet Explorer 中，单击“工具”菜单，选择“Internet 选项”，单击“高级”选项卡，并清除“显示友好 HTTP 错误消息”复选框。
+</p>
+
+
+<p>
+本教程不包含：
+</p>
+
+<ul>
+	<li>
+	VBScript 和 JScript 的完整语言信息或有关编写 ASP 脚本的主题；请参阅 <A href="iiwawelc.htm">Active Server Pages</A> 或 <A href="http://go.microsoft.com/fwlink/?LinkId=1758" target=_blank>Windows Script Technologies</A>。
+	</li> 
+	<li>所有内置 ASP 对象的完整参考；请参阅<A href="iiwaobb.htm">内置 ASP 对象</A>。
+	</li>
+</ul> 
+  
+<p>&nbsp;</p> 
+  
+
+<hr class="iis" size="1">
+<p align="center">
+<A href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</A>
+</p>
+
+</font>
+
+</body>
+</html>

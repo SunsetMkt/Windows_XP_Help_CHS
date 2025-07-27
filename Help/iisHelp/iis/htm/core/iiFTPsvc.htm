@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML dir=ltr><HEAD><TITLE>FTP 服务</TITLE>
+<SCRIPT language=JavaScript>
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</SCRIPT>
+
+<SCRIPT language=VBScript>
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META content="如何安装 FTP 服务和默认 FTP 站点。" 
+name=DESCRIPTION>
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<META http-equiv=PICS-Label 
+content='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META content=ZH-CN name=MS.LOCALE>
+<META content="Internet 信息服务" name=MS-IT-LOC>
+<META content="Microsoft FrontPage 4.0" name=GENERATOR></HEAD>
+<BODY text=#000000 bgColor=#ffffff><FONT face=宋体>
+<H1><A name=H1_37679962>FTP 服务</A></H1>
+
+
+
+<p>
+安装 IIS 5.1 时将默认安装 FTP 服务。安装 FTP 服务时，将在 <I>x</I>:\Inetpub\Ftproot 中创建一个默认 FTP 站点，其中 <I>x</I>: 表示安装 IIS 的驱动器号。如果安装了 IIS 但卸载了 FTP 服务，可以通过下列步骤重新安装 FTP 服务。</p>
+
+<A name=#EnablingFTP><BIG>安装 FTP 服务</BIG><!--</p>--><BR>
+<OL>
+  <LI>在“控制面板”中，单击“添加或删除程序”。<LI>单击“添加/删除 Windows 组件”。<LI>从列表中选择“Internet 信息服务 (IIS)”，然后单击“详细信息”。<LI>选中“文件传输协议 (FTP) 服务”复选框。<LI>单击“确定”（可能会提示您输入 Windows XP CD 或网络安装路径名）。<LI>单击“下一步”。<LI>单击“完成”。</LI></OL>
+
+
+<P><STRONG>相关主题</STRONG></P>
+<UL>
+  <LI>若要安装 IIS，请参阅<a href="iiiisin.htm">安装 IIS</a>。</li>
+  <LI>若要使用默认设置快速建立站点，请参阅<A   href="iitstart.htm">使用 IIS 快速建立站点</A>。</Li> 
+  <LI>若要更改现有网站或 FTP 站点的属性，请参阅<A   href="iivspro.htm">更改继承的默认值</A>。</Li>
+  <LI>若要添加虚拟目录，请参阅<A   href="iicodirv.htm">创建虚拟目录</A>。</Li>
+</UL>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<SCRIPT language=javascript>
+<!--
+function Activate() {
+if (navigator.appName == "Microsoft Internet Explorer"){
+	window.open("iisnapin.htm", "NewWin", 'toolbar=no, left=200, top=200, scrollbars=no, resizeable=no,  width=350, height=350');
+	}
+	else if (navigator.appName == "Netscape") {
+		window.open("iisnapin.htm", "NewWin",  'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=yes,resizable=0,width=350,height=350,top=200,left=200');
+	}
+}
+//-->
+</SCRIPT>
+</FONT></BODY></HTML>

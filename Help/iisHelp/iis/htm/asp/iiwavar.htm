@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML DIR=LTR><HEAD><TITLE>使用变量和常量</TITLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</SCRIPT> 
+
+
+
+<META NAME="DESCRIPTION" CONTENT="解释如何在 ASP 脚本环境中使用变量和常量。包含 VBScript 和 JScript 范例。"><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<FONT FACE="宋体">	
+
+
+<H1><A NAME="H1_37780314">使用变量和常量</A></H1>
+
+
+<P>“变量”是计算机内存中已命名的存储位置，它包含数据，如数值或文本字符串。变量中包含的数据称为变量的“值”。变量使用有助于理解脚本功能的名称来存储、检索和管理值。</P>
+
+<H2><A NAME="H2_37780793">声明和命名变量</A></H2>
+
+<P>遵循下列脚本语言规则和原则来命名和声明变量。即使不要求在使用之前声明变量，但先声明变量的良好开发习惯将有助于减少错误。“声明”变量也就是告诉脚本引擎特定名称的变量已经存在，可以在脚本中引用此变量。</P>
+
+
+<H3><A NAME="H3_37781338">VBScript</A></H3>
+
+<P>VBScript 不要求变量声明，但在使用之前先声明所有变量是一种良好的脚本编程习惯。可以使用 <STRONG>Dim</STRONG>、<STRONG>Public</STRONG> 或 <STRONG>Private</STRONG> 语句在 VBScript 中声明变量。例如：</P>
+
+<PRE>&lt;% Dim UserName %&gt;</PRE>
+
+<P>可以在 .asp 文件中使用 VBScript <STRONG>Option Explicit</STRONG> 语句，要求必须使用<STRONG>Dim</STRONG>、<STRONG>Private</STRONG>、<STRONG>Public</STRONG> 和 <STRONG>ReDim</STRONG> 语句显式声明变量。<STRONG>Option Explicit</STRONG> 语句必须位于任何 ASP 命令之后、任何 HTML 文本或脚本命令之前。此语句只影响使用 VBScript 编写的 ASP 命令；并不影响 JScript 命令。</P>
+
+<PRE>&lt;% Option Explicit %&gt;
+&lt;HTML&gt;
+&lt;%
+  Dim strUserName
+  Public lngAccountNumber
+%&gt;
+.
+.
+.
+</PRE>
+
+
+<P>有关这些命令的详细信息，请参阅 <a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&pver=6.0&ar=scripting" target=_blank>Windows Script Technologies</a> 网站中的“VBScript 语言参考”。</P>
+
+
+<H3><A NAME="H3_37782240">JScript</A></H3>
+
+<P>虽然 JScript 通常不要求变量声明，但在使用之前先声明所有变量是一个良好的脚本编程习惯。可使用 <STRONG>var</STRONG> 语句声明变量。例如：</P>
+
+<PRE>&lt;% var UserName %&gt;</PRE>
+
+<P>通常，只有在需要将函数内部变量与在函数外部使用的“全局”变量区分开时，才有必要在 JScript 中声明变量。在这种情况下，如果不区分两个变量，JScript 会假定只引用全局变量。关于 <STRONG>var</STRONG> 语句的详细信息，请参阅 <a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&pver=6.0&ar=scripting" target=_blank>Windows Script Technologies</a> 网站中的“JScript 语言参考”。</P>
+
+<H2><A NAME="H2_37782652">变量范围</A></H2>
+
+<P>变量“范围”或生存期确定哪些脚本命令可以访问变量。在过程中声明的变量具有“局部范围”；每次执行过程时创建和消除此变量。无法从过程外部访问此变量。在过程外部声明的变量具有“全局范围”；ASP 网页中的任何脚本命令都可以访问和修改此变量值。</P>
+
+<P><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;将变量范围限制在过程中有利于提高性能。</P>
+
+
+<P>声明变量时，局部变量和全局变量可以同名。修改其中一个变量的值，不会影响另一个变量。不过，如果不声明变量，则有可能在无意中修改全局变量的值。例如，在下例中虽然有两个变量 Y，但脚本命令返回值 1：</P>
+
+<PRE>&lt;%
+  Option Explicit 
+  Dim Y
+
+  Y = 1
+
+  SetLocalVariable
+
+  Response.Write Y
+
+Sub SetLocalVariable
+    Dim Y
+    Y = 2
+End Sub
+%&gt;</PRE>
+
+<P>与此相反，在下例中因为没有显式声明变量，所以脚本命令返回值 2。当过程调用设置 Y 为 2 时，脚本引擎认为过程要修改全局变量：</P>
+
+<PRE>&lt;% 
+  Option Explicit
+  Dim Y = 1
+
+  SetLocalVariable
+
+  Response.Write Y
+
+Sub SetLocalVariable
+    Y = 2
+End Sub
+%&gt;</PRE>
+
+<P>要避免此类问题的发生，有必要养成显式声明所有变量的习惯。这一点当使用 <STRONG>#include</STRONG> 语句在 .asp 文件中包含其他文件时尤其重要。被包含的脚本虽然在单独的文件中，但却当作是包含文件的一部分。除非声明变量，否则很容易忘记必须在主脚本和被包含脚本中使用不同的变量名。</P> 
+
+<H2><A NAME="H2_37784611">指定变量的 Session 或 Application 作用域 </A></H2>
+
+<P>全局变量只能在单个 .asp 文件内访问。要从单独网页外部访问变量，需提供变量的 Session 或 Application 作用域。Session 作用域变量对单个用户请求的 ASP 应用程序的所有页都可用。Application 作用域变量对任何用户请求的 ASP 应用程序的所有页都可用。Session 变量适用于存储单个用户的信息，如首选项、用户名或标识。应用程序变量适用于存储特定应用程序所有用户的信息，如应用程序需要的特定欢迎词或常规值。</P>
+
+<P>ASP 提供了两种内置对象，您可以在其中存储变量：<STRONG>Session</STRONG> 对象和 <STRONG>Application</STRONG> 对象。</P>
+
+<P>也可以用 Session 或 Application 作用域来创建对象实例。详细信息，请参阅<A HREF="iiwaobu.htm">设置对象作用域</A>。</P>
+
+<H3><A NAME="H3_37785903">Session 作用域</A></H3>
+
+<P>要给变量提供 Session 作用域，可通过给对象中已命名条目赋值将变量存储在 <STRONG>Session</STRONG> 对象中。例如，下列命令将在 <STRONG>Session</STRONG> 对象中存储两个新变量：</P>
+
+<PRE>&lt;% 
+  Session(&quot;FirstName&quot;) = &quot;Jeff&quot;
+  Session(&quot;LastName&quot;) = &quot;Smith&quot; 
+%&gt;</PRE>
+
+<P>要从 <STRONG>Session</STRONG> 对象中检索信息，可使用输出命令 (<CODE>&lt;%=</CODE>) 或 <STRONG>Response.Write</STRONG> 访问已命名的条目。下列示例使用输出命令显示 Session("FirstName") 的当前值：</P>
+
+<PRE>Welcome &lt;%= Session(&quot;FirstName&quot;) %&gt;</PRE>
+
+<P>可以在 Session 对象中存储用户首选项，然后通过访问这些首选项来确定将哪些页返回给用户。例如，可以允许用户在应用程序首页中指定只查看纯文本内容，然后将此项选择应用于用户在此应用程序中访问的所有后续页。</P>
+
+<PRE>&lt;%
+  strScreenResolution = Session(&quot;ScreenResolution&quot;)
+  If strScreenResolution = &quot;Low&quot; Then
+%&gt; 
+  这是一个纯文本网页。
+&lt;% Else %&gt; 
+  这是一个多媒体网页。
+&lt;% End If %&gt;</PRE>
+
+<P><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;如果在脚本中要多次引用 session 作用域变量，可以考虑如上例所示，将此变量赋给一个局部变量以便提高性能。</P>
+
+
+<H3><A NAME="H3_37787278">Application 作用域</A></H3>
+
+<P>要提供变量 Application 作用域，可通过给对象中已命名条目赋值来将变量存储在 <STRONG>Application</STRONG> 对象中。例如，下列命令在 <STRONG>Application</STRONG> 对象中存储应用程序特定的欢迎词：</P>
+
+<PRE>&lt;% Application(&quot;Greeting&quot;) = &quot;Welcome to the Sales Department!&quot; %&gt;</PRE>
+
+<P>要从 <STRONG>Application</STRONG> 对象中检索信息，可使用 ASP 输出命令 (<CODE>&lt;%=</CODE>) 或 <STRONG>Response.Write</STRONG> 来从应用程序中的任何后续页访问已命名的条目。下列命令使用输出命令来显示 Application("Greeting") 的值：</P>
+
+<PRE>&lt;%= Application(&quot;Greeting&quot;) %&gt;</PRE>
+
+<P>同样地，如果脚本重复引用 Application 作用域变量，应将此变量赋给全局变量以便提高性能。</P>
+
+<H2><A NAME="usingconstants">使用常量</A></H2>
+
+<P>“常量”是用来取代数值或字符串的名称。随 ASP 提供的部分基本组件，如 ActiveX 数据对象 (ADO)，定义了可在脚本中使用的常量。组件可以在“组件类型库”中声明常量，组件类型库是一个包含 COM 组件支持的对象和类型的信息的文件。一旦在 .asp 文件中声明了类型库，就可以在同一 .asp 文件的所有脚本中使用已定义的常量。类似地，可以在 Global.asa 文件中声明类型库，以便在应用程序的所有 .asp 文件中使用已定义的常量。</P>
+
+<P>要声明类型库，可以在 .asp 文件或 Global.asa 文件中使用 &lt;METADATA&gt; 标签。例如，要声明 ADO 类型库，可使用下列语句：</P>  
+
+<PRE>&lt;!--METADATA NAME=&quot;Microsoft ActiveX Data Objects 2.5 Library&quot; TYPE=&quot;TypeLib&quot; UUID=&quot;{00000205-0000-0010-8000-00AA006D2EA4}&quot;--&gt;</PRE>
+
+<P>或者，如果不引用类型库的通用唯一标识符 (UUID)，也可通过文件路径引用类型库：</P>
+
+<PRE>&lt;!-- METADATA TYPE=&quot;typelib&quot; FILE=&quot;c:\program files\common files\system\ado\msado15.dll&quot;--&gt;</PRE> 
+	
+
+<P>然后，即可在 .asp 文件中使用 ADO 常量，此文件声明了类型库或者驻留在包含 Global.asa 文件（声明了 ADO 类型库）的应用程序中。在下列例子中，adOpenKeyset 和 adLockOptimistic 是 ADO 常量：</P>
+
+<PRE>&lt;%
+  '创建并打开 Recordset 对象。
+  Set rstCustomerList = Server.CreateObject(&quot;ADODB.Recordset&quot;)
+
+  rstCustomerList.ActiveConnection = cnnPubs
+  rstCustomerList.CursorType = adOpenKeyset
+  rstCustomerList.LockType = adLockOptimistic
+%&gt;</PRE>
+
+<P>下表列出了常用的类型库和 UUID：</P>
+
+<TABLE BORDER="1" CELLPADDING="5" CELLSPACING="1" WIDTH="80%">
+	<TR>
+	  <TH WIDTH=20% BGCOLOR="#c0c0c0">类型库</TH>
+	  <TH WIDTH=80% BGCOLOR="#c0c0c0">UUID</TH>
+	</TR>
+	<TR><TD>Microsoft ActiveX Data Objects 2.5 Library</TD><TD>{00000205-0000-0010-8000-00AA006D2EA4}</TD></TR>
+	<TR><TD>Microsoft CDO 1.2 Library for Windows 2000 Server</TD><TD>{0E064ADD-9D99-11D0-ABE5-00AA0064D470}</TD></TR>
+	<TR><TD>MSWC Advertisement Rotator Object Library</TD><TD>{090ACFA1-1580-11D1-8AC0-00C0F00910F9}</TD></TR>
+	<TR><TD>MSWC IIS Log Object Library</TD><TD>{B758F2F9-A3D6-11D1-8B9C-080009DCC2FA}</TD></TR>
+</TABLE>
+
+<P>关于 &lt;METADATA&gt; 标签的参考信息，请参阅 <A HREF="glob4b5f.htm">TypeLibrary 声明</A>。</P>
+
+<P>在以前版本的 ASP 中，部分组件以文件形式提供了常量定义，这些文件必须包含在使用这些常量的所有 ASP 文件中。虽然仍可以通过 <A HREF="../core/iisiinc.htm">#include</A> 命令包含常量定义，但使用类型库更方便，也更容易升级脚本。在未来的 ASP 版本中，组件可能不提供常量定义文件。</P>
+
+<P><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;使用 &lt;METADATA&gt; 标签（而不是 <STRONG>#include</STRONG> 命令）可以提高 Web 应用程序的性能。</P>
+
+<P>可以定义自己的常量。在 VBScript 中，使用 <STRONG>Const</STRONG> 语句。在 JScript 中，可以使用 <STRONG>var</STRONG> 语句将常量值赋给变量。如果要在多个 .asp 文件中使用常量，则需要将定义放在单独文件中，并在所有使用此常量的 .asp 文件中包含这些定义。</P>
+
+
+<HR CLASS="iis" SIZE="1">
+<P ALIGN="center"><A HREF="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</A></P>
+
+</font>
+
+</font>
+</BODY>
+
+</HTML>

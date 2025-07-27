@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>自定义错误消息</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="链接到列出可自定义的 HTTP 1.1 错误消息主题, 并描述创建自定义错误消息步骤的导航页。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="customerrormessages">自定义错误消息</a></h1>
+
+<p>可以配置 IIS 发送自定义错误消息，而不是发送默认的 HTTP 1.1 错误消息。可以将这些自定义错误消息映射为文件名或 URL。</p>
+
+<p>本节包含：</p>
+<ul>
+<li><a href="iierrabt.htm">关于自定义错误消息</a>：有关默认和自定义 HTTP 1.1 错误的概述信息。</li>
+<li><a href="iierradd.htm">添加自定义错误消息</a>：有关如何向网站添加自定义错误消息的过程信息。</li>
+<li><a href="iierrdtl.htm">启用详细自定义错误消息</a>：有关如何使用 IIS 附带的详细（或友好） HTTP 1.1 错误信息的过程信息。</li>
+<li><a href="iiprstop.htm">启用 ASP 错误处理</a>：有关如何使用 500-100.asp 自定义错误文件处理 ASP 错误的概述信息。</li>
+</ul>
+
+<p>本节不包含：</p>
+<ul>
+<li>网站内容；请参阅<a href="iiwebcon.htm">网站管理</a>。</li>
+<li>Windows 事件；请参阅 <a href="iievents.htm">IIS 的 Windows 事件</a>。</li>
+</ul>
+ 
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE>
+（下列单词只用于搜索，不会显示在网页中。）自定义错误, 错误, 消息, 文本, 对话框, 自定义, 修改, 替代, 友好, 信息, 默认, 详述, 详细, 默认, 列出, 列表, 表, 图表, 表, 卡片, 参考, 400, 401, 403, 404, 405, 406, 407, 412, 414, 500, 501, 502, http 1.1, asp, 500-100.asp, 警告, 警告, 进程, 处理, 意义, 表示, 解释, 定义, 定义, 解释, 链接, 详细信息
+</layer></span>
+</font>
+</body>
+</html>

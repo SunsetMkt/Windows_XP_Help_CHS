@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>安装 IIS 可选组件</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="安装和卸载 IIS 可选组件的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+
+<h1><a name="installing">安装 IIS 可选组件</a></h1>
+
+
+<p>Internet 信息服务包括一些可选组件，您可以随时启用或禁用这些组件。下面对这些组件及其对当前 IIS 设置的影响进行了说明。在此说明之后提供了安装说明。</p>
+
+<p><h2>公用文件</h2>
+<p>“公用文件”选项是安装 IIS 时的默认选项。为了增强服务器环境的安全性，可能要取消对某些公用文件的选择。但是，如果取消选择“公用文件”选项，随后所有公用文件都会被取消选择，您将无法在计算机上安装 IIS。因此，若要在计算机上安装 IIS，应该选中“公用文件”选项。若要限制与 IIS 一起安装的某些服务或组件，请取消选择“公用文件”组件下列出的相应组件。</p>
+
+<p><h2>文档</h2> 
+<p>“文档”选项是安装 IIS 时的默认选项。IIS 联机文档中包含完整的“入门”、“管理”和“Active Server Pages 指南”；其中提供的都是概念性的信息，可以帮助用户了解 IIS 的各种功能、工具和管理选项。此文档还包括分步指导，可以帮助用户管理、监视及提高 IIS Web 服务器的性能。可以搜索 IIS 联机文档，或者在主题树中按主题进行浏览或在索引中进行浏览。</p>
+
+<p>如果将计算机环境设置为用户可以从一个 IIS Web 主服务器管理多个 IIS Web 服务器，则不必将文档安装到所有服务器上。不安装此可选组件，并不会影响 IIS 的设置和功能。</p>
+
+<p>安装此可选组件后，可以在浏览器地址栏中输入 http://localhost/iisHelp/ 并按 Enter 键来查看 IIS 联机文档。</p>
+
+<h2>文件传输协议 (FTP) 服务器（非默认选项）</h2> 
+<p>通过文件传输协议 (FTP) 可以实现本地系统与使用传输控制协议/网际协议 (TCP/IP) 的网络（如 Internet）上的远程计算机系统之间的文件复制。此协议还允许用户使用 FTP 命令进行文件操作，如列出远程系统上的文件和目录。对于 IIS，启用 FTP 就意味着用户能够通过 Web 浏览器进行文件传输。</p>
+
+<p>有关详细信息，请参阅</p>
+<ul>
+<li><a href="iivsovr.htm">关于网站和 FTP 站点</a></li>
+<li><a href="iitstart.htm">使用 IIS 快速建立站点（在 FTP 站点上发布内容）</a></li>
+</ul>
+
+<p><h2>FrontPage 服务器扩展</h2>
+<p>FrontPage 服务器扩展允许用户将 FrontPage 作为一种网站创作环境，在图形化界面中查看和管理网站。使用 FrontPage，可以在服务器上快速创建网站，以及创建、编辑网页并将其发布到远程 IIS 上。创建站点时，FrontPage 一直保持与 IIS 的连接，并且继续保存和更改 Web 文件，所以用户可以查看此站点。如果没有安装 FrontPage 服务器扩展，则必须手动复制所有 Web 内容，并对某些设置进行配置。某些情况下，还需手动注册已在 FrontPage 中注册的应用程序。Microsoft 群集中的资源不支持 Microsoft FrontPage 服务器扩展。</p>
+
+<p>有关详细信息，请参阅</p>
+<ul>
+<li>Windows XP 联机文档中的“FrontPage 服务器扩展”</li> 
+<li><a href="iihowat.htm">选择创作工具</a></li>
+<li><a HREF="http://www.microsoft.com/isapi/redir.dll?prd=frontpage&ar=home" target="_blank">FrontPage 网站</a></li>
+</ul>
+
+<p><h2>Internet 信息服务管理单元</h2> 
+<p>“Internet 服务管理器”现在称为 <a href="iiabuti.htm">Internet 信息服务管理单元</a>，是用于管理网站的图形化用户界面。Internet 信息服务管理单元是一种 Microsoft Management Console (MMC) 管理单元，是一个内嵌到 MMC 代码中的应用程序，因此出现在 MMC 窗口中，并且外观与内嵌到 MMC 中的其它所有管理应用程序类似。也可以不使用 Internet 信息服务管理单元来管理服务器，但这种情况下创建站点、应用程序、虚拟目录和安全设置时，需要使用已编码的脚本（如 inetpub\adminscripts\adsutil.vbs）或自己的脚本来调用 IIS API。Web 服务和 FTP 服务要求使用 Internet 信息服务管理单元。</p>   
+
+<p>有关详细信息，请参阅</p>
+<ul>
+<li type="1"><a href="iiabuti.htm">Internet 信息服务管理单元</a></li> 
+<li type="1"><a href="iinewtp2.htm">管理</a></li>
+</ul>
+
+<p>
+
+<p><h2>SMTP（非默认选项）</h2> 
+<p>可以使用简单邮件传输协议 (SMTP) 设置与 IIS 一起运行的 Intranet 邮件服务。SMTP 是用于在网络计算机之间进行邮件传递的 TCP/IP 协议。此协议用于在 Internet 上路由电子邮件。</p>
+
+<p>安装 SMTP 后，可以在浏览器地址栏中输入 file:\\%systemroot%\help\mail.chm 并按 Enter 键来查看产品文档。</p>
+
+<p><h2>Visual InterDev RAD 远程部署支持</h2> 
+<p>Microsoft Visual InterDev 是一种功能强大的 Web 应用程序开发工具，可用来快速构建极富特色的网站。Visual InterDev 提供了一组集成数据库工具，大大减化了网站与 OLE DB 数据源以及与“开放式数据库互接”(ODBC) 兼容数据库的连接过程。“Visual Interdev RAD 远程部署支持”允许用户在 Web 服务器上远程部署应用程序。</p>
+
+<p>有关详细信息，请参阅</p>
+<ul>
+<li><a href="iihowat.htm">选择创作工具</a></li> 
+<li type="1"><a href="iiwebcon.htm">网站管理</a></li>
+<li><a HREF="http://www.microsoft.com/isapi/redir.dll?prd=vinterdev&ar=home&pver=6.0" target="_blank">Visual Interdev 网站</a></li>
+</ul>
+
+<p><h2>万维网服务</h2>
+<p>IIS 为 Internet 和万维网网页提供服务。必须安装此组件，IIS 才能实现其主要服务。如果取消选择此选项，Internet 信息服务将被禁用。</p> 
+
+<p>“World Wide Web 服务器”包括下列虚拟目录：</p>
+
+<p><h3>MSADC 虚拟目录</h3>
+此目录中包含 ActiveX 数据对象 (ADO)，可将 ADO 置于网页中以便客户端能够进行数据访问。从服务器端 Active Server Pages (ASP) 访问 ADO 时不需要这些文件。此目录也被称为 Microsoft 远程数据服务 (MSRDS)。
+
+<p><h3>Printers 虚拟目录</h3>
+<p>Windows XP 在易于访问的网站 (http://localhost/printers/) 上动态列出服务器上的所有打印机。可以浏览此站点以监视打印机及其作业，也可以通过此站点将任何运行 Windows 的计算机与这些打印机相连。</p> 
+
+<p><h3>Scripts 虚拟目录</h3>
+<p>此目录是集中存储脚本的位置。</p>
+
+<p><h3>终端服务远程桌面 Web 连接虚拟目录</h3>
+
+<p>“终端服务”是 Windows XP 的一项功能，此功能允许远程访问另一台计算机的桌面，以便共享桌面（远程桌面）或主持多个应用程序（终端服务器）。可以使用“终端服务远程桌面”（Windows XP 的默认选项）远程管理 Windows XP 服务（如 IIS），就像在服务器控制台进行管理一样。使用终端服务，不需要在远程计算机上安装 Microsoft Management Console (MMC) 或 Internet 信息服务管理单元。</p> 
+
+<p>终端服务客户端软件可供旧式 PC 和非 PC 设备（如 UNIX 工作站）使用（非 Windows 的客户端设备需要第三方附件软件）。Windows XP 内置的“远程桌面连接”客户端软件允许通过网络（如 LAN、PPTP 或拨号网络）进行连接。</p> 
+
+<p>“远程桌面 Web 连接”提供了一个 Web 控件和示例页，可用于在 Web 上部署终端服务客户端连接。在 Web 服务器上部署远程桌面 Web 连接时，客户端计算机只需使用 Internet Explorer 和 TCP/IP 连接即可远程连接到终端服务器和其他远程桌面。</p>
+
+<p>有关详细信息，请参阅“远程桌面 Web 连接”文档，此文档的默认安装位置是 C:\%Windir%\Help\Rdesktop.chm。在 Windows 2000 Server 上，“终端服务器”文档的安装位置是 C:\%Windir%\Help\Termsrv.chm。</p>
+
+<h2>安装 IIS 可选组件</h2><br>
+<ol>
+
+<li>单击“开始”，指向“设置”，单击“控制面板”，启动“添加或删除程序”应用程序。</li>
+<li>单击“添加/删除 Windows 组件”，出现“Windows 组件向导”。</li>
+
+<li>对于 Windows XP Professional，默认情况下不安装 Internet 信息服务。如果不选中 Internet 信息服务 (IIS)，则不会在计算机上安装 IIS。选中此选项，可以同时安装 IIS 及其中的一些可选组件。</li>
+<li>单击“详细信息”按钮，显示“Internet 信息服务”对话框，此对话框中列出了 IIS 的可选子组件。</li> 
+
+<p>默认情况下，IIS 安装下列子组件：</p>
+<ul>公用文件</ul>
+<ul>文档</ul>
+<ul>FrontPage 2000 服务器扩展</ul>
+<ul>Internet 信息服务管理单元</ul>
+<ul>SMTP Service</ul>
+<ul>万维网服务</ul>
+<p></p>
+<li>选择要安装的 IIS 可选组件。选定每个组件后，请检查“详细信息”按钮是否被激活。</li> 
+<li type="1">如果选定组件后“详细信息”按钮被激活，请单击“详细信息”按钮，将出现相应的子组件对话框。</li> 
+<li type="1">选择要安装的子组件并单击“确定”。</li>
+<li type="1">返回“Windows 组件向导”，单击“下一步”。</li>
+<li type="1">将开始安装选定的 IIS 可选组件。</li>
+
+</ol>
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li>有关安装 IIS 的详细信息，请参阅<a href="iiiisin.htm">安装 IIS</a>。</li>
+<li>要查看有关 IIS 常见问题的解答，请参阅<a href="iifaq.htm">常见问题</A>。</li>
+
+
+</font>
+</ul>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</body>
+</html>

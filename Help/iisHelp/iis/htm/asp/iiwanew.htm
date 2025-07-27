@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>ASP 新增功能</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<META NAME="DESCRIPTION" CONTENT="讲述本版本的 Active Server Pages 中的新增功能。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<font face="宋体" color="black">
+<h1><a name="H1_37775030">ASP 新增功能</a></h1>
+
+
+<p>Active Server Pages (ASP) 新增了许多功能，有助于轻松编写脚本和开发 Web 应用程序。</p>
+
+<ul>
+
+<li><strong>新的流控制能力</strong> ASP 的 <strong>Server</strong> 对象具有两种可用来控制程序流的新方法：<strong>Server.Transfer</strong> 和 <strong>Server.Execute</strong>。与重定向请求（需要往返于客户端）不同，可以使用这些方法将请求直接传送到 .asp 文件，而不需要离开服务器。详细信息，请参阅<a href="iiwacont.htm">将内容发送到浏览器</a>。</li>
+
+<li><strong>错误处理</strong> ASP 具有新的错误处理能力，可以使用自定义的错误消息 .asp 文件来捕捉错误，并使用新的 <strong>Server.GetLastError</strong> 方法显示有用信息，如错误描述或发生错误的行号。详细信息，请参阅 <a href="vbob1dtg.htm">ASPError 对象</a>。</li>
+
+<li><strong>无脚本 ASP</strong> 由于静态内容的处理速度通常快于服务器端内容，因此以前只将 .asp 文件扩展名指派给包含 ASP 功能的文件。无论何时，如果需要在静态 .html 文件中添加 ASP 功能，只能手动添加 .asp 文件扩展名并修正相关超级链接。不过，在 ASP 的最新版本中，不包含服务器端功能的 .asp 文件的处理速度比以前快了许多。因此，如果正在创建扩展的 Web 应用程序，并且其中的文件最终可能需要 ASP 功能，现在就可以很方便地为这些文件指派 .asp 文件扩展名，而不必考虑它们是否包含静态或服务器端内容。详细信息，请参阅<a href="iiwabasi.htm">创建 ASP 网页</a>。</li>
+
+<li><strong>对象性能得到进一步增强</strong> ASP 现在提供流行的可安装组件的性能增强版本。这些对象能够可靠地适用于各种 Web 发布环境。详细信息，请参阅 <a href="comp275c.htm">ASP 的可安装组件</a>。</li>
+
+<li><strong>XML 集成</strong> 扩展标记语言 (XML) 可以描述复杂的数据结构或文档，这些数据结构或文档可以在各种应用程序、客户端和服务器之间共享。使用 Microsoft&#174; Internet Explorer 4.0 或更高版本附带的 Microsoft&reg;&nbsp;XML Parser，可以创建服务器端应用程序，使您的 Web 服务器与 Internet Explorer 4.0 （或更高版本）或任何具有 XML 解析能力的服务器交换 XML 格式的数据。详细信息，请参阅 <a href="http://www.microsoft.com/isapi/redir.dll?prd=xml" target="_blank">Microsoft XML 网站</a>。</li>
+
+<li><strong>Windows 脚本组件</strong> ASP 支持 Microsoft 强大的脚本新技术 - Windows 脚本组件。现在可以将商业逻辑脚本过程转换为可重复使用的 COM 组件，此组件可用于 Web 应用程序和其他组件对象模型 (COM) 兼容的程序。详细信息，请参阅<a href="iiwacomu.htm">使用组件和对象</a>。</li>
+
+<li><STRONG>确定浏览器能力的新方法</STRONG> ASP 具有可准确确定浏览器能力的新特性。当浏览器发送能描述其能力的 cookie（可通过使用简单的客户端脚本来安装这样的 cookie）时，可以创建一个“浏览器能力组件”实例，以便检索随 cookie 返回的浏览器属性。可以使用此功能来确定浏览器能力并对应用程序作相应调整。详细信息，请参阅<A HREF="comp1vol.htm">根据 Cookie 检索浏览器能力</A>。</li>
+
+<li><STRONG>ASP 自调整</STRONG> ASP 现在可以检测请求执行过程何时被外部资源阻断，并自动提供更多线程以便同时执行附加请求并继续正常处理。如果 CPU 负担过重，ASP 将减少线程数量，以便减少因太多非阻断请求同时执行而产生的持续不断的切换。详细信息，请参阅 <A HREF="apro4s9w.htm">AspThreadGateEnabled</A> 的 Metabase 属性参考。</li>
+
+
+<li><STRONG>服务器端包含（使用 SRC 属性）</STRONG>&nbsp;现在，可以使用 HTML &lt;SCRIPT&gt;&lt;/SCRIPT&gt; 标签的 SRC 属性实现“服务器端包含”。当使用 SRC 属性指定虚拟或相对路径，并使用 RUNAT=SERVER 属性表示服务器端执行时，可以完成与 #Include 命令一样的功能。（详细信息，请参阅<A HREF="iiwainc.htm">包含文件</A>。）</li>
+
+<li><STRONG>编码的 ASP 脚本</STRONG>&nbsp;以前，Web 开发人员无法防止其他人查看隐藏在脚本后面的逻辑。现在，ASP 可以支持新的由 Microsoft&#174;&nbsp;Visual Basic Scripting Edition (VBScript) 和 Microsoft&#174;&nbsp;JScript&nbsp;5.0 提供的脚本编码工具。Web 开发人员可对客户端和服务器端脚本应用编码方案，使编程逻辑显示为不可读的 ASCII 字符。编码的脚本在运行时由脚本引擎解码，这样就无需单独的工具。虽然此特性并非专门的安全加密解决方案，但可防止大多数一般用户查看或复制脚本。详细信息，请访问 <a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&pver=6.0&ar=scripting" target=_blank>Windows Script Technologies</a> 网站。</LI>
+
+</font>
+
+</font>
+
+<li><font face="宋体" color="black"><b>国际 ASP 开发</b>&nbsp; </font><font face="宋体" color="black">Response 对象新增了两个属性：Response.CodePage 和 Response.LCID。这些属性为动态字符串的代码页和区域设置提供网页级别的控制，而无需启用会话。Session.CodePage 和 Session.LCID 仍然可以为动态字符串的代码页和区域设置提供会话级别的控制；然而，它们不会再被 @CodePage 和 @LCID 无意中覆盖。@CodePage 和 @LCID 仍然可以影响网页中的静态字符串。默认情况下，所有这些值都隐含设定为系统默认的系统 ANSI 代码页 (CP_ACP) 和默认的系统区域设置 (LOCALE_SYSTEM_DEFAULT)。然而，如果为网站或虚拟目录设置 Metabase 属性 AspCodePage 或 AspLCID，这些属性即成为默认值。Metabase 属性允许使用特定 global.asa 文件，这些文件需要不同于系统默认值的代码页。改进的 UTF-8 支持增加了对固有对象（例如表单数据和服务器变量）中的替代字符和本地化字符的支持。</font></LI>
+
+</ul>
+
+
+<font face="宋体" color="black">
+
+
+</font>
+
+</font>
+
+</body>
+</html>

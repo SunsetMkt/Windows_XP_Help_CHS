@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>启用日志记录</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何为每个网站或 FTP 站点启用日志记录以及如何指定日志格式的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37698079">启用日志记录</a></h1>
+
+<p>可以针对各个网站和 FTP 站点启用日志记录并选择日志格式。启用日志记录时，会对所有网站的目录启用日志记录，但是可以对特定目录禁用日志记录。</p>
+ 
+<big>启用网站或 FTP 站点上的日志记录。</big><!--</p>--><br>
+
+<ol>
+<li>选中某个网站或 FTP 站点，并打开其属性页。</li>
+<li>在“网站”或“FTP 站点”属性页中，选中“启用日志记录”复选框。</li>
+<li>在“活动日志格式”列表中，选择一种格式。默认情况下，“启用日志记录”复选框被选中，其格式为“W3C 扩展日志文件格式”，并已启用了下列字段：“时间”、“客户端 IP 地址”、“方法”、“URI 源”以及“HTTP 状态”。 </li>
+
+
+
+<li>单击“应用”。</li>
+
+<li>单击“确定”。</li>
+</ol>
+
+<big>禁用或启用网站上特定目录的日志记录</big><!--</p>--><br>
+
+<ol>
+<li>选择目录并打开其属性页。</li>
+<li>在“主目录”或“目录”属性页中，查看“记录访问”复选框。默认情况下，此复选框被选中。</li>
+<li>要禁用目录的日志记录，请清除此复选框；要启用日志记录，请选中此复选框。这些设置不会影响进程计帐。</li>
+</ol>
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li>有关可用日志文件格式的说明，请参阅<a href="iiabtlg.htm">关于记录站点活动</a>。</li>
+<li>有关设置 W3C 扩展日志记录字段的详细信息，请参阅<a href="iiconlg.htm">自定义 W3C 扩展日志记录</a>。</li>
+<li>有关日志记录频率和日志文件大小的信息，请参阅<a href="iinamlg.htm">保存日志文件</a>。</li>
+<li>有关日志记录属性的参考列表，请参阅<a href="iiintlg.htm">日志记录属性参考</a>。</li>
+</ul>
+
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于记录站点活动</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="概述对网站和 FTP 站点访问活动进行日志记录的可用选项，帮助确定内容受欢迎程度、规划安全需求以及解决潜在的问题。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37676888">关于记录站点活动</a></h1>
+
+<p>可以对网站或 FTP 站点进行配置，记录用户和服务器活动所生成的日志项。IIS 日志数据有助于控制对内容的访问、确定内容的受欢迎程度、规划安全需求以及解决网站或 FTP 站点潜在的问题。不要把记录 IIS 站点活动与事件日志相混淆。事件日志是由  Windows&nbsp;XP 执行的，可以通过“事件查看器”查看，而 IIS 日志记录的范围更广。本节包括下列内容：</p>
+
+<ul>
+<li><a href="#events">记录过程</a></li>
+<li><a href="#logmodules">日志文件格式</a></li>
+             
+<li><a href="#logsize">日志文件大小和新建日志文件</a></li>
+<li><a href="#H3_37719228">日志文件名</a></li>
+</ul>
+
+<h2><a name="events">记录过程</a></h2>
+
+<p>网站或 FTP 站点的日志记录活动通过一个独立的活动模块执行，而不依赖服务器上的其他活动。可以为每个单独的网站或 FTP 站点选择日志格式。如果站点启用了日志记录，还可以单独针对此站点上的某个目录禁用或启用日志记录。有关对站点或目录启用或禁用日志记录的过程信息，请参阅<a href="iienblg.htm">启用日志记录</a>。</p>
+
+
+
+<p>不同的日志格式将使用不同的时区确定在日志中列出的时间。W3C 扩展格式使用世界协调时 (UTC)，即以前的格林威治标准时间。其他格式使用本地时间。日志文件中列出的时间反映了服务器处理请求和响应请求的时间，并不反映通过网络传递到客户端所用的时间或客户端的处理时间。</p>
+
+<h2><a name="logmodules">日志文件格式</a></h2>
+
+<p>可以选择 Web 服务器记录用户活动的格式。可以从下列格式中选择：
+
+<ul>
+<li><a href="#W3CExtendedLogFileFormat">W3C 扩展日志文件格式</a></li>
+<li><a href="#MicrosoftIISLogFormat">Microsoft IIS 日志文件格式</a></li>
+<li><a href="#NCSACommonLogFileFormat">NCSA 公用日志文件格式</a></li>
+
+</ul>
+
+<p>W3C 扩展日志文件格式、Microsoft IIS 日志文件格式以及 NCSA 日志文件格式都是 ASCII 文本格式。W3C 扩展和 NCSA 格式使用四位数年份格式记录日志数据。Microsoft IIS 格式使用两位数年份格式记录 1999 年及以前年份的日志数据，使用四位数年份格式记录 1999 年之后的日志数据。Microsoft IIS 日志格式与早期的 IIS 版本兼容。只能使用 W3C 扩展日志文件格式自定义日志记录格式，使其只包含您需要的字段。</p>
+
+<h3><a name="W3CExtendedLogFileFormat">W3C 扩展日志文件格式</a></h3>
+
+<p>W3C 扩展格式是一种可以自定义的 ASCII 格式，可以包含各种不同的字段。为了缩小日志文件，可以只包含您认为重要的字段，而略去不需要的字段。字段之间以空格分开，所记录的时间为 UTC（格林威治标准时间）。有关自定义此格式的信息，请参阅<a href="iiconlg.htm">自定义 W3C 扩展日志记录</a>。有关 W3C 扩展格式规范的详细信息，请参阅 <a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=W3org&pver=1.0&ar=specs" target=_blank>World Wide Web Consortium（WWW 协会）网站</a>。</p>
+
+<p>下列示例显示记录了下列字段信息的文件中的几行内容：时间、客户端 IP 地址、方法、URI 资源、协议状态和协议版本。</p>
+
+<p><pre>#Software: Microsoft Internet Information Services 5.1
+#Version: 1.0
+#Date: 1998-05-02 17:42:15
+#Fields: time c-ip cs-method cs-uri-stem sc-status cs-version
+17:42:15 172.16.255.255 GET /default.htm 200 HTTP/1.0</pre>
+
+<p>上面各项说明：在格林威治标准时间 1998 年 5 月 2 日下午 5:42，IP 地址为 172.16.255.255 的一个用户通过 HTTP 1.0，对文件 /Default.htm 发出了一个 HTTP GET 命令。请求已返回，而且没有出错。#日期: 字段指出第一个日志项的创建时间，也就是日志的创建时间。#版本: 字段指出所使用的 W3C 日志记录格式。</p>
+
+<p>可以选择任何字段，但对于某些请求，某些字段可能没有可用信息。对于那些被选中但没有信息的字段，将显示一个连字符 (&#0151;) 作为占位符。</p>
+
+<h3><a name="MicrosoftIISLogFormat">Microsoft IIS 日志文件格式</a></h3>
+
+<p>Microsoft IIS 格式是一种固定的 ASCII 格式，无法进行自定义。与 NCSA 公用格式相比，它记录的信息项更多。Microsoft IIS 格式包括一些基本的信息项，例如用户的 IP 地址、用户名、请求日期和时间、服务状态码以及接收的字节数等。另外，它还包括一些详细信息，例如所用时间、发送的字节数、操作（例如，通过 GET 命令执行的下载操作）以及目标文件等。这些日志项用逗号分开，这样比使用空格作为分隔符的其他 ASCII 格式更便于用户阅读。记录的时间为本地时间。</p>
+
+<p>在文本编辑器中打开 Microsoft IIS 格式的文件时，显示的内容与下列示例相似：</p>
+
+<p>
+
+192.168.114.201, &#151;, 03/20/98, 7:55:20, W3SVC2, SALES1, 192.168.114.201, 4502, 163, 3223, 200, 0, GET, /DeptLogo.gif, &#151;,</p>
+
+<p>
+
+172.16.255.255, anonymous, 03/20/98, 23:58:11, MSFTPSVC, SALES1, 192.168.114.201, 60, 275, 0, 0, 0, PASS, /intro.htm, &#151;,</p>
+
+<p>下列表格对上述示例中的各项进行了说明。每个表的第一行数据都取自第二个网站实例（“服务”下列 W3SVC2），最后一行数据取自第一个 FTP 站点实例（“服务”下列 MSFTPSVC1）。由于页宽所限，此示例分成了三个表。</p>
+
+<table border="1" cellpadding="5" cellspacing="1">
+<tr>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="20%">用户 IP 地址</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="15%">用户名</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="15%">日期</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="15%">时间</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="15%">服务和实例</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="15%">计算机名</th><tr>
+
+<td valign="Top"><pre>192.168.114.201</pre></td>
+<td valign="Top">&#151;</td>
+<td valign="Top"><pre>03/20/98</pre></td>
+<td valign="Top"><pre>7:55:20</pre></td>
+<td valign="Top"><pre>W3SVC2</pre></td>
+<td valign="Top"><pre>SALES1</pre></td></tr>
+<tr><td valign="Top"><pre>172.16.255.255</pre></td>
+<td valign="Top"><pre>anonymous</pre></td>
+<td valign="Top"><pre>03/20/98</pre></td>
+<td valign="Top"><pre>23:58:11</pre></td>
+<td valign="Top"><pre>MSFTPSVC1</pre></td>
+<td valign="Top"><pre>SALES1</pre></td></tr>
+</table>
+<br>
+
+<table border="1" cellpadding="5" cellspacing="1">
+<tr align="Left" valign="top" bgcolor="#cococo">
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="20%">服务器 IP 地址</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="20%">所用时间</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="20%">发送的字节数</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="20%">接收的字节数</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="20%">服务状态码</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="20%">Windows 状态码</th></tr>
+
+<tr>
+<td valign="Top"><pre>172.21.13.45</pre></td>
+<td valign="Top"><pre>4502    </pre></td>
+<td valign="Top"><pre>163      </pre></td>
+<td valign="Top"><pre>3223     </pre></td>
+<td valign="Top"><pre>200      </pre></td>
+<td valign="Top"><pre>0             </pre></td></tr>
+
+<tr>
+<td valign="Top"><pre>172.16.255.255</pre>
+</td>
+<td valign="Top"><pre>60</pre></td>
+<td valign="Top"><pre>275</pre></td>
+<td valign="Top"><pre>0</pre></td>
+<td valign="Top"><pre>0</pre></td>
+<td valign="Top"><pre>0</pre></td></tr>
+
+</table>
+<br>
+<table border="1" cellpadding="5" cellspacing="1">
+<tr align="Left" valign="top" bgcolor="#cococo">
+
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="30%">请求类型</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="30%">操作目标</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="30%">参数</th></tr>
+<tr>
+<td valign="Top"><pre>GET</pre></td>
+<td valign="Top"><pre>/DeptLogo.gif</pre></td>
+<td valign="Top"><pre>—</pre></td></tr>
+<td valign="Top"><pre>[376] PASS </pre></td>
+<td valign="Top"><pre>/intro.htm</pre></td>
+<td valign="Top"><pre>—</pre></td>
+</table>
+
+<p>此示例中的第一项指出，本地时间 1998 年 3 月 20 日上午 7 点 55 分，IP 地址为 192.168.114.201 的匿名用户，从 IP 地址为 172.21.13.45 的服务器 SALES1，对图像文件 /DeptLogo.gif 发出 HTTP GET 命令。此 HTTP 请求有 163 字节，处理所用的时间是 4502 毫秒（4.5 秒），最后向匿名用户返回 3223 字节的数据，没有错误。</p>
+
+<p>在日志文件中，每个字段都以逗号 (,) 结束。如果某一字段没有有效值，则用连字符 (&#0151;) 作占位符。</p>
+
+<h3><a name="NCSACommonLogFileFormat">NCSA 公用日志文件格式</a></h3>
+
+<p>NCSA 公用格式是一种固定的 ASCII 格式，无法进行自定义。这种格式适用于网站，但不适用于 FTP 站点。它记录有关用户请求的基本信息，例如远程主机名、用户名、日期、时间、请求类型、HTTP 状态码以及服务器发送的字节数等。各项之间用空格分开，所记录的时间为本地时间。<p>
+
+<p>在文本编辑器中打开 NCSA 公用格式文件时，显示的内容与下列示例相似：</p>
+
+<p>172.21.13.45 &#151; REDMOND\fred [08/Apr/1997:17:39:04 -0800] &quot;GET /scripts/iisadmin/ism.dll?http/serv HTTP/1.0&quot; 200 3401</p>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;在上例中，第二个字段（将显示用户的远程登录名）为空，由一个连字符表示，位于 IP 地址 172.21.13.45 之后。</p>
+
+<p>下表对上述示例中的各项进行了说明。由于页宽所限，此示例显示在两个表中。</p>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="20%">远程主机名</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="30%">远程日志名称</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="15%">用户名</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="15%">日期</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top" width="20%">时间和时差</th></tr>
+<tr>
+<td valign="Top"><pre>172.21.13.45</pre></td>
+<td valign="Top"><pre>—       </pre></td>
+<td valign="Top"><pre>REDMOND\fred</pre></td>
+<td valign="Top"><pre>08/Apr/1998</pre></td>
+<td valign="Top"><pre>17:39:10 -0800</pre></td></tr>
+</table>
+<br>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+<th bgcolor="#C0C0C0" align="Left" valign="top">请求/版本</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top">服务状态码</th>
+<th bgcolor="#C0C0C0" align="Left" valign="top">发送的字节数</th></tr>
+<tr>
+<td valign="Top"><pre>GET /scripts/iisadmin/ism.dll?http/serv HTTP/1.0</pre></td>
+<td valign="Top"><pre>200      </pre></td>
+<td valign="Top"><pre>3401     </pre></td></tr>
+</table>
+
+<p>此项指出：1998 年 4 月 8 日下午 5 点 39 分，REDMOND 域中 IP 地址为 172.21.13.45、名为 Fred 的用户发出一个 HTTP GET 命令（即下载一个文件）。向用户 Fred 返回了 3401 字节的数据，没有错误。</p>
+
+
+
+
+<h2><a name="logsize">日志文件大小和新建日志文件</a></h2>
+
+<p>如果启用了 IIS 日志记录（默认设置），则只要用户访问服务器，就会生成新的日志项，这将导致日志文件的大小或数目逐渐增大。因此，需要权衡收集详细数据与将文件限制在可管理的大小和数目范围之内两者之间的关系。IIS 提供了两个选项，可用来管理日志数据的生成和日志文件的创建。</p>
+
+<p>管理日志数据的一种方法是自定义 W3C 扩展日志记录，使其只收集所需数据。有关自定义过程的帮助，请参阅<a href="iiconlg.htm">自定义 W3C 扩展日志记录</a>。管理日志文件的另一个方法是限制日志的大小，可通过更改日志文件的创建频率实现。有关时间间隔选项的详细信息，请参阅<a href="iinamlg.htm">保存日志文件</a>。如果选择了日志记录选项，请记住，只有在关闭此站点后，才能访问当前日志文件。</p>
+
+<p>日志文件是一种简单的 ASCII（文本）文件。如果创建了许多小文件，但是您比较喜欢使用一个大文件，则可以像合并其他 ASCII 文件一样，将这些小文件进行合并。有关使用 copy 命令合并文件的信息，请在命令提示符下输入“copy /?”。</p>
+
+<p>如果 IIS 尝试向日志文件中添加日志项时服务器磁盘空间已满，IIS 日志记录将关闭。同时，在 Windows 事件查看器的应用程序日志中记录一个事件。重新具有较多的磁盘空间时，便可恢复 IIS 日志记录。这将导致在 Windows 事件查看器的应用程序日志中记录一些额外事件。</p>
+
+<h2><a name="H3_37719228">日志文件名</a></h2>
+
+<p>日志文件名的前几位字母表示日志记录格式，其余字母表示时间格式或日志顺序。详细信息，请参阅下表。斜体字表示数字：<em>nn</em> 表示顺序，<em>yy</em> 表示年，<em>mm</em> 表示月，<em>ww</em> 表示某月的第几个星期，<em>dd</em> 表示日，<em>hh</em> 表示小时（24 小时制，如 17 表示下午 5 点）。</p>
+
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr>
+<th width="30%" bgcolor="#C0C0C0" align="Left" valign="top">格式</th>
+<th width="20%" bgcolor="#C0C0C0" align="Left" valign="top">新日志标准</th>
+<th width="50%" bgcolor="#C0C0C0" align="Left" valign="top">文件名格式</th>
+</tr>
+
+<tr>
+<td valign="top" rowspan="5"> Microsoft IIS 日志文件格式</td>
+<td valign="top">按文件大小     </td>
+<td valign="top"><strong>inetsv</strong><em>nn</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每小时      </td>
+<td valign="top"><strong>in</strong><em>yymmddhh</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每天     </td>
+<td valign="top"><strong>in</strong><em>yymmdd</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每周     </td>
+<td valign="top"><strong>in</strong><em>yymmww</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每月      </td>
+<td valign="top"><strong>in</strong><em>yymm</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top" rowspan=5> NCSA 公用日志文件格式</td>
+<td valign="top">按文件大小</td>
+<td valign="top"><strong>ncsa</strong><em>nn</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每小时</td>
+<td valign="top"><strong>nc</strong><em>yymmddhh</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每天</td>
+<td valign="top"><strong>nc</strong><em>yymmdd</em><strong>.log</strong></td></tr>
+
+<tr>
+<td valign="top">每周</td>
+<td valign="top"><strong>nc</strong><em>yymmww</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每月</td>
+<td valign="top"><strong>nc</strong><em>yymm</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top" rowspan=5> W3C 扩展日志文件格式</td>
+<td valign="top">按文件大小</td>
+<td valign="top"><strong>extend</strong><em>nn</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每小时</td>
+<td valign="top"><strong>ex</strong><em>yymmddhh</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每天</td>
+<td valign="top"><strong>ex</strong><em>yymmdd</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每周</td>
+<td valign="top"><strong>ex</strong><em>yymmww</em><strong>.log</strong></td>
+</tr>
+
+<tr>
+<td valign="top">每月</td>
+<td valign="top"><strong>ex</strong><em>yymm</em><strong>.log</strong></td>
+</tr>
+</table>
+
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

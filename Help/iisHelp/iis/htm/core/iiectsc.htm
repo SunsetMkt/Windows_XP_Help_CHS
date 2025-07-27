@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>启用客户证书</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关试图访问限制的目录和文件时如何要求用户使用客户证书登录的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="enablingcertificates">启用客户证书</a></h1>
+
+<p>可以要求试图访问网站的用户使用客户证书登录。然而，要求客户证书并不能防止您的内容受到未授权的访问。拥有客户证书的所有用户都可以建立安全连接并访问您的资源。为了防止 Web 内容受到未授权的访问，必须进行如下某项操作：</p>
+
+<ul>
+<li>除了要求客户证书外，还应使用基本、摘要式或集成 Windows 身份验证。</li>
+<li>创建客户证书的 Windows 帐户映射。详细信息，请参阅<a href="iimapsc.htm">将客户证书映射到用户帐户</a>。</li>
+</ul>
+
+<p><strong><font color="#0000FF">要点</font></strong></p>
+
+<ul>
+<li>Web 服务器不能处理客户证书，除非以前安装了服务器证书并启用了服务器安全通信功能。有关身份验证和证书的详细信息，请参阅<a href="iiabasc.htm">关于身份验证</a>和<a href="iiocrsc.htm">获取服务器证书</a>。</li>
+<li>当试图设置特定网站的属性时，Web 服务器将提醒您是否允许重新设置网站上单个目录和文件的属性。如果选择了重新设置这些属性，先前的设置将被新的设置所替换。设置目录属性时，如果目录中包含以前设置了安全属性的子目录或文件，情况也是如此。有关设置属性的详细信息，请参阅<a href="iivsovr.htm">关于网站和 FTP 站点</a>中的“站点属性和属性继承”。</li>
+</ul>
+
+<p class="bigfix">&nbsp;<big></big></p>
+
+<big>启用客户证书</big><br>
+
+<ol>	
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站、目录或文件，并打开其属性页。</li>
+<li>如果以前没有获取服务器证书，请选择“目录安全性”属性页，并单击“安全通信”下的“服务器证书”。详细信息，请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>。</li>
+<li>如果以前获得了服务器证书，请选择“目录安全性”或“文件安全性”属性页，并单击“安全通信”下的“编辑”。</li>
+<li>在“安全通信”对话框中，请选中“要求安全通道 (SSL)”复选框。要求安全通道意味着如果用户不使用安全链接（即链接的 URL 必须以 https:// 开头）就不能连接到此网站。</li>
+<li>在“客户证书”下，选择下列某一选项来启用客户证书身份验证：</li>
+
+<ul>
+<li><strong>接受客户证书</strong> 用户可以使用客户证书访问资源，但证书不是必需的。</li>
+<li><strong>要求客户证书</strong> 在将用户与资源连接之前，服务器要求客户证书。将拒绝没有有效客户证书的用户进行访问。</li>
+<li><strong>忽略客户证书</strong> 无论用户是否拥有证书，都将被授予访问权限。</li>
+</ul>
+
+</ol>
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

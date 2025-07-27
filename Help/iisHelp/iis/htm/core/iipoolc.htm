@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>缓存应用程序</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="解释如何设置 CGI 脚本超时、缓存 ISAPI DLL 以及更改 ASP 网页的缓存大小。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37719647">缓存应用程序</a></h1>
+
+<p>通过调整与服务器上运行的 Web 应用程序有关的某些设置，可以优化服务器性能。通过记录使用数据（例如请求数以及请求时间）有助于确定应该如何进行调整。有关记录服务器活动的详细信息，请参阅<a href="iilogsa.htm">记录站点活动</a>。有关性能问题的详细信息，请参阅<a href="iiabtpm.htm">关于性能调整</a>。</p>
+
+<p>本节对下列设置进行了说明：</p>
+
+<ul>
+<li>设置 CGI 脚本超时</li>
+<li>缓存 ISAPI 扩展</li>
+<li>缓存 ASP 脚本文件</li>
+</ul>
+
+<h2><a name="H2_37720440">设置 CGI 脚本超时</a></h2>
+
+<p>除与连接有关的超时外，还可以设置 CGI 脚本超时值。超时值是 CGI 脚本的执行时间量。CGI 应用程序继承整个网站的超时设置。可以针对整个网站更改此设置，也可以针对单个应用程序进行更改。</p>
+
+<big>设置超时值：</big><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择计算机图标，打开其属性页</strong>。</li>
+
+<li>在“主属性”下，选择“WWW 服务”，单击“编辑”按钮。</li>
+<li>单击“主目录”选项卡。</li>
+<li> 单击“配置”按钮。</strong></li>
+<li>单击<a href="iipy_35.htm">进程选项</a></strong>选项卡，在“CGI 脚本超时”文本框中，输入超时期限。</li>
+</ol>
+
+<h2><a name="H2_37722380">缓存 ISAPI 扩展</a></h2>
+
+<p>可以加载并缓存 ISAPI DLL，这样无需重新调用这些 DLL，即可处理后续请求。否则，这些 DLL 运行之后将被卸载。缓存可以减少加载 DLL 时用户等待的时间，对大多数 ISAPI 扩展（包括 Active Server Pages）也大有好处。应该只在某些特殊情况下（例如调试 ISAPI 扩展时）取消选择此选项。</p>
+
+<big>启用缓存：</big><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站或应用程序的开始位置目录。</li>
+<li>打开目录的属性页，单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+<li> 单击“配置”按钮。</li>
+<li>在<a href="iipy_34.htm">映射</a>选项卡，选中“缓存 ISAPI 应用程序”复选框。</li>
+</ol>
+
+<h2><a name="cachingaspscriptfiles">缓存 ASP 脚本文件</a></h2>
+
+<p> ASP 处理包含 ASP 脚本的文件，将处理完的文件存储在缓存中，并将缓存的文件提供给客户端使用。缓存 ASP 文件可以改善性能，因为不需要在每次调用缓存的 ASP 脚本时进行处理。还可以通过更改缓存文件数进一步改善性能，可以对“应用程序保护”设置为“低（IIS 进程）”或“中（已共用）”的所有应用程序进行更改，或单独对“应用程序保护”设置为“高（独立）”的应用程序进行更改。</p>
+
+<p><strong>更改缓存 ASP 文件的设置：</strong></p>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中, 选择某个网站、虚拟目录或目录，打开其属性页。</li>
+<li>单击“主目录”（网站）、“虚拟目录”（虚拟目录）或“目录”（目录）选项卡。</li>
+<li>在“应用程序设置”部分，将“应用程序保护”设置为“高（独立）”，单击“应用”。
+<li>单击“配置”按钮。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果“配置”按钮未激活，目录或开始位置将不包含独立应用程序。可以单击“创建”按钮新建一个应用程序。</P>
+<li>单击“缓存选项”选项卡。
+<li>要缓存请求的所有 .asp 文件，请选中“缓存所有请求的 ASP 文件”。要设置内存中缓存的最大文件数，请在文本框中输入一个值（超过此数目之外的文件将保存到磁盘缓存中）。</li>
+<li>若要限制缓存的 ASP 文件总数，请选中“将缓存的 ASP 文件数限制为:</strong>”，并在文本框中输入一个值。</li>
+<li>若要关闭缓存，请选中“不缓存 ASP 文件”。</li>
+</ol>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

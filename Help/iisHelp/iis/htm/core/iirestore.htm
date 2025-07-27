@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>还原配置数据库</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="还原配置数据库">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="bak">还原配置数据库</a></h1>
+
+<p>IIS 为 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中的“配置备份/还原”提供了新的功能。网站管理员可以将配置数据库的安全或不安全备份副本还原到其他计算机上。也可以用旧式方法还原配置数据库。</p>
+
+<h3>还原配置数据库备份的有关问题</h3>
+
+<p><b>还原安全备份</b>&nbsp;&nbsp;&nbsp;密码存储在配置数据库备份中，用于加密会话密钥。此密码不能更改。如果忘记密码，就无法还原此配置数据库备份。
+
+<p><b>还原不安全备份</b>&nbsp;&nbsp;&nbsp;配置数据库备份没有密码保护，任何人都可以将不安全备份还原到任何计算机上。
+
+<p><b>还原旧备份</b>&nbsp;&nbsp;&nbsp;旧式方法是使用计算机密钥（对于特定的 OS 安装是唯一的）和系统密钥（由 IIS 生成）对备份进行加密。因此，旧的配置数据库备份只能还原到创建此备份的操作系统（OS）中。
+
+<p><b>内容文件</b>&nbsp;&nbsp;&nbsp;“配置备份/还原”不保存内容文件。将配置数据库备份还原到另一台服务器时，必须同时复制内容文件。并且，内容文件必须位于原服务器使用的驱动器上。
+
+<p><b>SSL 证书</b>&nbsp;&nbsp;&nbsp;使用 Web 服务器上的 SSL（安全套接字层）证书将配置数据库备份还原到别的 OS 安装时，如果证书不可用或尚未安装，则会产生错误。如果站点的 SSL 证书丢失，则连接将会断开，IIS 显示“网页不可用”错误。服务器将下列警告记入事件日志：解决方法是将证书重新安装到原证书存储位置并重新启动 IIS。如果重新安装证书后重新启动 IIS 失败，会继续记录错误并断开连接。有关安装 SSL 证书的详细信息，请参阅<a href="iisslsc.htm">在服务器上设置 SSL</a>。</p>
+
+
+<a name="TorestoreyourMetabaseBackup"><h3>还原配置数据库备份</h3>
+<ol>
+<li> 在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择“Internet 信息服务”下的“计算机”图标。</li>
+<li>单击“操作”按钮，并选择“备份/还原配置”。</li>
+<li>在“以前的备份”下，从列表中选择文件名，并单击“还原”。如果提示输入密码，请输入为确保备份安全而设的密码。</li>
+</ol>
+
+<p><a name="RelatedTopics"><strong>相关主题</strong></p>
+<ul>
+<li>有关备份配置数据库的信息，请参阅<a href="iitasks.htm">备份配置数据库</a>。</li>
+<li>有关配置数据库关键字名称和路径、属性继承、安全性和可靠性的信息，请参阅 <a href="../asp/aint1aud.htm">IIS 配置数据库简介</a>。</li>
+<li>有关安装 SSL 证书的详细信息，请参阅<a href="iisslsc.htm">在服务器上设置 SSL</a>。</li>
+<li>有关重新启动 IIS 的信息，请参阅<a href="iicodira.htm">重新启动 IIS</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+</font>
+
+
+</body>
+</html>

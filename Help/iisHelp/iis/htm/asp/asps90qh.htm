@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>Metabase Backup Utility</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT><META NAME="DESCRIPTION" CONTENT="Internet Information Services reference information">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="EN-US">
+<META NAME="MS-IT-LOC" Content="Internet Information Services"> 
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<H1><A NAME="_metabase_backup_utility"></A><SUP></SUP>Metabase Backup Utility</H1>
+
+<H6>Overview</H6>
+
+<P>The IIS metabase is a large and complicated structure, and has much vital information about your Internet sites. So that you can easily protect that important data, backing up the metabase has been made into a relatively easy task. This tool demonstrates how you can create a tool that makes backing up the metabase even easier.</P>
+
+<H6>Code Tour</H6>
+
+<P>All metabase backup functionality is provided at the IIS://LocalHost level, so this string is passed to <B>GetObject</B> to get a reference to the local machine object. The <B>Backup</B> method is then invoked with several parameters, including a number of flags, a location, and a version number.</P>
+
+<P>The location parameter refers to a name that you give to your set of backup versions. Backup implementation will probably change in future releases, but at the time of this writing, all backups are stored in the same directory. Therefore, it might be helpful to think of location as the name of a series of backup snapshots.</P>
+
+<P>The backup version parameter can be explicit, or you can use one of several special values, the most important being &amp;HFFFFFFFF. This value, which equals -1 in VBScript, indicates that the <B>Backup</B> method should assign a version number to this backup that is one higher than the highest version number found for that location.</P>
+
+<H6>Location</H6>
+
+<P>This script is available in the Internet services directory, at ...\iissamples\sdk\admin\metaback.vbs.</P>
+<hr class="iis" size="1">
+<p align="center"><em><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. All rights reserved.</a></em></p>
+</BODY>
+</HTML>

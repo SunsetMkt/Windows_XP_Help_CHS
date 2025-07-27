@@ -1,0 +1,82 @@
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>创建虚拟目录</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META name="DESCRIPTION" content="有关如何在网站或 FTP 站点上新建虚拟目录的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="creatingvirtualdirectories">创建虚拟目录</a></h1>
+
+<p>如果网站包含的某些文件不在主目录中或在其他计算机上，则必须创建虚拟目录将这些文件包含到网站中。要使用其他计算机上的目录，必须指定此目录的通用命名约定 (UNC) 名称，并提供具有访问权限的用户名和密码。</p>
+
+<big>创建虚拟目录</big><br>
+
+<ol> 
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要添加目录的网站或 FTP 站点。</li>
+<li>单击“操作”菜单，指向“新建”，然后单击“虚拟目录”。</li>
+<li>使用“虚拟目录创建向导”完成此任务。</li>
+</ol>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果使用 NTFS，也可以用鼠标右键单击 Windows 资源管理器中的某个目录，单击“共享”，然后选择“Web 共享”属性页来创建虚拟目录。</p>
+
+
+
+<big>删除虚拟目录</big><br>
+
+<ol> 
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要删除的虚拟目录。</li>
+<li>单击“操作”菜单，然后单击“删除”。删除虚拟目录不会删除相应的物理目录或文件。</li>
+</ol>
+
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

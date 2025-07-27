@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于网站管理</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="管理网站概述及其步骤。其中包括对目录结构、重定向、“服务器端包含”程序和服务器端脚本的基本建议。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="webmanage">关于网站管理</a></h1>
+
+<P>如果您正在配置一个成本很高的新网站，却忽然发现此站点的所有网页中都遗漏了公司的徽标；或者，当技术人员正忙着为计算机排除故障时，突然需要将成千上万个用户转移到另一个网站。这些棘手的日常问题已经开始说明，成功管理网站是多么重要。尽管从本质上讲，有效的网站管理取决于管理员的能力，但还是可以通过一些基本工具和步骤来处理一般性的管理任务和突发事件。</P>
+
+<H2><A NAME="H2_448401500"></A>入门</H2>
+
+<p>首先应该从说明哪些目录包含要发布的文档来开始设置网站。Web 服务器无法发布不在这些指定目录中的文档。所以，部署网站的第一步应该是确定文件的组织方式。可以使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>来标识站点由哪些目录组成。</p>
+
+<p>如果希望不创建特殊的目录结构就立即开始发布，并且文件全部位于运行 Internet 信息服务的计算机上，而且都在同一个硬盘上，则可以将网站文件复制到默认主目录 C:\InetPub\Wwwroot 中以便立即发布文档。（对于 FTP 站点，应将文件复制到 C:\InetPub\Ftproot 中。）Intranet 用户可以输入下列 URL 访问这些文件：http://<EM>服务器名</EM>/<EM>文件名</EM>。要了解如何维护多个站点及如何组织不同的网站内容，请参阅本节中的步骤。这些步骤说明了如何更改文件的默认位置、如何添加位于其他硬盘或网络中其他计算机上的目录等事项。</P>
+
+<h2><a name="homedirectories">定义主目录</a></h2>
+
+<p>每个网站或 FTP 站点必须有一个主目录。主目录是发布网页的中心位置。它包含带有欢迎内容的主页或索引文件，并且包含与所在站点其他网页的链接。主目录映射为站点的域名或服务器名。例如，如果站点的 Internet 域名是 www.microsoft.com 并且主目录是 C:\Website\Microsoft，浏览器将使用 URL http://www.microsoft.com 访问主目录中的文件。在内部网上，如果服务器名是 AcctServer，浏览器将使用 URL http://acctserver 访问主目录上的文件。</p>
+
+<p>安装 Internet 信息服务或新建网站时将创建默认主目录。可以更改主目录。有关说明，请参阅<a href="iicodirh.htm">更改主目录</A>。</p>
+
+<h2><a name="virtualdirectories">什么是虚拟目录？</a></h2>
+
+<p>要从主目录以外的其他目录中进行发布，就必须创建虚拟目录。“虚拟目录”不包含在主目录中，但在显示给客户端浏览器时就象位于主目录中一样。</p>
+
+<p>虚拟目录有一个“别名”，供 Web 浏览器访问此目录时使用。由于别名通常要比目录的路径名短，因此更便于用户输入。使用别名更加安全，因为用户不知道文件在服务器上的实际位置，所以无法使用此信息修改文件。使用别名可以更方便地在站点中移动目录，原因在于不需要更改目录的 URL，只需更改别名与目录实际位置之间的映射即可。</p>
+
+<p>例如，假设您在公司的内部网上为销售部门建立了一个网站。下表说明文件的实际位置与访问文件的 URL 之间的映射关系。</p>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+<th align=middle width="33%" bgcolor="#C0C0C0">物理位置</th>
+<th align=middle width="33%" bgcolor="#C0C0C0">别名</th>
+<th align=middle width="34%" bgcolor="#C0C0C0">URL 路径</th></tr>
+<tr>
+<td valign="top" width="33%">C:\Inetpub\wwwroot</td>
+<td valign="top" width="33%">无（主目录）</td>
+<td valign="top" width="34%">http://Sales</td></tr>
+<tr>
+<td valign="top" width="33%">\\Server2\SalesData\ProdCustomers</td>
+<td valign="top" width="33%">Customers</td>
+<td valign="top" width="34%">http://Sales/Customers</td></tr>
+<tr>
+<td valign="top" width="33%">C:\Inetpub\wwwroot\Quotes</td>
+<td valign="top" width="33%">无</td>
+<td valign="top" width="34%">http://Sales/Quotes</td></tr>
+<tr>
+<tr>
+<td valign="top" width="33%">C:\Inetpub\wwwroot\OrderStatus</td>
+<td valign="top" width="33%">无</td>
+<td valign="top" width="34%">http://Sales/OrderStatus</td></tr>
+<tr>
+<td valign="top" width="33%">D:\Mktng\PR</td>
+<td valign="top" width="33%">PR</td>
+<td valign="top" width="34%"> http://Sales/PR</td></tr>
+</table>
+
+<p>虚拟目录和实际目录（不带别名的目录）都显示在 Internet 信息服务管理单元中。虚拟目录由角上带有地球标志的文件夹图标表示。下图说明了上述网站示例，其中 /Customers 和 /PR 是虚拟目录：</p>
+
+<img src="iicodir1.gif" alt="Internet 信息服务管理单元中将要出现的示例网站，虚拟目录由角上带有地球的文件夹图标表示" align=bottom width="144" height="100">
+<p>
+<p>
+
+<p>对于简单的网站，可能不需要添加虚拟目录。可以将所有文件放置在站点的主目录中。如果站点比较复杂或者需要为站点的不同部分指定不同的 URL，可以按需要添加虚拟目录。有关信息，请参阅<a href="iicodirv.htm">创建虚拟目录</a>。</p>
+
+<h2><a name="browserredirects">使用重定向重新路由请求</a></h2>
+
+<p>当浏览器请求网站中的网页，Web 服务器将通过 URL 来定位这个网页，然后将其返回浏览器。如果网站中的网页发生了移动，则无法完全纠正指向网页的旧 URL 的所有链接。要确保浏览器能够使用新的 URL 找到网页，必须通知 Web 服务器为浏览器提供新的 URL。浏览器使用新的 URL 再次请求网页。此过程称为“重定向浏览器请求”或“重定向到其他 URL”。重定向网页请求与邮政服务中的转发地址很相似。转发地址可以保证将接收地址为原居住地址的信件和邮包投递到新的居住地址。</p> 
+   
+<p>当更新了网站并希望其中的部分内容暂时不被用户访问时，或者当更改了虚拟目录的名称并希望使与原虚拟目录中文件的链接能够访问新虚拟目录中相同的文件时，重定向 URL 非常有用。有关信息，请参阅<a href="iicodirr.htm">将请求重定向到目录</a>。</p>
+
+
+<H2><A NAME="otherfeatures">其他有用的工具</A></H2>
+
+<P>通常，在 Web 内容被请求之后、但返回浏览器之前动态地更改 Web 内容将十分有用。Internet 信息服务包括两个可以提供此功能的特性：“服务器端包含 (SSI)”和 Microsoft Active Server Pages (ASP) 脚本环境。  </P>
+
+<P>每次通过 SSI 收到文件请求之后，便可以执行从添加动态时间标记到运行特定 shell 命令的一整套网站管理活动。SSI 命令称为“指令”，在设计阶段被添加到网页中。请求网页时，Web 服务器解析在网页上发现的所有指令，然后执行这些指令。常用 SSI 指令将文件的内容插入或“包含”到网页的文件内容中。例如，如果要求不断更新一个网页广告，可以使用 SSI 将广告的 HTML 源代码包含到网页中。若要更新广告，则仅需要修改包含广告的 HTML 源代码的文件。无需了解使用 SSI 的脚本语言，只需遵循正确的指令语法即可。</P>
+
+<P>有关步骤和参考的详细信息，请参阅<A HREF="iisiwelc.htm">服务器端包含</A>。</P> 
+
+<P>ASP 是可以用来动态更改 Web 内容的“服务器端”脚本环境。尽管 ASP 主要用于 Web 应用程序的开发，但可以使用它的许多功能来更容易地管理网站。例如，使用 ASP 可以跟踪用户对网站的访问，或者可以按照浏览器性能自定义 Web 内容。但与 SSI 不同，ASP 不要求使用 VBScript 或 JScript 等脚本语言。 </P>
+
+<P>详细信息，请参阅<A HREF="iiaspat.htm">使用 ASP 管理网站内容</A>。</P>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE> 
+（下列单词只用于搜索，不会显示在网页中。）图标
+</layer></span>
+
+</font>
+</body>
+</html>

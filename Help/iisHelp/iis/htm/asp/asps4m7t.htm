@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>Metabase Backup Restore Utility</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT><META NAME="DESCRIPTION" CONTENT="Internet Information Services reference information">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="EN-US">
+<META NAME="MS-IT-LOC" Content="Internet Information Services"> 
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<H1><A NAME="_metabase_backup_restore_utility"></A><SUP></SUP>Metabase Backup Restore Utility</H1>
+
+<H6>Overview</H6>
+
+<P>If you have backed up your metabase, and then somehow corrupted the configuration on all of your Web sites, you will need to retrieve your metabase backup. This tool is provided for just such a situation.</P>
+
+<H6>Code Tour</H6>
+
+<P>The method to restore the metabase is simply called <B>Restore</B>, and is accessed at the same IIS://LocalHost node of the metabase that the <B>Backup</B> method was. <B>Restore</B> takes several parameters, including the location string and the version number. Again, there are several constants that can be used in place of an explicit version number. This sample uses as a default one of those constants, &amp;HFFFFFFFE (-2 decimal), which indicates that the server should look for, and restore from, the highest numbered version of the specified backup location.</P>
+
+<H6>Location</H6>
+
+<P>This script is available in the Internet services directory, at ...\iissamples\sdk\admin\metabackenum.vbs.</P>
+<hr class="iis" size="1">
+<p align="center"><em><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. All rights reserved.</a></em></p>
+</BODY>
+</HTML>

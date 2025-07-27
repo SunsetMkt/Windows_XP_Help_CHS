@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>CodePage</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT><META NAME="DESCRIPTION" CONTENT="Internet Information Services reference information">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="EN-US">
+<META NAME="MS-IT-LOC" Content="Internet Information Services"> 
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<H4><A NAME="_response_codepage"></A><SUP></SUP>CodePage</H4>
+
+<P>The <B>CodePage</B> property specifies how strings are encoded in the intrinsic objects. A codepage is a character set that can include numbers, punctuation marks, and other glyphs. Codepages are not the same for each language. Some languages such as Japanese and Hindi have multi-byte characters, while others like English and German only need one byte to represent each character. The <B>CodePage</B> property is read/write.</P>
+
+<H6>Syntax</H6>
+
+<P><B>Response.CodePage </B>[<B>=</B> <I>CodePageID </I>]</P>
+
+<H6>Parameters</H6>
+
+<DL>
+<DT><I>CodePageID</I></DT>
+</DL>
+
+<P>An integer representing the character formatting codepage. You can find codepage integers at <a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&sbp=workshop&pver=6.0&ar=reference&sba=charsets" target=_blank><b>MSDN Web Workshop</b></a> under the column for FamilyCodePage.</P>
+
+<H6>Notes</H6>
+
+<P>Setting Response.CodePage explicitly affects a single page, where Session.CodePage affects all responses in a session. </P>
+
+<P>If Response.CodePage is not explicitly set in a page, it is implicitly set by Session.CodePage, if sessions are enabled. If sessions are not enabled, Response.CodePage is set by @CodePage, if @CodePage is present in the page. If there is no @CodePage in the page, Response.CodePage is set by the AspCodePage metabase property. If the AspCodePage metabase property is not set, or set to 0, Response.CodePage is set by the system ANSI codepage.</P>
+
+<P>There can be only one codepage per response body, otherwise incorrect characters are displayed. If you set the codepage explicitly in two pages where one is called by the other with #include, Server.Execute, or Server.Transfer, usually the parent page decides the codepage. The only exception is if Response.CodePage is explicitly set in the parent page of a Server.Execute call. In that case, an @CodePage command in the child page overrides the parent codepage.</P>
+
+<P>Literal strings in a script are still encoded using @CodePage (if present) or the AspCodePage metabase value (if set), or the system ANSI codepage. If you set Response.CodePage or Session.CodePage explicitly, do so before sending non-literal strings to the client. If you use literal and non-literal strings in the same page, make sure the codepage of @CodePage matches the codepage of Response.CodePage, or the literal strings are encoded differently from the non-literal strings and display incorrectly.</P>
+
+<P>If the codepage of your Web page matches the system defaults of the Web client, you do not need to set a codepage in your Web page. However, setting the value is recommended.</P>
+
+<P>If the codepage is set in a page, then <B>Response.Charset</B> should also be set. The codepage value tells IIS how to encode the data when building the response, and the charset value tells the browser how to decode the data when displaying the response. The <I>CharsetName</I> of Response.Charset must match the codepage value, or mixed characters will be displayed in the browser. Lists of <I>CharsetNames</I> and matching codepage values can be found at <a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&sbp=workshop&pver=6.0&ar=reference&sba=charsets " target=_blank><b>MSDN Web Workshop</b></a> under the columns for Preferred Charset Label and FamilyCodePage.</P>
+
+<P>The file format of a Web page must be the same as the @CodePage used in the page. Notepad.exe allows you to save files in UTF-8 format or in the system ANSI format. For example, if @CodePage is set to 65001 indicating UTF-8, the Web file must be saved in UTF-8 format. If @CodePage is set to 1252 indicating English or German, the Web file must be saved in ANSI format on an English or German system. If you want to save a page in the ANSI format for a language other than your system language, you can change your default System Locale in Regional Options from the Control Panel. For example, once you change your system locale to Japanese, any files you save in ANSI format are saved using the Japanese codepage and are only readable from a Japanese System Locale.</P>
+
+<P>If you are writing and testing Web pages that use different codepages and character sets (for example, creating a multi-lingual Web site), remember that your test client-computer must have the language packs installed for each language you wish to display. You can install language packs from Regional Options in the Control Panel.</P>
+
+<H6>Example</H6>
+
+<P>The following example shows the home page of a multi-lingual site. The home page is saved in UTF-8 format so characters from all languages can be shown. The home page redirects the client to a page of their language by using the ServerVariable HTTP_ACCEPT_LANGUAGE to discern the language of the client.</P>
+
+<P>--- Default.asp ---</P>
+
+<PRE><CODE>&lt;%@ CodePage=65001 Language="VBScript"%&gt;
+
+&lt;% 
+' Default.asp
+' This file is saved in UTF-8 format.
+' The codepage of the system doesn't matter because
+' you are setting @CodePage, Response.CodePage, and Response.Charset.
+' Otherwise, the system codepage of the server would be the default.
+
+Response.CodePage = 65001
+Response.CharSet = "utf-8"
+
+' Redirect to the correct home page based on the client language.
+Select Case Request.ServerVariables("HTTP_ACCEPT_LANGUAGE")
+
+  Case "en-us", "en", "fr", "fr-fr", "es", "es-es", "zh", "zh-cn", "zh-tw"
+    Response.Redirect Request.ServerVariables("HTTP_ACCEPT_LANGUAGE") &amp; "Start.asp"
+
+  Case Else
+    %&gt;
+    Welcome.  Click &lt;a href="enStart.asp"&gt;here&lt;/a&gt; to go to the English Web site.&lt;BR&gt;&lt;BR&gt;
+    Bienvenue. Cliquetez &lt;a href="frStart.asp"&gt;ici&lt;/a&gt; pour aller au Web site français.&lt;BR&gt;&lt;BR&gt;
+    Recepción. Haga clic &lt;a href="esStart.asp"&gt;aquí&lt;/a&gt; para ir al Web site español.&lt;BR&gt;&lt;BR&gt;
+    [Chinese characters with a link]&lt;BR&gt;&lt;BR&gt;
+    [Chinese - Taiwan characters with a link]&lt;BR&gt;&lt;BR&gt;
+    &lt;%
+
+End Select
+%&gt;</CODE></PRE>
+
+<P>--- En-usStart.asp ---</P>
+
+<PRE><CODE>&lt;%@ Language="VBScript" %&gt;
+&lt;% Response.Redirect "enStart.asp" %&gt;</CODE></PRE>
+
+<P>--- EnStart.asp ---</P>
+
+<PRE><CODE>&lt;%@ CodePage=1252 Language="VBScript"%&gt;
+
+&lt;% 
+' enStart.asp
+' This file is saved in ANSI format on US English system locale.
+' The language of the system doesn't matter
+'  because you are setting @CodePage and Response.CodePage.
+' Otherwise, the system codepage of the server would be the default.
+
+Response.CodePage = 1252
+Response.CharSet = "windows-1252" 
+
+Response.Write "&lt;H1 align=center&gt;News for Today&lt;/H1&gt;"
+%&gt;
+
+You can insert more content here, possibly using the &lt;BR&gt;
+IIS Content Linking component, the &lt;BR&gt;
+IIS Content Rotator component, or the &lt;BR&gt;
+IIS Ad Rotator component.&lt;BR&gt;</CODE></PRE>
+
+<H6>Applies To</H6>
+
+<P><A HREF="/iishelp/iis/htm/asp/vbob5sj8.htm"><B>Response</B> Object</A></P>
+
+<H6>See Also</H6>
+
+<P><A HREF="/iishelp/iis/htm/asp/vbob7fw4.htm"><B>Charset</B></A>, <A HREF="eadg4o37.htm">Accommodating International Clients</A></P>
+<hr class="iis" size="1">
+<p align="center"><em><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. All rights reserved.</a></em></p>
+</BODY>
+</HTML>

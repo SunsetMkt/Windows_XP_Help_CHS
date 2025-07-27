@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>将客户证书映射到用户帐户</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何验证使用客户证书登录的用户的概念和过程。讨论创建映射的方法，这些映射将证书所包含的信息与 Windows 用户帐户相关联。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37709492">将客户证书映射到用户帐户</a></h1>
+
+<p>通过创建“映射”将证书所包含的信息与 Windows 用户帐户相关联，可以对使用客户证书登录的用户进行身份验证。映射证书有两种方法：<a href="#H2_448402558">一对一</a>和<a href="#H2_448402922">多对一</a>。可以使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>处理这两种映射类型。</P>
+
+<ul>
+<li><a href="#aboutmap">关于映射</a></li>
+<li><a href="#mappingstratagies">映射策略</a></li>
+<li><a href="#exportingmap">导出证书</a></li>
+<li><a href="#mapping">如何映射证书</a></li>
+</ul>
+
+<P><strong><font color="#0000FF">要点</font></strong></p>
+<ul>
+<li>要启用证书映射，必须安装服务器证书。有关安装服务器证书的详细信息，请参阅<A HREF="iiocrsc.htm">获取服务器证书</A>。</li>
+<li>要确保对映射规则的更改生效，必须停止并重新启动网站。操作方法为：在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站，再从“操作”菜单中选择“停止”或单击工具栏上的“停止”图标。然后从“操作”菜单中选择“启动”，或单击工具栏上的“启动”图标。</li>
+</ul>
+
+<p class="bigfix">&nbsp;</p>
+
+
+
+<H2><A NAME="aboutmap"></A>关于映射</H2>
+
+<H3><A NAME="H2_448402558"></A>一对一映射</H3>
+<P>一对一映射将每一个客户证书映射到帐户。服务器将其所持客户证书的副本与浏览器发送的客户证书相比较。要进行映射，两者必须完全一致。如果客户端获得的另一个证书包含完全相同的用户信息，则必须重新映射。</P>
+
+<H3><A NAME="H2_448402922"></A>多对一映射</H3>
+<P>多对一映射使用“通配符”匹配规则，验证客户证书是否包含如颁发者或主题等特殊信息。此映射不比较实际客户证书，而是接受所有符合特定标准的客户证书。如果客户端获得的另一个证书包含完全相同的用户信息，现有映射仍可继续使用。</P>
+
+<H3>目录服务 (DS) 映射</H3>
+<P>目录服务 (DS) 证书映射使用本机 Windows Active Directory 功能对具有客户证书的用户进行身份验证。使用 DS 映射既有利也有弊。例如，其优点在于多台服务器可以共享客户证书信息，而缺点则在于通配符匹配不如 IIS 匹配器中的高级。有关 DS 映射的详细信息，请参阅 Windows 文档。</p>
+<p>只能在主属性级启用 DS 映射，并且您必须是 Windows 域的成员。激活 DS 映射后，整个 Web 服务都不能使用<nobr>一对一</nobr>和<nobr>多对一</nobr>映射。</P>
+
+
+<a name="mappingstratagies"></a><H2><A NAME="H2_448403756"></A>映射策略</H2>
+<P>客户证书映射十分灵活，其中的三种映射方法都可用于将客户证书映射到用户帐户。可以将客户证书映射到任意数量的用户帐户，或将任意数量的客户证书映射到单个用户帐户。证书映射可用于多种情况，其中包括：</P>
+
+<UL>
+<LI><strong>大型网络</strong>&nbsp;&nbsp;&nbsp;拥有大量客户证书的网络可使用多对一或 DS 映射。管理员可创建一个或多个匹配规则，将证书映射到一个或多个 Windows 用户帐户。</LI>
+
+<LI><strong>小型网络</strong>用户数很少的网络既可以使用一对一映射，这样便于更好地控制证书的使用和吊销，也可使用多对一映射，这样更便于管理。</LI>
+
+<LI><strong>额外的安全措施</strong>&nbsp;&nbsp;&nbsp;对于用户很少且要求额外安全措施的资源，管理员可使用一对一映射。管理员可以确保仅使用了特定的证书。这样可以更好地执行证书吊销策略。</LI>
+
+<LI><strong>Internet</strong>&nbsp;&nbsp;&nbsp;通过接受范围广泛的证书并将其映射到与 IUSR_<EM> computername </EM>帐户权限类似的帐户，使用证书验证的 Internet 站点可以使用多对一映射。</LI>
+
+<LI><strong>通过证书颁发机构</strong>&nbsp;&nbsp;&nbsp;要映射所有使用客户证书登录的用户（这些证书由特殊的组织颁发），可以使用多对一映射并定义匹配规则，此规则自动将由此组织颁发的证书映射到用户帐户。</LI>
+</UL>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果需要灵活的通配符映射，请使用 IIS 映射功能。如果要通过映射将网站集成到 Windows 域，Windows DS 影射器可能更能满足您的需要。详细信息，请参阅 Windows 文档。</p>
+
+
+<h2><a name="exportingmap"></a>导出证书</h2>
+<p>某些证书需要“导出”，以便在 IIS 一对一映射中使用。对于多对一映射，则无需导出证书。详细信息，请与证书颁发机构联系。 </p>
+
+<big>使用 Internet Explorer 4.0 或更高版本导出证书</big>
+<p>也可以使用此过程创建证书的备份副本。</p>
+
+<OL>
+<LI>在 Internet Explorer 中，单击“工具”中的“Internet 选项”。</LI>
+<LI>在“Internet 选项”属性页中，单击“内容”。</LI>
+<LI>在“内容”属性页中，单击“个人”(Internet Explorer 4.0) 或“证书”，然后单击“个人”选项卡 (Internet Explorer 5)。</LI>
+<LI>从列表中选择证书，然后单击“导出”。</LI>
+<LI>在向导中，选择“下一步”，然后选择“不，不要导出私钥”，并单击“下一步”。</LI>
+<LI>在下页中，选择“Base64 编码 X.509 (*.CER)”，然后单击“下一步”。完成向导中的过程。</LI>
+<P>现在证书已准备好，可以在以后的 IIS 一对一映射中使用。对于每个证书，此过程只需进行一次。</P>
+</OL>
+
+
+<H2><a name="mapping"></a>如何映射证书</H2>
+<P>一对一映射将每一客户证书映射到帐户。多对一映射使用“通配符”匹配规则，验证客户证书是否包含如颁发者或主题等特殊信息。</P>
+
+<a name="1to1map"></a><big>将指定客户证书映射到用户帐户（一对一映射）</big><!--</p>--><br>
+
+<ol>
+<LI>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要配置身份验证的网站，并打开其属性页。</LI>
+<LI>在“目录安全性”属性页的“安全通信”下，单击“编辑”。</LI>
+<LI>在“安全通信”对话框中，如果“启用客户证书映射”未被选中，请选中它。单击“编辑”。</LI>
+<LI>在“帐户映射”对话框的“一对一”选项卡中，单击“添加”以添加新证书，或选择映射并单击“编辑映射”对现有映射进行编辑。</LI>
+<LI>如果正在添加新证书，请找到并打开证书文件。</LI>
+
+<P><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果无法找到证书文件，则需要将其导出。</P>
+
+<LI>在“映射到帐户”对话框中，输入映射的名称。此名称将显示在“帐户映射”对话框的选项列表中。</LI>
+<LI>输入 Windows 用户帐户或通过浏览选择帐户。输入证书所映射到的帐户的密码。</LI>
+<LI>单击“确定”。</LI>
+<LI>重复以上步骤映射其他证书或将此证书映射到其他帐户。</LI>
+</OL>
+
+<a name="manymap"></a><big>使用通配规则添加客户证书映射（多对一映射）</big><!--</p>--><br>
+
+<P>不必导出证书以供多对一映射使用。</P>
+
+<ol>
+<LI>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要配置身份验证的网站并打开其属性页。</LI>
+<LI>在“目录安全性”属性页的“安全通信”下，单击“编辑”。</LI>
+<LI>在“安全通信”对话框中，如果“启用客户证书映射”复选框未被选中，请选中它。单击“编辑”。</LI>
+<LI>在“帐户映射”对话框的“多对一”选项卡中，单击“添加”。</LI>
+<LI>在“常规”对话框中，输入规则名称。此名称将显示在“帐户映射”对话框的选项列表中。可以创建规则供以后使用，或禁用但不删除规则，方法是选中或清除“启用通配符规则”复选框。单击“下一步”。</LI>
+<LI>在“规则”对话框中，单击“新建”。</LI>
+<LI>在“编辑规则元素”对话框中，选择相应的条件，然后单击“确定”。</LI>
+
+<P><strong>注意</strong>&nbsp;&nbsp;&nbsp;可以重复步骤 6 和 7 进一步定义规则。</P>
+
+<LI>完成后，单击“下一步”。</LI>
+
+<LI>在“映射”对话框中，输入 Windows 用户帐户或通过浏览选择帐户。输入规则所映射到的帐户的密码。</LI>
+
+<P><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果映射的帐户位于工作组内的计算机上，则需要指定计算机名称和帐户名称。例如，如果正在映射到 Sales1 计算机的 RegionalSales 帐户，则映射的帐户名称将是 Sales1\RegionalSales。</P>
+
+<LI>单击“确定”。</LI>
+<LI>重复以上步骤创建其他映射规则。</LI>
+<li>使用“上移”和“下移”按钮为规则指定优先级。列表中位置较高的规则优先级较高。</li>
+</OL>
+
+<big>编辑现有通配规则（多对一映射）</big><!--</p>--><br>
+
+<ol>
+<LI>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要配置身份验证的网站，并打开其属性页。</LI>
+<LI>在“目录安全性”属性页上，单击“安全通信”中的“编辑”。</LI>
+<LI>在“安全通信”对话框中，如果“启用客户证书映射”复选框未被选中，请选中它。单击“编辑”。</LI>
+<LI>在“帐户映射”对话框的“多对一”选项卡中，选择规则并单击“编辑规则”。</LI>
+<LI>进行必要的更改。</LI>
+<LI>完成后，单击“确定”。</LI>
+</OL>
+
+
+<p class="bigfix">&nbsp;</p>
+	
+<p><strong>注意</strong>
+<ul>
+<li>指定客户证书映射始终优先于通配符映射。</li>
+<li>某些客户证书提供更大的标识信息量，并且可能包含附加的自定义子域。有关证书格式的信息，请询问证书颁发机构。</li>
+<li>使用的匹配规则应尽可能详细。好的通配规则可匹配多个不同的域和子域的信息。例如，名称记帐、运输和销售可在多个公司客户证书的组织单元子域中出现。只根据此子域映射证书的匹配规则可能会导致不必要的映射。</li>
+</ul>
+</p>
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

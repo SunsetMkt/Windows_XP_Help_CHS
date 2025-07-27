@@ -1,0 +1,108 @@
+<html dir=ltr><head><title>更改访问限制 (chaccess)</title>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<meta name="description" content="本主题包含了有关更改访问限制 (chaccess) 管理脚本的概述和用法信息。">
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<font face="宋体">
+
+<h1 ALIGN="left">更改访问限制 (chaccess)</h1>
+
+<p><strong>概述：</strong></p>
+
+<p>更改一组特定计算机中给定节点上所允许的访问类型。例如，您可以使用此脚本控制目录、虚拟目录或文件是否具有读取或执行属性。</p>
+
+<p><strong>用法：</strong></p>
+
+<table cellspacing="2" cellpadding="5">
+<tr>
+<td valign="TOP">chaccess</td> <td>-a ADSPATH -computer|-c COMPUTER1, COMPUTER2,...<br>[+read|-read]<br> [+write|-write]<br> [+script|-script]<br> [+execute|-execute]<br> [+browse|-browse]<br> [-verbose|-v]<br> [--help|-?]</td>
+</tr>
+</table>
+
+<p><strong>参数：</strong></p>
+
+<table cellspacing="2" cellpadding="5">
+<tr>
+<td valign="TOP">-a ADSPATH</td> <td>计算机相对路径名称。例如 -a w3svc/1。</td>
+</tr>
+
+<tr>
+<td valign="TOP">-Computer</td> <td>要在其上进行更改的、逗号分隔的一组计算机。例如 -c Machine1,Machine2,Machine3。此处假设指定路径在所有指定的计算机上都存在。如果未指定计算机，则认为是本机。</td>
+</tr>
+
+<tr>
+<td>+-write</td> <td>打开/关闭此节点的写入权限。</td>
+</tr>
+
+<tr>
+<td>+-script</td> <td>打开/关闭此节点的执行脚本权限。</td>
+</tr>
+
+<tr>
+<td>+-execute</td> <td>打开/关闭此节点的执行权限。</td>
+</tr>
+
+<tr>
+<td>+-browse</td> <td>打开/关闭此节点的目录浏览。</td>
+</tr>
+
+<tr>
+<td>-verbose</td> <td>打印处理过程中的状态信息。</td>
+</tr>
+</table>
+
+<p><STRONG>示例：</STRONG></p>
+
+<p>chaccess -a w3svc/1/ROOT +read -write +script +browse</p>
+
+<p>chaccess -c MACHINE1,MACHINE2 -a w3svc/1/ROOT +read -write +script +browse</p>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

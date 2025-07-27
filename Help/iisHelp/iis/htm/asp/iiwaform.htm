@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>处理用户输入</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+
+
+<META NAME="DESCRIPTION" CONTENT="讲述如何使用 ASP Request 对象创建用于收集并处理 HTML 表单数据的脚本。解释如何创建处理表单信息的基本脚本，并讲述验证服务器和用户浏览器上的表单数据的技术。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+
+<font face="宋体">
+
+<h1><a name="H1_37773245">处理用户输入</a></h1>
+
+
+<p>使用 ASP 的 <A HREF="vbob5ulw.htm">Request</A> 对象，可以创建简单但功能强大的脚本，用于收集并处理由 HTML 表单收集的数据。在本主题中，您不仅可以到学习如何创建最基本的表单处理脚本，还可以获得如何在服务器和用户浏览器上验证表单数据的有用技巧。</p>
+
+<h2><a name="H2_37773883">关于 HTML 表单</a></h2>
+
+<p>HTML 表单是收集基于网站的信息最常用的方法，它由特殊的 HTML 标记（用于生成网页上的用户界面元素）排列组成。文本框、按钮和复选框是这些元素的示例，这些元素可以使用户与网页进行交互，并将信息提交给 Web 服务器。</p>  
+
+<p>例如，下列 HTML 标记生成一个表单，用户可以在里面输入他们的名、姓和年龄，并且还包括一个按钮，用于将信息提交给 Web 服务器。此表单中还包括一个隐藏的输入标记（在 Web 浏览器中不显示），用来向 Web 浏览器传递其他信息。</p>
+
+<pre>&lt;FORM METHOD=&quot;Get&quot; ACTION=&quot;Profile.asp&quot;&gt;
+&lt;INPUT TYPE=&quot;Text&quot; NAME=&quot;FirstName&quot;&gt; 
+&lt;INPUT TYPE=&quot;Text&quot; NAME=&quot;LastName&quot;&gt;
+&lt;INPUT TYPE=&quot;Text&quot; NAME=&quot;Age&quot;&gt;
+&lt;INPUT TYPE=&quot;Hidden&quot; NAME=&quot;UserStatus&quot; VALUE=&quot;New&quot;&gt;
+&lt;INPUT TYPE=&quot;Submit&quot; VALUE=&quot;Enter&quot;&gt;
+&lt;/FORM&gt;</pre>
+
+<p>详细描述全部 HTML 表单标记已超出本主题的范围，然而，有大量的信息资源可以帮助您学习如何创建实用而美观的 HTML 表单。例如，可以使用 Web 浏览器的查看源文件功能来查看其他网站上的表单是如何创建的。此外，也可以访问 <a HREF="http://go.microsoft.com/fwlink/?LinkId=1694" target="_blank">MSDN Online</a> 学习如何与其他 Internet 技术一起使用 HTML 表单的创新方法。</p>
+
+<h3><a name="H3_37775553">使用 ASP 处理表单输入</a></h3>
+
+<p>创建 HTML 表单后，需要处理用户输入，也就是将信息发送到 .asp 文件中进行分析和处理。让我们再检查一下上例中的 HTML 代码。请注意 &lt;FORM&gt; 标记的 ACTION 属性引用了一个称为 Profile.asp 的文件。当用户提交 HTML 信息时，浏览器使用 POST 方法将信息发送到服务器上的 .asp 文件中，这里是 Profile.asp。.asp 文件可能包含脚本，这些脚本用来处理信息，并与其他脚本、COM 组件或资源（如数据库）进行交互操作。</p>
+
+<p>使用 ASP，可以通过下列三种基本方法收集 HTML 表单中的信息。</p>
+
+<ul>
+<li>静态 .htm 文件可以包含表单，并将表单值发送到 .asp 文件。 </li>
+<li>.asp 文件可以创建表单，并将表单信息发送到其他 .asp 文件。 </li>
+<li>.asp 文件可以创建表单，并将表单信息发送到此文件自身，也就是说，将表单信息发送到包含此表单的 .asp 文件。 </li>
+</ul>
+
+<p>前两种方法的工作方式和表单与其他 Web 服务器程序（ASP 除外）交互的方式一样，极大简化了搜集和处理表单信息的任务。第三种方法特别有用，将在<a href="#verfyingforminput">验证表单输入</a>部份加以说明。</p>
+
+
+<h2><a name="H2_37776308">获取表单输入</a></h2>
+
+<p>ASP 的 Request 对象提供两个集合，简化了检索随 URL 请求一起发送的表单信息。</p>
+
+<h3><a name="H3_37776816">QueryString 集合</a></h3>
+
+<p><A HREF="vbob53hj.htm">QueryString</A> 集合检索传送到 Web 服务器的表单值，这些值在请求 URL 中表现为问号后面的文本。要将表单值附加到请求 URL 中，可以使用 HTTP GET 方法或手动将表单值添加到 URL。</p>
+
+<p>例如，如果前面的表单示例使用 GET 方法 (METHOD="GET")，并且用户键入 <em>Clair</em>、<em>Hector</em> 和 <em>30</em>，则下列 URL 请求将发送到服务器：</p> 
+
+<pre>http://Reskit/Workshop1/Painting/Profile.asp?FirstName=Clair&amp;LastName=Hector&amp;Age=30&amp;UserStatus=New</pre>
+
+<p>Profile.asp 可能包含下列表单处理脚本：</p>
+
+<pre>Hello &lt;%= Request.QueryString(&quot;FirstName&quot;) %&gt;&nbsp;&lt;%= Request.QueryString(&quot;LastName&quot;) %&gt;. 
+您今年 &nbsp;&lt;%= Request.QueryString(&quot;Age&quot;) %&gt;&nbsp; 岁！
+
+&lt;%
+  If Request.QueryString(&quot;UserStatus&quot;) = &quot;New&quot; Then 
+    Response.Write &quot;这是您第一次访问此网站！&quot;
+  End if	
+%&gt;</pre>
+
+<p>此时，Web 服务器将下列文本返回给用户 Web 浏览器：</p>
+
+<pre>您好，Clair Hector。您今年 30 岁！这是您第一次访问此网站！</pre>
+
+<p>QueryString 集合还包含一个可选参数，可用来访问 URL 请求中出现的多个值中的单个值（使用 GET 方法）。也可以使用 Count 属性来计算特定类型值出现的次数。</p>
+  
+<p>例如，包含多项目列表框的表单可生成下列请求：</p>
+
+<pre>http://Reskit/OrganicFoods/list.asp?Food=Apples&amp;Food=Olives&amp;Food=Bread</pre>
+
+<p>可以使用下列命令计算多个值：</p>
+
+<pre>Request.QueryString(&quot;Food&quot;).Count</pre>
+
+<p>要显示多个值类型，可在 List.asp 中包含下列脚本：</p>
+
+<pre>&lt;%
+  lngTotal = Request.QueryString(&quot;Food&quot;).Count
+  For i = 1 To lngTotal
+    Response.Write Request.QueryString(&quot;Food&quot;)(i) &amp; &quot;&lt;BR&gt;&quot;
+  Next
+%&gt;</pre>
+上述脚本将显示：
+
+<pre>Apples
+Olives
+Bread</pre>
+
+<P>要将整个值列表显示为用逗号分隔的字符串，可以使用下列脚本：</P>
+
+<pre>&lt;% Response.Write Request.QueryString(&quot;Item&quot;) %&gt;</pre>
+
+<p>将显示下列字符串：</p>
+
+<pre>Apples, Olives, Bread</pre>
+
+<h3><a name="H3_37779230">Form 集合</a></h3>
+
+<p>如果使用 HTTP GET 方法将长而复杂的表单值传送到 Web 服务器，将冒丢失信息的风险。某些 Web 服务器会限制 URL 查询字符串的长度，以便删节通过 GET 方法传送的长表单值。如果要将表单中的大量信息发送到 Web 服务器，应使用 HTTP POST 方法。POST 方法在 HTTP 请求体内发送表单数据，几乎不限制发送到服务器的字符长度。可以使用 ASP 的 Request 对象的 <A HREF="vbob4fl9.htm">Form</A> 集合来检索通过 POST 方法发送的值。</p>
+
+<p><strong>Form</strong> 集合存储值的方式类似于 QueryString 集合。例如，如果用户在表单中填充了一长串名称，则可以使用下列脚本检索食品名称：</p>
+
+<pre>&lt;%
+  lngTotal = Request.Form(&quot;Food&quot;).Count
+  For i = 1 To lngTotal 
+   Response.Write Request.Form(&quot;Food&quot;)(i) &amp; &quot;&lt;BR&gt;&quot;
+  Next
+%&gt;</pre>
+
+<h2><a name="verfyingforminput">验证表单输入</a></h2>
+
+<p>设计优秀的 Web 表单通常包含客户端脚本，以便在将信息发送到服务器之前验证用户输入。“验证脚本”可以检查许多事情，如用户输入值是否有效或者文本框是否为空。假设网站包含表单，此表单允许用户计算投资回报率。您可能需要验证用户是否在相应表单字段中输入了数字或文本信息，以防将潜在的无效信息发送到服务器。</p>
+
+<p>通常，在客户端尽可能多地验证表单数据将非常有好处。除了能尽快提示存在用户输入错误外，客户端验证能提高响应速度、减少服务器负担并为其他应用程序释放带宽。</p>
+
+<p>下列客户端脚本在将信息发送到服务器之前验证用户输入（这里，脚本确定用户输入的帐号是否是一个数字）：</p>
+
+<pre>&lt;SCRIPT LANGUAGE=&quot;JScript&quot;&gt;
+	
+function CheckNumber()
+{			
+ if (isNumeric(document.UserForm.AcctNo.value))
+   return true
+ else
+ {
+   alert(&quot;Please enter a valid account number.&quot;)
+   return false
+ }		
+}
+	
+//Function for determining if form value is a number.
+//Note:  The JScript isNaN method is a more elegant way to determine whether
+//a value is not a number. However, some older browsers do not support this method.
+function isNumeric(str)
+{
+  for (var i=0; i &lt; str.length; i++)
+		{
+    var ch = str.substring(i, i+1)
+    if( ch &lt; &quot;0&quot; || ch&gt;&quot;9&quot; || str.length == null)
+				{
+      return false
+    }
+  }
+  return true
+}	
+&lt;/SCRIPT&gt;
+
+&lt;FORM METHOD=&quot;Get&quot; ACTION=&quot;balance.asp&quot; NAME=&quot;UserForm&quot; ONSUBMIT=&quot;return CheckNumber()&quot;&gt;
+
+	&lt;INPUT TYPE=&quot;Text&quot;   NAME=&quot;AcctNo&quot;&gt;
+	&lt;INPUT TYPE=&quot;Submit&quot; VALUE=&quot;Submit&quot;&gt;
+	
+&lt;/FORM&gt;
+</pre>
+
+<p>但是，如果表单验证要求访问数据库，则可以考虑使用服务器端表单验证。执行服务器端验证的一个明显优势在于可以创建表单并向此表单自身发送信息。也就是说，.asp 文件实际上包含可用来检索用户输入的 HTML 表单。（请记住，可以使用 ASP 来与客户端脚本和 HTML 进行交互。详细信息，请参阅<A HREF="iiwabs.htm">与客户端脚本交互操作</A>。）输入返回到相同的文件，随后由此文件来验证信息，如果输入无效将警告用户。</p>  
+
+<p>使用此方法处理和验证用户输入，可极大增强基于网站的表单的可用性和响应能力。例如，将错误信息显示在无效信息所在的表单字段旁边，可便于用户发现出错的地方。（通常，基于网站的表单将请求转发给包含错误信息的单独的网页。不能立即理解此信息的用户可能会丧失信心。）</p>
+
+<p>例如，下列脚本通过将信息发送给自身 (Verify.asp) 并调用用户定义的数据库查询函数来决定用户是否输入了有效的帐号值：</p>
+
+<pre>&lt;% 
+  strAcct = Request.Form(&quot;Account&quot;)
+  If Not AccountValid(strAcct) Then   
+    ErrMsg = &quot;&lt;FONT COLOR=Red&gt;对不起！您输入的帐号值无效。&lt;/FONT&gt;&quot;
+  Else
+    <em>处理用户输入</em>
+    .
+    .
+    .	
+    Server.Transfer(&quot;Complete.asp&quot;)
+  End If
+
+  Function AccountValid(strAcct)
+    <em>此处调用数据库互连脚本或组件方法。</em>
+  End Function 
+%&gt;
+
+&lt;FORM METHOD=&quot;Post&quot;  ACTION=&quot;Verify.asp&quot;&gt;   
+帐号：&lt;INPUT TYPE=&quot;Text&quot; NAME=&quot;Account&quot;&gt;&nbsp;&lt;%= ErrMsg %&gt;&nbsp;&lt;BR&gt; 
+&lt;INPUT TYPE=&quot;Submit&quot;&gt;			
+&lt;/FORM&gt;</pre>
+
+<p>在本例中，脚本位于 Verify.asp 文件中，此文件同时也包含 HTML 表单；通过在 ACTION 属性中指定 Verify.asp，此文件将信息发送给自身。</p> 
+
+
+<p><STRONG><font color="#0000FF">要点</font></STRONG>&nbsp;&nbsp;&nbsp;如果使用 JScript 进行服务器端验证，则将集合赋给局部变量时，必须确保 Request 集合项目（QueryString 或 Form）后面有一对空括号。如果没有括号，集合将返回对象，而不是字符串。下列脚本说明通过 JScript 给变量赋值的正确方式：</p>
+ 
+<pre>
+&lt;%
+   var Name = Request.Form(&quot;Name&quot;)();
+   var Password = Request.Form(&quot;Password&quot;)();
+
+  if(Name &gt; &quot;&quot;)
+  {
+     if(Name == Password)
+      Response.Write(&quot;姓名与密码相同。&quot;)
+  else
+      Response.Write(&quot;姓名与密码不同。&quot;);
+  }
+%&gt;
+</pre>
+ 
+<p>当集合中包含以逗号分隔的或索引化的多个值时，VBScript 也具有类似的行为。这意味着，对于 VBScript 和 JScript，除了在 Request 集合项目后面附加空括号外，还要指定所需值的索引。例如，下列 JScript 行将只返回表单元素多个值中的第一个值：</p>
+
+<pre>
+var Name = Request.Form(&quot;Name&quot;)(1);
+</pre> 
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+
+</font>
+</body>
+
+</html>

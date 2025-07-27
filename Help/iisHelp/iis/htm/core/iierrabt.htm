@@ -1,0 +1,246 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于自定义错误消息</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关默认和自定义 HTTP 错误消息的概述信息。包括一系列默认错误消息和数字。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="customerrormessages">关于自定义错误消息</a></h1>
+
+<p>此主题包括有关默认和自定义 HTTP 1.1 错误消息的概念性信息。</p>
+
+<ul>
+<li><a href="#httperrors">HTTP 1.1 错误消息</a></li>
+<li><a href="#customize">自定义错误消息</a></li>
+</ul>
+
+<h2><a name="httperrors">HTTP 1.1 错误消息</a></h2>
+<P>以 HTML 网页形式向客户端浏览器返回 HTTP 1.1 错误消息，其中包含一般性信息。如果用户试图连接到网站时发生了 HTTP 错误，将向客户端浏览器返回一条错误消息，简述试图建立连接时所发生的情况。例如，如果用户试图连接的网站已经达到了最大连接容量，将会向客户端返回 HTTP 错误，其中包含“用户过多”。</P>
+
+<h2><a name="customize">自定义错误消息</a></h2>
+
+<p>所有 IIS 自定义错误消息都显示行业标准 HTTP 代码，这样可以确保与 HTTP 1.1 错误消息的一致性。但可以使用 IIS 中的“自定义错误”属性页自定义一般性的 HTTP 错误消息。</p>
+
+<p>可以通过 IIS 自定义下列 HTTP 错误消息：</p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="70%">
+<tr>
+<th  bgcolor="#C0C0C0" align="Left" valign="top" ALIGN="Center">错误代码</th>
+<th  bgcolor="#C0C0C0" align="Left" valign="top">错误消息</th>
+</tr>
+<tr>
+<td valign="Top" ALIGN="Center">400</td>
+<td  valign="Top">无效请求</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 401.1</td>
+<td  valign="Top">登录失败</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 401.2</td>
+<td  valign="Top">由于服务器配置导致登录失败</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 401.3</td>
+<td  valign="Top">由于资源上的 ACL 导致未被授权</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center">401.4</td>
+<td  valign="Top">由于筛选器导致授权失败</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center">401.5</td>
+<td  valign="Top">由于 ISAPI/CGI 应用程序导致授权失败</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center">403.1</td>
+<td  valign="Top">禁止执行访问</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center">403.2</td>
+<td  valign="Top">禁止读取访问</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center">403.3</td>
+<td  valign="Top">禁止写入访问</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center">403.4</td>
+<td  valign="Top">要求 SSL</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.5</td>
+<td  valign="Top">要求 SSL 128</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.6</td>
+<td  valign="Top">IP 地址被拒绝</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.7</td>
+<td  valign="Top">要求客户证书</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.8</td>
+<td  valign="Top">拒绝站点访问</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.9</td>
+<td  valign="Top">用户太多</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.10</td>
+<td  valign="Top">无效配置</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.11</td>
+<td  valign="Top">密码已更改</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.12</td>
+<td  valign="Top">映射器被拒绝访问</td>
+</tr>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.13</td>
+<td  valign="Top">客户证书已被吊销
+</td>
+</tr>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.14</td>
+<td  valign="Top">拒绝目录列表</td>
+</tr>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.15</td>
+<td  valign="Top">已超过客户访问许可协议
+</td>
+</tr>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.16</td>
+<td  valign="Top">客户证书不可信或无效
+</td>
+</tr>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 403.17</td>
+<td  valign="Top">客户证书已过期或尚未生效</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 404</td>
+<td  valign="Top">找不到</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 404.1</td>
+<td  valign="Top">找不到站点</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 405</td>
+<td  valign="Top">不允许使用的方法</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 406</td>
+<td  valign="Top">无法接受</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center">407</td>
+<td  valign="Top">要求代理身份验证</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center">412</td>
+<td  valign="Top">前提条件失败</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center">414</td>
+<td  valign="Top">请求的 URI 太长</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 500</td>
+<td  valign="Top">内部服务器错误</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 500.12</td>
+<td  valign="Top">正在重新启动应用程序</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 500.13</td>
+<td  valign="Top">服务器太忙</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 500.15</td>
+<td  valign="Top">不允许请求 Global.asa</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 500-100.asp</td>
+<td  valign="Top">ASP 错误</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 501</td>
+<td  valign="Top">未实现</td>
+</tr>
+<tr>
+<td  valign="Top" ALIGN="Center"> 502</td>
+<td  valign="Top">无效网关</td>
+</tr>
+</table>
+
+<p><strong>注意</strong></p>
+
+<ul>
+<li>自定义错误消息以列表形式显示在 Internet 信息服务管理单元中，并被 IIS 视为一个属性。例如，在网站级配置一组自定义错误消息之后，此服务器的所有目录都将继承整个自定义错误消息列表。也就是说，两个自定义错误消息列表（对于服务器和目录）并不合并。</li>
+
+
+
+<li>404.1 错误只发生在具有多个 IP 地址的计算机上。如果某个特定 IP 地址/端口组合收到客户端请求，但此 IP 地址并未设置为对此端口侦听，IIS 将返回 404.1 HTTP 错误。例如，如果一台计算机有两个 IP 地址，但只将其中一个 IP 地址配置为在端口 80 上侦听，则另一个 IP 地址从端口 80 收到的任何请求都将导致 IIS 返回 404.1 错误。只应在服务级设置这一错误，因为只有当服务器上存在多个 IP 地址时，才会将此错误返回给客户端。</li>   
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

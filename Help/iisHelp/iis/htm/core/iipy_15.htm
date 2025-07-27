@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=gb2312">
+<title>“目录”属性页</title>
+
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=Windows-1252">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 dir=ltr>
+<FONT FACE="宋体">
+
+<p><a name="hidd_directory_properties+0x20001"></a> <strong>“目录”属性页</strong></p>
+
+<p>使用此属性页更改网站上物理目录的属性。</p>
+
+<p>物理目录可以从下列位置返回内容：</p>
+
+<ul>
+<li><strong>此计算机上的目录</strong>；例如，C:\Catalog\Shoes。</li>
+
+<li><strong>重定向到 URL</strong>；例如，http://tempserver。将“重定向到”文本框中提供的目标 URL 自动提供给请求原始 URL 上资源的浏览器，以便可以再次请求资源。要将请求映射到虚拟目录，请使用虚拟路径；例如，/newcatalog。</li>
+</ul>
+
+<p>“本地路径”显示此目录的位置。</p>
+
+<p><strong>访问权限</strong></p>
+
+<p><strong>读取</strong> 如果允许用户读取或下载文件或目录以及相关的属性，请选中此选项。 </p>
+
+<p><strong>写入</strong> 如果允许用户将文件及其相关属性上载到服务器上已启用的目录，或者允许用户更改可写文件的内容，请选中此选项。只有使用支持 HTTP 1.1 协议标准的 PUT 功能的浏览器，才能执行写入操作。 </p>
+
+<p><strong>脚本资源访问</strong> 如果要允许用户访问设置了“读取”或“写入”权限的源代码，请选中此选项。源代码包含 ASP 应用程序中的脚本。</p>
+
+<p><strong>目录浏览</strong> 如果允许用户以超文本形式查看虚拟目录中的文件和子目录，请选中此选项。虚拟目录不会出现在目录列表中，用户必须知道虚拟目录的别名。</p>
+
+<p><font color="#0000FF"><strong>要点</strong></font>&nbsp;&nbsp;&nbsp;如果用户试图访问文件或目录，并且满足下列两个条件，Web 服务器将在用户 Web 浏览器中显示“禁止访问”错误消息。</p>
+<ul>
+<li>禁用目录浏览。<br><br></li>
+<li>用户没有指定文件名，例如 filename.htm。<br><br></li>
+</ul>
+
+<p><strong>记录访问</strong> 要在日志文件中记录对目录的访问，请选中此选项。只有启用了此网站的日志记录之后，才会记录访问。 </p>
+
+<p><strong>索引资源</strong> 要允许 Microsoft 索引服务将此目录包含在网站的全文索引中，请选中此选项。使用全文索引，用户可以在发布的文档中快速搜索单词或短语。</p>
+
+<p><strong>应用程序设置</strong></p>
+
+<p>基于 Web 的 IIS 应用程序由其所在的目录结构定义。要使此目录成为应用程序开始点（从而创建一个应用程序），请单击“创建”按钮。要将此主目录与应用程序分离，请单击“删除”按钮。</p>
+
+<p><strong>执行权限</strong></p>
+
+<p>执行权限决定允许对站点或虚拟目录资源进行何种级别的程序执行。</p>
+
+<ul>
+<li><strong>无</strong> 只允许访问静态文件，例如 HTML 或图像文件。</li>
+<li><strong>纯脚本</strong> 只能运行脚本，例如 ASP 脚本。</li>
+<li><strong>脚本和可执行文件</strong> 可以访问或执行所有文件类型。</li>
+</ul>
+
+<p><strong>应用程序保护</strong></p>
+
+<p>选择运行应用程序的保护方式：与 Web 服务在同一进程中运行（低）、与其他应用程序在独立的共用进程中运行（中）或者在与其他进程不同的独立进程中运行（高）。</p> 
+
+<strong>客户端将定向到</strong></p>
+
+<p>如果选择“重定向到 URL”，则出现这些属性。</p>
+
+<p>“上面输入的准确 URL”将虚拟目录重定向到目标 URL，但不会添加原始 URL 的任何其他部分。可以使用此选项将整个虚拟目录重定向到一个文件。例如，要将对 /scripts 虚拟目录的所有请求重定向到主目录中的文件 Default.htm，请在“重定向到”文本框中键入 <strong>/Default.htm</strong>，并选中此选项。</p>
+
+<p>“此位置下的目录”可将父目录重定向到子目录。例如，要将主目录（由 / 指定）重定向到子目录 /newhome，可在“重定向到”文本框中键入 /newhome，并选中此选项。如果不选中此选项，Web 服务器会继续将父目录映射到其自身。</p>
+
+<p>“资源的永久重定向”可向客户端发送下列信息：“301 永久重定向”。重定向被视为临时性的，客户端浏览器将接收到下列消息：“302 临时重定向。”某些浏览器使用“301 永久重定向”消息作为永久更改 URL的信号（如书签等）。</p>
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</BODY>
+</HTML>

@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>级别与继承</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="描述可供配置“进程回收”的配置数据库级别，并讨论配置设置的继承。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="LevelsAndInheritance">级别与继承</a></h1>
+
+可以通过用户界面 (UI) 或直接编辑配置数据库，在 IIS 配置数据库的各个级别对“进程回收”事件进行配置。为“进程回收”配置的所有属性都由更低级别的 IIS 配置数据库继承，除非已对更低级别进行了特别配置。
+
+<ul>
+<li>共用应用程序是在 W3SVC 级别与所有其他共用进程外应用程序一起配置的。</li>
+<li>独立应用程序是在它们的相关网站的 AppRoot 级别配置的。</li>
+</ul>
+
+<p><strong>配置数据库关键字</strong><p>
+
+<p>具有四个“进程回收”专用的配置数据库关键字。下表中前三个关键字可以通过 UI 进行配置。第四个关键字 ShutdownTimeLimit 只能通过直接编辑配置数据库进行配置。
+
+<ul>
+<li> <strong>PeriodicRestartRequests</strong><br>
+此属性指示应用程序应该处理的请求数。处理完这些数目的请求后将回收应用程序。详细信息，请参阅 <a href="../asp/apro5myb.htm">PeriodicRestartRequests</a>。
+</li>
+<li><strong>PeriodicRestartTime</strong><br>
+此属性指示应用程序为请求提供服务的周期（以分钟为单位）。此周期过后，IIS 将回收独立的应用程序。详细信息，请参阅 <a href="../asp/apro6xb9.htm">PeriodicRestartRequests</a>。
+</li>
+<li><strong>PeriodicRestartSchedule</strong><br>
+此属性指定一天中的某个时间（采用 24 小时格式）。到了此时刻将回收应用程序。</li> 详细信息，请参阅 <a href="../asp/apro6zj9.htm">PeriodicRestartSchedule</a>。
+</li>
+<li><strong>ShutdownTimeLimit</strong><br>
+此属性指定时间量（以秒为单位），达到回收阈值后，IIS 将等待所有旧的应用程序请求都在旧的 DLLHost.exe 进程中运行完毕。达到 ShutdownTimeLimit 时，IIS 将终止旧的 DLLHost。详细信息，请参阅 <a href="../asp/apro0y44.htm">ShutdownTimeLimit</a>。</li>
+</ul>
+
+<H2>应用程序安全</H2>
+不通过 UI 配置“进程回收”时，应该了解 <strong>AppIsolated</strong> 配置数据库关键字，因为 AppIsolated 关键字的参数值将表明应用程序的安全级别。然后可以使用此信息确定进行“进程回收”设置的位置。可以在各个配置数据库级别配置应用程序及其安全级别。安全级别确定应用程序在什么位置获取其“进程回收”设置。
+
+<p>
+<table width="60%" align="CENTER" cellspacing="2" cellpadding="2" bordercolor="#000000" frame="BORDER">
+
+<tr align="CENTER" bgcolor="#C0C0C0" bordercolor="#000000">
+<td width="50%" bgcolor="#C0C0C0"><strong>应用程序保护</strong></td>	
+<td width="50%" bgcolor="#C0C0C0">&nbsp;&nbsp;&nbsp;<strong>配置数据库设置</strong></td>
+
+<tr bordercolor="#000000">
+	<td align="LEFT" valign="TOP">&nbsp;&nbsp;&nbsp;<strong>低 (IIS)</strong></td>
+	<td align="CENTER" valign="TOP">AppIsolated = 0</td>
+</tr>
+<tr>
+	<td align="LEFT" valign="TOP">&nbsp;&nbsp;&nbsp;<strong>中（共用）</strong></td>
+	<td align="CENTER" valign="TOP">AppIsolated = 2</td>
+</tr>
+<tr>
+	<td align="LEFT" valign="TOP">&nbsp;&nbsp;&nbsp;<strong>高（独立）</strong></td>
+	<td align="CENTER" valign="TOP">AppIsolated = 1</td>
+</tr>
+</table></p>
+
+
+<p>下列配置数据库配置示例对在各个配置数据库级别配置“进程回收”时使用的配置数据库关键字（粗体）进行了说明。</p> 
+
+<H2>配置数据库配置示例</H2><p>
+
+/W3SVC<br>
+&nbsp;&nbsp;&nbsp;AppIsolated             = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;<b>PeriodicRestartTime</b>     = (INTEGER) 60<br>
+&nbsp;&nbsp;&nbsp;<b>PeriodicRestartRequests</b> = (INTEGER) 10000<br>
+&nbsp;&nbsp;&nbsp;<b>PeriodicRestartSchedule</b> = (STRING) “03:30” “21:30”<br>
+&nbsp;&nbsp;&nbsp;<b>ShutdownTimeLimit</b> = (INTEGER) 6000<br>
+&nbsp;&nbsp;&nbsp;…other default site/app settings…<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/W3SVC/1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ShutdownTimeLimit</b> = (INTEGER) 700<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/W3SVC/1/root<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AppIsolated = (INTEGER) 2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PeriodicRestartTime</b> = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;…other app settings…<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/W3SVC/1/root/isolatedApp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AppIsolated = (INTEGER) 1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PeriodicRestartTime</b> = (INTEGER) 600<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PeriodicRestartRequests</b> = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ShutdownTimeLimit</b> = (INTEGER) 900<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;…other app settings…<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/W3SVC/1/root/PooledApp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AppIsolated = (INTEGER) 2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;…other app settings…<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/W3SVC/1/root/PooledApp/WebDir<br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/W3SVC/1/root/inprocApp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AppIsolated = (INTEGER) 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;…other app settings…<br>
+
+<p>
+
+<H2><a name=UnderstandingTheExample>理解配置数据库配置示例</strong></a></H2>
+
+<ul>
+<Li>W3SVC 级别也称为 IISWebService 级别，是配置数据库中可以配置“进程回收”的最高级别。如果更低的级别没有特定的配置设置，此级别设置的配置将由更低级别继承。所有共用应用程序的回收事件都是在此级别设置的。
+<p>
+<li>W3SVC/<i>n</i> 级别也称为 IISWebServer 级别，是一个特定的网站，其中 n 是站点编号。站点编号从 1 开始。在此级别不能使用 UI 配置“进程回收”设置。在上面的示例中，因设置了零参数，所以在 /W3SVC/1/root 级别已禁用 PeriodicRestartTime 事件。没有对 PeriodicRestartTime 关键字进行特别设置的更低级别将继承此级别的设置。
+<p>
+<li>W3SVC/<i>n</i>/Root 级别也称为 IISWebVirtualDir 级别，是网站的起始点，其中 n 是站点编号。独立应用程序的“进程回收”事件可以在此级别配置，也可以在此级别配置是否禁用特定网站的进程回收文件。
+<p>
+<li>W3SVC/<i>n</i>/ROOT/WebVirtualDir 级别也称为 IISWebVirtualDir 级别，是网站中的虚拟目录，其中 n 是站点编号。在上面的示例中，/W3SVC/1/root/IsolatedApp 级别（其中 IsolatedApp 是虚拟目录的名称）的 <b>PeriodicRestartRequests</b> 设置为零参数。零参数在此级别禁用 PeriodicRestartRequests 事件。否则，/W3SVC/1/root/IsolatedApp 级别将从 /W3SVC 级别继承设置 10000。
+<p>
+<li>W3SVC/<i>n</i>/Root/WebVirtualDir/WebDir 级别也称为 IISWebDirectory 级别，是网站上虚拟目录中的物理目录，其中 n 是站点编号。在上面的示例中，/W3SVC/1/root/PooledApp/WebDir 在网站 1 的 PooledApp 虚拟目录中显示了目录 WebDir。因为 WebDir 从 /W3SVC/1/root/PooledApp 级别继承了 AppIsolated = 2（共用）设置，所以 WebDir 级别从 W3SVC 级别继承进程回收配置设置。
+<p>
+<li>在上面的示例中，/W3SVC/2/root/isolatedApp 对每个回收事件（除了 PeriodicRestartSchedule 外）都配置了“进程回收”设置。由于配置了 PeriodicRestartSchedule 的下一个更高级别是 W3SVC 级别，因此将从 W3SVC 级别继承 PeriodicRestartSchedule，将在每天凌晨 03:30 和下午 9:30 执行回收。
+<p>
+</ul>
+
+<p>有关创建应用程序和设置安全级别的详细信息，请参阅<a href="iiwarndc.htm">关于应用程序</a>。有关设置应用程序的起始点和边界的信息，请参阅<a href="../asp/eadg7lpv.htm">定义应用程序边界</a>。
+
+<h2><a name="RelatedResources">相关资源</a></h2>
+
+<ul>
+<li><a href="iioopcre.htm">配置回收事件</a>&nbsp;&nbsp;&nbsp;有关如何配置应用程序，使其在各种不同进程中运行的逐步说明。</li>
+<p>
+<li><a href="iiwarndc.htm">关于应用程序</a>&nbsp;&nbsp;&nbsp;有关应用程序的概念性信息，它们的起始点，以及应用程序可在其中运行的各种不同进程。</li>
+<p>
+<li><a href="iiisol.htm">独立应用程序</a>&nbsp;&nbsp;&nbsp;有关如何配置应用程序，使其在各种不同进程中运行的逐步说明。</li>
+<p>
+<li><a href="../asp/eadg7lpv.htm">定义应用程序边界</a>&nbsp;&nbsp;&nbsp;对如何设置应用程序的起始点和边界进行说明。
+<p>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

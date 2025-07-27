@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML dir=ltr>
+<HEAD>
+
+<TITLE>#echo</TITLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="Internet 信息服务参考信息。#echo 命令指示 Web 服务器将环境变量值插入到 HTML 网页中。">
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000"><font face="宋体">
+
+<H2><A NAME="_k2_echo"></A><SUP></SUP>#echo</H2>
+
+<P><b>#echo</b> 指令指示 Web 服务器显示服务器变量的值。必须使用 HTML 注释分隔符将指令括起来。</P>
+
+<P>默认情况下，此指令仅可用于 HTML 网页，无法用于 ASP 网页。对于 ASP 网页，可以通过 <a href="../asp/vbob5vsj.htm"><b>Request.ServerVariables</b></a> 集合来访问服务器变量。</P>
+<H6>语法</H6>
+
+<P><STRONG>&lt;!-- #echo var = </STRONG><em>VariableName</em> <STRONG>--&gt;</STRONG></P>
+
+<H6>参数</H6>
+
+<P class=dt><em>VariableName</em></P>
+
+<P class=indent>指定希望插入其值的变量名。变量可以是下列各项之一：</P>
+
+<TABLE border=0 cellpadding=5 cols=2 frame=box rules=all width=100%>
+
+<TR VALIGN="top">
+<TD width=20%><STRONG>变量</STRONG></TD>
+<TD width=80%><STRONG>含义</STRONG></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>ALL_HTTP</TD>
+<TD width=80%>此表说明尚未解析成其他某个变量的所有 HTTP 头。这些变量的形式为 HTTP_<em>头字段名</em>。这些 HTTP 头包含一个空结束字符串及由回车换行符分隔的单独的头。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>AUTH_TYPE</TD>
+<TD width=80%>包含所使用的身份验证的类型。例如，如果使用基本身份验证，则字符串为“Basic”；而对于集成身份验证，则为“integrated Windows authentication”。其他身份验证方案拥有其他字符串。由于可以向 Web 服务器添加各种身份验证类型，所以要列出所有可能的字符串是不现实的。如果字符串为空，表示没有使用身份验证。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>AUTH_PASSWORD</TD>
+<TD width=80%>在客户端身份验证对话框中输入的值。只有使用基本身份验证时，此变量才有效。 </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>AUTH_USER</TD>
+<TD width=80%>在客户端身份验证对话框中输入的值。 </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>CONTENT_LENGTH</TD>
+<TD width=80%>脚本可以期望从客户端接收到的字节数。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>CONTENT_TYPE</TD>
+<TD width=80%>在 POST 请求正文中提供的信息内容类型。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>DOCUMENT_NAME</TD>
+<TD width=80%>当前文件名。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>DOCUMENT_URI</TD>
+<TD width=80%>当前文档的虚拟路径。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>DATE_GMT</TD>
+<TD width=80%>以格林威治标准时间 (GMT) 表示的当前日期。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>DATE_LOCAL</TD>
+<TD width=80%>以本地时区表示的当前日期。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>GATEWAY_INTERFACE</TD>
+<TD width=80%>Web 服务器所使用的 CGI 规范的版本。以 CGI/<em>版本号</em> 格式返回版本号。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>HTTP_ACCEPT</TD>
+<TD width=80%>特殊 HTTP 头。以逗号 (,) 连接和分隔的 accept 字段的值。例如，如果下列行是 HTTP 头的一部分： 
+<P><CODE>accept:*/*; q=0.1<BR> accept:text/html<BR> accept:image/jpeg</CODE></P>
+
+<P>HTTP_ACCEPT 变量的值将是：</P>
+
+<P><CODE>*/*; q=0.1, text/html, image/jpeg</CODE></P>
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>LAST_MODIFIED</TD>
+<TD width=80%>上次修改当前文档的日期。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>PATH_INFO</TD>
+<TD width=80%>附加路径信息，由客户端指定。由脚本名称之后、查询字符串之前的 URL 后缀部分组成（如果有）。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>PATH_TRANSLATED</TD>
+<TD width=80%>PATH_INFO 的值，但具有扩展至目录规范的虚拟路径。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>QUERY_STRING</TD>
+<TD width=80%>在引用此脚本的 URL 中，跟随在问号 (?) 之后的信息。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>QUERY_STRING_UNESCAPED</TD>
+<TD width=80%>查询字符串的“非转义”版本；即不是 URL 编码的另一版本。 </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>REMOTE_ADDR</TD>
+<TD width=80%>发送请求的客户端或客户端代理（例如，网关或防火墙）的 IP 地址。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>REMOTE_HOST</TD>
+<TD width=80%>发送请求的客户端或客户端代理（例如，网关或防火墙）的主机名。IIS 2.0 和 3.0 为此参数返回一个 IP 地址。 </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>REMOTE_USER</TD>
+<TD width=80%>包含通过服务器身份验证的客户端的用户名。如果应用程序启用了“匿名访问”，则返回空字符串。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>REQUEST_METHOD</TD>
+<TD width=80%>HTTP 请求方法。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>SCRIPT_NAME</TD>
+<TD width=80%>正在执行的脚本程序的名称。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>SERVER_NAME</TD>
+<TD width=80%>服务器的主机名或 IP 地址，应出现在自引用 URL 中。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>SERVER_PORT</TD>
+<TD width=80%>接收请求的 TCP/IP 端口。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>SERVER_PORT_SECURE</TD>
+<TD width=80%>值为 0 或 1 的一个字符串。如果正在安全端口上处理请求，则其为 1。否则将为 0。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>SERVER_PROTOCOL</TD>
+<TD width=80%>与此请求相关的信息检索协议的名称和版本。通常为 HTTP/1.0。以“名称/版本”格式返回此协议。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>SERVER_SOFTWARE</TD>
+<TD width=80%>应答请求的 Web 服务器的名称和版本。以“名称/版本”格式返回服务器信息。</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>URL</TD>
+<TD width=80%>给定 URL 的基本部分，不包括参数值。当 Web 服务器从头中解析 URL 时，将确定此值。</TD>
+</TR>
+</TABLE>&nbsp;<big></big><font face="宋体">
+
+<P><strong><font color="#0000FF">要点</strong></font>&nbsp;&nbsp;&nbsp;包含此指令的文件必须使用已映射到 SSI 解释程序的扩展名。否则，Web 服务器将不处理此指令。默认情况下，文件扩展名 .stm、.shtm 和 .shtml 将映射到 SSI 解释程序 (ssinc.dll)。</P>
+
+<P>使用 #echo 指令的 STM 网页既可以自运行，也可以通过 Response.Redirect 从 ASP 网页调用它来运行。用 Server.Transfer、Server.Execute 或 #include 从 ASP 网页中调用 STM 网页是行不通的，因为这样会迫使 STM 网页通过 asp.dll 而不是通过 ssinc.dll 进行解释。</P>
+
+<P>如果安装了 <a href="iiabuti.htm">Internet 信息服务管理单元</a>，则可以修改默认扩展名映射并添加新映射，请参阅<A HREF="iiwarndf.htm">设置应用程序映射</A>。由于不能将一个文件扩展名映射到多个可执行文件，所以不能在 ASP 文件中使用此指令。ASP 文件已映射到 asp.dll，并且必须保持此状态。</P>
+
+<H6><b>示例</b></H6>
+
+<p>下列示例使用 #echo 指令将 URL 插入 FORM 语句的 ACTION 值中。</p>
+
+<p>--- Echo.asp ---</p>
+
+<pre>&lt;FORM NAME=&quot;RunEcho&quot; METHOD=&quot;POST&quot; ACTION=&quot;Echo.asp&quot;&gt;
+&lt;INPUT TYPE=&quot;SUBMIT&quot; VALUE=&quot;Run the #echo Directive&quot; NAME=&quot;RunEcho&quot;&gt;
+&lt;/FORM&gt;
+&lt;%
+If Len(Request.Form(&quot;RunEcho&quot;)) Then
+  Response.Redirect(&quot;Echo.stm?Echo.asp&quot;)
+End If
+%&gt;
+</pre>
+
+<p>--- Echo.stm ---</p>
+
+<pre>&lt;H3&gt;Inside Echo.stm&lt;/H3&gt;
+AUTH_TYPE is &lt;!-- #echo var=&quot;AUTH_TYPE&quot;--&gt;&lt;BR&gt;
+&lt;FORM NAME=&quot;Return&quot; METHOD=&quot;POST&quot; ACTION=&quot;&lt;!-- #echo var=&quot;QUERY_STRING&quot;--&gt;&quot;&gt;
+&lt;INPUT TYPE=&quot;SUBMIT&quot; VALUE=&quot;Return to Previous Page&quot; NAME=&quot;Return&quot;&gt;
+&lt;/FORM&gt;
+</pre>
+
+</font>
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</BODY>
+</HTML>

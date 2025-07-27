@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于安全性</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="Web 服务器安全功能和向导相关主题的概述。通过这种安全功能和向导，可以验证用户、控制访问、加密通信、审核活动和使用证书。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name="H1_37678347">关于安全性</a></h1>
+
+<p>本节概述 Internet Information Services 5.1 提供的五个主要安全功能元素：验证、访问控制、加密、审核和证书。本节还提供如何配置 Web 服务器安全性的信息、IIS 的新任务向导简介以及与 IIS 安全功能支持的标准有关的一些备注。本节包括下列内容：</p>
+ 
+<UL>
+<li><A href="#wizards">新任务向导</A></li>
+<li><A HREF="#authenticationbasics">身份验证概述</A></li>
+<li><A HREF="#accesscontrolbasics">访问控制</A></li>
+<li><A HREF="#certificatesbasics">证书</A></li>
+<li><A HREF="#encryptionbasics">加密</A></li>
+<li><A HREF="#auditingbasics">审核</A></li>
+<li><A HREF="#standardsused">实施标准</A></li>
+<li><A HREF="#getstarted">设置安全性</A></li>
+</UL>
+
+
+<h2><A NAME="wizards"></A>新任务向导</h2>
+<p>IIS 5.0 包括三个新的安全任务向导，这些向导在 IIS 5.1 中也可用。使用“证书向导”，可以非常方便地获取并管理服务器证书。使用“CTL 向导”，可以非常方便地创建并管理证书信任列表。这两个向导代替了以前版本的 IIS 中执行这些任务的程序。使用“权限向导”，可以非常方便地设置目录和文件的权限（权限仍然可以通过 NTFS 和以前版本 IIS 中使用的程序进行设置）。详细信息，请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>。</p>
+
+<h2><a name="authenticationbasics">身份验证概述</a></h2>
+<p>Internet 信息服务提供的安全功能实现了与 Windows 的完全集成。它支持六种身份验证方法，可以用来确认请求访问网站的任意用户的身份：</p>
+
+<ul>
+<li><strong>匿名身份验证</strong>&nbsp;&nbsp;&nbsp;允许任意用户访问，不要求提供用户名和密码。</li>
+
+<li><strong>基本身份验证</strong>&nbsp;&nbsp;&nbsp;提示用户输入用户名和密码，这些信息以未加密方式通过网络发送。</li>
+
+<li><strong>摘要式身份验证</strong>&nbsp;&nbsp;&nbsp;与基本身份验证类似，但摘要式身份验证的密码是以散列方式发送的。摘要式身份验证仅用于具有 Windows 2000 域控制器的域。</li>
+
+<li><strong>高级摘要式身份验证</strong>&nbsp;&nbsp;&nbsp;高级摘要式身份验证与摘要式身份验证基本相同，但高级摘要式身份验证以 MD5 散列方式将客户端凭据存储在 Windows XP 域控制器的 Active Directory 目录中，从而提高了安全性。
+</li>
+
+<li><strong>集成 Windows 身份验证</strong>&nbsp;&nbsp;&nbsp;使用散列算法技术标识用户，不需要通过网络实际发送密码。</li>
+<li><strong>证书</strong>&nbsp;&nbsp;&nbsp;用来建立安全套接字层 (SSL) 连接的数字凭据，也可以用于身份验证。</li>
+</ul>
+
+<p>可以使用这些方法授权用户访问站点上的公共区域，同时阻止未经授权的用户访问私人文件和目录。请参阅<A HREF="iiathsc.htm">身份验证</A>，了解可以在您的 Web 服务器上使用的身份验证方法。</p>
+
+
+<h2><A NAME="accesscontrolbasics"></A>访问控制概述</h2>
+<p>NTFS 访问权限是 Web 服务器的安全基础，用来定义授予 Windows 用户和组访问文件和目录的权限级别。例如，如果一个企业决定在您的 Web 服务器上发布它的目录，则需要为此企业创建一个 Windows 用户帐户，然后为特定的网站、目录或文件配置权限。所配置的权限应该只允许服务器管理员和企业的所有者更新网站内容。公共用户可以查看网站，但不能更改网站内容。有关设置 NTFS 权限的详细信息，请参阅<A HREF="iidfpsc.htm">设置目录或文件的 NTFS 权限</A>。</p>
+
+<p>WebDAV 是 HTTP 1.1 协议的扩展，简化了通过 HTTP 连接进行的文件和目录操作。使用 WebDAV“动词”或命令，可以为文件和目录添加属性，或读取其属性。可以远程编辑、创建、删除、移动或复制文件和目录。还可以通过 Web 服务器权限和 NTFS 权限配置其他访问控制。详细信息，请参阅<a href="iiacnsc.htm">关于访问控制</a>或 <A href="wcwbdav.htm">WebDAV 发布</A>。</p>
+
+<h2><A NAME="certificatesbasics"></A>证书概述</h2>
+<p>证书是允许服务器和客户端相互进行身份验证的数字标识文档。证书应服务器和客户端浏览器的请求，在服务器和客户端之间建立 SSL 连接，并发送加密信息。IIS 中基于证书的 SSL 功能由服务器证书、客户证书和各种数字密钥组成。这些证书可以使用 Microsoft 证书服务创建，也可以从相互信任的、称为证书颁发机构 (CA) 的第三方机构获得。有关设置证书和密钥的详细信息，请参阅<a href="iisslsc.htm">在服务器上设置 SSL</a>。</p>
+
+<h3>服务器证书</h3>
+<p>服务器证书为用户提供了一种确认网站身份的方法。服务器证书包含详细的标识信息，例如与服务器内容相关的机构名称、颁发证书的机构名称以及用于建立加密连接的公钥。此信息可以向用户确保 Web 服务器内容的真实性和安全 HTTP 连接的完整性。详细信息，请参阅<a href="iiabcsc.htm">关于证书</a>。</p>
+
+<h3>客户证书</h3>
+<p>使用 SSL，Web 服务器还可以通过检查客户证书对用户进行身份验证。典型的客户证书包含用户的详细标识信息以及颁发证书和“公钥”的机构的详细标识信息。可以将客户证书身份验证与 SSL 加密技术结合使用，通过高度安全的方法来验证用户的身份。详细信息，请参阅<a href="iiabcsc.htm">关于证书</a>。</p>
+
+<h2><A NAME="encryptionbasics"></A>加密概述</h2>
+<P>使用加密，可以让用户以一种安全的方式与服务器交换个人信息（如信用卡号或电话号码）。信息在发送之前通过加密技术对其进行“编码”，接收后通过解密技术进行“解码”。在 IIS 中，这种加密技术是基于 SSL 3.0 协议的，此协议提供了与用户建立加密通信链接的安全方式。SSL 可以确认网站的真实性，也可以确认正在访问受限访问网站的用户的身份（可选）。</P>
+
+<p> 证书包括建立 SSL 安全连接时使用的密钥。建立 SSL 连接时，只能使用密钥对服务器和客户端进行身份验证。公钥和私钥组成一个 SSL 密钥对，Web 服务器使用此密钥对与用户的 Web 浏览器协商安全连接，确定保护通信安全所需的加密级别。</p>
+
+<p>对于这种类型的连接，Web 服务器和用户的浏览器必须具有相互兼容的加密和解密功能。在信息交换过程中，将创建加密密钥或会话密钥。服务器和 Web 浏览器都使用会话密钥对传输的信息进行加密和解密。会话密钥的加密程度或强度以位为单位进行度量。组成会话密钥的位数越多，加密等级和安全等级就越高。虽然较高的加密密钥强度提供的安全性较高，但实现这些密钥需要更多的服务器资源。通常 Web 服务器的会话密钥长度为 40 位，也可以使用 128 位，这取决于所需的安全等级。详细信息，请参阅<a href="iiencsc.htm">加密</a>。</p>
+
+
+
+
+<h2><A NAME="auditingbasics"></A>审核概述</h2>
+<P>可以使用安全审核技术监视大量用户和 Web 服务器的安全活动。建议定期审核服务器配置，检测哪些区域的资源可能会被未经授权的用户非法访问和篡改。可以使用集成的 Windows 工具、IIS 内置的日志记录功能或 Active Server Pages (ASP) 应用程序创建自己的审核日志。详细信息，请参阅<a href="iiaudsc.htm">审核</a>。 </P>
+
+
+<h2><A NAME="standardsused"></A>实施标准</h2>
+<p>IIS 的许多安全功能实施 Internet 通用标准。这些标准有助于保持应用程序和信息的一致性，以便跨平台使用。Microsoft 承诺配合 Internet 及计算机委员会，帮助他们制定良好的标准，加强这些标准的实施。有关 IIS 安全功能实施的标准的详细信息，请参阅下列相应链接：</p>
+
+<p><a href="http://go.microsoft.com/fwlink/?LinkId=1769" target="_blank">Fortezza</a> 美国政府安全标准，通常称为 Fortezza，IIS 支持此标准。此标准通过一种信息加密机制，为消息、组件和系统提供消息机密性、完整性、身份验证、认可和访问控制，确保防御消息系统 (Defense Message System) 架构的安全。要实现这些功能，既需要服务器和浏览器软件，也需要 PCMCIA 卡硬件。Fortezza 是美国政府广泛使用的一种安全机制。</p>
+
+<p><a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=Netscape&pver=1.0&ar=SSL3" target="_blank">安全套接字层 (SSL 3.0)</a> 是一个基于公钥的安全协议，由安全通道 (Schannel) 安全提供商实现。Internet 浏览器和服务器广泛使用 SSL 安全协议进行身份验证、确保消息的完整性和机密性。</p>
+
+<p><a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=W3org&pver=1.0&ar=specs" target="_blank">基本身份验证</a>是 HTTP 1.0 规范的组成部分，它使用 Base64 编码格式通过网络发送密码。大多数浏览器都支持此规范。</p>
+
+<p><a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=W3org&pver=1.0&ar=specs" target="_blank">摘要式身份验证</a>以散列方式通过网络发送身份验证信息，而且与代理服务器兼容。</p>
+
+<p><a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=RSA&pver=1.0&ar=securitystandards" target="_blank">PKCS&nbsp;#7</a> 说明加密数据（例如数字签名或数字信封）的格式，这些加密数据可以保证所包含信息的安全性。所有这些都包含在 IIS 的证书功能中。</p>
+
+<p><a href="http://www.microsoft.com/isapi/redir.dll?prd=external&sbp=RSA&pver=1.0&ar=securitystandards" target="_blank">PKCS&nbsp;#10</a> 说明向证书颁发机构提交的证书请求的格式。</p>
+
+<p>有关 Windows 和网络安全问题的其他信息，请访问 <a href="http://www.microsoft.com/isapi/redir.dll?prd=msft&pver=1.0&ar=security" target="_blank">Microsoft 安全网站</a>或 <a href="http://www.microsoft.com/isapi/redir.dll?prd=msft&sbp=ntserver&pver=1.0&ar=security" target="_blank">Windows 安全网站</a>。</p>
+
+<h2><a name="getstarted">设置安全性</a></h2>
+<p>配置 Web 服务器的安全性之前，请先确定保护网站和 FTP 站点所需的安全级别。例如，如果需要创建一个允许特定用户访问个人信息（例如财务或体检记录）的网站，则需要配置较高的安全级别。此配置应该能够可靠地对指定的用户进行身份验证，而且严格限制只有这些指定的用户可以访问。</p>
+
+<p> 大多数 Web 服务器的安全性依赖于 Windows 安全性配置。如果 Windows 安全功能配置不当，将无法保证 Web 服务器的安全。</p>
+
+<p>如果尚未进行安全性设置，请执行下列任务：</p> 
+
+<ul>	
+<li>配置 Windows Administrator 帐户。</li>
+<li>创建并管理用户帐户。</li>
+<li>创建并管理组。</li>
+<li>定义 Windows 安全策略。</li>
+</ul>
+
+<p>详细信息，请参阅 Windows 文档。Microsoft Windows 2000 Server 资源大全中也包含许多安全性信息。</p>
+
+<p>作为安全性配置的一部分，还应该将硬盘分区转换为 NTFS 分区。NTFS 硬盘分区提供精确的文件和目录访问控制，比文件分配表 (FAT) 分区能更安全地保存信息。可以使用 Windows 转换工具将硬盘分区转换成 NTFS 格式。详细信息，请参阅 Windows 文档。</p>
+
+<p>然后，确定哪些文件和目录是可供访问网站和 FTP 站点的用户共用的。将公用内容和受限内容放置在不同的目录中。</p>
+
+<p>要开始配置 Web 服务器的安全性，请参阅<a href="iiacnsc.htm">关于访问控制</a>，了解正确配置匿名访问 Web 服务器的有关信息。</p>
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</body>
+</html>

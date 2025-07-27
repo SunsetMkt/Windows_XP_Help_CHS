@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+
+<title>安全通信</title>
+
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000 dir=ltr>
+<FONT FACE="宋体">
+
+<p><a name="hidd_secure_communications"></a><strong>安全通信</strong></p>
+
+<p>通过此对话框为使用支持安全通信 （以 https:// 开始的 URL） 的 Web 浏览器的用户配置安全套接字层 (SSL) 加密通信。 </p>
+
+<p>在使用 Web 服务器的 SSL 安全功能之前，必须先从一个可信的、称为“证书颁发机构”的第三方组织获得一个有效的服务器证书。Internet 服务管理器 (HTML) 无法完成此操作，必须使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>。</p>
+
+<p><strong>要求安全通道 (SSL)</strong> 如果要求 Web 浏览器与网站、目录或文件的连接为加密通信连接，请选中此选项。 </p>
+
+<p><strong>要求 128 位加密</strong> 如果要求 Web 浏览器与网站、目录或文件的连接为 128 位加密通信连接，请选中此选项。</p>
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;由于受到出口限制，128 位密钥加密功能只适用于美国和加拿大。</p>
+
+<p><strong>客户证书</strong></p>
+
+<p>可以将 Web 服务器配置为接受、要求或拒绝客户证书，作为建立与特定文件或目录的连接方法。客户证书是由一个可信任的、称为 “证书颁发机构”的第三方机构颁发的数字标识。</p>
+
+<p><strong>忽略客户证书</strong> 如果允许用户访问而不要求出示客户证书，请选中此选项。</p>
+
+<p><strong>接受客户证书</strong> 如果允许具有客户证书的用户访问，但并不要求证书，请选中此选项。具有客户证书的用户可用于映射；没有证书的用户可使用其他身份验证方法。</p>
+
+<p><strong>要求客户证书</strong> 如果只允许使用有效客户证书的用户连接，请选中此选项。将拒绝没有有效客户证书的用户的访问。必须选中“要求安全通道 (SSL)”复选框才能使用此选项。</p>
+
+<p><strong>启用客户证书映射</strong></p>
+
+<p>要对使用有效客户证书登录的用户进行身份验证，请选中此选项。映射过程将客户证书中包含的信息与 Windows 用户帐户信息进行匹配。</p>
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

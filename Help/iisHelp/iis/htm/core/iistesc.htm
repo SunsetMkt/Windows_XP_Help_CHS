@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>设置加密强度</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何设置 SSL 安全通信加密密钥长度的过程信息（默认的会话密钥长度是 40 位）。尽管由于出口限制， 128 位加密限于美国和加拿大境内，服务器网关加密 (SGC) 仍可用于启用 128 位财务事务。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37756791">设置加密强度</a></h1>
+
+<p>可以将 Web 服务器配置为所有 SSL 安全通信会话都要求 128 位的最小会话密钥强度，而不是默认的 40 位密钥强度。不过，如果设置了最小 128 位密钥强度，则试图与服务器建立安全通信通道的用户必须使用具有 128 位会话密钥通信能力的浏览器。</p>
+
+<p><strong><font color="#0000FF">要点</font></strong></p>
+
+<ul>
+<li>有关升级到 128 位加密能力的信息，请访问 <a href="http://www.microsoft.com/isapi/redir.dll?prd=support&prd=ie&ar=support" target="_blank">Microsoft 产品支持服务网站</a>。</li>
+
+<li>设置特定网站的安全属性时，同时将自动为属于此站点的目录和文件设置同一安全属性，除非以前单独为这些目录和文件设置了安全属性。</li>  
+
+<li>尝试设置网站的安全属性时，Web 服务器将提示用户是否具有重新设置单独的目录和文件属性的权限。如果选择重新设置这些属性，先前设置的安全属性将由新的设置所替代。此情况同样适用于为包含子目录或文件（在以前已设置了安全属性）的目录设置安全属性。有关设置属性的详细信息，请参阅<a href="iivsovr.htm">关于网站和 FTP 站点</a>中的“站点属性和属性继承”。</li>
+</ul>
+
+<p class="bigfix">&nbsp;<big></big></p>
+
+<big>设置加密强度</big><br>
+
+
+<p>请注意，除非您已经安装了有效的服务器证书，否则无法建立安全、加密的通信。详细信息，请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>以及<a href="iiocrsc.htm">获取服务器证书</a>。</p>
+
+<ol>
+	<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站、目录或文件，并打开其属性页。</li>
+	<li>如果此前未创建服务器密钥对和证书请求，请选择“目录安全”或“文件安全”属性页。在“安全通信”下，单击“服务器证书”。新 Web 服务器证书向导将指导您完成此过程。有关新向导的详细信息，请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>。</li>
+	<li>如果此前创建了服务器密钥对和证书请求，请选择“目录安全”或“文件安全”属性页。在“安全通信”下，单击“编辑”。</li>
+	<li>在“安全通信”对话框中，请选中“要求安全通道 (SSL)”复选框。</li>
+	<li>如果要求 128 位加密级别，请选中“要求 128 位加密”复选框。</li>
+
+<P><STRONG>注意</STRONG>&nbsp;&nbsp;&nbsp;如果在只有 56 位加密能力的服务器上选中“要求 128 位加密”复选框，用户将无法访问具有此要求的资源。即使启用了 128 位加密，也只能使用 56 位加密。要使用户可以查看这些资源，请清除此复选框。</p>
+
+	<li>单击“确定”。</li>
+</ol>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;会话密钥不同于 SSL 密钥对，SSL 密钥对用于协商和建立安全通信链接。</p>
+
+
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

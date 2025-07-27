@@ -1,0 +1,17 @@
+:Base progman.hlp>proc4
+:Title  程序管理器
+1 启动程序
+2 从程序组中启动程序=start_group
+2 使用“运行”命令启动程序=START_RUN
+2 启动或退出 MS-DOS 提示符方式=START_MSDOS
+1 使用组和程序项
+2 创建组=create_group
+2 删除组=delete_group
+2 创建程序项=CREATE_ITEM
+2 从组中删除程序项=DELETE_ITEM
+2 更改程序项或组的属性=change_properties
+2 将程序项复制到其他组中=copy_item
+2 将程序项移动到其他组中=move_item
+2 更改程序项图标=change_icon
+2 重排组窗口=arrange_groups
+2 排列程序项图标=arrange_items

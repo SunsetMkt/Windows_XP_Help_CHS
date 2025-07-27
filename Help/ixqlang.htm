@@ -1,0 +1,67 @@
+﻿<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+
+<html>
+<head>
+<title>使用索引服务查询表</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+        TempString = navigator.appVersion
+        if (navigator.appName == "Microsoft Internet Explorer"){        
+// Check to see if browser is Microsoft
+                if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+                        document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+                }
+                else {
+                        document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+                }
+        }
+        else if (navigator.appName == "Netscape") {                                             
+// Check to see if browser is Netscape
+                document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+        }
+        else
+                document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+</script>
+
+<META NAME="DESCRIPTION" CONTENT="介绍如何使用联合查询来明确搜索">
+<META HTTP-EQUIV="Content-Type" CONTENT="text-html;charset=utf-8">
+</head>
+
+<body bgcolor="#FFFFcc" text="#000000" LANGUAGE="VBScript">
+<font face="宋体">
+
+从“索引服务查询表”输入的查询，一般情况下不限制文本格式。要使用“索引服务查询语言”的高级功能，请单击“高级查询”。允许您查询特殊的属性并受益于查询语言的强大功能，如分量、向量和布尔查询。要了解“索引服务查询语言”的其他功能，请单击“查询语法”按钮。
+<p>
+<p>
+<p>
+<p align="center"> <BUTTON TYPE=SUBMIT ID="CmdTips">&nbsp;查询语法&nbsp;</BUTTON>&nbsp;
+
+
+
+</font>
+</body>
+
+
+<SCRIPT LANGUAGE=VBSCRIPT>
+
+'
+  ' SubRoutine: CmdGo_OnClick
+  '
+  '   Synopsis: Executes query
+  '
+
+  Private SUB CmdTips_OnClick()
+    ON ERROR RESUME NEXT
+    '
+    ' show help
+    '
+    
+    showHelp("isconcepts.chm::/ismain-concepts_30.htm")
+    
+  END SUB
+  
+</SCRIPT>
+
+</html>
+

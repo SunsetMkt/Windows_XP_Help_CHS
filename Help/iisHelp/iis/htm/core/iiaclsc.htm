@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>访问控制</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="导航页链接的主题包括：如何控制哪些用户和哪些计算机可以访问您的 Web 服务器及其资源。可以使用 NTFS 和 Web 安全功能为用户分配对某些目录的文件的特定访问权限。。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="accesscontrol">访问控制</a></h1>
+
+<p>可以控制允许哪些用户和哪些计算机访问您的 Web 服务器及其资源。既可以使用 NTFS 安全功能，也可以使用 Web 服务器安全功能为用户分配对某些目录和文件的特定访问权限。</p>
+
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iiacnsc.htm">关于访问控制</a>：有关如何限制访问某些文件和目录的概述。</li>
+<li><a href="iintfsc.htm">使用 NTFS 保护文件安全</a>：有关如何配置服务器使用 NTFS 安全功能的过程信息。</li>
+<li><a href="iidfpsc.htm">设置目录或文件的 NTFS 权限</a>：有关如何配置 NTFS 权限的过程信息。在此过程中，将定义为 Windows 用户帐户分配的文件或目录访问级别。</li>
+
+<li><a href="iiwspsc.htm">设置 Web 和 FTP 权限</a>：设置将应用于所有用户的 Web 和 FTP 内容限制。 </li>		
+<li><a href="iidbcsc.htm">控制数据库访问</a>：有关如何防止未经授权用户访问数据库文件的指南。</li>	
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>配置内容分级特性，在用户试图访问无权访问的 Web 内容时发出警告；详细信息，请参阅<a href="iicodirc.htm">使用内容分级</a>。</li>
+
+
+</ul>
+
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

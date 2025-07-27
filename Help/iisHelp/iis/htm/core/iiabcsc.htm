@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML dir=ltr><HEAD><TITLE>关于证书</TITLE>
+<SCRIPT language=JavaScript>
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</SCRIPT>
+
+<SCRIPT language=VBScript>
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META 
+content="有关服务器和客户证书身份验证的一些概念性信息。在允许 Web 服务器和用户建立连接之前，证书可使 Web 服务器和用户相互进行身份验证或确认对方的身份。" 
+name=description>
+<META content="text/html; charset=gb2312" http-equiv=Content-Type>
+<META 
+content='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))' 
+http-equiv=PICS-Label>
+<META content=ZH-CN name=MS.LOCALE>
+<META content="Internet 信息服务" name=MS-IT-LOC>
+<META content="Microsoft FrontPage 4.0" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff text=#000000><FONT face=宋体>
+<H1><A name=H1_37676752>关于证书</A></H1>
+<P>证书包含建立网络标识（即身份验证过程）所使用的信息。与传统身份验证相似，在建立连接之前，可以使用证书让 Web 服务器和用户互相进行身份验证。证书还包含加密值（即密钥），可用来在客户端和服务器之间建立安全套接字层 (SSL) 连接。通过此连接发送的信息（例如信用卡号码）将被加密，这样就不会被未经授权的某方截获和使用。</P>
+<P>SSL 中使用的证书有两种类型，每种类型都有自己特定的格式和用途。“客户证书”包含与请求访问站点的客户有关的个人信息，可在允许其访问站点之前有效地进行验证。“服务器证书”包含与服务器有关的信息，使客户在共享敏感信息之前，可以有效验证服务器。 
+<UL>
+  <LI><A href="iiabcsc.htm#server">服务器证书</A> 
+  <LI><A href="iiabcsc.htm#H2_37677634">客户证书</A> 
+  <LI><A   href="iiabcsc.htm#H2_20495411">证书颁发机构</A> 
+  <LI><A href="iiabcsc.htm#ctl">证书信任列表</a> 
+  <LI><A href="iiabcsc.htm#H2_37679028">侦测无效的客户证书</a> </LI></UL>
+<H2><A name=server>服务器证书</A></H2>
+<P>要激活 Web 服务器的 SSL 5.0 安全功能，必须获取并安装有效的服务器证书。服务器证书是一种数字标识，其中包含有关 Web 服务器以及服务器 Web 内容主办机构的信息。服务器证书允许用户对服务器进行身份验证，检查 Web 内容的有效性，并建立安全连接。服务器证书还包含公钥，可用来在客户端和服务器之间建立安全连接。</P>
+<P>作为一种标识方法，服务器证书成功与否取决于用户是否信任证书中所包含信息的有效性。例如，登录到公司网站的用户可能正在犹豫是否提供信用卡信息，尽管他（她）已经看到了公司服务器证书的内容。如果贵公司是一家新公司并且尚未被人了解，这种现象将尤其明显。</P>
+<P>为此，证书有时由一个相互信任、称为<A href="iiabcsc.htm#H2_20495411">证书颁发机构</a> (CA) 的第三方机构颁发并认可。证书颁发机构的首要职责就是确认寻求证书者的身份，这样才能确保证书中包含的标识信息的有效性。</P>
+<P>另外，根据贵机构与网站用户的关系，可以发布自己的服务器证书。例如，在大型企业 Intranet 中，为了处理雇员薪水册和福利信息，公司管理人员可能决定维护一个证书服务器，并使其具有验证标识信息和颁发服务器证书的职责。详细信息，请参阅<a href="iiocrsc.htm">获取服务器证书</a>。</P>
+
+<H4><A NAME="H2_448415275"></A>服务器网关加密</H4>
+<P>服务器网关加密 (SGC) 使用 128 位加密，为财政机构提供全球安全财政事务解决方案。SGC 是安全套接字层 (SSL) 的扩展，它允许拥有 IIS 出口版本的财政机构使用强加密。</P>
+
+<P>服务器网关加密不需要在客户端浏览器上运行应用程序，并且可供 IIS 标准出口版本、4.0 或更高版本使用。配置了 SGC 的服务器支持 128 位和 40 位两种加密会话，因此不需要多个 IIS 版本。虽然 SGC 功能已集成到 IIS 4.0 和更高版本中，但使用 SGC 时仍需要特殊的 SGC 证书。有关信息，请与证书颁发机构联系。有关 SGC 的详细信息，请参阅<a href="http://www.microsoft.com/isapi/redir.dll?prd=msft&sbp=sgc&pver=1.0&ar=security" target=_blank>服务器网关加密 (SGC)</a>。</P>
+
+<H2><A name=H2_37677634>客户证书</A></H2>
+<P>客户证书是包含客户信息的电子文档。这些证书和服务器证书一样，不仅包含此类信息，而且还包含加密密钥 - IIS SSL 3.0 安全功能的一部分。来自服务器证书和客户证书的这些密钥或密码组成一个“密钥对”，可以对在开放网络（如 Internet）上传输的数据进行加密和解密。有关加密的详细信息，请参阅<a href="iicrysc.htm">关于加密</a>。</P>
+<P>典型的客户证书包含下列信息：用户标识、证书颁发机构标识、用来建立安全通信的公钥以及确认信息（如截止日期和序列号等）。证书颁发机构提供各种类型的客户证书，其中包括的信息数量各不相同，这取决于请求的身份验证级别。详细信息，请参阅<a href="iiclisc.htm">获取客户证书</a>。</P>
+<H2><A name=H2_20495411>证书颁发机构</A></H2>
+<P>可以从互相信任、称为证书颁发机构的商业机构处获取客户证书。颁发证书之前，颁发机构要求您提供标识信息，例如姓名、地址和组织名称等。要求提供的信息的范围根据证书的标识保证要求的不同而有所不同。如果需要一个能绝对证明您身份的证书，证书颁发机构将要求您提供真实信息；收集这些信息时，可能需要与颁发机构进行私人面谈，并需要进行公证。</P>
+<P>有关证书颁发机构的列表，请参阅<a href="iiocrsc.htm">获取服务器证书</a>。</P>
+<P><strong>注意</strong>&nbsp;&nbsp;&nbsp;证书身份验证成功与否主要取决于接收证书的一方是否信任证书颁发机构，以及此机构是否能够正确验证证书所有者的标识。但除这种信任之外，证书并不提供用户或服务器身份、可信度或意图方面的确定性依据。</P>
+<H2><a name=ctl>证书信任列表</a></H2>
+<P>通过保存的证书信任列表 (CTL)，网站管理员可以根据预先确定的可信任证书颁发机构列表自动验证客户证书。</P>
+<P>例如，Intranet 管理员可以为网络上的各个部门创建不同的可信任证书颁发机构列表。IIS 将只接受此部门 CTL 中证书颁发机构提供的客户证书。详细信息，请参阅<a href="iicarsc.htm">使用证书信任列表</a>。</P>
+<H2><a name=H2_37679028>侦测无效的客户证书</a></H2>
+<P>大多数著名的证书颁发机构都保留一个证书吊销列表 (CRL)，这是在预定的截止日期之前要吊销的当前客户证书列表。</P>
+<P>例如，证书颁发机构向某个用户颁发了一个客户证书，后来发现此用户提交的是虚假信息，则颁发机构可以吊销此用户的客户证书。但是，证书颁发机构无法实际吊销客户证书，它将通过在 CRL 中添加吊销客户证书信息以提醒 Web 管理员。有关吊销服务提供商的详细信息，请与证书颁发机构联系。</P>
+<HR class=iis SIZE=1>
+
+<P align=center><A href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</A></P></FONT></BODY></HTML>

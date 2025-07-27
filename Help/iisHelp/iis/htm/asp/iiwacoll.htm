@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>使用集合</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+ 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="说明如何使用内置对象集合，包括对集合进行迭代。这包括 VBScript 和 JScript 代码示例。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="usingcollections">使用集合</a></h1>
+
+
+<p>多数 ASP 内置对象都提供集合。“集合”是类似于数组的数据结构，可存储字符串、数值、对象和其他值。与数组不同的是，集合可以根据所获得或存储的项目自动伸缩。随着集合发生变化，项目的位置也将变动。要访问集合中的项目，可以通过项目唯一的字符串关键字、项目在集合中的索引（位置）或迭代集合中的所有项目来实现。</p>
+
+<h2><a name="H2_37766951">根据名称或索引访问项目</a></h2>
+
+<p>可以通过引用唯一字符串关键字或名称来访问集合中的指定项目。例如，Contents 集合载有 Session 对象中存储的所有变量。它还可以载有通过调用 Server.CreateObject 而进行实例化的对象。假设您在 Session 对象中储存了下列用户信息：</p>
+
+<pre>&lt;%
+  Session.Contents("FirstName") = "Meng"
+  Session.Contents("LastName") = "Phua"
+  Session.Contents("Age") = 29
+%&gt;</pre>
+
+<p>可以使用存入集合时与项目予以关联的字符串关键字访问此项目。例如，下列表达式返回字符串“Meng”：</p>
+
+<pre>&lt;%= Session.Contents("FirstName") %&gt;</pre>
+
+<p>还可以使用与项目关联的索引或数字访问项目。例如，下列表达式获得存储在 <strong>Session</strong> 对象第二部分中的信息并返回“Phua”。</p>
+
+<pre>&lt;%= Session.Contents(2) %&gt;</pre>
+
+<p>ASP 集合的标号从 1 开始。当在集合中添加或删除项目时，与项目相关联的索引也将更改。不应将项目索引视为是一成不变的。索引访问通常用于迭代一个集合，如下列主题中所述，或访问只读集合中的项目。</p>
+
+<p>还可以使用速记符根据名称访问项目。ASP 可搜索与特定顺序的对象相关联的集合。如果具有特定名称的项目仅在对象集合中出现一次，则可以删除集合名称（尽管这样做会影响性能）：</p>
+
+<pre>&lt;%= Session("FirstName") %&gt;</pre>
+
+<p>当访问存储在 Application 或 Session 对象中的项目时，删除集合名称一般来说是安全的。但对于 Request 对象，指定集合名称则更为安全。因为集合很容易包含具有重复名称的项目。</p>
+
+<h2><a name="H2_37768485">迭代集合</a></h2>
+
+<p>可以迭代集合中的所有项目，查看集合中存储的信息或更改项目。进行集合迭代时必须提供集合名称。例如，可以使用 VBScript 中的 <strong>For...Each</strong> 语句访问存储在 Session 对象中的项目。</p>
+
+<pre>&lt;% 
+  '声明计数器变量。
+  Dim strItem 
+
+  '显示集合中每个项目的值。
+  For Each strItem In Session.Contents 
+    Response.Write Session.Contents(strItem) & "&lt;BR&gt;"
+  Next
+%&gt;</pre>
+
+<p>还可以使用 VBScript 中的 <strong>For...Next</strong> 语句迭代集合。例如，列出通过上例存储在 <strong>Session</strong> 中的三个项目，可以使用下列语句：</p>
+
+<pre>&lt;% 
+  '声明计数器变量。
+  Dim intItem
+
+  '重复循环，直到计数器的值达到 3。
+  For intItem = 1 To 3
+    Response.Write Session.Contents(intItem) & "&lt;BR&gt;"
+  Next
+%&gt;</pre>
+
+<p>由于通常不知道集合中所存储的项目数，ASP 支持集合的 Count 属性，此属性返回集合中的项目个数。可以使用 Count 属性指定计数器的最大值。</p> 
+
+<pre>&lt;% 
+  '声明计数器变量。
+  Dim lngItem, lngCount
+
+  lngCount = Session.Contents.Count
+
+  '重复循环，直到计数器的值等于
+  '集合中的项目个数。
+  For lngItem = 1 To lngCount
+     Response.Write Session.Contents(lngItem) & "&lt;BR&gt;"
+  Next
+%&gt;</pre>
+
+<p>在 JScript 中，可以使用 <strong>for</strong> 语句可迭代集合。要提高在 JScript 的 <strong>for</strong> 语句中使用 <strong>Count</strong> 属性的效率，应将 <strong>Count</strong> 值分配给本地变量，并用此变量来设置计数器的最大值。这样，脚本引擎就不必每次循环都去查找 <strong>Count</strong> 值。以下示例说明了这一技巧：</p>
+
+<pre>&lt;% 
+  var intItem, intNumItems;
+		
+  intNumItems = Session.Contents.Count;
+		
+  for (intItem = 1; intItem &lt;= intNumItems; intItem++)
+  {
+    Response.Write(Session.Contents(intItem) + "&lt;BR&gt;")
+  }
+%&gt;</pre>
+
+
+<p>Microsoft JScript 支持 Enumerator 对象，也可使用它来迭代 ASP 集合。atEnd 方法标明集合中是否还存在其他项目。moveNext 方法用于移动到下一个集合项目。</p>
+
+<pre>&lt;%
+  Session.Contents("Name") = "Suki White"
+  Session.Contents("Department") = "Hardware"
+		.
+		.
+		.
+  //创建枚举器对象。
+  var mycollection = new Enumerator(Session.Contents);
+
+  //在集合中迭代并显示每个项目。
+  while (!mycollection.atEnd())
+  {
+    var x  = myCollection.item();
+    Response.Write(Session.Contents(x) + "&lt;BR&gt;");
+    myCollection.moveNext();
+  }
+%&gt;</pre>
+
+<h2><a name="H2_37771913">使用子关键字迭代整个集合</a></h2>
+
+<p>脚本可在单个 cookie 中嵌入多个关联值，以便减少在浏览器和 Web 服务器之间传递的 cookie 数目。Request 和 Response 对象的 Cookies 集合可在单个项目中载有多个值。这些子项目或子关键字可单独使用。只有 Request.Cookies 和 Response.Cookies 集合支持子关键字。Request.Cookies 仅支持读操作，Response.Cookies 仅支持写操作。</P>
+
+<P>下面将创建一个普通 cookie 和一个带子关键字的 cookie：</P>
+
+<PRE>&lt;%
+  '将 cookie 发送到浏览器。
+  Response.Cookies("Fruit") = "Pineapple"
+
+  '用子关键字将 cookie 发送到浏览器。
+  Response.Cookies("Mammals")("Elephant") = "African"
+  Response.Cookies("Mammals")("Dolphin") = "Bottlenosed"
+%&gt;</PRE>
+
+<P>发送到浏览器的 HTTP 响应中的 cookie 文本显示如下：</P>
+
+<PRE>HTTP_COOKIE= Mammals=ELEPHANT=African&DOLPHIN=Bottlenosed; Fruit=Pineapple;</PRE> 
+
+<p>可以列举出 Request.Cookies 集合中的所有 cookies 以及 cookies 中的所有子关键字。不过，对不存在子关键字的 cookie 迭代子关键字将无法生成项目。要避免出现这种情况，请先检查 cookie 的子关键字是否是使用 Cookies 集合的 HasKeys 属性得到的。这一技巧将在以下示例中加以说明。</p>
+
+<pre>&lt;% 
+   '声明计数器变量。
+   Dim Cookie, Subkey
+
+   '显示整个 cookie 集合。
+   For Each Cookie In Request.Cookies
+     Response.Write Cookie 
+     If Request.Cookies(Cookie).HasKeys Then
+       Response.Write "&lt;BR&gt;" 	
+       '显示子关键字。
+       For Each Subkey In Request.Cookies(Cookie)
+         Response.Write " -&gt" & Subkey & " = " & Request.Cookies(Cookie)(Subkey) & "&lt;BR&gt;"
+       Next
+     Else
+       Response.Write " = " & Request.Cookies(Cookie) & "&lt;BR&gt;"
+     End If
+   Next    
+%&gt;</pre>
+
+<P>此脚本将返回下列结果：</P>
+
+<PRE>Mammals
+-&gt;ELEPHANT = African
+-&gt;DOLPHIN = Bottlenosed
+Fruit = Pineapple</PRE>
+
+<H2><a name="H2_321118501">关键字名称的大小写</a></H2>
+
+<p>Cookies、Request、Response 和 ClientCertificate 集合可引用相同的唯一字符串关键字名称。例如，下列语句引用了同一关键字名称 User，但对于每一个集合却返回了不同的值：</p>
+
+<pre>strUserID = Request.Cookies("User") 
+strUserName = Request.QueryString("User")</pre>
+
+<P>关键字名称的大小写由第一个集合将值赋给关键字时设定。请查看下列脚本：</P>
+
+<pre>&lt;%
+  '使用 UserID 关键字检索 QueryString 集合中的值。
+  strUser = Request.QueryString("UserID") 
+				
+  '将 cookie 发送到浏览器，但引用关键字 UserId，该关键字使用不同的拼写。
+  Response.Cookies("UserId")= "1111-2222"
+  Response.Cookies("UserId").Expires="December 31, 2000"
+%&gt;
+</pre>
+
+<P>尽管看上去好象将关键字名称 <EM>UserId</EM> 赋给了 cookie，但实际上，赋给 cookie 的是关键字名称  <EM>UserId</EM>（其大小写不同）。<STRONG>QueryString</STRONG> 集合首先定义了此关键字的大小写。
+
+<P>由于对集合值的引用与关键字名称的大小写无关，因此这一行为将不会影响脚本，除非应用程序对关键字名称使用了区分大小写的处理过程。</P>
+
+
+<h2><a name="H3_37773518">迭代对象的集合</a></h2>
+
+<p>Session 和 Application 集合既可使用标量变量也可使用对象实例。Contents 集合同时载有由调用 Server.CreateObject 而创建的标量变量和对象实例。StaticObjects 集合载有由 HTML 的 &lt;OBJECT&gt; 标记在 Session 对象的作用域之内创建的对象。关于用此方法实例化对象的详细信息，请参阅<A HREF="iiwaobu.htm">设置对象作用域</A>。</p>
+
+<p>迭代包含对象的集合时，既可访问对象的 Session 或 Application 状态信息，也可访问其方法或属性。例如，假设应用程序使用多个对象创建用户帐号，而每个对象都具有实例化方法。可以迭代 StaticObjects 集合以获取对象属性：</p>
+
+<pre>&lt;%
+  For Each Object in Session.StaticObjects
+    Response.Write Object & ": " & Session.StaticObjects(Object)
+  Next
+%&gt;</pre>
+
+<h2><a name="H3_37774582">ASP 集合有什么不同之处？</a></h2>
+
+<p>尽管本主题中说明的 ASP 集合与 Visual Basic 中的 Collection 对象十分类似，但它们仍有一些区别。ASP 集合支持 Count 属性以及 Item、Remove 和 RemoveAll 方法，但不支持 Add 方法。</p>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

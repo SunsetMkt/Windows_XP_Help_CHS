@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html dir=ltr>
+<head>
+
+<title>“进程选项”属性页</title>
+<META NAME="ROBOTS" CONTENT="NOINDEX">
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+<BODY BGCOLOR=#FFFFFF TEXT=#000000>
+<FONT FACE="宋体"><p>
+<strong>“进程选项”属性页</strong></p>
+
+<p>使用此属性页更改在单个进程中运行的应用程序的设置。可以使用此属性页更改两种类型进程的设置：Web 服务器进程和单独的应用程序进程。网站选项设置影响在 Web 服务器进程中运行的所有应用程序。单独应用程序的选项设置只影响此应用程序本身。</p>
+
+<p><strong>将不成功的客户端请求写入事件日志</strong></p>
+
+<p>选中此复选框可以使 Web 服务器将不成功的客户端请求写入 Windows 事件日志。</p>
+
+<p><strong>启用调试异常捕获</strong></p>
+
+<p>如果选中此复选框，当 ASP 无法创建 ActiveX 组件（对 <strong>Server.CreateObject</strong> 的调用）提供的对象例程时，ASP 将发送一般错误消息。未选中此复选框时，ASP 将传送来自于组件的特定错误消息。调试组件时撤消此选项。完成调试后，重新选中此选项。</p>
+
+<p><strong>缓存的脚本引擎数</strong></p>
+
+<p>指定 Active Server Pages 在缓存中保留的 ActiveX 脚本引擎的最大数目。</p>
+
+<p><strong>脚本文件缓存选项</strong></p>
+
+<p>使用此选项指定缓存在内存中的预处理的 .asp 文件数。增加缓存的文件数可以改善 Active Server Pages 的性能。要缓存所有 .asp 文件，可选中“缓存所有请求的 ASP 文件”。要指定缓存脚本文件的最大数目，可选中“在内存中缓存的 ASP 文件数”，并在文本框中输入值。</p>
+
+<p><strong>CGI 脚本超时</strong></p>
+
+<p>可以设置或更改超时值，它是 CGI 脚本用来在操作停止前执行并返回值的时间。</p>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;可以在网站、虚拟目录和目录级别上设置应用程序配置属性。</p>
+
+<p><hr class="iis" size="1"></p>
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

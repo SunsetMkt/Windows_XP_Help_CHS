@@ -1,0 +1,472 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>访问数据源</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+
+
+<META NAME="DESCRIPTION" CONTENT="本主题描述如何使用 ASP 和 ActiveX 数据对象 (ADO) 将数据库访问添加到您的网页中。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+
+<font face="宋体">
+
+<h1><a name="H1_37770897">访问数据源</a></h1>
+
+
+<p>ActiveX 数据对象 (ADO) 是一种既易于使用又可扩展的技术，用于向网页添加数据库访问。可以使用 ADO 编写简洁和可扩展的脚本，连接到与 OLE DB 兼容的数据源，如数据库、电子表格、顺序数据文件或电子邮件目录。OLE DB 是一个系统级的编程接口，它提供一套标准的 COM 接口，用来展示数据库管理系统的功能。使用 ADO 的对象模型，您可以轻松地（使用 VBScript 或 JScript 等脚本语言）访问这些接口，并将数据库功能添加到您的 Web 应用程序中。另外，您还可以使用 ADO 访问与开放式数据库互连 (ODBC) 兼容的数据库。</p>
+
+<p>如果您是一位对数据库互连知识有一定了解的脚本编写者，您将发现 ADO 的命令语法很简单，而且易于使用。如果您是一位经验丰富的开发人员，您将非常欣赏 ADO 为各种数据源提供的这种可扩展的、高性能访问。</p>
+
+<P>有关 ADO 的详细信息，请访问 <A HREF="http://www.microsoft.com/isapi/redir.dll?prd=mdac" TARGET="_blank">Microsoft Universal Data Access (UDA) 网站</A>。</P>
+
+<h2><a name="H2_37771874">创建连接字符串</a></h2>
+
+<p>创建 Web 数据应用程序的第一步是为 ADO 提供一种定位并标识数据源的方法。这一步通过“连接字符串”实现。连接字符串是一系列用分号分隔的参数，用于定义诸如数据源提供程序和数据源位置等参数。ADO 使用连接字符串标识 OLE DB 提供程序并将提供程序指向数据源。提供程序是一个组件，用来描述数据源并以行集合的形式将信息展示给应用程序。</P>  
+
+
+<P>下表列出了几种通用数据源的 OLE DB 连接字符串：</P>
+
+<TABLE border="1" cellpadding="4" cellspacing="1" width="60%">
+<TR>
+    <TD bgcolor="#C0C0C0" align="Left" valign="top"><STRONG>数据源</STRONG></TD>
+    <TD bgcolor="#C0C0C0" align="Left" valign="top"><STRONG>OLE DB 连接字符串</STRONG></TD>
+</TR>
+<TR>
+    <TD>Microsoft Access</TD>
+    <TD>Provider=Microsoft.Jet.OLEDB.4.0;Source=指向 .mdb 文件的物理路径</TD>
+</TR>
+<TR>
+    <TD>Microsoft SQL Server</TD>
+    <TD>Provider=SQLOLEDB.1;Source=指向服务器上数据库的路径</TD>
+</TR>
+<TR>
+    <TD>Oracle</TD>
+    <TD>Provider=MSDAORA.1;Source=指向服务器上数据库的路径</TD>
+</TR>
+<TR>
+    <TD>Microsoft Indexing Service</TD>
+    <TD>Provider=MSIDXS.1;Source=指向文件的路径</TD>
+</TR>
+
+</TABLE>
+
+
+<P>为了向后兼容性，ODBC 的 OLE DB 提供程序支持 ODBC 连接字符串语法。下表列出了常用的 ODBC 连接字符串： </P>
+
+<TABLE border="1" cellpadding="4" cellspacing="1" width="60%">
+	<TR>
+	  <TD bgcolor="#C0C0C0" align="Left" valign="top"><STRONG>数据源驱动程序</STRONG></TD>
+	  <TD bgcolor="#C0C0C0" align="Left" valign="top"><STRONG>ODBC 连接字符串</STRONG></TD>
+	</TR>
+	<TR>
+	  <TD>Microsoft Access</TD>
+	  <TD>Driver={Microsoft Access Driver (*.mdb)};DBQ=指向 .mdb 文件的物理路径</TD>
+	</TR>
+	<TR>
+	  <TD>SQL Serverr</TD>
+	  <TD>Driver={SQL Server};SERVER=指向服务器的路径</TD>
+	</TR>
+	<TR>
+	  <TD>Oracle</TD>
+	  <TD>Driver={Microsoft ODBC for Oracle};SERVER=指向服务器的路径</TD>
+	</TR>
+	<TR>
+	  <TD>Microsoft Excel</TD>
+	  <TD>Driver={Microsoft Excel Driver (*.xls)};DBQ=指向 .xls 文件的物理路径; DriverID =278</TD>
+	</TR>
+	<TR>
+	  <TD>Microsoft Excel 97</TD>
+	  <TD>Driver={Microsoft Excel Driver (*.xls)};DBQ=指向 .xls 文件的物理路径;DriverID=790</TD>
+	</TR>
+	<TR>
+	  <TD>Paradox</TD>
+	  <TD>Driver={Microsoft Paradox Driver (*.db)};DBQ=指向 .db 文件的物理路径; DriverID=26</TD>
+	</TR>
+	<TR>
+	  <TD>文本</TD>
+	  <TD>Driver={Microsoft Text Driver (*.txt;*.csv)}; DefaultDir=指向 .txt 文件的物理路径</TD>
+	</TR>
+	<TR>
+	  <TD>Microsoft Visual FoxPro&#174;（带有一个数据库容器） </TD>
+	  <TD>Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDb=指向 .dbc 文件的物理路径</TD>
+	</TR>
+   	<TR>
+	  <TD>Microsoft Visual FoxPro（不带数据库容器） </TD>
+	  <TD>Driver={Microsoft Visual FoxPro Driver};SourceType=DBF;SourceDb=指向 .dbf 文件的物理路径</TD>
+	</TR>
+		
+</TABLE>
+
+<BR>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;连接字符串如果使用 UNC 路径引用位于远程计算机上的数据源，可能会造成潜在的安全性问题。为了防止对您的数据源进行未经授权的访问，可以为需要访问数据的计算机创建一个 Windows 帐户，然后对数据源应用适当的 NTFS 权限。详细信息，请参阅<A HREF="../core/iintfsc.htm">使用 NTFS 保护文件安全</A>。</p>
+
+<H2>设计 Web 数据应用程序时应考虑的高级问题</H2>
+
+<p>由于性能和可靠性的原因，我们强烈推荐，使用客户端服务器数据库引擎部署数据驱动的 Web 应用程序，此程序需要能够满足约 10 个以上用户同时访问的高访问需求。虽然 ADO 适用于与 OLE DB 兼容的任何数据源，但经过广泛的测试，它主要用来与客户端服务器数据库（如 Microsoft SQL Server 或 Oracle）协同工作。</p>
+
+<p>ASP 支持共享文件数据库（Microsoft Access 或 Microsoft FoxPro）作为有效的数据源。虽然在 ASP 文档中有些示例使用了“共享文件”数据库，但我们还是建议这些类型的数据库引擎只用于开发目的或有限的开发方案中。共享文件数据库可能不如客户端服务器数据库适用于高要求和高质量的 Web 应用程序。</p>
+
+<p>如果正在开发 ASP 数据库应用程序，并且此程序将连接到远程 SQL Server 数据库，您还应该注意下列几点：</p>
+
+<ul>
+<li><strong>选择 SQL Server 连接方案</strong> 要访问远程 SQL Server 数据库，可以选择 TCP/IP 套接字方法或已命名管道方法。使用命名管道，必须在建立连接之前由 Windows 对数据库客户端进行身份验证，这样，具有适当 SQL Server 访问凭据、但在运行命名管道的远程计算机上没有 Windows 用户帐户的用户，更有可能被拒绝访问。或者，可以使用 TCP/IP 套接字的连接直接连接到数据库服务器，而不需要通过中间计算机进行连接。而使用命名管道时，必须通过中间计算机建立连接。而且，由于使用 TCP/IP 套接字的连接将直接连到数据库服务器，所以用户通过 SQL Server 身份验证、无需通过 Windows 身份验证即可进行访问。</li>
+
+<li><STRONG>ODBC 80004005 错误</STRONG> 如果访问 SQL Server 的连接方案设置不正确，正在查看数据库应用程序的用户可能会收到 ODBC 80004005 错误消息。如果 SQL Server 与 IIS 需在同一计算机上运行，要纠正这种情况，可使用本地命名管道连接代替网络命名管道连接。Windows XP 安全规则不会受到影响，因为此管道是本地连接而不是网络连接，它可以由匿名用户帐户模拟。同样，在 SQL Server 连接字符串（在 Global.asa 文件或网页级脚本中）中，将参数 <STRONG>SERVER=<EM>服务器名称</EM></STRONG> 更改为 <STRONG>SERVER=(local)</STRONG>。关键字 (local) 是 SQL Server ODBC 驱动程序可以识别的特殊参数。如果此解决方案无效，那么请在 IIS 和 SQL Server 之间尝试使用非身份验证协议，如 TCP/IP 套接字。SQL Server 在本地或远程计算机上运行时，此协议将能够工作。</li> 
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;为了在连接到远程数据库时提高性能，请使用 TCP/IP 套接字。</p>
+
+<li><strong>SQL Server 安全性</strong> 如果使用 SQL Server 的“集成”或“混合”安全特性，并且 SQL Server 数据库驻留在远程服务器上，那么您将无法使用集成 Windows 身份验证。特别是无法将集成 Windows 身份验证凭据发送到远程计算机。这意味着您不得不使用基本身份验证，这种身份验证需要用户提供用户名和密码。</li>
+</ul>
+
+<p>有关这些问题的详细信息，请访问 <a href="http://www.microsoft.com/isapi/redir.dll?prd=support&sbp=portal" target="_blank">Microsoft 产品支持服务网站</a>。</p>
+
+<h2><a name="H2_37777925">连接到数据源</a></h2>
+
+<p>ADO 提供了 <strong>Connection</strong> 对象，用于建立和管理应用程序与 OLE DB 兼容数据源或 ODBC 兼容数据库之间的连接。<strong>Connection</strong> 对象的属性和方法可以用来打开和关闭数据库连接，并发布对更新信息的查询。</p>  
+
+<p>要建立数据库连接，首先必须创建 <strong>Connection</strong> 对象实例。例如，下列脚本创建 <strong>Connection</strong> 对象实例，接着打开一个连接：</p>
+
+<pre>&lt;%
+  创建 connection 对象。
+  Set cnn = Server.CreateObject(&quot;ADODB.Connection&quot;)
+  '使用 OLE DB 连接字符串打开连接。
+  cnn.Open  &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\MarketData\ProjectedSales.mdb&quot;
+%&gt;</pre>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;连接字符串在等号 (=) 的左右并不包含空格。</p>
+
+<p>在上例中，<strong>Connection</strong> 对象的 <strong>Open</strong> 方法将引用连接字符串。</p>
+
+<h2><a name="H2_37779470">使用 Connection 对象执行 SQL 查询</a></h2>
+
+<p>使用 <strong>Connection</strong> 对象的 <strong>Execute</strong> 方法，可以向数据源发出命令，如结构化查询语言 (SQL) 查询。（SQL 是与数据库进行通信的工业标准语言，定义了用来检索和更新信息的命令。）<STRONG>Execute</STRONG> 方法可以接收参数，用来指定命令（或查询）、受影响的数据记录数和所使用的命令类型。 </p>
+
+<p>下列脚本使用 <STRONG>Execute</STRONG> 方法，以 SQL <strong>INSERT</strong> 命令的形式发出查询，此命令用来将数据插入指定的数据库表中。在下例中，脚本块将姓名 <EM>Jose Lugo</EM> 插入 <EM>Customers</EM> 数据库表中。</p>
+
+<pre>&lt;%
+  '定义 OLE DB 连接字符串。
+  strConnectionString = &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Data\Employees.mdb&quot;
+
+  '例示 Connection 对象并打开数据库连接。
+  Set cnn = Server.CreateObject(&quot;ADODB.Connection&quot;)
+  cnn.Open strConnectionString
+
+  '定义 SQL SELECT 语句。 
+  strSQL = &quot;INSERT INTO Customers (FirstName, LastName) VALUES ('Jose','Lugo')&quot;   
+
+  '使用 Execute 方法将 SQL 查询发布到数据库。 
+  cnn.Execute strSQL,,adCmdText + adExecuteNoRecords
+%&gt;</pre>
+
+<P>注意，在用来执行查询的语句中指定了两个参数：<STRONG>adCmdText</STRONG> 和 <STRONG>adExecuteNoRecords</STRONG>。可选参数 <STRONG>adCmdText</STRONG> 指定命令类型，指出提供程序对此查询语句（这里是 SQL 查询语句）求值所得的应该是命令的文本定义。<STRONG>adExecuteNoRecords</STRONG> 参数指示 ADO，在没有结果返回应用程序时，不要创建数据记录集。此参数只用于定义为文本定义的命令类型（如 SQL 查询），或已存储的数据库过程。虽然 <STRONG>adCmdText</STRONG> 和 <STRONG>adExecuteNoRecords</STRONG> 是可选参数，但使用 <STRONG>Execute</STRONG> 方法时应指定这两个参数，以改善数据应用程序的性能。</P>
+
+<p><strong><FONT COLOR="#0000FF">要点</FONT></strong>&nbsp;&nbsp;&nbsp;ADO 参数（如 <STRONG>adCmdText</STRONG>）需要在脚本中先定义然后再使用。一种方便的定义参数的方法是使用“组件类型库”，它是包含所有 ADO 参数定义的文件。要实施组件类型库，首先应声明它。将下列 &lt;METADATA&gt; 标记添加到自己的 .asp 文件或 Global.asa 文件中以声明 ADO 类型库：
+
+<PRE>&lt;!--METADATA NAME=&quot;Microsoft ActiveX Data Objects 2.5 Library&quot; TYPE=&quot;TypeLib&quot; UUID=&quot;{00000205-0000-0010-8000-00AA006D2EA4}&quot;--&gt;</PRE>
+
+<p>有关实施组件类型库的详细信息，请参阅<A HREF="iiwavar.htm">使用变量和常量</A>主题中的<A HREF="iiwavar.htm#usingconstants">使用常量</A>一节。</p>
+
+
+<p>除了 SQL <strong>INSERT</strong> 命令外，还可以使用 SQL <strong>UPDATE</strong> 和 <strong>DELETE</strong> 命令更改和删除数据库信息。</p> 
+
+<p>使用 SQL <strong>UPDATE</strong> 命令，可以更改数据库表中各个项目的值。下列脚本使用 <strong>UPDATE</strong> 命令，将 <code>Customers</code> 表中所有在 <code>LastName </code> 字段中包含姓氏 <code>Smith</code> 的 <code>FirstName</code> 字段更改为 <code>Jeff</code>。</p>
+
+<pre>&lt;%
+  Set cnn = Server.CreateObject(&quot;ADODB.Connection&quot;)
+  cnn.Open &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Data\Employees.mdb&quot;
+  cnn.Execute &quot;UPDATE Customers SET FirstName = 'Jeff' WHERE LastName = 'Smith' &quot;,,adCmdText + adExecuteNoRecords
+%&gt;</pre>
+
+<p>要删除数据库表中特定的记录，可使用 SQL <strong>DELETE</strong> 命令。下列脚本将删除 Customers 表中所有姓为 <code>Smith</code> 的行：</p>
+
+<pre>&lt;%
+  Set cnn = Server.CreateObject(&quot;ADODB.Connection&quot;)
+  cnn.Open &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Data\Employees.mdb&quot;
+  cnn.Execute &quot;DELETE FROM Customers WHERE LastName = 'Smith'&quot;,,adCmdText + adExecuteNoRecords
+%&gt;</pre>
+
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;使用 SQL <strong>DELETE</strong> 命令时务必小心谨慎。不带 <strong>WHERE</strong> 子句的 <strong>DELETE </strong> 命令将删除表中的所有行。确保包括 SQL <strong>WHERE</strong> 子句，以便明确指定要删除的行。</p>
+
+<h2><a name="H2_37782547">使用 Recordset 对象处理结果</a></h2>
+
+<p>为了检索数据、检查结果和更改数据库，ADO 提供了 <strong>Recordset</strong> 对象。正如名字所示，<strong>Recordset</strong> 对象可以用来检索和显示数据库行（或“记录”），这取决于您的查询约束条件。<strong>Recordset</strong> 对象保留由查询返回的每一条记录的位置，这样就能使您查看所有的结果，每次一条。</p>
+
+<h3><a name="H3_37784801">检索记录集</a></h3>
+
+<p>成功的 Web 数据应用程序既使用 <strong>Connection</strong> 对象建立链接，又使用 <strong>Recordset</strong> 对象处理返回的数据。通过综合使用这两种对象的一些特殊功能，开发出的数据库应用程序几乎可以执行所有的数据处理任务。例如，下列服务器端脚本使用 <strong>Recordset</strong> 对象执行 SQL 的 <strong>SELECT</strong> 命令。此 <strong>SELECT</strong> 命令基于查询约束条件检索信息集。此查询还包含 SQL <strong>WHERE</strong> 子句，用来将查询限制到一个指定的标准。在此例中，WHERE 子句将查询限制在 Customers 数据库表中“姓”字段包含 Smith 的所有记录。</p>
+
+<pre>&lt;%
+  '与数据源建立连接。 
+  strConnectionString  = &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Data\Employees.mdb&quot;  
+  Set cnn = Server.CreateObject(&quot;ADODB.Connection&quot;)
+  cnn.Open strConnectionString
+
+  '例示 Recordset 对象。
+  Set rstCustomers = Server.CreateObject(&quot;ADODB.Recordset&quot;)
+  
+  '使用 Open 方法打开记录集，
+  '并使用通过 Connection 对象建立的连接。
+  strSQL = &quot;SELECT FirstName, LastName FROM Customers WHERE LastName = 'Smith' &quot;
+  rstCustomers.Open  strSQL, cnn	
+  
+  '遍历记录集，显示结果，
+  '并使用 MoveNext 方法递增记录位置。
+   Set objFirstName = rstCustomers(&quot;FirstName&quot;) 
+   Set objLastName = rstCustomers(&quot;LastName&quot;)  
+   Do Until rstCustomers.EOF   
+     Response.Write objFirstName &amp; &quot; &quot; &amp; objLastName &amp; &quot;&lt;BR&gt;&quot;
+     rstCustomers.MoveNext
+   Loop
+
+%&gt;</pre>
+
+<p>注意，在上例中，<strong>Connection</strong> 对象建立数据库连接，而 <strong>Recordset</strong> 对象使用同一连接从数据库中检索结果。当需要精确配置建立数据库链接的方式时，此方法非常有用。例如，如果要指定在连接中止之前的时间延迟，可能需要使用 <strong>Connection</strong> 对象设置此属性。但是，如果只想使用 ADO 的默认连接属性建立连接，您可以使用 <strong>Recordset</strong> 对象的 <strong>Open</strong> 方法来建立链接：</p>
+
+  
+<pre>&lt;%
+  strConnectionString  = &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Data\Employees.mdb&quot;
+  strSQL = &quot;SELECT FirstName, LastName FROM Customers WHERE LastName = 'Smith' &quot;
+  Set rstCustomers = Server.CreateObject(&quot;ADODB.Recordset&quot;)
+
+  '使用 Open 方法打开连接
+  '并使用通过 Connection 对象建立的连接。
+  rstCustomers.Open  strSQL, strConnectionString	
+  
+  '遍历记录集，显示结果，
+  '并使用 MoveNext 方法递增记录位置。
+   Set objFirstName = rstCustomers(&quot;FirstName&quot;) 
+   Set objLastName = rstCustomers(&quot;LastName&quot;) 
+   Do Until rstCustomers.EOF
+      Response.Write objFirstName &amp; &quot; &quot; &amp; objLastName &amp; &quot;&lt;BR&gt;&quot;
+      rstCustomers.MoveNext
+   Loop
+%&gt;</pre>
+ 
+<p>使用 <strong>Recordset</strong> 对象的 <strong>Open</strong> 方法建立连接时，也隐含地使用了 <strong>Connection</strong> 对象保护链接的安全。详细信息，请参阅 <A HREF="http://www.microsoft.com/isapi/redir.dll?prd=mdac" TARGET="_blank">Microsoft Universal Data Access 网站</A>上的 Microsoft ActiveX 数据对象 (ADO) 文档。</p>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;要明显提高 ASP 数据库应用程序的性能，可以考虑以“应用程序”状态缓存记录集。详细信息，请参阅<a href="eadg6cbl.htm">缓存数据</a>。
+</p>
+
+<P>统计记录集中返回的记录数有时候很有用。<STRONG>Recordset</STRONG> 对象的 <STRONG>Open</STRONG> 方法使您能够指定可选的游标参数，以定义基础提供程序检索和浏览记录集的方法。通过向执行查询的语句中添加 <STRONG>adOpenKeyset</STRONG> 游标参数，可以使客户端应用程序完全浏览记录集。因此，应用程序可使用 <STRONG>RecordCount</STRONG> 属性精确地统计记录集中的记录数。请参阅下例：</P>
+
+<pre>&lt;%
+	Set rs = Server.CreateObject(&quot;ADODB.Recordset&quot;)
+	rs.Open &quot;SELECT * FROM NewOrders&quot;, &quot;Provider=Microsoft.Jet.OLEDB.3.51;Data Source='C:\CustomerOrders\Orders.mdb'&quot;, adOpenKeyset, adLockOptimistic, adCmdText 
+	
+	'使用 Recordset 对象的 RecordCount 属性进行统计。
+	If rs.RecordCount &gt;= 5 then
+	  Response.Write &quot;我们已收到下列 &quot; &amp; rs.RecordCount &amp; &quot; 个新订单&lt;BR&gt;&quot;	
+	
+	  Do Until rs.EOF
+	  	Response.Write rs(&quot;CustomerFirstName&quot;) &amp; &quot; &quot; &amp; rs(&quot;CustomerLastName&quot;) &amp; &quot;&lt;BR&gt;&quot;
+		Response.Write rs(&quot;AccountNumber&quot;) &amp; &quot;&lt;BR&gt;&quot;
+		Response.Write rs(&quot;Quantity&quot;) &amp; &quot;&lt;BR&gt;&quot;		 
+		Response.Write rs(&quot;DeliveryDate&quot;) &amp; &quot;&lt;BR&gt;&lt;BR&gt;&quot;
+	      	rs.MoveNext
+	  Loop
+
+  	Else	    	 
+	  Response.Write &quot;新订单数少于 &quot; &amp; rs.RecordCount &amp; &quot;。&quot;		
+	End If
+	   
+   rs.Close
+%&gt;</pre>
+
+<h2><a name="H2_37787604">使用 Command 对象改善查询</a></h2>
+
+<p>使用 ADO <strong>Command</strong> 对象执行查询的方式与使用 <strong>Connection</strong> 和 <strong>Recordset</strong> 对象执行查询的方式一样，但是使用 <strong>Command</strong> 对象可以准备（或编译）对数据库源的查询，然后使用各种不同的值重复发出此查询。用这种方法编译查询的好处在于，当您需要重新发出修改过的已有查询时，可以大大地减少发出时间。另外，还可以留下 SQL 的部分查询不进行定义，而在执行查询之前对这部分进行更改。</p>  
+
+<p> <strong>Command</strong> 对象的 <strong>Parameters</strong> 集合可以使您避免每次重新发布查询时都要重建查询的麻烦。例如，如果您需要定期更新基于网站的库存系统的供应和费用信息，就可以按照下列方式预定义查询：</p>
+
+<pre>&lt;%  
+    '使用 Connection 对象打开连接。注意，Command 对象
+    '没有可以用来建立连接的 Open 方法。
+    strConnectionString = &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Data\Inventory.mdb&quot; 
+    Set cnn = Server.CreateObject(&quot;ADODB.Connection&quot;)
+    cnn.Open strConnectionString
+
+    '例示 Command 对象；使用 ActiveConnection 属性
+    '向 Command 对象附加连接。
+    Set cmn= Server.CreateObject(&quot;ADODB.Command&quot;)
+    Set cmn.ActiveConnection = cnn
+ 
+    '定义 SQL 查询。
+    cmn.CommandText = &quot;INSERT INTO Inventory (Material, Quantity) VALUES (?, ?)&quot; 
+
+    '首次执行 Command 对象之后，保存 CommandText 属性中
+    '指定的查询的预备（或预编译）版本。
+    cmn.Prepared = True
+
+    '定义查询参数配置信息。
+    cmn.Parameters.Append cmn.CreateParameter(&quot;material_type&quot;,adVarChar, ,255 )
+    cmn.Parameters.Append cmn.CreateParameter(&quot;quantity&quot;,adVarChar, ,255 )
+
+    '定义并执行第一个插入操作。
+    cmn(&quot;material_type&quot;) = &quot;日光灯&quot; 
+    cmn(&quot;quantity&quot;) = &quot;40&quot; 
+    cmn.Execute ,,adCmdText + adExecuteNoRecords
+  
+    '定义并执行第二个插入操作。
+    cmn(&quot;material_type&quot;) = &quot;保险丝&quot; 
+    cmn(&quot;quantity&quot;) = &quot;600&quot; 
+    cmn.Execute ,,adCmdText + adExecuteNoRecords
+    .
+    .
+    .
+  %&gt;</pre>
+
+
+<p><strong><FONT COLOR="#0000FF">要点</FONT></strong>&nbsp;&nbsp;&nbsp;ADO 参数（如 adCmdText）是一些简单变量，这意味着在数据访问脚本中使用 ADO 参数之前需要先定义参数值。由于 ADO 使用了大量的参数，因此根据“组件类型库”定义参数更容易些。组件类型库是包含所有 ADO 参数和常量定义的文件。有关实施 ADO 类型库的详细信息，请参阅<A HREF="iiwavar.htm">使用变量和常量</A>主题中的<A HREF="iiwavar.htm#usingconstants">使用常量</A>一节。</p>
+
+<p>在上例中，您将注意到脚本使用不同的值重复构建和重新发布 SQL 查询，但并没有重新定义查询以及向数据库源中重新发出查询。使用 <strong>Command</strong> 命令编译查询还有如下优点：可避免在将字符串和变量连接成 SQL 查询时出现问题。特别是使用 <strong>Command</strong> 对象的 <strong>Parameter</strong> 集合，可以避免那些与定义特定类型字符串、日期和时间变量相关的问题。例如，包含单引号 (') 的 SQL 查询值可能导致查询失败：</p>
+
+<pre>  strSQL = &quot;INSERT INTO Customers (FirstName, LastName) VALUES ('Robert','O'Hara')&quot; </pre>
+
+<p>注意，姓 <strong>O'Hara</strong> 包含一个单引号，这与用来表示 SQL <strong>VALUES</strong> 关键字中数据的单引号冲突。通过将查询值绑定为 <strong>Command</strong> 对象参数，可以避免此类问题。</p>
+
+<h2><a name="H2_37790742">合并 HTML 表单和数据库访问</a></h2>
+
+<p>包含 HTML 表单的网页可允许用户远程查询数据库并检索指定的信息。使用 ADO，可以创建出非常简单的脚本来收集用户表单信息、创建自定义的数据库查询并向用户返回信息。使用 ASP 的 <strong>Request</strong> 对象，可以检索输入到 HTML 表单中的信息，并将这些信息嵌入到 SQL 语句中。例如，下列脚本块将由 HTML 表单提供的信息插入表中。此脚本使用 <strong>Request</strong> 对象的 <strong>Form </strong> 集合收集用户信息。</p>
+
+<pre>&lt;%
+  '使用 Connection 对象打开连接。Command 对象没有
+  '可以用来建立连接的 Open 方法。
+   strConnectionString = &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=D:\CompanyCatalog\Seeds.mdb&quot; 
+ 	Set cnn = Server.CreateObject(&quot;ADODB.Connection&quot;)
+ 	cnn.Open strConnectionString
+
+  '例示 Command 对象，
+  '并使用 ActiveConnection 属性
+  '向 Command 对象附加连接。
+  Set cmn= Server.CreateObject(&quot;ADODB.Command&quot;)
+  Set cmn.ActiveConnection = cnn
+ 
+  '定义 SQL 查询。
+  cmn.CommandText = &quot;INSERT INTO MySeedsTable (Type) VALUES (?)&quot; 
+
+  '定义查询参数配置信息。
+  cmn.Parameters.Append cmn.CreateParameter(&quot;type&quot;,adVarChar, ,255)
+
+  '指派输入值并执行更新操作。
+  cmn(&quot;type&quot;) = Request.Form(&quot;SeedType&quot;) 
+  cmn.Execute ,,adCmdText + adExecuteNoRecords
+%&gt;</pre>
+
+<p>有关表单和使用 ASP <strong>Request</strong> 对象的详细信息，请参阅<a href="iiwaform.htm">处理用户输入</a>。</p>
+
+<h2><a name="H2_37792280">管理数据库连接</a></h2>
+
+<p>要设计一个完善的 Web 数据库应用程序（例如，为成千上万个客户服务的联机订购输入应用程序），所面临的一个主要挑战就是如何正确管理数据库连接。打开并维护数据库连接时，即使没有信息传输时，也会严重消耗数据库服务器的资源并导致连接性问题。设计完善的 Web 数据库应用程序，可重复利用数据库连接并补偿因网络通信导致的延迟。</p>
+
+<h3><a name="H3_37793252">超时连接</a></h3>
+
+<p>数据库服务器当活动突然激增时会形成积压，从而大大增加了建立数据库连接所需的时间。因此，过多的连接延迟会降低数据库应用程序的性能。</p>
+
+<p>使用 <strong>Connection</strong> 对象的 <strong>ConnectionTimeout</strong>，可以限制应用程序在放弃连接尝试并发出错误消息之前等待的时间。例如，下列脚本将 <strong>ConnectionTimeout</strong> 属性设置为在取消连接尝试之前等待 20 秒。</p>
+  
+<pre>Set cnn = Server.CreateObject(&quot;ADODB.Connection&quot;)
+cnn.ConnectionTimeout = 20
+cnn.Open &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Data\Inventory.mdb&quot;
+</pre>
+
+<p><strong>ConnectionTimeout</strong> 属性默认为 30 秒。</p> 
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;在将 <strong>ConnectionTimeout</strong> 属性并入数据库应用程序之前，请确保您的连接提供程序和数据源支持此属性。</p>
+
+<h3><a name="H3_37794400">共用连接</a></h3> 
+
+<p>连接池可使您的 Web 应用程序使用“池”中的连接，“池”指的是包含许多不需要重新建立的自由连接的容器。创建连接并放入连接池中后，应用程序可以重复使用此连接而不必执行连接进程。这可明显地提高性能，特别是在应用程序通过网络连接或需要重复连接和断开的情况下更是如此。另外，共用的连接可被多个应用程序重复使用。</P>
+
+<H4>OLE DB 会话池</H4>
+
+<P>OLE DB 具有“共用”特性，称为“会话池”，用来提高大型 Web 数据库应用程序的活动性能。会话池保护连接安全和一些其他属性。共用连接仅在连接两端提出匹配的请求时才可重新使用。默认情况下，Microsoft SQL Server 和 Oracle 的 OLE DB 提供程序支持会话池。这意味着并不需要对应用程序、服务器或数据库进行配置，即可使用会话池。然而，如果默认情况下提供程序不支持会话池，则需要创建注册表设置以启用会话池。有关会话池的详细信息，请参阅 OLE DB 2.0 Software Development Kit (SDK) 文档。</P>
+
+<H4>ODBC 连接池</H4>
+
+<p>如果希望 ODBC 驱动程序分享连接池，必须配置特定的数据库驱动程序，然后在 Windows 注册表中设置驱动程序的 <strong><strong>CPTimeout</strong> </strong> 属性。<strong>CPTimeout</strong> 属性确定连接在连接池中的保留长度。如果连接在池中的保留时间超过了 <strong>CPTimeout</strong> 设置的持续时间，连接将关闭并从池中删除。<strong>CPTimeout</strong> 的默认值是 60 秒。</p>
+
+<p>通过创建带有下列设置的注册表项，可以有选择性地设置 <strong>CPTimeout</strong> 属性，启用特定 ODBC 数据库驱动程序的连接池：</p>
+
+<pre>
+\HKEY_LOCAL_MACHINE\SOFTWARE\ODBC\ODBCINST.INI\driver-name\CPTimeout = timeout 
+ (REG_SZ, units are in seconds)
+</pre>
+
+<p>例如，下列键值将 SQL Server 驱动程序的连接池超时设置为 180 秒（3 分钟）。</p>
+
+<pre>\HKEY_LOCAL_MACHINE\SOFTWARE\ODBC\ODBCINST.INI\SQL Server\CPTimeout = 180</pre>
+
+<p class="note"><strong>注意</strong>&nbsp;&nbsp;&nbsp;默认情况下，Web 服务器激活 SQL Server 的连接池，并将 <strong>CPTimeout</strong> 设置为 60 秒。</p>
+
+<h3><a name="H3_37796346">使用跨多页的连接</a></h3>
+
+<p>虽然可以通过将连接储存在 ASP 的 <strong>Application</strong> 对象中，重复使用跨多页的连接，但这样做可能导致不必要地保持打开的连接，这样就无法体现使用连接池的优势。如果有许多用户需要连接到同一个 ASP 应用程序，一种更好的方法是将字符串放置到 ASP 的 <strong>Application</strong> 对象中，重复使用跨多个网页的数据库连接字符串。例如，您可以在 Global.asa 文件的 Application_OnStart 事件过程中指定连接字符串，如下列脚本所示：</p>
+
+<pre>
+Application(&quot;ConnectionString&quot;) = &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Data\Inventory.mdb&quot;
+</pre>
+
+<p>然后在访问数据库的每个 ASP 文件中，写入下列脚本创建此页的连接对象实例：</p>
+
+<pre>&lt;OBJECT RUNAT=SERVER ID=cnn PROGID=&quot;ADODB.Connection&quot;&gt;&lt;/OBJECT&gt;</pre>
+
+<p>并使用下列脚本打开此连接：</p>
+
+<pre>cnn.Open Application(&quot;ConnectionString&quot;)</pre>
+
+<p>要关闭连接，可在此页的最后写入下列脚本：</p>
+
+<pre>cnn.Close</pre>
+
+<p>在个别用户需要重复使用跨多个网页连接的情况下，您将发现使用 <strong>Session</strong> 对象储存连接字符串比使用 <strong>Application</strong> 对象更具优势。</p>
+
+<h3><a name="H3_37797541">关闭连接</a></h3>
+
+<p>要充分利用连接池，请尽可能显式关闭数据库连接。默认情况下，连接在脚本执行完后终止。然而，通过显式关闭脚本中不再需要的连接，可以减少对数据库服务器的需求，并使得其他用户可以使用此连接。</p>
+
+<p>可以使用 <strong>Connection</strong> 对象的 <strong>Close</strong> 方法显式终止 <strong>Connection</strong> 对象和数据库之间的连接。下列脚本将打开和关闭连接：</p>
+
+<pre>&lt;%
+  strConnectionString = &quot;Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Data\Inventory.mdb&quot;
+  Set cnn = Server.CreateObject(&quot;ADODB.Connection&quot;)
+  cnn.Open strConnectionString
+  cnn.Close
+%&gt;
+</pre>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+
+</font>
+</body>
+
+</html>

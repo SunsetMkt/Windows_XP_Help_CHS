@@ -1,0 +1,713 @@
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>计数器说明</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<meta name="DESCRIPTION" content="列出并说明由 IIS 安装的所有用于性能监视的计数器。计数器分为下列类别：带宽使用、吞吐量、错误、连接、缓存，等等。">
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name ="globalcounters">计数器说明</a></h1>
+
+<table border="1" cellpadding="5" cellspacing="1" width="100%">
+<tr>
+<th bgcolor="#C0C0C0">对象</th>
+<th bgcolor="#C0C0C0">计数器</th>
+<th bgcolor="#C0C0C0">说明</th>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="ActiveFlushedEntries"><strong>Active Flushed Entries</strong></a></td>
+<td valign="top">Active Flushed Entries 是缓存文件句柄，当前传输全部完成后将关闭此句柄。IIS Global 对象。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="AnonymousUsers/sec">Anonymous Users/Sec</a></strong></td>
+<td valign="top">用户通过 Web 服务进行的匿名连接数。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="BLOBCacheFlushes"><strong>BLOB Cache Flushes</strong></a></td>
+<td valign="top">自服务器启动后的 BLOB 缓存刷新数。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="BLOBCacheHits"><strong>BLOB Cache Hits</strong></a></td>
+<td valign="top">BLOB 缓存中的成功查找总数。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="BLOBCacheHits%"><strong>BLOB Cache Hits %</strong></a></td>
+<td valign="top">BLOB 缓存命中数占全部缓存请求的比率。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="BLOBCacheMisses"><strong>BLOB Cache Misses</strong></a></td>
+<td valign="top">BLOB 缓存中的未成功查找总数。</td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><strong><a name="BytesReceived/sec">Bytes Received/Sec</a></strong></td>
+<td valign="top">服务在应用层接收数据字节的速率，不包括协议头和控制字节。</td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><strong><a name="BytesSent/sec">Bytes Sent/Sec</a></strong></td>
+<td valign="top">服务发送数据字节的速率。</td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><strong><a name="BytesTotal/sec">Bytes Total/Sec</a></strong></td>
+<td valign="top">由 Web 服务传输的每秒总字节数（发送字节数/秒与接收字节数/秒的总和）。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="CGIRequests/sec">CGI Requests/Sec</a></strong></td>
+<td valign="top">每秒由 Web 服务同时处理的 CGI 请求数。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="ConnectionAttempts/sec">Connection Attempts/Sec</a></strong></td>
+<td valign="top">每秒用 Web 服务进行的尝试连接次数。此数是所有网站的平均值，而不考虑为“实例”所做的选择。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="CopyRequests/sec">Copy Requests/Sec</a></strong></td>
+<td valign="top">每秒使用 COPY 方法进行的 HTTP 请求数。Copy 请求用于复制文件和目录。可以统算，也可以分网站计算。</td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a name="CurrentAnonymousUsers"><strong>Current Anonymous Users</strong></a></td>
+<td valign="top">当前使用 Web 或 FTP 服务建立匿名连接的用户数。如果客户端请求匿名连接被拒绝，但客户端用有效的身份验证数据来响应，则此连接将被视为非匿名连接。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="CurrentBLOBsCached"><strong>Current BLOBs Cached</strong></a></td>
+<td valign="top">当前在缓存中用于 WWW 和 FPT 服务的 BLOB 信息块数。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global、Web</td>
+<td valign="top"><a name="CurrentBlockedAsyncI/ORequests"><strong>Current Blocked Async I/O Requests</strong></a></td>
+<td valign="top">当前由于带宽限制设置而暂时被阻止的请求数。被阻止的请求存放在缓冲区中，如果在达到超时限制之前，有了更多带宽，将解除阻止。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="CurrentCALCountForAuthenticatedUsers">Current CAL Count for Authenticated Users</a></strong></td>
+<td valign="top">Web 服务当前同时用于已验证的连接的许可证数。可以统算，也可以分网站计算。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="CurrentCALCountForSSLConnections">Current CAL Count for SSL connections</a></strong></td>
+<td valign="top">Web 服务当前同时用于 SSL 连接的许可证数。可以统算，也可以分网站计算。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="CurrentCGIRequests">Current CGI Requests</a></strong></td>
+<td valign="top">当前由服务同时处理的 CGI 请求数。</td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a name="CurrentConnections"><strong>Current Connections</strong></a></td>
+<td valign="top">当前使用 Web 或 FTP 服务建立的连接数（匿名用户数与非匿名用户数之和）。此数是所有网站或 FTP 站点的总数，而不考虑为“实例”所做的选择。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="CurrentFileCacheMemoryUsage"><strong>Current File Cache Memory Usage</strong></a></td>
+<td valign="top">当前用于文件缓存的字节数。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="CurrentFilesCached"><strong>Current Files Cached</strong></a></td>
+<td valign="top">其内容位于缓存中的、用于 WWW 和 FTP 服务的当前文件数。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="CurrentISAPIExtensionRequests">Current ISAPI Extension Requests</a></strong></td>
+<td valign="top">当前由服务同时处理的 ISAPI 扩充请求数。</td>
+</tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a name="CurrentNonAnonymousUsers"><strong>Current NonAnonymous Users</strong></a></td>
+<td valign="top">当前使用 Web 或 FTP 服务建立非匿名连接的用户数。如果客户端请求匿名连接被拒绝，但客户端用有效的身份验证数据来响应，则此连接将被视为非匿名连接。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="CurrentURIsCached"><strong>Current URIs Cached</strong></a></td>
+<td valign="top">当前缓存中用于 WWW 和 FTP 服务的 URI 信息块数。</td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="DebuggingRequests"><strong>Debugging Requests</strong></a></td>
+<td valign="top">调试文档请求数。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="DeleteRequests/sec">Delete Requests/Sec</a></strong></td>
+<td valign="top">每秒使用 DELETE 方法进行的 HTTP 请求数。</td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="ErrorsDuringScriptRuntime"><strong>Errors During Script Runtime</strong></a></td>
+<td valign="top">由于运行时错误而导致的请求失败次数。</td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="ErrorsFromASPPreprocessor"><strong>Errors From ASP Preprocessor</strong></a></td>
+<td valign="top">由于预处理器错误而导致的请求失败次数。</td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="ErrorsFromScriptCompiler"><strong>Errors From Script Compiler</strong></a></td>
+<td valign="top"> 由于脚本编译错误而导致请求失败的总次数。</td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="Errors/Sec"><strong>Errors/Sec</strong></a></td>
+<td valign="top">每秒错误数。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top">
+<a name="FileCacheFlushes"><strong>File Cache Flushes</strong></a></td>
+<td valign="top">自服务器启动后的文件缓存刷新数。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="FileCacheHits"><strong>File Cache Hits</strong></a></td>
+<td valign="top">文件缓存中的成功查找总数。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="FileCacheHits%"><strong>File Cache Hits %</strong></a></td>
+<td valign="top">文件缓存命中数占全部缓存请求的比率。</td>
+</tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="FileCacheMisses"><strong>File Cache Misses</strong></a></td>
+<td valign="top">文件缓存中的未成功查找总数。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="FilesReceived/sec">Files Received/Sec</a></strong></td>
+<td valign="top">自 Web 服务启动后由此服务接收（上载到 Web 服务）文件的速率。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="FilesSent/sec">Files Sent/Sec</a></strong></td>
+<td valign="top">自 Web 服务启动后由此服务发送（从 Web 服务下载）文件的速率。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="Files/sec">Files/Sec</a></strong></td>
+<td valign="top">自 Web 服务启动后由服务器传输文件的速率。</td>
+</tr>
+
+<tr>
+<td valign="top">FTP</td>
+<td valign="top"><strong>FTP Service Uptime</strong></td><td valign="top">服务或实例已经运行的秒数。当服务器或实例停止后，此值回到零。暂停不会影响此计数器。在 Web 服务中，此计数器称为 <b> Service Uptime</b>。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="GetRequests/sec">Get Requests/Sec</a></strong></td>
+<td valign="top">使用 GET 方法进行的 HTTP 请求的速率。虽然 GET 请求可以用于表单，但它们通常用于基本文件检索或图形映射。</td>
+</tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="HeadRequests/sec">Head Requests/Sec</a></strong></td>
+<td valign="top">使用 HEAD 方法进行的 HTTP 请求的速率。HEAD 请求通常表明客户端正在查询现有文档的状态，查看此文档是否需要刷新。</td>
+</tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="InMemoryCacheHitRate">In Memory Cache Hit Rate</a></strong></td><td valign="top">在缓存中的 ASP 模板中找到的请求的百分比。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="InMemoryTemplates">In Memory Templates</a></strong></td><td valign="top">缓存中的 ASP 模板总数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="ISAPIExtensionRequests/sec">ISAPI Extension
+  Requests/Sec</a></strong></td><td valign="top">每秒由 Web 服务同时处理的 ISAPI 扩展请求数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="LockRequests/sec">Lock Requests/Sec</a></strong></td><td valign="top">每秒使用 LOCK 方法锁定的 HTTP 请求数。Lock 请求用于将文件锁定于一个用户，使得只有此用户可以修改文件。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a name="LockedErrors/sec"><strong>Locked Errors/Sec</strong></a></td><td valign="top">由于所需文档被锁定，每秒使服务器无法满足请求而导致的错误数。通常以 HTTP 423 错误代码形式报告给客户端。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a name="LogonAttempts/sec"><strong>Logon Attempts/Sec</strong></a></td><td valign="top">每秒用 Web 服务尝试登录数。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a name="MaximumAnonymousUsers"><strong>Maximum Anonymous Users</strong></a></td><td valign="top">使用 Web 或 FTP 服务（自服务启动后）建立当前匿名连接的最大用户数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a name="MaximumCALCountForAuthenticatedUsers"><strong>Maximum CAL Count for Authenticated Users</strong></a></td><td valign="top">Maximum CAL Count for Authenticated Users 是 Web 服务同时用于已验证的连接的最大许可证数。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a name="MaximumCALCountForSSLConnections"><strong>Maximum CAL Count for SSL connections</strong></a></td><td valign="top">Maximum CAL count for SSL connections 是 Web 服务同时用于 SSL 连接的最大许可证数。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="MaximumCGIRequests">Maximum CGI Requests</a></strong></td><td valign="top">自 Web 服务启动后由此服务同时处理的最大 CGI 请求数。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a name="MaximumConnections"><strong>Maximum Connections</strong></a></td><td valign="top">自 Web 或 FTP 服务启动后，由此服务建立的最大并发连接数。此数是当前所有网站或 FTP 站点的最大数，而不考虑为“举例”所做的选择。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="MaximumFileCacheMemoryUsage"><strong>Maximum File Cache Memory Usage</strong></a></td><td valign="top">用于文件缓存的最大字节数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="MaximumISAPIExtensionRequests">Maximum ISAPI Extension Requests</a></strong></td><td valign="top">自服务启动后，由此服务同时处理的最大 ISAPI 扩展请求数。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a name="MaximumNonAnonymousUsers"><strong>Maximum NonAnonymous Users</strong></a></td><td valign="top">使用 Web 或 FTP 服务（自服务启动之后）建立当前非匿名连接的最大用户数。如果客户端请求匿名连接被拒绝，但客户端用有效的身份验证数据来响应，则此连接将被视为非匿名连接。</td></tr>
+
+<tr>
+<td valign="top">IIS Global、Web</td>
+<td valign="top"><a name="MeasuredAsyncI/OBandwidthusage"><strong>Measured Async I/O Bandwidth usage</strong></a></td><td valign="top">由 Web 服务器接收和发送的字节数，一分钟内的平均值。这是服务器上用户通信总数的衡量标准。</td></tr>
+
+<tr>
+<td valign="top">&nbsp;</td>
+<td valign="top"><strong><a name="MemoryAllocated">Memory Allocated</a></strong></td><td valign="top">当前由 Active Server Pages 分配的内存总数（以字节为单位）。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a name="MkcolRequests/sec"><strong>Mkcol Requests/Sec</strong></a></td><td valign="top">每秒使用 MKCOL 方法进行的 HTTP 请求数。Mkcol 请求用于在服务器上创建目录。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a name="MoveRequests/sec"><strong>Move Requests/Sec</strong></a></td><td valign="top">每秒使用 MOVE 方法得到的 HTTP 请求数。Move 请求用于移动文件和目录。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><a name="NonAnonymousUsers/sec"><strong>NonAnonymous Users/Sec</strong></a></td><td valign="top">每秒用户使用 Web 服务进行的匿名连接数。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="NotFoundErrors/sec">Not Found Errors/Sec</a></strong></td><td valign="top">由于未找到所请求的文档，服务器无法满足请求而导致错误的速率。通常以 HTTP 错误代码 404 报告给客户端。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="OptionsRequests/sec">Options Requests/Sec</a></strong></td><td valign="top">每秒使用 OPTIONS 方法进行的 HTTP 请求数。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="OtherRequestMethods/sec">Other Request Methods/Sec</a></strong></td><td valign="top">每秒不使用 GET、POST、PUT、DELETE、TRACE 或 HEAD 方法所进行的 HTTP 请求数。可以包括 LINK 或受网关应用程序支持的其他方法。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="PostRequests/sec">Post Requests/Sec</a></strong></td><td valign="top">每秒使用 POST 方法的 HTTP 请求数；通常用于表单或网关请求。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="PropfindRequests/sec">Propfind Requests/Sec</a></strong></td><td valign="top">每秒使用 PROFIND 方法进行的 HTTP 请求数。Propfind 请求检索文件和目录的属性值。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="ProppatchRequests/sec">Proppatch Requests/Sec</a></strong></td><td valign="top">每秒使用 PROPPATCH 方法进行的 HTTP 请求数。Proppatch 请求设置文件和目录的属性值。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="PutRequests/sec">Put Requests/Sec</a></strong></td><td valign="top">每秒使用 PUT 方法进行的 HTTP 请求数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestBytesInTotal"><strong>Request Bytes In Total</strong></a></td><td valign="top">所有请求的总计大小（以字节为单位）。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestBytesOutTotal"><strong>Request Bytes Out Total</strong></a></td><td valign="top">发送到客户端的所有响应的总计大小（以字节为单位）。但不包括标准 HTTP 响应头。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestExecutionTime"><strong>Request Execution Time</strong></a></td><td valign="top">执行最近的请求所花费的时间（以毫秒为单位）。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestWaitTime"><strong>Request Wait Time</strong></a></td><td valign="top">最近的请求在队列中等待的时间（以毫秒为单位）。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestsDisconnected"><strong>Requests Disconnected</strong></a></td><td valign="top">由于通信失败而使连接断开的请求数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestsExecuting"><strong>Requests Executing</strong></a></td><td valign="top">当前执行的请求数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestsFailedTotal"><strong>Requests Failed Total</strong></a></td><td valign="top">由于错误、授权失败和拒绝而导致失败的请求总数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestsNotAuthorized"><strong>Requests Not Authorized</strong></a></td><td valign="top">由于访问权限不够而导致失败的请求数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestsNotFound"><strong>Requests Not Found</strong></a></td><td valign="top">未找到文件的请求数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestsQueued"><strong>Requests Queued</strong></a></td><td valign="top">在队列中等待服务的请求数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestsRejected"><strong>Requests Rejected</strong></a></td><td valign="top">由于没有足够的资源对它们进行处理而没有执行的请求总数。</td></tr>
+ 
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestsSucceeded"><strong>Requests Succeeded</strong></a></td><td valign="top">成功执行的请求数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestsTimedOut"><strong>Requests Timed Out</strong></a></td><td valign="top">超时的请求数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="RequestsTotal"><strong>Requests Total</strong></a></td><td valign="top">自服务启动后所有请求的总数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><a name="Requests/Sec"><strong>Requests/Sec</strong></a></td><td valign="top">每秒执行的请求数。 </td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="ScriptEngineCache">Script Engines Cached</a></strong></td><td valign="top">缓存中的脚本引擎数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="SearchRequests/sec">Search Requests/Sec</a></strong></td><td valign="top">每秒使用 MS SEARCH 方法进行的 HTTP 请求数。Search 请求用于对服务器进行查询，以查找符合客户端所需条件的资源。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><strong><a name="ServiceUptime">Service Uptime</a></strong></td><td valign="top">服务或实例已经运行的秒数。当服务器或实例停止后，此值回到零。暂停不会影响此计数器。在 FTP 服务中，此计数器称为 <b>FTP Service Uptime</b>。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="SessionDuration">Session Duration</a></strong></td><td valign="top">最近进行的会话所持续的时间（以毫秒为单位）。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="SessionsCurrent">Sessions Current</a></strong></td><td valign="top">正在使用服务的会话数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="SessionsTimedOut">Sessions Timed Out</a></strong></td><td valign="top">已超时的会话数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="SessionsTotal">Sessions Total</a></strong></td><td valign="top">自服务启动后所有会话的总数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="TemplateCacheHitRate">Template Cache Hit Rate</a></strong></td><td valign="top">在 ASP 模板缓存中找到的请求的百分比，包括内存中的和持续的。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="TemplateNotifications">Template Notifications</a></strong></td><td valign="top">由于更改通知而无效的缓存中的模板数，包括内存中的和持续的。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="TemplatesCached">Templates Cached</a></strong></td><td valign="top">缓存的 ASP 模板总数，包括内存中的和持续的（在磁盘上）。</td></tr>
+
+<tr>
+<td valign="top">IIS Global、Web</td>
+<td valign="top"><a name="TotalAllowedAsyncI/ORequests"><strong>Total Allowed Async I/O Requests</strong></a></td><td valign="top">自服务启动后由 Web 和 FTP 服务允许的用户请求数。当限制带宽时，所允许的用户请求数也将受到限制。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a name="TotalAnonymousUsers"><strong>Total Anonymous Users</strong></a></td><td valign="top">使用 Web 或 FTP 服务（自服务启动后）建立匿名连接的用户总数。如果客户端请求匿名连接被拒绝，但客户端用有效的身份验证数据来响应，则此连接将被视为非匿名连接。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="TotalBLOBsCached"><strong>Total BLOBs Cached</strong></a></td><td valign="top">曾添加到 WWW 和 FTP 服务的缓存中的 BLOB 信息块总数。</td></tr>
+
+<tr>
+<td valign="top">IIS Global、Web</td>
+<td valign="top"><a name="TotalBlockedAsyncI/ORequests"><strong>Total Blocked Async I/O Requests</strong></a></td><td valign="top">自服务启动后由于带宽限制设置而暂时被阻止的请求总数。被阻止的请求存放在缓冲区中，如果在达到超时限制之前，有了更大的带宽，将解除阻止。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalCGIRequests">Total CGI Requests</a></strong></td><td valign="top">自服务启动后所执行的通用网关接口 (CGI) 请求总数。CGI 请求是自定义的网关可执行文件 (.exe files)，管理员可以安装它以添加表单处理或其他动态数据源。CGI 请求将处理分散到服务器上会大大消耗服务器的资源。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a name="TotalConnectionAttempts"><strong>Total Connection Attempts</strong></a></td><td valign="top">自启动服务后试图连接到 Web 或 FTP 服务的连接总数。此数是当前所有网站或 FTP 站点的最大个数，而不考虑为“实例”所做的选择。<br>此数不包含在 TCP（传输）或 IP（网络）层失败的连接尝试。要监视所有连接尝试，请使用 TCP 性能对象上的 Connection 计数器。有关获取和查看此对象的详细信息，请参阅 Windows 2000 Resource Kit。要监视当前的活动连接，请使用 <strong>Current Connections</strong>。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalCopyRequests">Total Copy Requests</a></strong></td><td valign="top">使用 COPY 方法的 HTTP 请求总数（自服务启动后开始计算）。Copy 请求用于复制文件和目录。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalCountOfFailedCALRequestsForAuthenticatedUsers">Total Count of failed CAL Requests for Authenticated Users</a></strong></td><td valign="top">由于已验证的用户不能使用许可证而导致失败的 HTTP 请求数。此计数是自服务启动后的总数。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalCountOfFailedCALRequestsForSSLConnections">Total Count of Failed CAL Requests for SSL connections</a></strong></td><td valign="top">由于 SSL 连接不能使用许可证而导致失败的 HTTP 请求的总数。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalDeleteRequests">Total Delete Requests</a></strong></td><td valign="top">使用 DELETE 方法的 HTTP 请求数。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="TotalFilesCached"><strong>Total Files Cached</strong></a></td><td valign="top">曾添加到 WWW 和 FTP 服务的缓存的文件总数。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><strong><a name="TotalFilesReceived">Total Files Received</a></strong></td><td valign="top">自 Web 服务启动后由此服务接收的文件总数。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><strong><a name="TotalFilesSent">Total Files Sent</a></strong></td><td valign="top">自 Web 服务启动后由此服务发送的文件总数。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><strong><a name="TotalFilesTransferred">Total Files Transferred</a></strong></td><td valign="top">自 Web 服务启动后由此服务传输的文件总数。文件传输总数是发送文件总数和接收文件总数之和。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="TotalFlushedBLOBs"><strong>Total Flushed BLOBs </strong></a></td><td valign="top">自服务启动后，已从缓存删除的 BLOB 信息块总数。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="TotalFlushedFiles"><strong>Total Flushed Files</strong></a></td><td valign="top">Total Flushed Files 是自服务启动后已从缓存删除的文件句柄数。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="TotalFlushedURIs"><strong>Total Flushed URIs</strong></a></td><td valign="top">自服务启动后，已从缓存删除的 URI 信息块总数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalGetRequests">Total Get Requests</a></strong></td><td valign="top">由服务接收的 HTTP GET 请求的总数。虽然 GET 请求也可以用于表单，但是它们通常用于基本文件检索或图象映射。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalHeadRequests">Total Head Requests</a></strong></td><td valign="top">由服务接收的 HTTP HEAD 请求总数。HEAD 请求通常表明客户端正在查询现有文档的状态，查看此文档是否需要刷新。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalISAPIExtensionRequests">Total ISAPI Extension Requests</a></strong></td><td valign="top">由服务接收的 HTTP ISAPI 扩展请求总数。ISAPI 扩展请求是自定义的网关动态链接库 (DLL)，管理员可以安装它以添加表单处理或其他动态数据源。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalLockRequests">Total Lock Requests</a></strong></td><td valign="top">使用 LOCK 方法的 HTTP 请求总数（自服务启动后开始计算）。Lock 请求用于将文件锁定于一个用户，使得只有此用户可以修改文件。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalLockedErrors">Total Locked Errors</a></strong></td><td valign="top">由于所请求的内容被锁定，而使服务器无法满足的请求总数。通常以 HTTP 423 错误代码方式报告客户端。此数是自服务启动后的总数。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a name="TotalLogonAttempts"><strong>Total Logon Attempts</strong></a></td><td valign="top">自 Web 或 FTP 服务启动后成功登录到此服务的总次数；不包括失败的登录尝试。要计算失败尝试（即客户端可以连接但无法登录），可用连接尝试次数减去登录尝试次数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalMethodRequests">Total Method Requests</a></strong></td><td valign="top">HTTP GET、POST、PUT、DELETE、TRACE、HEAD 以及其他方法请求的总数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalMethodRequests/sec">Total Method Requests/Sec</a></strong></td><td valign="top">每秒使用 GET、POST、PUT、DELETE、TRACE 或 HEAD 方法所进行的 HTTP 请求数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalMkcolRequests">Total Mkcol Requests</a></strong></td><td valign="top">使用 MKCOL 方法的 HTTP 请求的总数（自服务启动后开始计算）。Mkcol 请求用于在服务器上创建目录。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalMoveRequests">Total Move Requests</a></strong></td><td valign="top">使用 MOVE 方法的 HTTP 请求的总数（自服务启动后开始计算）。Move 请求用于移动文件和目录。</td></tr>
+
+<tr>
+<td valign="top">Web、FTP</td>
+<td valign="top"><a name="TotalNonAnonymousUsers"><strong>Total NonAnonymous Users</strong></a></td><td valign="top">使用 Web 或 FTP 服务建立非匿名连接的用户总数（自服务启动后）。如果客户端请求匿名连接被拒绝，但客户端用有效的身份验证数据来响应，则此连接将被视为非匿名连接。</td></tr>
+  
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalNotFoundErrors">Total Not Found Errors</a></strong></td><td valign="top">由于未找到所请求的文档，Web 服务无法满足的请求数；通常以 HTTP 404 错误代码方式向客户端报告。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalOptionsRequests">Total Options Requests</a></strong></td><td valign="top">使用 OPTIONS 方法的 HTTP 请求的总数（自服务启动后开始计算）。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalOtherRequestMethods">Total Other Request Methods</a></strong></td><td valign="top">不是 GET、POST、PUT、DELETE、TRACE 或 HEAD 方法的 HTTP 请求的总数。可以包括 LINK 或网关应用程序支持的其他方法。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalPostRequests">Total Post Requests</a></strong></td><td valign="top">使用 POST 方法的 HTTP 请求数。Post 请求通常用于表单或网关请求。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalPropfindRequests">Total Propfind Requests</a></strong></td><td valign="top">使用 PROPFIND 方法的 HTTP 请求的总数（自服务启动后开始计算）。Propfind 请求设置文件和目录的属性值。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalProppatchRequests">Total Proppatch Requests</a></strong></td><td valign="top">使用 PROPPATCH 方法的 HTTP 请求的总数（自服务启动后开始计算）。Proppatch 请求设置文件和目录的属性值。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalPutRequests">Total Put Requests</a></strong></td><td valign="top">使用 PUT 方法的 HTTP 请求数。</td></tr>
+
+<tr>
+<td valign="top">IIS Global、Web</td>
+<td valign="top"><a name="TotalRejectedAsyncI/ORequests"><strong>Total Rejected Async I/O Requests</strong></a></td><td valign="top">自服务启动后由于带宽限制设置而被拒绝的用户请求总数。与被阻止的请求不同，被拒绝的请求不存放在缓冲区中。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalSearchRequests">Total Search Requests</a></strong></td><td valign="top">使用 MS SEARCH 方法的 HTTP 请求总数（自服务启动后开始计算）。Search 请求用于对服务器进行查询，以查找符合客户端所需条件的资源。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalTraceRequests">Total Trace Requests</a></strong></td><td valign="top">使用 TRACE 方法的 HTTP 请求数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TotalUnlockRequests">Total Unlock Requests</a></strong></td><td valign="top">使用 UNLOCK 方法的 HTTP 请求的总数（自服务启动后开始计算）。Unlock 请求用于取消对文件的锁定。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="TotalURIsCached"><strong>Total URIs Cached</strong></a></td><td valign="top">曾添加到 WWW 和 FTP 服务的缓存中的 URI 信息块总数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="TraceRequests/sec">Trace Requests/Sec</a></strong></td><td valign="top">使用 TRACE 方法的 HTTP 请求的速率。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="TransactionsAborted">Transactions Aborted</a></strong></td><td valign="top">已终止的事务数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="TransactionsCommitted">Transactions Committed</a></strong></td><td valign="top">已提交的事务数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="TransactionsPending">Transactions Pending</a></strong></td><td valign="top">正在处理的事务数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="TransactionsTotal">Transactions Total</a></strong></td><td valign="top">自服务启动后的事务总数。</td></tr>
+
+<tr>
+<td valign="top">ASP</td>
+<td valign="top"><strong><a name="Transactions/Sec">Transactions/Sec</a></strong></td><td valign="top">每秒启动的事务数。</td></tr>
+
+<tr>
+<td valign="top">Web</td>
+<td valign="top"><strong><a name="UnlockRequests/sec">Unlock Requests/Sec</a></strong></td><td valign="top">每秒使用 UNLOCK 方法进行的 HTTP 请求数。Unlock 请求用于取消对文件的锁定。可以统算，也可以分网站计算。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="URICacheFlushes"><strong>URI Cache Flushes</strong></a></td><td valign="top">自服务器启动后的 URI 缓存刷新数。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="URICacheHits"><strong>URI Cache Hits</strong></a></td><td valign="top">URI 缓存中的成功查找总数。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="URICacheHits%"><strong>URI Cache Hits %</strong></a></td><td valign="top">URI 缓存命中数占全部缓存请求的比率。</td></tr>
+
+<tr>
+<td valign="top">IIS Global</td>
+<td valign="top"><a name="URICacheMisses"><strong>URI Cache Misses</strong></a></td><td valign="top">URI 缓存中的未成功查找总数。</td></tr>
+</table>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>

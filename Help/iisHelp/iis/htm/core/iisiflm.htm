@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML dir=ltr>
+<HEAD>
+
+<TITLE>#flastmod</TITLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="Internet 信息服务参考信息。#flastmod 命令指示 Web 服务器将指定文件的修改时间插入到 HTML 网页中。">
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<H2><A NAME="_k2_flastmod"></A><SUP></SUP>#flastmod</H2>
+
+<p><b>#flastmod</b> 指令指示 Web 服务器插入指定文件的最后修改时间。必须使用 HTML 注释分隔符将指令括起来。</p>
+<p>默认情况下，此指令仅可用于 STM 网页，无法用于 ASP 网页。可以使用 <b>FileSystemObject</b> 对象通过 ASP 脚本执行同样的任务，可以在 <a href="http://www.microsoft.com/isapi/redir.dll?prd=msdn&amp;pver=6.0&amp;ar=scripting" target="_blank">MSDN</a> 中（在 VBScript 或 
+JScript 下）找到有关此对象的说明。
+</p>
+
+<H6>语法</H6>
+
+<P><STRONG>&lt;!-- #flastmod </STRONG><em>PathType</em><STRONG> = </STRONG><em>FileName</em> <STRONG>--&gt;</STRONG></P>
+
+<H6>参数</H6>
+
+<P><em>PathType</em></P>
+
+<P>指定 <em>FileName</em> 的路径类型。路径可以是下列某种类型：</P>
+
+<TABLE border=0 cellpadding=5 cols=2 frame=box rules=all width=100%>
+
+<TR VALIGN="top">
+<TD width=20%><STRONG>路径类型</STRONG></TD>
+<TD width=80%><STRONG>含义</STRONG></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%> 文件 </TD>
+<TD width=80%>此文件名是相对于使用 #flastmod 指令的文档所在目录的路径。
+</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>虚拟</TD>
+<TD width=80%>文件名为相对于所在网站虚拟目录的完全路径。</TD>
+</TR>
+</TABLE><BR>
+
+<P><em>FileName</em></P>
+
+<P>指定需要其最后修改时间的文件名。FileName 必须包含文件扩展名，而且必须将文件名用引号 (") 引起来。</P>
+
+<font face="宋体">
+
+<P><strong><font color="#0000FF">要点</strong></font>&nbsp;&nbsp;&nbsp;包含此指令的文件必须使用已映射到 SSI 解释程序的扩展名。否则，Web 服务器将不处理此指令。默认情况下，文件扩展名 .stm、.shtm 和 .shtml 将映射到 SSI 解释程序 (ssinc.dll)。</P>
+
+<P>使用 #echo 指令的 STM 网页既可以自运行，也可以通过 Response.Redirect 从 ASP 网页调用它来运行。用 Server.Transfer、Server.Execute 或 #include 从 ASP 网页中调用 STM 网页是行不通的，因为这样会迫使 STM 网页通过 asp.dll 而不是通过 ssinc.dll 进行解释。</P>
+
+<P>如果安装了 <a href="iiabuti.htm">Internet 信息服务管理单元</a>，则可以修改默认扩展名映射并添加新映射，请参阅<A HREF="iiwarndf.htm">设置应用程序映射</A>。由于不能将一个文件扩展名映射到多个可执行文件，所以不能在 ASP 文件中使用此指令。ASP 文件已映射到 asp.dll，并且必须保持此状态。</P>
+
+<H6><b>示例</b></H6>
+
+<p>--- SSI.stm ---</p>
+
+<pre>&lt;!-- #config ERRMSG = &quot;An error occurred processing a directive.&quot; --&gt;
+
+SSI.stm was last formatted on 
+&lt;!-- #config TIMEFMT = &quot;%A, the %d of %B, %Y, at %H:%M&quot; --&gt;
+&lt;!-- #flastmod FILE = &quot;ssi.stm&quot; --&gt;
+&lt;BR&gt;
+
+The size of SSI.stm in bytes is
+&lt;!-- #config SIZEFMT = &quot;BYTES&quot; --&gt;
+&lt;!-- #fsize FILE = &quot;ssi.stm&quot; --&gt;
+&lt;BR&gt;&lt;BR&gt;
+
+This line will print out the ERRMSG configured above&lt;BR&gt;
+&lt;!-- #config SIZEFMT = &quot;BYTE&quot; --&gt;
+</pre>
+
+</font>
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+</BODY>
+</HTML>

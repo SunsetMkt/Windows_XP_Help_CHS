@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于配置数据库</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="本节包含有关配置数据库的概述信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37713458">关于配置数据库</a></h1>
+
+<p></p>
+
+<p>通过管理工具（如 <a href="iiabuti.htm">Internet 信息服务管理单元</a>）对值进行配置，可以修改配置数据库。还可以通过 IIS Admin 对象和 ADSI 进行值的配置，从而以编程方式修改配置数据库。</p>
+
+<p>有关配置数据库结构、配置数据库关键字和路径、属性继承以及配置数据库安全的详细信息，请参阅 <a href="../asp/aint1aud.htm">IIS 配置数据库简介</a>。</p>
+
+<p>有关使用 IIS Admin 对象和 IIS Admin Base 对象以编程方式管理 IIS 的信息，请参阅<a href="../asp/aint7e9l.htm">以编程方式管理 IIS</a>。</p>
+
+<p>有关配置数据库所有可配置属性的综合参考信息，请参阅<a href="../asp/apro3usl.htm">管理属性参考</a>。</p>
+
+<ul>
+<li><a href="#namespace">名称空间</a></li>
+<li><a href="#inheritance">继承</a></li>
+</ul>
+
+<strong><font color="Blue">要点</font></strong>&nbsp;&nbsp;&nbsp;直接编辑配置数据库时要特别谨慎。在配置数据库中，属性配置不当可能会导致错误，包括网站或 FTP 站点故障。如果编辑时出错，网站或 FTP 站点的配置将损坏。应只对无法在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中调整的配置数据库属性进行直接编辑。
+</p>
+
+<h2><a name="namespace">名称空间</a></h2>
+
+<p>名称空间指定配置数据库属性的位置。其形式如下：</p>
+
+<p>LM/<em>Service</em>/<em>Website</em>/Root/<em>virtual directory</em>/<em>dir</em>/<em>file</em><p>
+其中 LM = 本机<br> <em>Service</em> = Internet 服务 （W3SVC 或 MSFTPSVC)<br> <em>Website</em> = 网站<br> Root = 虚拟根目录<br> <em>virtual directory</em> = 虚拟目录<br> <em>dir</em> = 目录<br> <em>file</em> = 文件
+</p>
+
+<p>例如，如果配置数据库路径的名称空间<br> LM/W3SVC/Website1/Root</p>
+
+<p>与下列路径相关<br> C:\Inetpub\wwwroot</p>
+
+<p>则 URL<br> http://domain.com/default.htm</p>
+
+<p>将映射到物理文件路径<br> C:\Inetpub\wwwroot\default.htm。</p>
+
+<h2><a name="inheritance">继承</a></h2>
+
+<p>在较高级别（如网站级）上配置的配置数据库属性可以传递或继承给较低的级别（如目录级）。这些继承属性也可在较低级别上单独编辑。如果在单独的服务器、目录或文件上更改了属性，则在较高级别上更改的设置将不会自动覆盖较低级别的独立设置。</p>
+
+<hr class="iis" size="1"><p align=center><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

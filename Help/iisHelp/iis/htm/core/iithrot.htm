@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>限制带宽</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何限制 Web 服务器或单独网站所使用的全部可用带宽数量的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37759079">限制带宽</a></h1>
+
+<p>如果其他服务（如电子邮件）也在使用 Web 服务器所使用的网络连接，可能需要对 Web 服务器所使用的带宽进行限制，以便使其他服务也可以使用带宽。可以只限制静态 HTML 文件使用的带宽。 
+<p>
+
+<big>确定服务器使用的带宽</big><br>
+
+</p>
+
+<ol>
+<li>使用系统监视器检查 Network Interface 对象中的 Bytes Total/sec 或 Current Bandwidth 计数器。（如果希望比较传入和传出通信量，可以检查 Bytes Sent/sec 和 Bytes Received/sec。）</li> 
+
+<li>将这些值与网络连接的总带宽进行比较。在负载正常的情况下，服务器使用的带宽应该不超过全部可用带宽的 50%。如果服务器经常出现负载高峰，甚至尖峰，则最好将正常负载保持在总量的 50% 以下，将剩余的“净空”带宽留在高峰期间使用。
+</li>
+</ol>
+
+<big>限制 IIS 使用的带宽</big><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择运行 IIS 的计算机。</li>
+<li>在“Internet 信息服务”属性页中，选中“启用带宽限制”复选框。</li>
+<li>在“最大网络使用”框中，以 kb/s 为单位输入希望 IIS 使用的最大带宽。</li>
+</ol>
+
+<p class="bigfix">&nbsp;<big></big></p>
+
+
+
+
+<p><strong>相关主题</strong></p>
+
+<ul>
+<li>有关监视工具的信息，请参阅<a href="iiabtpm.htm">关于性能调整</a>。</li>
+<li>有关 IIS 提供的计数器的清单，请参阅<a href="iicntpm.htm">计数器参考</a>。</li>
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

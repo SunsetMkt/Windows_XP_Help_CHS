@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML dir=ltr>
+<HEAD>
+
+<TITLE>“服务器端包含”参考</TITLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="导航页包含有关“服务器端包含”的参考信息。">
+
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<H1><A NAME="_k2_server-side_includes_reference"></A><SUP></SUP>“服务器端包含”参考</H1>
+
+<P>可以使用“服务器端包含 (SSI)”指令在静态网页中执行某些任务。静态网页在执行大规模任务时比 ASP 网页快一些。使用 SSI 指令，可以在网页中包含文件的内容、与文件有关的信息、服务器变量或可执行文件（如 CGI 文件和 ISAPI 应用程序）的输出。</P>
+
+<P>除了包含可执行文件之外，所有这些任务都可以通过 ASP 脚本执行。如果需要将 ASP 脚本用于其他网页任务，则需要使用这些任务的 ASP 解决方案。除了 #include 指令外，不能将其他 SSI 指令与 ASP 脚本混合使用。</P>
+
+<P><strong>注意</strong>&nbsp;&nbsp;&nbsp;服务器端时间和日期函数使用由 C 库区域设置（而不是操作系统区域设置）设定的语言。C 库区域设置通常设为英语。</P>
+
+<P>在本节中：
+
+<UL type=disc>
+	<LI><A HREF="iisicfg.htm">#config</A>：指定用于 SSI 错误信息的字符串，以及由 #flastmod 和 #fsize 返回的日期和文件大小的格式。</li>
+
+	<LI><A HREF="iisieco.htm">#echo</A>：将服务器变量的值插入 HTML 网页。</li>
+
+	<LI><A HREF="iisiexc.htm">#exec</A>：运行应用程序或 Shell 命令，并将输出结果插入到 HTML 网页中。 </li>
+
+	<LI><A HREF="iisiflm.htm">#flastmod</A>：将文件修改日期插入网页，其格式由 #config 指令指定。</li>
+
+	<LI><A HREF="iisifsz.htm">#fsize</A>：将文件大小插入网页，其格式由 #config 指令指定。</li>
+
+	<LI><A HREF="iisiinc.htm">#include</A>：将文件包含在网页中。这是唯一一个既可用于 ASP 文件又可用于 STM 文件的指令。</li>
+</UL>
+<hr class="iis" size="1">
+<p align="center"><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+</BODY>
+</HTML>

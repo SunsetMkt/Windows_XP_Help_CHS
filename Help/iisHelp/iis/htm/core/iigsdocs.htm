@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>使用文档</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="文档速览">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37672043">使用文档</a></h1>
+
+<p>使用 Internet 信息服务联机文档提供的功能，可以查找和使用所需信息。</p>
+
+<p><strong>导航</strong></p>
+
+<ul>
+<li>在导航窗格中，包含一个列出了所有可用功能和主题的目录。</li>
+<li>单击最高级的主题标题，说明这一部分内容的页面将显示在主题窗格中。</li>
+<li>单击主题标题旁的加号可以展开内容列表，您将看到这一部分的所有主题。</li>
+</ul>
+
+<p><strong>搜索</strong></p>
+
+<ul>
+<li>在导航窗格中单击“搜索”选项卡。</li>
+<li>在“搜索”页的文本框中输入词或短语。</li>
+<li>默认情况下，标准搜索将搜索与这个词或短语相近的几个词或短语。可以选择“精确查找”、“任何词”、“所有词”和“布尔搜索”来缩小查找范围。</li>
+</ul>
+
+<p><strong>索引</strong></p>
+
+<ul>
+<li>要查看索引，请在导航窗格中单击“索引”选项卡。</li>
+<li>在文本框中输入单词将索引范围，缩小到与所输入单词最为接近的部分。</li>
+<li>双击条目查看文件，或者查看包含与关键字相关的信息的主题列表。</li>
+</ul>
+
+<p><strong>打印</strong></p>
+
+<p> <img src="../../misc/print.gif" border="0" alt="打印按钮"> 要打印一个或多个主题，请单击“打印”按钮。</p>
+
+<p><strong>同步目录</strong></p>
+
+<p> <img src="../../misc/synch.gif" border="0" alt="同步按钮"> 要查看主题在目录列表中的显示位置，请单击“同步”按钮。 </p>
+
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

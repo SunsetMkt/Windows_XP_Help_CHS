@@ -1,0 +1,74 @@
+<!doctype html public "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>控制数据库访问</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<meta name="description" content="有效地限制访问 Web 服务器数据库文件的通用准则。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name="H1_37696546">控制数据库访问</a></h1>
+
+<p>可以通过多种技术有效地限制对数据库文件的访问。这些技术包括从配置数据库软件的安全功能到设置数据库文件的 NTFS 权限等。本主题概述如何有效限制对 Web 服务器数据库文件进行访问的基本准则。</p>
+
+<big><strong>控制数据库访问</strong></big><br>
+
+<ol>
+<li>在创建数据库的同时配置数据库软件的安全功能。使用某些版本的数据库软件提供的安全功能，可以非常严密地控制用户对数据库文件的访问。例如，使用 Microsoft SQL Server 的安全功能，可以控制用户如何访问特定数据库文件，包括这些用户如何访问特定的表、记录和字段。详细信息，请参阅数据库软件文档。</li>
+
+<li>通过设置适当的 NTFS 权限，可以保护存储在 Web 服务器上的数据库文件和目录的安全性。确保需要更新数据库文件的可信用户具有适当的权限。详细信息，请参阅<a href="iidfpsc.htm">设置目录或文件的 NTFS 权限</a>。</li>
+
+<li>可以通过适当的 NTFS 权限保护文件的数据源名 (DSN)，数据源名可能包含用户 ID 和密码。</li>
+<li>可以通过适当的 NTFS 权限保护 .asp 文件，此文件包含将用户名和密码信息传递给数据库的脚本。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;请将 ASP 数据库脚本（特别是那些包含用户名和密码信息的脚本）转换成安全的 COM 服务器组件。详细信息，请参阅随 Platform SDK 提供的 Internet 信息服务软件开发工具包。</p>
+
+<li>通过适当的 Web 服务器身份验证方法识别尝试访问数据库的用户的身份。数据库用户身份验证在很大程度上依赖于用来连接数据库的协议。例如，如果决定使用 SQL Server 的“命名管道”默认连接协议，则可能会通过其他 SQL Server 身份验证对 Windows 用户帐户凭据进行验证。应认真阅读数据库软件文档，了解不同身份验证方法的集成原则。</li>
+</ol>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

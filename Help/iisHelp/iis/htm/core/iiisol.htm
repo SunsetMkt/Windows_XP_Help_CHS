@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>独立应用程序</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关为防止系统崩溃，独立应用程序以在单独的内存空间（进程外）运行的步骤信息。通过这种方式，即使单个应用程序失败，计算机上的其他应用程序也不会受到影响。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="Isolating">独立应用程序</a></h1>
+
+<p> 所谓独立应用程序，即意味着它们是在与 Web 服务器和其他应用程序不同的进程或内存空间中运行的。可以将应用程序独立为三个应用程序保护级别之一。有关详细信息，请参阅“关于应用程序”主题中的<a href="iiwarndc.htm#app_2">应用程序保护</a>。有关性能问题的详细信息，请参阅<a href="iiabtpm.htm">关于性能调整</a>。</p></p>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;“服务器端包含 (SSI)”和“Internet 数据库连接器 (IDC)”应用程序无法在 Web 服务器之外的内存空间运行。</p>
+
+<big>设置或更改应用程序保护级别</big><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择网站或应用程序的<a href="iiwarndc.htm#app_1">开始位置目录</a>。</li>
+<li>打开目录的属性页，然后单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+
+<p>如果所处目录被列为“开始位置”目录，需填写“应用程序名”对话框。</p>
+
+<li>从“应用程序保护”下拉菜单中，选择适当的进程选项。</li>
+
+<li>单击“确定”。</li>
+
+<p>创建单独的进程之前，Web 服务器将首先处理完当前对应用程序的所有请求。下一次对应用程序进行请求时，将在单独的内存空间运行应用程序。</p>
+</ol>
+
+<hr class="iis" size="1"><p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

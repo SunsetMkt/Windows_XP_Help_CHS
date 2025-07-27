@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于容量计划</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="关于网络容量性能问题的概念性信息。包括对限制带宽使用与连接数的建议。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name="H1_37719965">关于容量计划</a></h1>
+
+<p>IIS 包括许多属性设置，非常便于调整网站性能。本主题描述与网络容量相关的属性以及如何调整这些属性。还将根据通信量和计划维护的站点类型对硬件提出建议。</p>
+
+<p><b>注意</b>&nbsp;&nbsp;&nbsp;要改进网站的高级性能和容量规划能力，可以考虑使用 <a href ="http://www.microsoft.com/commerceserver/default.htm">Microsoft Commerce Server</a>。Commerce Server 2000 功能全面，开发人员可以利用它们快速建立可缩放的、以用户为中心的、商家对消费者和商家对商家的电子商务网站。它还提供了完善的商务分析工具，可供您及时捕捉商机以及完善在线商业促销。</p>
+
+<p>本主题包括：</p>
+
+<ul>
+<li><a href="#RestrictingBandwidth">限制带宽</a></li>
+<li><a href="#LimitingConnections">限制连接</a></li>
+<li><a href="#NetworkConnectionCapacity">网络连接容量</a></li>
+
+</ul>
+
+<h2><a name="RestrictingBandwidth">限制带宽</a></h2>
+
+<p>通过限制 IIS 使用的连接带宽，可以为其他应用程序（如电子邮件）保留可用的带宽。带宽限制只限制静态 HTML 文件所使用的带宽。</p>
+
+<p>可以使用<a href="iiabtpm.htm">关于性能调整</a>中介绍的工具，确定是否应该限制 IIS 的带宽。请注意，虽然一天中的连接尝试总数可以反映站点活动的大体情况，但还需要考虑连接速率（每秒钟连接数）的变化以检查高峰期是否存在拥塞问题。如果所用带宽通常超过总连接带宽的百分之五十，则需要考虑进行升级。</p>
+
+
+
+<h2><a name="LimitingConnections">限制连接</a></h2>
+
+<p>如果限制同一时间内到网站的连接数，可以为使用相同连接的其它服务或使用同一台计算机的其它应用程序保存资源。注意，当限制到单个网站的连接数时，大多数浏览器通常最多同时建立四个连接从网页中下载文本和图形。连接限制之外的所有连接尝试都被拒绝。关于如何限制连接的说明，请参阅<a href="iilimcn.htm">限制连接和设置连接超时</a>。</p>
+
+<h2><a name="NetworkConnectionCapacity">网络连接容量</a></h2>
+
+<p>除计算机硬件外，网络连接类型也会直接影响服务器的性能。IIS 的可用带宽也会受到在计算机上运行的、需要网络带宽的其它应用程序（如电子邮件）的影响。</p>
+
+<p>在中等繁忙的站点，IIS 完全可以使一个 100 Mbps 的以太网卡处于饱和状态。为防止服务器受到有限的网络容量的限制，可使用多个 100 Mbps 以太网卡。要查看网络的饱和程度，可检查客户端和服务器上的 CPU 使用率。如果客户端和服务器都没有受到 CPU 容量的限制，则可能存在其它问题。使用包含在 Windows&nbsp;2000 Server 中的“网络监视器”可以检查网络利用率。如果客户端或服务器的网络利用率接近百分之百，则很可能是网络存在瓶颈。以太网或基于令牌网络的过载值可能较低，只有 40%。有关访问“网络监视器”的详细信息，请参阅 Windows&nbsp;XP 文档。</p>
+
+<p>不同品牌的网卡性能上也存在差异。网卡性能也会受到配置网卡时所使用的驱动程序及其设置的影响。请咨询网卡制造商是否有更新的驱动程序。</p>
+
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

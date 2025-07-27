@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>为网页添加页脚</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何配置 Web 服务器自动将 HTML 格式的文件插入到所有发送出去的网页底部的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37692420">为网页添加页脚</a></h1>
+
+<p>可以对 Web 服务器进行配置，自动将 HTML 格式的文件插入到 Web 服务器发送出去的所有网页的底部（不支持对 ASP 网页附加页脚）。例如，可以在文件中包含 HTML 格式的说明，将简单的文字消息和徽标图案添加到网页中。详细信息，请参阅<a href="iihtmat.htm">关于网站管理</a>和<a href="iisiwelc.htm">服务器端包含</a>。</p>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;文档页脚可能会降低 Web 服务器的性能，尤其在网页访问频率较高时。</p>
+
+<big>为所有网页添加页脚</big><br>
+
+<ol>
+<li>创建一个 HTML 页脚文件，并将其保存在 Web 服务器的硬盘上。</li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;页脚文件不应是完整的 HTML 文档，应该只包含定义页脚内容外观格式所需的那些 HTML 标记。例如，将公司名称添加到所有网页底部的页脚文件应包含文本和定义文本字体及颜色所必需的 HTML 标记。</p>
+
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择某个网站、目录或文件，并打开其属性页。</li>	
+<li>单击“文档”选项卡，然后选中“启用文档页脚”复选框。</li>						
+<li>在文本框中，输入页脚文件的完整本地路径，或者使用“浏览”按钮导航到此页脚文件。</li>	
+</ol>
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

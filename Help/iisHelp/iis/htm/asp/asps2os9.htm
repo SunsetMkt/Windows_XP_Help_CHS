@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>Database Connectivity</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT><META NAME="DESCRIPTION" CONTENT="Internet Information Services reference information">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="EN-US">
+<META NAME="MS-IT-LOC" Content="Internet Information Services"> 
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<H1><A NAME="_database_connectivity"></A><SUP></SUP>Database Connectivity</H1>
+
+<P>If you are creating a Web-based application, your application is probably going to have forms. And it will probably also require some kind of database. ActiveX<sup>&reg;</sup> Data Objects (ADO) provides you with a set of powerful tools for accessing and manipulating data sources.</P>
+
+<P>The samples in this section illustrate the techniques required to use ADO effectively, and how you can best put its functionality to use in a Web-based application.
+
+<UL type=disc>
+	<LI><A HREF="/iishelp/iis/htm/asp/asps3unt.asp">Simple Query</A>: Illustrates how you can use ADO and ASP together to perform simple database queries.</li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps3reb.asp">Limit Query Results</A>: Shows how your scripts, using ASP and ADO, can limit the number of rows returned in a recordset.</li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps6fax.asp">Scrollable Query</A>: Demonstrates a multidirectional, scrollable query with ADO.</li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps7q0j.asp">Add/Delete Records</A>: Illustrates the techniques you need to use to add and delete records from a data source by using ASP and ADO.</li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps9uk3.asp">Update Records</A>: Shows how your application can use ADO to update existing records.</li>
+
+	<LI><A HREF="/iishelp/iis/htm/asp/asps05kj.asp">Executing Stored Procedures</A>: Illustrates how your ASP scripts can use ADO to execute stored database procedures.</li>
+</UL>
+
+<P>For more information on ADO, and Microsoft data access tools in general, refer to the <B>Microsoft Data Access </B>documentation.</P>
+<hr class="iis" size="1">
+<p align="center"><em><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. All rights reserved.</a></em></p>
+</BODY>
+</HTML>

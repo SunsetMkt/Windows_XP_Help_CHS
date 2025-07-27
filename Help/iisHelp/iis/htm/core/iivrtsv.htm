@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>网站和 FTP 站点</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="包含链接的导航页，这些链接指向有关设置、命名和管理服务器上网站和 FTP 站点的信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37761499">网站和 FTP 站点</a></h1>
+
+<p>起初，每个域名（如 www.microsoft.com）只表示一台计算机。而现在，运行 Windows 2000&nbsp;Server 的一台计算机可以同时托管多个网站或 FTP 站点，看上去好像有几台计算机。每个网站都具有托管一个或多个域名的能力。由于每个站点都模仿一台计算机，因此有时也将站点称为“虚拟服务器”。</p>
+
+<p>本节包含：</p>
+
+<ul>
+<li><a href="iivsovr.htm">关于网站和 FTP 站点</a>：描述网站和 FTP 站点及其属性的概念信息。</li>
+
+<li><a href="iiststp.htm">启动和停止站点</a>：有关使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>启动和停止站点的过程信息。</li>
+
+
+
+<li><a href="iiprsovr.htm">设置 FTP 消息和目录输出样式</a>：为 FTP 客户端创建自定义消息和目录列表格式。</li>
+
+<li><a href="iinamvs.htm">命名网站</a>：将唯一的主机头名、IP 地址和端口组合分配给网站。</li>
+
+<li><a href="iicodira.htm">重新启动 IIS</a>：通过 <a href="iiabuti.htm">Internet 信息服务管理单元</a>停止和启动 Internet 服务。</li>
+
+
+
+<li><a href="iivspro.htm">更改继承的默认值</a>：更改站点的全局默认设置。</li>
+
+<li><a href="iitasks.htm">备份配置数据库</a>：备份 IIS 配置设置。</li>
+
+<li><a href="iirestore.htm">还原配置数据库</a>：还原 IIS 配置设置。</li>
+
+
+</ul>
+
+<p>本节不包含：</p>
+
+<ul>
+<li>网络命名系统；请参阅<a href="iinrsov.htm">名称解析</a>。</li>
+<li>增强安全性设置；请参阅<a href="iisecsa.htm">安全性</a>。</li>
+<li>添加虚拟目录；请参阅<a href="iicodirv.htm">创建虚拟目录</a>。</li>
+</ul>
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+
+<span style="display:none"><LAYER VISIBILITY=HIDE>
+（下列单词只用于搜索，不会显示在网页中。）管理, 基本, 简单, 欢迎, 概述, 管理员, 管理器, c:\, inetpub, wwwroot, url, internet, 友好名, 文本名, iis, 管理单元, ism, internet 服务管理器, 别名, 物理位置, 发布点, ftp, 站点管理员, 配置, 设置, 安装, html, http, 网页, 浏览器, 旧的, 更旧, 以前, 版本, 2.0, 3.0, 默认配置, 默认设置, 默认, 继承, explorer, navigator, 站点, 记事本, frontpage, visual interdev, asp, active server pages, 内容, 文件, 更改, 树, 目录, 文件夹, 结构, 关联, 链接, 主, 启动, 默认, 虚拟目录, vdir, v-dir, vroot, v-root, 虚拟根, 虚拟服务器, unc, http, ip, 地址, 访问, 详细信息, 许多, 多个, 几个, 建立, 创建, 更多, 添加, 新的, web, 站点, 单独, 用户, 领域, 域, dns, 主机, 服务器, 多主机, multihome, 主机, 头, ip 地址, web 地址, 命名空间, 启动, 停止, 添加, 维护, 消息, ftp, 下载, 上载, 继续执行, 输出, 样式, 自定义, 端口, 头, 重新启动, 服务, 服务器, 全局, 父, 子, 子网, 子文件夹, 子目录, 远程, 基于浏览器的, 通过网络, 管理, 管理员, 代理, 有限的, 操作员, 分配, offsite, off-site, 在整个网络中, 通过 internet, 下层, 工作站, 客户, 属性, 属性页
+</layer></span>
+</font>
+</body>
+</html>

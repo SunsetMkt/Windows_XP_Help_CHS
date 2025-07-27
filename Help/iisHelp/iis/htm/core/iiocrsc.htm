@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>获取服务器证书</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关如何获取激活 Web 服务器 SSL 特性所需服务器证书的过程信息。服务器证书使用户可以验证您的服务器，检查 Web 内容的合法性，并建立安全连接。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37718888">获取服务器证书</a></h1>
+
+<p>可以通过两种方式获取服务器证书。可以<a href="#certserver">颁发自己的证书</a>，或者从<a href="#CAcerts">证书颁发机构</a>获得证书。下列步骤解释如何在服务器上实施证书。有关证书的详细信息，请参阅<a href="iiabcsc.htm">关于证书</a>。</p>
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;保护好证书和密钥对非常重要；必须将它们备份到磁盘并保存在安全的地方。
+
+<ul>
+<li><a href="#certserver">发布自己的服务器证书</a></li>
+<li><a href="#CAcerts">从证书颁发机构获取服务器证书</a></li>
+<li><a href="#savekeys">创建服务器证书和私钥的备份副本</a>
+</li>
+</ul>
+
+<a name="certserver"></a><big>发布自己的服务器证书</big><br>
+
+<p>当决定是否颁发自己的服务器证书时需考虑下列问题：</p>
+<ul>
+
+<li>考虑证书服务提供的功能；Microsoft Certificate Services 2.0 包含不同的证书格式，并提供与证书相关的活动的审核或日志。</li> 
+<li>比较颁发自己的证书和从证书颁发机构购买证书两者之间的费用。</li>
+<li>在了解、实施和将现有的安全系统和策略与证书服务集成之前，您的公司可能需要一个原始调整阶段。</li>
+</ul>
+
+<ol>
+<li>使用证书服务可以创建用来发布和管理证书的自定义服务。可以为 Intranet 创建服务器证书，以便公司能够完全控制证书管理策略。详细信息，请参阅 Microsoft 证书服务文档。</li>
+
+<li>使用 <a href="iikeysc.htm#TheWebServerCertificateWizard">Web 服务器证书向导</a>可以请求和安装服务器证书。</li>
+</ol>
+
+<p><strong>注意</strong>
+<ul>
+<LI>只能对企业证书服务进行服务器证书的联机请求。IIS Web 服务器证书向导不识别同一台计算机上的独立证书服务。要先使用脱机证书请求将请求保存到文件中，然后再将其作为脱机请求进行处理（请参阅证书服务文档）。使用本地企业证书服务进行的联机注册不会受到影响。</LI>
+<LI>如果打开 SGC 证书，您可能会在“常规”选项卡上收到这样的通知：“证书无法检验其所有的预定用途”。这是由于 SGC 证书与 Windows 2000 的交互方式所致，但这并不表示证书无法正常工作。</LI>
+</UL>
+
+
+<p class="bigfix">&nbsp;</p>
+
+<a name="CAcerts"></a><big>从证书颁发机构获取服务器证书</big><br>
+
+<p>如果正在替换当前的服务器证书，IIS 将继续使用原有证书，直到完成新的请求。</p>
+
+<ol>	
+<li>找到能够满足您的商业需要的证书颁发机构，然后请求服务器证书。</li>
+
+
+<p>选择证书颁发机构时，请考虑下列几方面的问题：</p>
+
+<ul>       
+<li>证书颁发机构是否能够向您颁发证书，并使证书与访问服务器的所有浏览器兼容？</li>
+<li>证书颁发机构是否为经过验证的可信任的机构？</li>
+<li>证书颁发机构如何验证您的标识？</li>
+<li>证书颁发机构是否具有接收联机证书请求（如用 Web 服务器证书向导生成的请求）的系统？</li>
+<li>证书的初始费用以及更新或其他服务的费用是多少？</li>
+<li>证书颁发机构是否熟悉您所在组织或公司的利益？</li>
+</ul>
+
+	
+<p>要获取支持 Internet 信息服务的证书颁发机构的最新列表，请访问 <a href="http://www.microsoft.com/isapi/redir.dll?prd=backoffice&sbp=securityadvisor&pver=1.0&ar=security" target="_blank">Microsoft Security Advisor 网站</a>。在 <B>By Category</B>（按类别）列表中，选择 <B>Certification Authority Services</B>（证书颁发机构服务）。</p>
+
+<li>使用 <a href="iikeysc.htm">Web 服务器证书向导</a>创建证书请求，此请求将发送到证书颁发机构。</li>
+<li>将请求发送到证书颁发机构。它们将处理请求并向您发送证书。</li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;在处理请求或颁发证书之前，某些证书颁发机构要求您证明自己的身份。</p>
+<li>使用 <a href="iikeysc.htm">Web 服务器证书向导</a>来安装证书。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果某服务器证书是通过 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中的“证书向导”分配到服务器的，那么发送对此服务器证书的联机请求时，可能会将分配给证书颁发机构 (CA) 的证书安装到服务器上。文件夹“颁发的证书”将显示颁发给服务器的证书，但是证书实际上是颁发给 CA 的。</p>
+<p>要解决此问题，请在创建证书请求时脱机工作。在“证书向导”中选择“现在准备请求，但稍后发送”，不要选择“立即将证书请求发送到联机证书颁发机构”。
+</p>
+
+</ol>
+
+<h3><a name="savekeys">创建服务器证书和私钥的备份副本</a></h3>
+
+<p>在以前的 IIS 版本中，使用“密钥管理器”对服务器证书进行备份。而在此 IIS 版本中，“Web 服务器证书向导”替换了“密钥管理器”。因为 IIS 与 Windows 关系密切，所以可以使用“证书管理器”工具导出或备份服务器证书。</p>
+
+
+<big>备份服务器证书</big><br>
+<ol>
+<li>定位正确的证书存储位置。这通常是证书管理器中的本地计算机存储位置。</li>
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果没有在 MMC 中安装证书管理器，则需要<a href="#installCertManager">安装</a>。</p>
+<li>选择个人存储位置中的证书。</li>
+<li>打开“操作”菜单，指向“所有任务”，并单击“导出”。</li>
+<li>在“证书导出向导”中，选择“是，导出私钥”。</li>
+<li>保留向导默认设置，出现提示时输入证书备份文件的密码。</li>
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;不要选中“如果导出成功，删除密钥”复选框，因为这将禁用当前服务器证书。</p>
+
+<li>完成向导，导出服务器证书的备份副本。</li>
+</ol>
+
+<big><a name="installCertManager">将证书管理器添加到 MMC</a></big><br>
+
+<p>如果已经在 MMC 中安装了“证书管理器”，它将指向正确的“本地计算机”证书存储位置。</p>
+<ol>
+<li>打开 MMC 控制台，并从“文件”菜单中选择“添加/删除管理单元”。</li>
+<li>单击“添加”。</li>
+<li>选择“证书”。</li>
+<li>单击“添加”。</li>
+<li>选择“计算机帐户”选项。</li>
+<li>选择“本地计算机”选项。</li>
+<li>单击“完成”。</li>
+</ol>
+
+<h3>服务器证书及升级</h3>
+<p>由于 IIS 5.1 使用服务器证书的方式有所改变，因此升级到 Microsoft Windows XP 之后，在删除和重新分配服务器证书时可能会遇到困难。要解决此问题，请使用下列 Visual Basic 脚本更改配置数据库设置并删除证书，然后可以使用 IIS 中的“网站证书向导”重新分配证书。</p>
+<code>'将计算机名设置为计算机名称或 localhost<br>
+Set PathObj = GetObject("IIS://" &amp; MachineName &amp; "/w3svc")<br>
+PathObj.PutEx 1, "SSLCertHash", ""<br>
+PathObj.PutEx 1, "SSLStoreName", ""<br>
+PathObj.Setinfo</code><br><br>
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

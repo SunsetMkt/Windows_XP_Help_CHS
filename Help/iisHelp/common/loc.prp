@@ -1,0 +1,37 @@
+
+#
+# General Error Messages
+err.propload=加载属性时出错。
+err.badurl=无效的 URL:
+
+#
+# Contents Properties
+#
+cnt.load=正在加载
+cnt.load.status=正在加载目录...
+cnt.load.elementname=正在加载 HHC 文件...
+cnt.load.status2=正在加载目录
+cnt.load.success=成功加载目录 HHC 文件。
+cnt.load.err=加载时出错
+cnt.merge.err=合并时出错
+cnt.merge.elementname=正在加载此部分...
+cnt.merge.errelement=无法加载此部分
+cnt.merge.success=成功加载此部分。
+
+#
+# Index Properties
+#
+idx.load.err=加载时出错
+idx.load.success=成功加载索引
+idx.load.elementname=正在加载 HHK 文件...
+idx.load.status=正在加载索引 HHK 文件...
+idx.load.status2=正在加载索引 HHK
+idx.display=显示主题
+
+#
+# Related Topics
+#
+rel.dlgcaption=相关主题
+rel.display=显示主题
+rel.cancel=关闭对话框
+rel.label=此处是有关如何操作的具体描述。请单击某个主题，然后单击“显示”。

@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>WWW 服务注册表项</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关系统注册表的参考信息；包含有关 WWW 服务注册表项的详细信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37747197">WWW 服务注册表项</a></h1>
+
+<p>除了在<a href="iiregssp.htm">服务特定的注册表项</a>中列出的参数外，WWW 服务还维护下列参数。</p>
+
+<p>注册表路径：</p>
+
+<p>HKEY_LOCAL_MACHINE\SYSTEM<br> \CurrentControlSet<br> &nbsp;\Services<br> &nbsp;&nbsp;\W3SVC<br> &nbsp;&nbsp;&nbsp;\Parameters</p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr>
+<td width=100% bgcolor="#C0C0C0"><strong>AcceptByteRanges</strong><br> REG_DWORD</td>
+</tr>
+<tr>
+<td width=100%> <strong>范围：</strong> 1、0 <br> <strong>默认值：</strong>1（启用）</td>
+</tr>
+<tr>
+<td width=100%>此值决定 HTTP 服务器是否处理“bytes:”类型的“Range”头。如果启用，服务器将通过发送“Accept-Range: bytes”头字段表示它接受范围请求，并根据 Internet 草案“Byte range extension to HTTP”处理指定了“Range: bytes=”头字段的传入请求。</td>
+</tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr>
+<td width=100% bgcolor="#C0C0C0"><strong>AllowSpecialCharsInShell</strong><br> REG_DWORD</td>
+</tr>
+<tr>
+<td width=100%> <strong>范围：</strong> 0、1 <br> <strong>默认值：</strong>0（禁用）</td>
+</tr>
+<tr>
+<td width=100%>此值控制当运行批处理文件（.bat 和 .cmd 文件）时，命令行是否允许 Cmd.exe 特殊字符（包括 | ( , ; % &lt; 和 &gt;)。这些特殊字符可能引起严重的安全隐患。如果此项目的值设置为 1，怀有恶意的用户可以执行服务器上的命令。所以，强烈建议将它设置为 0，即默认值。默认情况下，不能将这些特殊字符传递给脚本映射 CGI 小程序。如果设置为 1，这些特殊字符可以传递给脚本映射 CGI 小程序，除了管道字符 (|) 和标准 I/O 重定向字符（“&lt;”和“&gt;”），它们对于命令处理器有特殊的含义。 </td>
+</tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr>
+<td width=100% bgcolor="#C0C0C0"><strong>DLCSupport</strong><br>REG_DWORD</td>
+</tr>
+<tr>
+<td width=100%><strong>范围：</strong> 0、1 <br> <strong>默认值：</strong>0（禁用）</td>
+</tr>
+<tr>
+<td width=100%>此值表示是否启用低级客户端支持。一些早期版本的浏览器不支持主机头，主机头给予客户端访问共享一个 IP 地址的多个网站的能力。值为 0 意味着将不支持低级客户端。值为 1 意味着将支持低级客户端。 </td>
+</tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr>
+<td width=100% bgcolor="#C0C0C0"><strong>DLCCookieNameString</strong><br>REG_STRING</td>
+</tr>
+<tr>
+<td width=100%><strong>范围：</strong> 字符串<br> <strong>默认值：</strong>不适用</td>
+</tr>
+<tr>
+<td width=100%>此值指定服务器发送给低级客户端的 HTTP cookie 的名称。发送给低级客户端的 cookie 将行使伪主机头的功能。这样，服务器就可以将客户端的 HTTP 请求转发到适当的网站。</td>
+</tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr>
+<td width=100% bgcolor="#C0C0C0"><strong>DLCHostNameString</strong><br>REG_STRING</td>
+</tr>
+<tr>
+<td width=100%><strong>范围：</strong> 字符串<br> <strong>默认值：</strong>不适用</td>
+</tr>
+<tr>
+<td width=100%>此值表示包含低级主机菜单的网站的名称，此菜单保存在 <STRONG>LCCookieMenuDocumentString</STRONG>。低级主机菜单是一个文件（如 HTML 文件、asp 文件等等），它列出了单个 IP 地址上的所有网站。用户可以从此菜单选择适当的服务器实例。</td>
+</tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr>
+<td width=100% bgcolor="#C0C0C0"><strong>DLCCookieMenuDocumentString</strong><br>REG_STRING</td>
+</tr>
+<tr>
+<td width=100%><strong>范围：</strong> 字符串<br> <strong>默认值：</strong>不适用</td>
+</tr>
+<tr>
+<td width=100%>此值为支持 cookies 但不支持主机头的客户端指定主机菜单的文件名。Cookie 作为“伪”主机头，而主机菜单列出共享单个 IP 地址的所有网站。在浏览器会话被终止之前，Cookie 附加于所有对主机的请求；但是，终止浏览器会话并不删除 cookie。</td>
+</tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr><td width=100% bgcolor="#C0C0C0"><strong>DLCMungeMenuDocumentString</strong><br>REG_STRING</td></tr>
+<tr><td width=100%><strong>范围：</strong> 字符串<br> <strong>默认值：</strong>不适用</td></tr>
+<tr><td width=100%>此值为不支持 cookies 的客户端指定主机菜单的文件名。此文件用来解析低级客户端发出的请求 URL，方法是在 URL 中嵌入主机名。</td></tr>
+</table>
+<p>&nbsp;<big></big></p>
+  
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr><td width=100% bgcolor="#C0C0C0"><strong>DLCMenuString</strong><br>REG_STRING</td></tr>
+<tr><td width=100%><strong>范围：</strong> 字符串<br> <strong>默认值：</strong>不适用</td></tr>
+<tr><td width=100%>此值指定低级客户端请求的 URL 的特殊前缀。服务器将针对此字符串检查所有低级请求。</td></tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr><td width=100% bgcolor="#C0C0C0"><strong> LogSuccessfulRequests </strong><br>REG_DWORD</td></tr>
+<tr><td width=100%> <strong>范围：</strong> 0、1 <br> <strong>默认值：</strong>1（启用）</td></tr>
+<tr><td width=100%>确定是否在日志文件中记录成功的活动。值为 1 时记录成功的活动；为 0 时则将它关闭。</td></tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr><td width=100% bgcolor="#C0C0C0"><strong> SSIEnableCmdDirective </strong><br>REG_DWORD</td></tr>
+<tr><td width=100%> <strong>范围：</strong> 0、1 <br> <strong>默认值：</strong>0（禁用）</td></tr>
+<tr><td width=100%>可以使用“服务器端包含”的 <STRONG>#exec cmd</STRONG> 指令执行 shell 命令。具有安全意识的站点可能希望通过将此值设置为 0 来禁用 <STRONG>#exec cmd</STRONG> 命令，以作为附加的安全防范，特别是当允许不受信任的团体将文件放置在服务器上时。默认情况下，此值不存在于注册表中；要允许此指令执行 Shell 命令，必须首先创建此值并将其设置为 1。</td></tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr><td width=100% bgcolor="#C0C0C0"><strong> TryExceptDisable </strong><br>REG_DWORD</td></tr>
+<tr><td width=100%> <strong>范围：</strong> 0、1 <br> <strong>默认值：</strong>0（禁用）</td></tr>
+<tr><td width=100%>此参数将在调用 ISAPI 应用程序的 HttpExtensionproc() 时禁用异常缓存。将 TryExceptDisable 设置为 1 将导致运行不正常的 ISAPI 应用程序异常停止服务器，但它允许开发人员进行及时调试；因此仅在调试 ISAPI 应用程序时才将此参数设置为 1。</td></tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr><td width=100% bgcolor="#C0C0C0"><strong> UploadReadAhead </strong><br>REG_DWORD</td></tr>
+<tr><td width=100%> <strong>范围：</strong> 0 - 0x80000000<br> <strong>默认值：</strong>48KB</td></tr>
+<tr><td width=100%>当客户端把数据发送到服务器时，这将是服务器把控制权转交给应用程序之前所读取的默认数据量。应用程序将负责读取其余的数据。如果要增加大小，则应增加服务器 RAM 的数量。 
+</td></tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<table border="1" cellpadding="4" cellspacing="1" width="100%">
+<tr><td width=100% bgcolor="#C0C0C0"><strong> UsePoolThreadForCGI </strong><br>REG_DWORD</td></tr>
+<tr><td width=100%> <strong> 范围：</strong> 1、0 <br><strong>默认值：</strong>1（启用）</td></tr>
+<tr><td width=100%> 默认情况下，IIS 使用服务器池线程进行 CGI 处理。这意味着延长请求时间的 CGI 请求将消耗一个服务器池线程。</td></tr>
+</table>
+<p>&nbsp;<big></big></p>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE> 
+（下列单词只用于搜索，不会显示在网页中。） W3SVC
+</layer></span>
+
+</font>
+</body>
+</html>

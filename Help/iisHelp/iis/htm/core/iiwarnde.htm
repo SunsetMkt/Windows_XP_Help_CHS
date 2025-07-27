@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>创建应用程序</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关如何指定起点目录（应用程序根）和设置应用程序边界的过程信息。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37777837">创建应用程序</a></h1>
+
+<p>要创建应用程序，请将某个目录指定为应用程序的开始位置（应用程序根目录），然后可以设置应用程序的属性。每个应用程序都可以有一个友好名称，此名称出现在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，以便您区分各个应用程序。此应用程序名在其他地方不会用到。</p>
+
+<p>可以从应用程序边界中删除目录，使得对此目录及其子目录中的文件的请求无法启动此应用程序。从应用程序边界中删除目录不会将此目录从网站或计算机硬盘上删除。</p>
+
+<big>创建应用程序</big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择作为应用程序开始位置的目录。可以将网站的主目录指定为应用程序开始位置。</li>
+<li>打开目录的属性页，然后单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+<li>单击“创建”按钮。</li>
+<li>在“应用程序名”文本框中，输入应用程序名。</li>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果出现“删除”按钮而不是“创建”按钮，则表明已经创建了应用程序。</p>
+
+</ol>
+
+<p class="bigfix">&nbsp;<big></big></p>
+
+<big>从应用程序中删除目录</big><!--</p>--><br>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，选择要删除的目录。</li>
+<li>打开目录的属性页，然后单击“主目录”、“虚拟目录”或“目录”选项卡。</li>
+<li> 单击“删除”按钮。</li>
+</ol>
+
+<p><strong>技巧</strong></p>
+<ul>
+<li>要终止应用程序并将其从内存中卸载，请单击“卸载”按钮。如果“卸载”按钮无效，则表明您没有位于应用程序的开始位置。</li>
+<li>要将主目录与应用程序分离，请单击“删除”按钮。</li>
+<li>选中“在单独的内存空间运行（独立进程）”复选框，在独立于 Web 服务器进程的进程中运行应用程序。运行隔离的应用程序可以使其他应用程序（包括 Web 服务器自身）在此应用程序失败或终止响应时免受影响。</li>
+</ul>
+
+<big>为应用程序设置权限</big><!--</p>--><br>
+
+<ul>
+<li> 将权限设置为“无”，防止运行任何程序或脚本。<br>或</li>
+<li> 设置为“纯脚本”，以便在无须设置“执行”权限的情况下，使映射到脚本引擎的应用程序可以在此目录中运行。也可以使用包含 ASP 脚本、Internet 数据库连接器 (IDC) 脚本或其他脚本的目录的“脚本”权限。“脚本”权限比“执行”权限更安全，因为可以限制在此目录中运行的应用程序。有关使应用程序成为脚本引擎的信息，请参阅<a href="iipy_34.htm">应用程序映射</a>属性页。<br> 或</li>
+<li>设置“脚本和可执行文件”，以便允许任何应用程序在此目录中运行，其中包括映射到脚本引擎和 Windows 二进制文件（.dll 和 .exe 文件）的应用程序。</li>
+</ul>
+
+<hr class="iis" size="1"><p align="center"><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于网站和 FTP 站点</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="有关网站和 FTP 站点（虚拟服务器）的概念信息。描述默认网站设置是如何继承的、远程管理选项以及默认情况下授予网站 Operators 组的、受到一定限制的管理特权。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="H1_37761870">关于网站和 FTP 站点</a></h1>
+
+<p>本主题包括网站和 FTP 站点（虚拟服务器）的概念性信息，并描述网站和 FTP 站点的属性、管理特权以及如何从远程位置进行管理。本节包含：</p>
+
+<ul>
+<li><a href="#virtualservers">网站和 FTP 站点</a></li>
+<li><a href="#propertiesandinheritanceofpropertiesonvirtualservers">站点属性和属性继承</a></li>
+
+<li><a href="#ftpresume">FTP 重新启动</a></li>
+<li><a href="#mimemap">MIME 映射</a></li>
+</ul>
+
+
+
+
+<h2><a name="virtualservers">网站和 FTP 站点</a></h2>
+
+<p>在 Windows XP&nbsp;Professional 中，可以通过一台计算机主持一个网站和一个 FTP 站点。下例说明了 Intranet 的情况，在此示例中，系统管理员在部门工作站上安装了 IIS ，然后创建了两个默认站点：一个网站和一个 FTP 站点。</p>
+
+<img src="iivsovr2.gif" alt="一个物理服务器和两个站点">
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;如果需要在一台计算机上主持多个网站或 FTP 站点，则必须安装 Windows Server 产品。</p>
+
+<h2><a name="propertiesandinheritanceofpropertiesonvirtualservers">站点属性和属性继承</a></h2>
+
+<p>属性是可以在网站上设置的值。例如，可以使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>将分配给默认网站的 TCP 端口号的默认值 80 更改为另一个值。站点的属性显示在属性页中，而存储在<em>配置数据库</em>中。</p>
+
+<p>在 IIS 安装过程中，会为属性页中的各种属性指定默认值。可以在 IIS 中使用这些默认设置，也可以按照自己的 Web 发布需要对这些设置进行自定义。通过调整默认设置，可以提供附加值、提高性能并增强安全性。</p>
+
+<p>属性可以分别在站点级别、目录级别或文件级别进行设置。较高级别（如站点级）的设置可以由较低级别（如目录级别）自动使用或继承，但仍然可以在较低级别单独进行编辑。在个别站点、目录或文件上更改某属性后，日后对主默认值的更改不会自动覆盖个别设置，而是向您发出警告消息，询问是否要对个别站点、目录或文件的设置进行更改，以便与新的默认值匹配。</p>
+
+<p>某些属性的值采用列表形式。例如，当用户未在 URL 中指定文件时，默认文档的值可以是已加载文档的列表。自定义错误消息、TCP/IP 访问控制、脚本映射和 MIME 映射也是以列表格式存储的属性。虽然这些列表有很多项，但 IIS 仍将整个列表作为一个属性。如果在目录上编辑列表，然后在站点级别进行了全局更改，则目录级别的列表将由站点级别的新列表完全替换，而不会合并列表。同样，具有列表值的属性只在主级别或使用非默认列表值的站点或目录上显示其列表。如果列表值是继承的默认值，则不会显示出来。</p>
+
+<p><a href="iiwarndg.htm">筛选器</a>以列表格式显示，但不将它视为列表。如果在站点级别添加筛选器，则新筛选器将与主级别的筛选器列表合并。如果两个筛选器具有相同的优先级设置，则在加载站点级的筛选器之前先加载主级别的筛选器。</p>
+
+
+
+<p>下图说明了用于设置所有网站属性的属性页。</p>
+
+<img src="iivsovr3.gif" alt="网站的属性页" width="462" height="455">
+
+<p>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，可以单击属性页中的“帮助”按钮获得各个属性设置的详细信息。</p>
+
+
+
+
+<h2><a name="ftpresume">FTP 重新启动</a></h2>
+
+<p> FTP 重新启动解决下载文件时的网络连接断开问题。支持 FTP 重新启动的客户端只需使用 REST 命令重新建立其 FTP 连接，文件传输便能自动找到断点。 </p> 
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;使用 FTP 下载通配符请求 (MGET)、将文件上载到服务器 (PUT) 或下载大于 4G 字节的文件时，不启用 IIS 5.1 中实现的 FTP 重新启动。</p>
+
+
+<h2><a name="mimemap">MIME 映射</a></h2>
+
+<p>多用途网际邮件扩充协议 (MIME) 是一个 Internet 标准，它为 Web 浏览器提供了查看多格式文件的方式。在 <a href="iipx.htm">Internet 信息服务</a>属性页的“文件类型”对话框中列出了在 Windows XP 上默认安装的已注册文件类型。</p>
+
+<p>可以在计算机、网站、虚拟目录、目录或文件级别上配置 MIME 映射。要在计算机级别上配置 MIME 映射，请使用 <a href="iipx.htm">Internet 信息服务</a>属性页。要在其他级别上配置 MIME 映射，请使用 <a href="iipy_9.htm">HTTP 头</a>属性页。</p>  
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;在计算机级别上配置的 MIME 映射不会自动覆盖在较低级别设置的映射。</p> 
+
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

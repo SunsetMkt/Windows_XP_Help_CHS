@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>关于加密</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="description" CONTENT="有关 Web 服务器加密功能的概述。加密是将传送的信息进行编码，以保护服务器和用户在访问限定的网站内容时两者之间通信的机密性。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name="H1_37695400"></a>关于加密</h1>
+
+<p>通过不安全的网络（如 Internet）传输敏感信息时，有可能被计算机黑客所截取。因此，如果为用户提供访问权限的网站是处理敏感的金融或个人信息的网站，就必须使用加密技术保护您的网络链接的安全性。</p>
+
+
+<ul>
+<li><a href="#Howencryptworks">加密的工作原理</a></li>
+<li><a href="#pub-keyencryption">公钥加密</a></li>
+<li><a href="#encryptstrength">会话密钥加密强度</a></li>
+</ul>
+
+<h2><a name="Howencryptworks">加密的工作原理</a></h2>
+
+<p>加密是用数学函数打乱信息编码的处理过程，除特定的接收者之外，任何人想要得到原始信息都极其困难。此过程的核心是一个数学值，称为“密钥”，函数使用密钥将信息打乱（采用独特而复杂的方法）以达到加密的目的。</p>
+
+<p>Web 服务器也基本使用同样的加密技术处理保护与用户通信链接的安全性。建立安全链接后，在 Web 服务器和用户的 Web 浏览器上都可以使用专门的“会话”密钥来加密和解密信息。例如，当验证过的用户尝试从要求安全通道的网站下载文件时，Web 服务器使用会话密钥加密此文件及相关的 HTTP 头。Web 浏览器在接收到加密的文件以后，使用同一会话密钥的副本恢复此文件。</p>
+
+<p>这种加密方法虽然安全，但具有一个内在的缺点：在创建安全链接的过程中，会话密钥副本可能会通过不安全的网络进行传输。这意味着如果计算机黑客想要破坏此链接，只需截取并窃得此会话的密钥。因此，为了避免出现这种情况，Web 服务器还需执行其他加密方法。</p>
+
+<h2><a name="pub-keyencryption">公钥加密</a></h2>
+
+<p>Web 服务器安全套接字层 (SSL) 安全功能利用一种称为“公钥”的加密技术保证会话密钥在传输过程中不被截取。公钥加密使用两个附加密钥，即“私钥”和“公钥”，其工作原理如下：</p>
+
+<ol>
+<li>用户的 Web 浏览器与 Web 服务器建立安全 (https://) 通信链接。</li>
+<li>用户的 Web 浏览器和服务器进行协商，确定用于保证通信安全性的加密程度。</li>
+<li>Web 服务器将其公钥发送给浏览器。</li>
+<li>Web 浏览器使用服务器公钥将生成会话密钥过程中所使用的信息进行加密，并将其发送到服务器。</li>
+<li>服务器则使用私钥解密此消息，然后生成会话密钥，将其用公钥加密后，再发送给浏览器。</li>
+<li>然后，Web 服务器和浏览器便使用会话密钥加密和解密传输的数据。 </li>
+</ol>
+
+<img src="iicrysc.GIF" width=350 height=170 border=0 alt="加密和解密图表">
+
+<p>请注意：私钥在保证通信链接安全性方面担当起了一个重要的角色。应采取严密防范措施保护私钥，防止丢失或被窃。可以将证书复制到软盘上进行备份，并将软盘保存在安全的地方。同样，如果您怀疑私钥可能受到损害，请通知证书颁发机构，使用 Web 服务器证书向导创建新的证书请求，然后获得新的服务器证书。详细信息，请参阅<a href="iikeysc.htm">使用新的安全任务向导</a>。</p>
+
+
+<h2><a name="encryptstrength">会话密钥加密强度</a></h2>
+
+<p>会话密钥的“强度”与组成会话密钥文件的二进制“位”的位数成正比。这意味着位数较多的会话密钥具有更强的安全性，要强行解密也更加困难。</p>
+
+<p>当用户尝试与您的服务器建立安全通信通道时，用户浏览器必须协商好可能采用的最强加密级别，或称会话密钥强度，用以保护此通道上的通信安全性。这意味着 Web 服务器和用户浏览器必须具有兼容的会话密钥加密和解密功能。例如，当 Web 服务器配置成需要最小 40 位（默认）加密长度的会话密钥时，希望保证连接安全性的用户的 Web 浏览器也必须能够处理 40 位会话密钥信息。</p>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

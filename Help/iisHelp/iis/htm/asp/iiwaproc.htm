@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>编写过程</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+ 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="解释如何在 ASP 脚本环境中定义和编写过程。包含 VBScript 和 JScript 范例。"><META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+
+<h1><a name="H1_37776449">编写过程</a></h1>
+
+
+<p>“过程”是一组脚本命令，可以执行特定任务并返回值。可以定义自己的过程，并在脚本中重复调用这些过程。</p>
+
+<p>可以将过程定义放在调用此过程的同一 .asp 文件中，或者可以将常用的过程放在共享的 .asp 文件中，并使用 <a href="../core/iisiinc.htm">#include</a> 命令将此文件包含在调用此过程的其他 .asp 文件中。另外，您还可以将具有某种功能的过程封装在 COM 组件中。</p>
+
+<h2><a name="H2_37777134">定义过程</a></h2>
+
+<p>过程定义可以出现在 &lt;SCRIPT&gt; 和 &lt;/SCRIPT&gt; 标签内，并且必须符合已声明的脚本语言的规则。用主脚本语言之外的其他语言编写的过程将使用 &lt;SCRIPT&gt; 元素。但是，用主脚本语言编写的过程使用脚本分隔符（&lt;% 和 %&gt;）。</p>
+
+<p>使用 HTML &lt;SCRIPT&gt; 标签时，必须使用两个属性以便确保服务器端能够处理脚本。使用 &lt;SCRIPT&gt; 标签的语法为：</p>
+
+<pre>&lt;SCRIPT LANGUAGE=JScript RUNAT=SERVER&gt;
+
+  <em>过程定义</em>
+
+&lt;/SCRIPT&gt;</pre>
+
+<p>RUNAT=SERVER 属性通知 Web 服务器处理服务器上的脚本。如果不设置此属性，将由客户端浏览器处理脚本。LANGUAGE 属性确定此脚本块使用的脚本语言。您可以为服务器指定任何语言，但服务器上必须已经安装了此语言的脚本引擎。可使用值“VBScript”指定 VBScript。可使用值“JScript”指定 JScript。如果没有设置 LANGUAGE 属性，则使用主脚本语言解释脚本块。</p>
+
+<p>脚本块中的命令必须以所选脚本语言形成一个或多个完整的过程。例如，下列命令定义 JScript 过程 <strong>MyFunction</strong>。</p>
+
+<pre>&lt;HTML&gt;
+&lt;SCRIPT LANGUAGE=JScript RUNAT=SERVER &gt;
+
+  function MyFunction()
+  {
+    Response.Write("您调用了 MyFunction()。")
+  }
+  
+&lt;/SCRIPT&gt;</pre>
+
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;不要在服务器端 &lt;SCRIPT&gt; 标记内包含任何不属于完整过程的脚本命令。不属于过程的命令可能导致无法预知的结果，因为代码是按下列顺序执行的：先按照出现的顺序执行的非默认语言编写的脚本块，然后是内嵌代码，最后是用默认语言编写的脚本块。此外，不能在过程中使用 ASP 输出定向命令 <code>&lt;%= %&gt;</code>。而应当使用 Response.Write 将内容发送到浏览器。</p>
+
+<h2><a name="callingprocedures">调用过程</a></h2>
+
+<p>要调用过程，需在命令中包含过程名。如果从 VBScript 中调用 JScript 过程，则过程名后必须使用括号；如果过程没有变量，则使用空括号。如果从 JScript 中调用 VBScript 或 JScript 过程，则过程名后必须总是使用括号。</p>
+
+<p>对于 VBScript，调用过程时也可以使用关键字 Call。不过，如果调用的过程要求变量，则变量列表必须包含在括号内。如果省略关键字 Call，同时也必须省略包含变量列表的括号。如果使用 Call 语句调用任何内置函数或用户定义函数，将丢弃函数的返回值。</p>
+
+<p>下例分别采用两种不同的脚本语言（VBScript 和 JScript）说明如何创建和调用过程。</p>
+
+<pre>&lt;%@ LANGUAGE=VBScript %&gt;
+&lt;HTML&gt; 
+  &lt;BODY&gt;
+  &lt;!-- 从 VBScript 内调用 JScript 过程 --&gt;
+  &lt;% call printDate() %&gt;
+  &lt;!-- 从 VBScrip 内调用 VBScript 过程 --&gt;
+&lt;% Echo %&gt; 
+  &lt;BR&gt;
+  &lt;/BODY&gt;
+&lt;/HTML&gt;
+
+&lt;%Sub Echo%&gt;
+&lt;!-- 注意：不会输出任何结果，除非通过诸如 http://localhost/test.asp?x=1%20have&y=a%20cunning&z=plan 的查询字符串调用网页 --&gt;
+&lt;%
+  Response.Write "&lt;TABLE BORDER=1&gt;" & _
+    "&lt;TR&gt;&lt;TH&gt;Name&lt;/TH&gt;&lt;TH&gt;Value&lt;/TH&gt;&lt;/TR&gt;" 
+
+  Set objQueryString = Request.QueryString 
+  
+  For Each strSelection In objQueryString
+    Response.Write "&lt;TR&gt;&lt;TD&gt;" &amp; strSelection &amp; "&lt;/TD&gt;&lt;TD&gt;" &amp; _ 
+    objQueryString(strSelection) &amp; &quot;&lt;/TD&gt;&lt;/TR&gt;&quot; 
+  Next 
+
+  Response.Write "&lt;/TABLE&gt;" 
+
+End Sub 
+%&gt;
+
+&lt;SCRIPT LANGUAGE=JScript RUNAT=SERVER&gt; 
+
+function printDate() 
+{ 
+  var x
+ 
+  x = new Date() 
+
+  Response.Write(x.toString()) 
+  Response.Write(&quot;&lt;BR&gt;&quot;)
+} 
+&lt;/SCRIPT&gt;</pre>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;VBScript 调用 JScript 函数时不区分大小写。</p>
+
+
+<h2><a name="H2_37781124">将数组传递给过程</a></h2>
+
+<p>要将整个数组传递给过程，在 VBScript 中，数组名后应紧接一对空括号；在 JScript 中则应使用空的方括号。</p>
+
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

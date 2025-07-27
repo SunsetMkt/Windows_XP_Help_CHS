@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" Content="text/html; charset=Windows-1252">
+<TITLE>Logging Module Enumerator</TITLE>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script>
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT><META NAME="DESCRIPTION" CONTENT="Internet Information Services reference information">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="EN-US">
+<META NAME="MS-IT-LOC" Content="Internet Information Services"> 
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+
+<H1><A NAME="_logging_module_enumerator"></A><SUP></SUP>Logging Module Enumerator</H1>
+
+<H6>Overview</H6>
+
+<P>Multiple logging modules can lead to multiple problems if you aren't prepared. This sample tool illustrates some techniques you can use to create logging management tools of your own.</P>
+
+<P>This sample tool serves two separate functions. If it is invoked without command-line arguments, then it simply lists all logging modules that currently have entries in the metabase on your server. But if an ADsPath is given, such as IIS://LocalHost/W3SVC/3, then the tool will try to determine what is considered the active logging module for that metabase node, and will give you information about that logging module.</P>
+
+<H6>Code Tour</H6>
+
+<P>To list the available logging modules, the <B>GetObject</B> method is invoked to gain access to the IIS://LocalHost/Logging node of the metabase. A <B>For ... Each</B> loop is then used to enumerate the modules that are founded in that node.</P>
+
+<P>Gathering information about a specific server's logging module is a bit more involved. Because the only property at the server level that indicates what logging module is currently in use by the server is the <B>LogPluginClsId</B> property, this value must be compared to each and every module listed at the //LocalHost level until a match is found.</P>
+
+<P><B>GetObject</B> is used to gain access to the list of logging modules provided at the //LocalHost level. The CLSID of the logging module is compared to the CLSID of each logging module provided in this main list until a match is found. When a match is found, the script tells you all it can about the logging module; if no match is found between the CLSIDs, the script aborts with an error.</P>
+
+<H6>Location</H6>
+
+<P>This script is available in the Internet services directory, at ...\iissamples\sdk\admin\logenum.vbs.</P>
+<hr class="iis" size="1">
+<p align="center"><em><a href="../../../common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. All rights reserved.</a></em></p>
+</BODY>
+</HTML>

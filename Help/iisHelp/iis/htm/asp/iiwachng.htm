@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr>
+<head>
+<title>ASP 的重要变化</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+ 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="此主题说明 ASP 的当前和前一版本的重要区别，如默认设置和行为等的更改。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">	
+
+<h1><a name="whatschanged">ASP 的重要变化</a></h1>
+
+
+<P>ASP 在很多方面进行了重要改进和增强。如果升级了前一版本的 ASP 应用程序，您将会注意到这些变化。</P>
+
+<p><strong>注意</strong>&nbsp;&nbsp;&nbsp;要了解 ASP 的新增功能，请参阅 <A HREF="iiwanew.htm">ASP 新增功能</A>。</p>
+
+<UL>
+
+<LI><strong>缓冲功能默认为打开</STRONG> 在 IIS 4.0 中，答复缓冲默认为关闭。而在 IIS 5.1 中，除非脚本明确将缓冲关闭，否则始终对输出进行缓冲。这意味着最终输出将在处理完成或脚本调用 Response.Flush 方法时发送到客户端。在从 IIS 4.0 升级到 IIS 5.1 时，将保留 IIS 4.0 设置。因此，除非将其打开，否则答复缓冲将保持关闭状态。详细信息，请参阅“将内容发送到浏览器”主题中的<A HREF="iiwacont.htm#buffcnt">缓冲内容</A>一节。</LI><BR><BR>
+
+
+<LI><strong>Response.IsClientConnected</strong> 在 IIS 4.0 中，仅当 ASP 文件将内容发送到浏览器时 Response.IsClientConnected 才返回正确信息。在 IIS 5.1 中，ASP 文件可以在将内容发送到浏览器之前使用 IsClientConnected 属性。详细信息，请参阅 <A HREF="vbob1d0k.htm">IsClientConnected</A>。</LI><BR><BR>
+
+
+<LI><strong>改进了包含文件的安全性</strong>&nbsp;在 IIS 4.0 中，当包含文件驻留在映射到物理路径的虚拟根目录下时，ASP 不使用物理路径的安全性凭据对文件进行处理。在 IIS 5.1 中处理包含文件时，ASP 使用物理路径的凭据。详细信息，请参阅<A HREF="iiwainc.htm">包含文件</A>。</LI><BR><BR>
+
+<LI><strong>默认文档查询字符串行为</strong> 在 IIS 5.1 中，如果 .asp（或 .cdx）文件配置为默认文档，则可以从未指定默认文档的 URL 中接收查询字符串。例如，URL <CODE>http://www.microsoft.com/default.asp?newuser=true</CODE> 和 <CODE>http://www.microsoft.com/?newuser=true</CODE> 都将向默认 .asp 文件发送查询字符串值。</LI><BR><BR>
+
+
+<LI><strong>事务标志</strong> IIS 4.0 使用 <STRONG>required</STRONG>、<STRONG>requires new</STRONG> 和 <STRONG>not supported</STRONG> 事务标志表示 ASP 开始了新的事务。在 IIS 5.1 中，这种行为没有改变。然而，如果 .asp 文件使用新的 Server.Execute 或 Server.Transfer 方法执行 .ASP 文件，则事务标志状态将保持到第二个 .asp 文件。如果第二个 .asp 文件的事务标志表示事务是被支持或必需的，则将使用现有事务，新事务无法启动。</LI><BR><BR>
+
+<LI><strong>双模型对象行为</strong> 如果以应用程序状态存储不支持自由线程 Marshaller 的双模型 COM 对象，那么它将失败。双模型组件必须将自由线程 Marshaller 聚合以应用程序状态存储。</LI><BR><BR> 
+
+<LI><strong>将一些可配置项目移动到配置数据库</strong> 下列 IIS 4.0 注册表项现在位于配置数据库中：</LI>
+<UL>
+	<LI>ProcessorThreadMax</li>
+	<LI>ErrorsToNTLog</li>
+</UL>
+
+<P>对于 IIS 5.1，所有 ASP 的可配置参数都可通过配置数据库进行修改。详细信息，请参阅<A HREF="../core/iimbsovr.htm">关于配置数据库</A>。</P>
+
+<LI><strong>本地服务器 COM 对象的安全性</strong> IIS 使用称为“伪装”的 Windows COM 的新功能，使由 .asp 文件实例化的本地服务器应用程序具有初始客户端的安全性上下文。在上一版本中，分配到本地服务器 COM 对象的标识由创建对象实例用户标识所决定。</LI><BR><BR>
+
+<LI><strong>提前释放对象</strong> 在 IIS 4.0 中，COM 对象到 ASP 结束网页处理之后才会被释放。在 IIS 5.1 中，如果 COM 对象不使用 OnEndPage 方法，并且对象的引用计数为零，那么对象将在处理完成之前被释放。</LI><BR><BR>
+
+</UL><BR><BR>
+
+<hr class="iis" size="1">
+<p align="center"><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+</font>
+</body>
+</html>

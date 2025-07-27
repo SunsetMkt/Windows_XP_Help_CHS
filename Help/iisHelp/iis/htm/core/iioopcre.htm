@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html dir=ltr><head><title>配置进程回收事件</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+	TempString = navigator.appVersion
+	if (navigator.appName == "Microsoft Internet Explorer"){	
+// Check to see if browser is Microsoft
+		if (TempString.indexOf ("4.") >= 0){
+// Check to see if it is IE 4
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+		}
+		else {
+			document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+		}
+	}
+	else if (navigator.appName == "Netscape") {						
+// Check to see if browser is Netscape
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/coua.css">');
+	}
+	else
+		document.writeln('<link rel="stylesheet" type="text/css" href="/iishelp/common/cocss.css">');
+//-->
+</script> 
+
+<SCRIPT LANGUAGE="VBScript">
+<!--
+Sub Window_OnLoad()
+   Dim frmContents
+   On Error Resume Next
+   If Not Parent Is Nothing Then
+      Set frmContents = Parent.Contents
+      If Not frmContents Is Nothing Then
+            frmContents.Window.TOCSynch_Click
+      End If
+   End If
+End Sub
+//--></SCRIPT>
+
+<META NAME="DESCRIPTION" CONTENT="说明如何配置进程回收事件。">
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=gb2312">
+
+<META HTTP-EQUIV="PICS-Label" CONTENT='(PICS-1.1 "<http://www.rsac.org/ratingsv01.html>" l comment "RSACi North America Server" by "inet@microsoft.com <mailto:inet@microsoft.com>" r (n 0 s 0 v 0 l 0))'>
+<META NAME="MS.LOCALE" CONTENT="ZH-CN">
+<META NAME="MS-IT-LOC" Content="Internet 信息服务">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000"><font face="宋体">
+
+<h1><a name="ConfiguringProcessRecyclingEvents">配置进程回收事件</a></h1>
+
+可以在用户界面 (UI) 中配置进程回收事件，也可以通过直接编辑配置数据库来配置这些事件。为降低发生错误的可能性，应尽量在 UI 中配置 IIS。
+
+<p>在配置进程回收事件之前，应该了解为什么要在不同的配置数据库级别配置进程回收，以及在什么情况下，其他级别会继承这些属性。</P>
+
+<p>可以使用四个配置数据库关键字配置进程回收，如<a href="iioopapr.htm">关于进程回收</a>中所述。这些关键字分别是 PeriodicRestartTime、PeriodicRestartRequests、PeriodicRestartSchedule 和 ShutdownTimeLimit。在这四关键字中，只有 <a href="../asp/apro0y44.htm">ShutdownTimeLimit</a> 配置数据库关键字不可以通过 UI 配置。有关配置 ShutdownTimeLimit 配置数据库关键字的信息，请参阅<a href="#ConfiguringWithoutUI">不使用 UI 配置事件</a>。</p>
+
+<h2><a name="ConfiguringEventsUsingTheUserInterface">使用 UI 配置事件</a></h2>
+进程回收事件是使用 <a href="iiabuti.htm">Internet 信息服务管理单元</a>在 UI 中进行配置的。根据所配置的 IIS 级别的不同，进程配置的步骤会有所变化。
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;只有 W3SVC (IISWebService) 级别可以使用共用进程外 (OOP) 应用程序的“进程回收”设置。
+<H3>配置 W3SVC (IISWebService) 级别</H3>
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，用鼠标右键单击电脑图标，然后单击“属性”。
+</p>
+<li>选择“Internet 信息服务”选项卡，在“主属性”下，从“主属性”列表中选择“WWW 服务”，然后单击“编辑”。
+<p>
+<li>选择“主目录”选项卡。
+<p>
+<li>在“应用程序设置”部分，单击“配置”。<p>
+<li>选择“进程选项”选项卡。
+</ol>
+<p>现在您位于“进程选项”属性页上。有关如何使用此属性页配置进程回收事件的信息，请参阅<a href="#ProcessOptionspage">“进程选项”属性页</a>。
+
+<p><strong><font color="#0000FF">要点</font></strong>&nbsp;&nbsp;&nbsp;对于独立 OOP 应用程序，其“进程回收”设置只可以使用 UI 在下面列出的三种级别上进行配置。使用 UI 在这些级别进行配置的先决条件是“独立”应用程序位于启用“进程回收”的级别上。否则，“进程选项”属性页上的“回收选项”将变灰，并且不可用。有关创建应用程序的信息，请参阅<a href="iiwarnde.htm">创建应用程序</a>。
+
+<H3>配置 W3SVC/<i>n</i>/ROOT (IISWebVirtualDir) 级别</H3>
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，用鼠标右键单击要配置的虚拟目录，然后从列表中选择“属性”。<p>
+<li>选择“虚拟目录”选项卡。
+<p>
+<li>在“应用程序设置”部分，单击“配置”。<p>
+<li>选择“进程选项”选项卡。
+</ol>
+<p>现在您位于“进程选项”属性页上。有关如何使用此属性页配置“进程回收”事件的信息，请参阅<a href="#ProcessOptionspage">“进程选项”属性页</a>。
+
+<H3>配置 W3SVC/<i>n</i>/ROOT/WebVirtualDir (IISWebVirtualDir) 级别</H3>
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，用鼠标右键单击要配置的虚拟目录中的目录，然后从列表中选择“属性”。<p>
+<li>选择“目录”选项卡。
+<p>
+<li>在“应用程序设置”中，单击“配置”。<p>
+<li>选择“进程选项”选项卡。
+</ol>
+<p>现在您位于“进程选项”属性页上。有关如何使用此属性页配置“进行回收”事件的信息，请参阅<a href="#ProcessOptionspage">“进程选项”属性页</a>。
+
+<H3>配置 W3SVC/<i>n</i>/ROOT/WebVirtualDir/WebDir (IISWebDirectory) 级别</H3>
+
+<ol>
+<li>在 <a href="iiabuti.htm">Internet 信息服务管理单元</a>中，用鼠标右键单击要配置的虚拟目录中的 Web 目录，然后从列表中选择“属性”。<p>
+<li>选择“目录”选项卡。
+<p>
+<li>在“应用程序设置”中，单击“配置”。<p>
+<li>选择“进程选项”选项卡。
+</ol>
+
+<p>现在您位于“进程选项”属性页上。有关如何使用此属性页配置“进程回收”事件的信息，请参阅<a href="#ProcessOptionspage">“进程选项”属性页</a>。
+
+<h3><a name="ProcessOptionspage">“进程选项”属性页</a></h3>
+
+<img src="iioop1.jpg" alt="“进程选项”属性页。">
+
+<p>可以从此属性页配置下列内容：</p>
+<p>
+<ul>
+<li>若要在指定时间段后回收应用程序，请选中“超过此时间后回收应用程序进程”复选框，并在“分钟”文本框中输入一个整数。在“分钟”字段中输入“0”将禁用此功能。注意：由于服务器上负载的缘故，此回收事件可能不会恰在达到阈值时发生，可能要稍等一会儿。
+</li>
+<li>如果要在达到设定数量的请求之后回收应用程序，请选中“超过此请求数后回收应用程序进程”复选框，并在“请求”文本框中输入一个整数。在“请求”字段中输入“0”将禁用此功能。
+</li>
+<li>如果要在每天的某个时间回收应用程序，请选中“在下列时间回收应用程序”复选框，并使用“添加时间”按钮添加一天中的某个时间，或一天中的多个时间。默认值为空字符串。</li>
+</ul></p>
+
+<h2><a name="ConfiguringWithoutUI">不使用 UI 配置事件</a></h2>
+
+<p>如果不通过 UI 配置“进程回收”事件，您就可以在配置数据库的任何级别配置这些设置。您可以通过这种方法更好地控制继承设置的来源。但是，此方法要求了解下列内容：</p>
+<p>
+<ul>
+<li>继承如何进行
+<li>只用于“进程回收”的配置数据库关键字
+<li>了解 AppIsolated 配置数据库关键字
+</ul>
+<p>采用不通过 UI 配置“进程回收”的方法之前，应该先查看<a href="iiooplai.htm">级别与继承</a>。
+
+<p>使用下列方法，可以不通过 UI 配置进程回收：
+<ul>
+<li>Active Directory 服务接口 (ADSI)
+<li>Windows 2000 Resource Kit 中包含的配置数据库编辑器，如 MetaEdit。
+</ul></p>
+
+<p>有关使用 ADSI 的信息，请参阅 <a href="../asp/adsi0aat.htm">ADSI 参考</a>。可以将 <a href="../adminsamples/adsutil.htm">IIS 管理脚本实用程序 (adsutil)</a> 与 ADSI 一起使用来配置配置数据库。</p>
+
+<h2><a name="RelatedResources">相关资源</a></h2>
+
+<p>下列资源提供了相关信息：</p>
+<ul>
+<li><a href="iiwarndc.htm">关于应用程序</a>&nbsp;&nbsp;&nbsp;有关应用程序的概念性信息，它们的起始点，以及应用程序可在其中运行的各种不同进程。</li>
+<li><a href="iiisol.htm">独立应用程序</a>&nbsp;&nbsp;&nbsp;有关如何配置应用程序，使其在各种不同进程中运行的逐步说明。</li>
+<li><a href="../asp/adsi0aat.htm">ADSI 参考</a>&nbsp;&nbsp;&nbsp;“ADSI 参考”一节介绍“IIS Admin 对象”所提供的属性和方法。</li> 
+<li><a href="../adminsamples/adsutil.htm">IIS 管理脚本实用程序 (adsutil)</a>&nbsp;&nbsp;&nbsp;IIS 管理实用程序将 VBScript 与 ADSI 一起使用，对 IIS 进行配置。</li> 
+</ul>
+
+<hr class="iis" size="1"><p align=center><a href="/iishelp/common/colegal.htm">&copy; 1997-2001 Microsoft Corporation. 保留所有权利。</a></p>
+
+<span style="display:none"><LAYER VISIBILITY=HIDE> 
+（下列单词只用于搜索，不会显示在网页中。）W3SVC
+</layer></span>
+
+</font>
+</body>
+</html>
